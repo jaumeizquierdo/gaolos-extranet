@@ -1,0 +1,37 @@
+﻿/* Filtros */
+
+@import "variables.scss";
+@import "materialdesign.scss";
+
+.filtros {
+    font-size: $filtro-size;
+    font-weight: $filtro-weight;
+    color: $filtro-url;
+    border: none;
+    background: $filtro-bg;
+    box-shadow: $filtro-box-weight $filtro-box-shadow;
+    border-radius: $border-radius-boton;
+    padding: $filtro-padding;
+    margin: $filtro-margin;
+    width: $filtro-width;
+    @include flex;
+    @include fade-link;
+    &:hover,
+    &:active,
+    &:focus {
+        color: $filtro-url-hover;
+        border: none !important;
+        background: $filtro-bg-hover;
+        box-shadow: $filtro-box-weight $filtro-box-shadow-hover;
+        outline: 0;
+        text-decoration: none;
+    }
+    p {
+        margin: 0;
+    }
+    a {
+        i {
+            color: #fff;
+        }
+    }
+}

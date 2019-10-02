@@ -1,0 +1,44 @@
+﻿@model MenuEmpresasLibrary.MenuEmpresasViewModel
+@if (Model != null)
+{
+    @if (Model.Menu != null)
+    {
+
+        @if (@Model.Menu.num > 1)
+        {
+        <div class="">
+            <div class="menu-divider"></div>
+            <ul id="accordionNegocio" role="tablist" aria-multiselectable="true">
+                <li>
+
+                    <div class="d-flex justify-content-between menu-item-container" data-toggle="tooltip" data-placement="right" title="" data-original-title="@ViewData["sesNeg"] (@Model.Menu.num)">
+                        <a href="#"><i class="material-icons ico md-18 mr-2">work</i> <span class="modulo-titulo">@ViewData["sesNeg"] (@Model.Menu.num)</span></a>
+                        <a role="button" data-parent="#accordionNegocio" data-toggle="collapse" href="#accordionNeg" aria-expanded="true" aria-controls="accordionNeg" class="colapsar-menu"> <i class="fa fa-angle-right"></i></a>
+                    </div>
+
+                    <div class="contentCollapse">
+                        <ul id="accordionNeg" class="panel-collapse collapse" role="tabpanel" aria-labelledby="accordionNeg">
+                            @foreach (var m in Model.Menu._menus)
+                            {
+                                <li><a href="#" class="refneg" id="refneg_@m.RefNeg">@m.Neg</a></li>
+                            }
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        }
+        else
+        {
+            <ul>
+                <li>
+                    <a href="#">@ViewData["sesNeg"]</a>
+                </li>
+            </ul>
+
+        }
+
+    }
+
+}

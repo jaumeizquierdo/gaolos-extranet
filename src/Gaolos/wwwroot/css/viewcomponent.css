@@ -1,0 +1,13 @@
+/* View-Component wrapper */
+/* Mixins */
+/* Skin v4.6 - White / Dark / Blue */
+#viewcomponent-wrapper {
+  margin: 1em 0;
+  border: 1px solid #ededed;
+  padding: 1em; }
+  #viewcomponent-wrapper a {
+    color: #b0bec5; }
+
+.vc-list-buttons .btn-submit {
+  font-size: 1em;
+  padding: 0.5em 1em; }

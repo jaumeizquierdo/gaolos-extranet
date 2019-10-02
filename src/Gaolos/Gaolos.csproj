@@ -1,0 +1,648 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup Label="Globals">
+    <SccProjectName>SAK</SccProjectName>
+    <SccProvider>SAK</SccProvider>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccLocalPath>SAK</SccLocalPath>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <PreserveCompilationContext>true</PreserveCompilationContext>
+    <AssemblyName>Gaolos</AssemblyName>
+    <OutputType>Exe</OutputType>
+    <PackageId>Gaolos</PackageId>
+    <RuntimeFrameworkVersion>2.1.4</RuntimeFrameworkVersion>
+    <AssetTargetFallback>$(AssetTargetFallback);portable-net45+win8+wp8+wpa81;</AssetTargetFallback>
+    <StartupObject />
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <PlatformTarget>x64</PlatformTarget>
+    <Optimize>false</Optimize>
+    <DefineConstants>DEBUG;TRACE;RELEASE;NETCOREAPP2_0</DefineConstants>
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+    <PlatformTarget>x64</PlatformTarget>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ModuloBlogs\BlogEstilos.cshtml" />
+    <EmbeddedResource Include="Views\ModuloBlogs\BlogsEntrada.cshtml" />
+    <EmbeddedResource Include="Views\ModuloBlogs\BlogsEntradas.cshtml" />
+    <EmbeddedResource Include="Views\ModuloBlogs\BlogsListado.cshtml" />
+    <EmbeddedResource Include="Views\ModuloBlogs\Categorias.cshtml" />
+    <EmbeddedResource Include="Views\ModuloBlogs\Eliminar_EstilosBlog.cshtml" />
+    <EmbeddedResource Include="Views\ModuloBlogs\Tags.cshtml" />
+    <EmbeddedResource Include="Views\ModuloCms\CmsTags.cshtml" />
+    <EmbeddedResource Include="Views\ModuloCms\CmsComponentesEditarHtml.cshtml" />
+    <EmbeddedResource Include="Views\ModuloCms\DocumentosPublicos.cshtml" />
+    <EmbeddedResource Include="Views\ModuloCms\WebNodosEditar.cshtml" />
+    <EmbeddedResource Include="Views\ModuloCms\WebsEstilos.cshtml" />
+    <EmbeddedResource Include="Views\ModuloCursos\CursosUbicacion.cshtml" />
+    <EmbeddedResource Include="Views\ModuloCursos\CursosUbicacionesListado.cshtml" />
+    <EmbeddedResource Include="Views\ModuloElementos\ElementosCaracteristicas.cshtml" />
+    <EmbeddedResource Include="Views\ModuloElementos\ElementosPlantillas.cshtml" />
+    <EmbeddedResource Include="Views\Gestoria\GestoriaFacturasClientes.cshtml" />
+    <EmbeddedResource Include="Views\Gestoria\GestoriaFacturasProveedores.cshtml" />
+    <EmbeddedResource Include="Views\Gestoria\GestoriaVentasTPV.cshtml" />
+    <EmbeddedResource Include="Views\Home\Clientes.cshtml" />
+    <EmbeddedResource Include="Views\Home\Error.cshtml" />
+    <EmbeddedResource Include="Views\Home\Facturas.cshtml" />
+    <EmbeddedResource Include="Views\Home\Google.cshtml" />
+    <EmbeddedResource Include="Views\Home\Index.cshtml" />
+    <EmbeddedResource Include="Views\Home\Websites.cshtml" />
+    <EmbeddedResource Include="Views\Inicio\Index.cshtml" />
+    <EmbeddedResource Include="Views\Login\Login.cshtml" />
+    <EmbeddedResource Include="Views\Mantenimientos\MantenimientosPlanificar.cshtml" />
+    <EmbeddedResource Include="Views\ModuloMiEmpresa\Contratar.cshtml" />
+    <EmbeddedResource Include="Views\ModuloMiEmpresa\Nodos.cshtml" />
+    <EmbeddedResource Include="Views\ModuloMiEmpresa\Permisos.cshtml" />
+    <EmbeddedResource Include="Views\ModuloMiEmpresa\Usuario.cshtml" />
+    <EmbeddedResource Include="Views\ModuloMiEmpresa\Usuarios.cshtml" />
+    <EmbeddedResource Include="Views\ModuloBiblioteca\Documento.cshtml" />
+    <EmbeddedResource Include="Views\ModuloBiblioteca\Documentos.cshtml" />
+    <EmbeddedResource Include="Views\ModuloEmpresasRelacionadas\EmpresasRelacionadasPorAgenteListado.cshtml" />
+    <EmbeddedResource Include="Views\ModuloContabilidad\ConciliacionClientes.cshtml" />
+    <EmbeddedResource Include="Views\ModuloContabilidad\ConciliacionDashBoard.cshtml" />
+    <EmbeddedResource Include="Views\ModuloContabilidad\ConciliacionPasarelas.cshtml" />
+    <EmbeddedResource Include="Views\ModuloContabilidad\ConciliacionPasarelasClientes.cshtml" />
+    <EmbeddedResource Include="Views\ModuloContabilidad\ConciliacionProveedores.cshtml" />
+    <EmbeddedResource Include="Views\ModuloContabilidad\ConciliacionRemesas.cshtml" />
+    <EmbeddedResource Include="Views\ModuloContabilidad\ConciliacionTarjetas.cshtml" />
+    <EmbeddedResource Include="Views\ModuloContabilidad\CuentasBancarias.cshtml" />
+    <EmbeddedResource Include="Views\ModuloContabilidad\ExportacionContabilidad.cshtml" />
+    <EmbeddedResource Include="Views\ModuloSoporte\SoporteGaolosNuevaSolicitud.cshtml" />
+    <EmbeddedResource Include="Views\ModuloProduccion\ProduccionOrdenesAbiertas.cshtml" />
+    <EmbeddedResource Include="Views\ModuloProduccion\ProduccionOrdenesEstadoTrabajadores.cshtml" />
+    <EmbeddedResource Include="Views\ModuloProduccion\ProduccionOrdenesHistorial.cshtml" />
+    <EmbeddedResource Include="Views\ProduccionOrdenes\ProduccionOrdenesProduccion.cshtml" />
+    <EmbeddedResource Include="Views\ModuloProduccion\ProduccionOrdenesOrdenDetalles.cshtml" />
+    <EmbeddedResource Include="Views\ModuloProduccion\ProduccionPedidoServiciosNuevo.cshtml" />
+    <EmbeddedResource Include="Views\ModuloProduccion\ProduccionPedidoSinPresupuesto.cshtml" />
+    <EmbeddedResource Include="Views\SEO\Analytics.cshtml" />
+    <EmbeddedResource Include="Views\SEO\AnalyticsCopy.cshtml" />
+    <EmbeddedResource Include="Views\SEO\AnalyticsEmbedAPIGoogle.cshtml" />
+    <EmbeddedResource Include="Views\Shared\AccesoDenegado.cshtml" />
+    <EmbeddedResource Include="Views\Shared\Modulo-Blogs\_Blogs.cshtml" />
+    <EmbeddedResource Include="Views\Shared\Modulo-Blogs\_BlogsEstilos.cshtml" />
+    <EmbeddedResource Include="Views\Shared\Modulo-Cms\_Cms.cshtml" />
+    <EmbeddedResource Include="Views\Shared\Modulo-Cms\_CmsComponentes.cshtml" />
+    <EmbeddedResource Include="Views\Shared\Modulo-Cms\_CmsDocumentosPublicos.cshtml" />
+    <EmbeddedResource Include="Views\Shared\Modulo-Cms\_CmsTags.cshtml" />
+    <EmbeddedResource Include="Views\Shared\Modulo-Cms\_CmsWebsEstilos.cshtml" />
+    <EmbeddedResource Include="Views\Shared\Components\IdiomasComponent\Default.cshtml" />
+    <EmbeddedResource Include="Views\Shared\Components\MenuEmpresasComponent\Default.cshtml" />
+    <EmbeddedResource Include="Views\Shared\Components\MenuFooterComponent\Default.cshtml" />
+    <EmbeddedResource Include="Views\Shared\Components\MenuGaolosComponent\Default.cshtml" />
+    <EmbeddedResource Include="Views\Shared\Components\MenuNotificacionesComponent\Default.cshtml" />
+    <EmbeddedResource Include="Views\Shared\Components\MenuUsuarioComponent\Default.cshtml" />
+    <EmbeddedResource Include="Views\Shared\Components\MenuUsuarioOpcionesComponent\Default.cshtml" />
+    <EmbeddedResource Include="Views\Shared\Modulo-Cursos\_Cursos.cshtml" />
+    <EmbeddedResource Include="Views\Shared\MenuHeader.cshtml" />
+    <EmbeddedResource Include="Views\Shared\Modulo-Biblioteca\_Modulo-Biblioteca.cshtml" />
+    <EmbeddedResource Include="Views\Shared\Modulo-Contabilidad\_Modulo-Contabilidad-Conciliacion-Clientes.cshtml" />
+    <EmbeddedResource Include="Views\Shared\Modulo-Contabilidad\_Modulo-Contabilidad-Conciliacion-DashBoard.cshtml" />
+    <EmbeddedResource Include="Views\Shared\Modulo-Contabilidad\_Modulo-Contabilidad-Conciliacion-Pasarelas-Clientes.cshtml" />
+    <EmbeddedResource Include="Views\Shared\Modulo-Contabilidad\_Modulo-Contabilidad-Conciliacion-Pasarelas.cshtml" />
+    <EmbeddedResource Include="Views\Shared\Modulo-Contabilidad\_Modulo-Contabilidad-Conciliacion-Proveedores.cshtml" />
+    <EmbeddedResource Include="Views\Shared\Modulo-Contabilidad\_Modulo-Contabilidad-Conciliacion-Remesas.cshtml" />
+    <EmbeddedResource Include="Views\Shared\Modulo-Contabilidad\_Modulo-Contabilidad-Conciliacion-Tarjetas.cshtml" />
+    <EmbeddedResource Include="Views\Shared\Modulo-Contabilidad\_Modulo-Contabilidad-Cuentas-Bancarias.cshtml" />
+    <EmbeddedResource Include="Views\Shared\MyGaolos\_MyGaolos.cshtml" />
+    <EmbeddedResource Include="Views\Shared\PanelActions.cshtml" />
+    <EmbeddedResource Include="Views\Shared\Modulo-Produccion\_ProduccionOrdenes.cshtml" />
+    <EmbeddedResource Include="Views\Shared\Modulo-Produccion\_ProduccionPedidos.cshtml" />
+    <EmbeddedResource Include="Views\Shared\SEO\_Analytics.cshtml" />
+    <EmbeddedResource Include="Views\Shared\Modulo-Situacion\_Situacion.cshtml" />
+    <EmbeddedResource Include="Views\Shared\SystemError.cshtml" />
+    <EmbeddedResource Include="Views\Shared\Modulo-Tags\_Tags.cshtml" />
+    <EmbeddedResource Include="Views\Shared\Modulo-Elementos\_Modulo-Elementos.cshtml" />
+    <EmbeddedResource Include="Views\Shared\_Error.cshtml" />
+    <EmbeddedResource Include="Views\Shared\_Google.cshtml" />
+    <EmbeddedResource Include="Views\Shared\_Inicio.cshtml" />
+    <EmbeddedResource Include="Views\Shared\_Layout.cshtml" />
+    <EmbeddedResource Include="Views\Shared\_Login.cshtml" />
+    <EmbeddedResource Include="Views\Shared\Modulo-Mi-Empresa\_Nodos.cshtml" />
+    <EmbeddedResource Include="Views\ModuloSituacion\Clientes.cshtml" />
+    <EmbeddedResource Include="Views\ModuloSituacion\Usuarios.cshtml" />
+    <EmbeddedResource Include="Views\ModuloTags\TagsListado.cshtml" />
+    <EmbeddedResource Include="Views\ModuloWeb\DefinicionPatrones.cshtml" />
+    <EmbeddedResource Include="Views\ModuloWeb\Estadisticas.cshtml" />
+    <EmbeddedResource Include="Views\ModuloWeb\WebsDominios.cshtml" />
+    <EmbeddedResource Include="Views\ModuloWeb\WebsReferido.cshtml" />
+    <EmbeddedResource Include="Views\ModuloWeb\WebsReferidos.cshtml" />
+    <EmbeddedResource Include="Views\ModuloWeb\WebsWeb.cshtml" />
+    <EmbeddedResource Include="Views\ModuloWeb\WebsWebs.cshtml" />
+    <EmbeddedResource Include="Views\_ViewImports.cshtml" />
+    <EmbeddedResource Include="Views\_ViewStart.cshtml" />
+    <Compile Remove="Controllers\Test\**" />
+    <Content Remove="Controllers\Test\**" />
+    <EmbeddedResource Remove="Controllers\Test\**" />
+    <None Remove="Controllers\Test\**" />
+    <EmbeddedResource Remove="Views\ModuloBlogs\BlogsDashboard.cshtml" />
+    <EmbeddedResource Remove="Views\ModuloCursos\CursosDashboard.cshtml" />
+    <EmbeddedResource Remove="Views\ModuloSolicitudes\SolicitudesAbiertas.cshtml" />
+    <EmbeddedResource Remove="Views\ModuloSolicitudes\SolicitudesDashboard.cshtml" />
+    <EmbeddedResource Remove="Views\ModuloSolicitudes\SolicitudesHistorial.cshtml" />
+    <EmbeddedResource Remove="Views\ModuloSolicitudes\SolicitudesNueva.cshtml" />
+    <EmbeddedResource Remove="Views\ModuloSolicitudes\SolicitudesPorAsignar.cshtml" />
+    <EmbeddedResource Remove="Views\ProduccionOrdenes\ProduccionOrdenesDisponibles.cshtml" />
+    <EmbeddedResource Remove="Views\SEO\SEODashboard.cshtml" />
+    <EmbeddedResource Remove="Views\Shared\Modulo-Solicitudes\_Solicitudes.cshtml" />
+    <EmbeddedResource Remove="Views\Shared\Modulo-Soporte\_Soporte-Gaolos.cshtml" />
+    <EmbeddedResource Remove="Views\Shared\Modulo-Soporte\_Soporte.cshtml" />
+    <EmbeddedResource Remove="Views\ModuloSituacion\SituacionDashboard.cshtml" />
+    <EmbeddedResource Remove="Views\ModuloTags\TagsDashboard.cshtml" />
+    <EmbeddedResource Remove="Views\ModuloWeb\WebsDashboard.cshtml" />
+    <None Update="wwwroot\**\*">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </None>
+  </ItemGroup>
+<!--
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="1.1.1" />
+    <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics" Version="1.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="1.1.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Routing" Version="1.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Server.IISIntegration" Version="1.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel" Version="1.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Session" Version="1.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="1.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="1.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="1.1.1" />
+    <PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="1.1.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="1.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="1.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="1.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="1.1.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="1.1.0" />
+    <PackageReference Include="System.IO.FileSystem" Version="4.3.0" />
+    <PackageReference Include="System.Xml.XmlDocument" Version="4.0.1" />
+    <PackageReference Include="system.xml.xpath.xmldocument" Version="4.0.0" />
+  </ItemGroup>
+-->
+  <ItemGroup>
+    <PackageReference Include="CoreCompat.System.Drawing" Version="1.0.0-beta006" />
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.1.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.ViewCompilation" Version="2.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel" Version="2.1.3" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="2.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="2.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="2.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="2.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="2.1.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="2.1.1" />
+    <PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="2.1.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.4" />
+    <PackageReference Include="System.Interactive.Async" Version="3.1.1" />
+  </ItemGroup>
+
+
+  <Target Name="PrepublishScript" BeforeTargets="PrepareForPublish">
+    <Exec Command="dotnet bundle" />
+  </Target>
+
+  <ItemGroup>
+    <DotNetCliToolReference Include="BundlerMinifier.Core" Version="2.2.301" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\sass\elosco\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Views\ModuloAlbaranes\Albaran.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\ModuloAlbaranes\Albaranes.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\ModuloAlbaranes\AlbaranesDashboard.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\ModuloAlbaranes\AlbaranesHistorial.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\ModuloAlbaranes\AlbaranesNuevo.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\ModuloAlbaranes\Albaranes-Facturar.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\ModuloArticulos\Articulo-Control.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\ModuloArticulos\Articulo-Precios.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\ModuloArticulos\ArticuloTracert.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\ModuloArticulos\ArticuloRelacionados.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\ModuloArticulos\ArticuloImagenes.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\ModuloArticulos\ArticuloTransporte.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\ModuloArticulos\ArticuloInternet.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\ModuloArticulos\Articulo-Proveedores.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\ModuloArticulos\Articulo-General.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\ModuloArticulos\Articulos.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\ModuloArticulos\Articulo-Tabs.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\ModuloArticulos\ArticulosDashboard.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\ModuloArticulos\Articulo-Cabecera.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\ModuloArticulos\Configuracion.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\ModuloArticulos\ConfiguracionFabricantes.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\ModuloArticulos\ConfiguracionFamilias.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\ModuloArticulos\ConfiguracionCategorias.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\ModuloAsistencias\AsistenciasPorFacturarRevisar.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\ModuloCalendario\CalendarioGrupos.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\ModuloClientes\Cliente-Correspondencia.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\ModuloClientes\Cliente-Tags.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\ModuloClientes\Cliente-ClientesRelacionados-Contactos.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\ModuloClientes\Cliente-ClientesRelacionados-Herencia.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\ModuloClientes\Cliente-ClientesRelacionados-PresupuestosContactos.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\ModuloClientes\Cliente-PreciosEspeciales-ArticulosFamilias.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\ModuloClientes\Cliente-PreciosEspeciales-ArticulosCategorias.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\ModuloClientes\Cliente-PreciosEspeciales-Articulos.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\ModuloClientes\Cliente-PreciosEspeciales-Servicios.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\ModuloClientes\Cliente-Situacion-Cobros.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\ModuloClientes\Cliente-Nuevo.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\ModuloClientes\Cliente-PreciosEspeciales-Tabs.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\ModuloClientes\ClientesConsultas-ResumenEmpresasRelacionadasPorAgente.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\ModuloClientes\ClientesConsultas-ResumenEmpresasRelacionadas.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\ModuloClientes\Configuracion-Preferencias.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\ModuloClientes\Configuracion.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\ModuloClientes\ClientesConsultas.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\ModuloClientes\ClientesPorRevisar.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\ModuloContabilidad\ConciliacionProveedoresV2.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\ModuloControlHorario\ControlHorarioHoy.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\ModuloControlHorario\ControlHorarioConsultas.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\ModuloControlHorario\ControlHorarioConsultas-ResumenHoras.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\ModuloCorrespondencia\Correspondencia.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\ModuloFacturacion\CobrosANegociar.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\ModuloFacturacion\Configuracion-Devoluciones.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\ModuloFacturacion\Factura-Vencimientos.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\ModuloFacturacion\CobrosEnEspera.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\ModuloFacturacion\Abonos.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\ModuloFacturacion\Configuracion-EnvioFacturas.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\ModuloFacturacion\Configuracion-SeriesFacturacion.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\ModuloFacturacion\Configuracion-AbonoFacturas.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\ModuloFacturacion\Configuracion-RemesasRecibos.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\ModuloFacturacion\Comisiones.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\ModuloMantenimientos\MantenimientosIncidencias.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\ModuloMantenimientos\Mantenimiento-Baja.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\ModuloMantenimientos\Mantenimiento-Baja-Elementos.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\ModuloMantenimientos\Mantenimiento-Baja-Historial.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\ModuloMantenimientos\Mantenimiento-Tabs-Baja.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\ModuloMantenimientos\Mantenimientos-Bajas.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\ModuloMantenimientos\MantenimientosConsultas-AltasYBajas.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\ModuloMantenimientos\MantenimientosConsultas.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\ModuloMiEmpresa\MiEmpresa-General.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\ModuloMiEmpresa\MiEmpresa-Fiscal.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\ModuloMiEmpresa\MiEmpresa-Tabs.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\ModuloMiEmpresa\MiEmpresa-Cabecera.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\ModuloMiEmpresa\Preferencias.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\ModuloPresupuestos\PresupuestosBorrador.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\ModuloPresupuestos\PresupuestosHistorial.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\ModuloPresupuestos\PresupuestosNuevo.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\ModuloPresupuestos\PresupuestosConsultas-AceptadosPorUsuario.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\ModuloPresupuestos\PresupuestosConsultas.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\ModuloPresupuestos\PresupuestosConsultas-AceptadosConAltaCliente.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\ModuloProduccion\ProduccionConsultas-TiemposDeProduccion.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\ModuloProduccion\ProduccionConsultas-CargaDeTrabajo.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\ModuloProduccion\ProduccionConsultas.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\ModuloProduccion\ProduccionOrdenesConIncidencias.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\ModuloProduccion\ProduccionOrdenesEnProduccion.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\ModuloPedidosProveedores\PedidosProveedoresCompras.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\ModuloProveedores\Proveedores.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\ModuloProveedores\ProveedoresFacturasRecibidas.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\ModuloServicios\Configuracion.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\ModuloServicios\ConfiguracionFamilias.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\ModuloServicios\Servicio-Nuevo.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\ModuloTaller\Taller.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\ModuloTransporte\Localizaciones.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\ModuloTransporte\Modalidades.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\ModuloTransporte\Tarifas.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\ModuloTransporte\TiposEnvio.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\ModuloWeb\WebsCabecera.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\ModuloWeb\Web-Tabs-Comunicacion.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\ModuloWeb\Web-Tabs.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\ModuloWeb\WebsWebCondiciones.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\ModuloWeb\WebsWebArticulos.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\ModuloWeb\WebsWebComunicacionRegistro.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\MyGaolos\Calendario.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Shared\Modulo-Albaranes\_Modulo-Albaranes-Facturar.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Shared\Modulo-Albaranes\_Modulo-Albaranes-Nuevo.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Shared\Modulo-Albaranes\_Modulo-Albaranes-Dashboard.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Shared\Modulo-Albaranes\_Modulo-Albaranes-Albaran.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Shared\Modulo-Albaranes\_Modulo-Albaranes-Albaranes.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Shared\Modulo-Articulos\_Modulo-Articulos-Articulo.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Shared\Modulo-Articulos\_Modulo-Articulos-Dashboard.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Shared\Modulo-Articulos\_Modulo-Articulos.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Shared\Modulo-Articulos\_Modulo-Articulos-Configuracion.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Shared\Modulo-Asistencias\_Modulo-Asistencias-Facturar.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Shared\Modulo-Calendario\_Modulo-Calendario.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Shared\Modulo-Clientes\_Modulo-Clientes-Configuracion.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Shared\Modulo-Clientes\_Modulo-Clientes-Nuevo.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Shared\Modulo-Clientes\_Modulo-Clientes-Consultas.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Shared\Modulo-Control-Horario\_Control-Horario.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Shared\Modulo-Correspondencia\_Modulo-Correspondencia.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Shared\Modulo-Facturacion\_Facturacion-Abonos.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Shared\Modulo-Facturacion\_Facturacion-Comisiones.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Shared\Modulo-Facturacion\_Facturacion-Facturas-Factura.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Shared\Modulo-Facturacion\_Facturacion-Remesas.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Shared\Modulo-Facturacion\_Facturacion-Recibos.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Shared\Modulo-Facturacion\_Facturacion-Cobros-en-Espera.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Shared\Modulo-Facturacion\_Facturacion-Configuracion.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Shared\Modulo-Mantenimientos\_Modulo-MantenimientoBaja.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Shared\Modulo-Mantenimientos\_Modulo-Mantenimientos-Consultas.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Shared\Modulo-Mi-Empresa\_MiEmpresa.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Shared\Modulo-Presupuestos\_Modulo-Presupuestos-Consultas.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Shared\Modulo-Presupuestos\_Modulo-Presupuestos-Consultas-AceptadosPorUsuario.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Shared\Modulo-Presupuestos\_Modulo-Presupuestos-Nuevo.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Shared\Modulo-Presupuestos\_Modulo-Presupuestos-Presupuesto.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Shared\Modulo-Produccion\_ProduccionConsultas.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Shared\Modulo-Pedidos-Proveedores\_Modulo-Pedidos-Proveedores-Compras.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Shared\Modulo-Proveedores\_Modulo-Proveedores.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Shared\Modulo-Servicios\_Servicios-Configuracion.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Shared\Modulo-Servicios\_Servicio-Nuevo.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Shared\Modulo-Servicios\_Servicio.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Shared\Modulo-Taller\_Modulo-Taller-Taller.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Shared\Modulo-Transporte\_Modulo-Transporte.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Shared\Modulo-Web\_Modulo-Web-Dashboard.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Shared\Modulo-Web\_Modulo-Web-Web.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Shared\Modulo-Web\_Modulo-Web.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+  </ItemGroup>
+
+</Project>

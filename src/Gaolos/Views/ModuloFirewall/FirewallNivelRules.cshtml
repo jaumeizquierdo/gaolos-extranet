@@ -1,0 +1,289 @@
+﻿@model ModuloFirewallLibrary.ModuloFirewallRulesListadoViewModel
+@{
+    Layout = "~/Views/Shared/Modulo-Firewall/_Modulo-Firewall.cshtml";
+    ViewData["Title"] = "Modulo Firewall Rules";
+}
+
+<div class="main-content m-0" id="widget-area">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+
+                @if (Model.Model.Err.eserror)
+                {
+                    ViewData["err"] = Model.Model.Err.mensaje;
+                @Html.Partial("AccesoDenegado");
+                }
+                else
+                {
+
+                <div class="card mb-2">
+                    <div class="card-block card-info-header card-info-header-modulo p-0">
+                        <div class="d-flex justify-content-center align-items-center">
+                            <div class="col-1 pb-2 pt-2 d-flex justify-content-center align-items-center">
+                                <?xml version="1.0" encoding="iso-8859-1" ?>
+                                <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve" class="svg-dashboard-apartado">
+                                <g>
+                                <g transform="translate(1 1)">
+                                <g>
+                                <path class="svg-color-2" d="M250.793,501.929c268.126-114.91,233.643-360.482,223.795-409.506
+				                        c-0.465-2.274-1.841-4.258-3.809-5.488c-1.968-1.231-4.354-1.6-6.602-1.023c-124.911,29.175-186.513-39.253-206.003-67.413
+				                        c-1.587-2.348-4.236-3.755-7.07-3.755c-2.834,0-5.483,1.407-7.07,3.755C224.476,46.71,162.669,115.13,37.733,85.912
+				                        c-2.248-0.577-4.634-0.208-6.602,1.023s-3.344,3.214-3.809,5.488c-9.856,49.024-44.331,294.596,223.795,409.515L250.793,501.929z
+				                        " />
+                                <path class="svg-color-2" d="M250.955,464.476C51.787,371.591,48.664,196.615,56.916,124.244
+				                        c12.953,1.901,26.025,2.87,39.117,2.901c58.284,1.112,114.42-21.994,155.034-63.812c40.517,41.82,96.585,64.932,154.803,63.812
+				                        c13.089-0.031,26.158-1,39.108-2.901C453.247,196.615,450.123,371.591,250.955,464.476z" />
+                                    </g>
+                                <g>
+                                <path class="svg-color-1" d="M250.947,501.844c-4.352-1.877-8.619-3.755-12.8-5.709
+				                        C492.184,378.964,458.648,140.713,449.005,92.423c-0.22-1.139-0.686-2.217-1.365-3.157c5.376-0.853,10.923-2.057,16.555-3.337
+				                        c2.244-0.56,4.62-0.185,6.582,1.039c1.963,1.224,3.344,3.193,3.828,5.455C484.419,141.507,518.893,386.9,250.947,501.844z" />
+                                <path class="svg-color-1" d="M250.947,464.468c-4.352-2.048-8.619-4.087-12.715-6.221
+				                        c184.32-93.167,189.15-259.337,181.47-331.529c8.458-0.368,16.89-1.194,25.259-2.475
+				                        C453.272,196.606,450.115,371.625,250.947,464.468z" />
+                                <path class="svg-color-1" d="M340.342,237.933V331.8c0,28.277-22.923,51.2-51.2,51.2h-68.267c-28.277,0-51.2-22.923-51.2-51.2
+				                        v-93.867c0-4.713,3.821-8.533,8.533-8.533h153.6C336.521,229.4,340.342,233.221,340.342,237.933z" />
+                                    </g>
+                                <path class="svg-color-2" d="M314.742,237.933V331.8c0,28.277-22.923,51.2-51.2,51.2h-42.667c-28.277,0-51.2-22.923-51.2-51.2
+			                        v-93.867c0-4.713,3.821-8.533,8.533-8.533h128C310.921,229.4,314.742,233.221,314.742,237.933z" />
+                                <circle class="svg-color-1" cx="255.009" cy="289.133" r="17.067" />
+                                <g>
+                                <path class="svg-color-3" d="M54.296,89.223c-5.41-0.939-10.897-1.988-16.563-3.311c-2.248-0.577-4.634-0.208-6.602,1.023
+				                        s-3.344,3.214-3.809,5.488C17.628,140.636-15.66,378.887,238.309,496.05l-0.162,0.085c4.002,1.877,8.098,3.669,12.254,5.47
+				                        l0.555,0.256c4.42-1.894,8.644-3.874,12.894-5.837C9.948,378.844,43.228,140.653,52.922,92.423
+				                        C53.151,91.272,53.619,90.182,54.296,89.223z" />
+                                <polygon class="svg-color-3" points="251.117,501.938 250.955,501.861 250.793,501.938" />
+                                <path class="svg-color-3" d="M263.892,26.213c-2.193-2.79-4.113-5.41-5.717-7.731c-1.587-2.348-4.236-3.755-7.07-3.755
+				                        c-2.834,0-5.483,1.407-7.07,3.755c-31.185,44.408-81.236,71.803-135.45,74.138C194.499,97.551,242.857,52.948,263.892,26.213z" />
+                                    </g>
+                                </g>
+                                <g>
+                                <path class="svg-color-3" d="M248.542,511.309c-34.753-14.71-67.572-33.625-97.724-56.32
+			                        C94.959,412.944,53.292,354.826,31.403,288.427c-10.712-32.959-16.87-67.227-18.304-101.854
+			                        c-1.719-34.708,1.203-69.489,8.687-103.424l16.503,4.369c-7.024,32.265-9.761,65.315-8.141,98.295
+			                        c1.368,33.071,7.245,65.799,17.468,97.28c20.805,63.14,60.44,118.397,113.579,158.345c29.028,21.825,60.621,40.011,94.071,54.153
+			                        L248.542,511.309z" />
+                                <g>
+                                <path class="svg-color-4" d="M189.389,463.846c-1.083,0.294-2.104,0.783-3.012,1.442c-2.839,1.955-4.193,5.448-3.413,8.806
+				                        c1.174,4.616,5.788,7.477,10.445,6.477l1.527-0.555c0.52-0.237,1.006-0.544,1.442-0.913c0.456-0.288,0.865-0.645,1.212-1.058
+				                        c0.365-0.438,0.702-0.9,1.007-1.382c1.105-1.983,1.453-4.299,0.981-6.519c-0.289-1.078-0.776-2.094-1.434-2.995
+				                        C196.153,464.39,192.706,463.09,189.389,463.846z" />
+                                <path class="svg-color-4" d="M259.96,6.135c-0.23-0.731-0.551-1.431-0.956-2.082c-1.695-2.37-4.429-3.776-7.343-3.776
+				                        c-2.913,0-5.648,1.406-7.343,3.776c-0.495,0.787-0.853,1.653-1.058,2.56c-8.482,15.223-67.174,108.322-211.046,70.477
+				                        c-4.552-1.197-9.214,1.517-10.419,6.067c-7.484,33.935-10.406,68.716-8.687,103.424c1.432,34.623,7.587,68.888,18.295,101.845
+				                        c21.887,66.402,63.555,124.524,119.415,166.571c2.304,1.775,4.71,3.413,7.066,5.12c3.804,2.738,9.104,1.896,11.872-1.887
+				                        c2.768-3.782,1.967-9.089-1.794-11.886c-2.253-1.63-4.565-3.191-6.767-4.881c-53.137-39.945-92.772-95.199-113.579-158.336
+				                        c-10.223-31.481-16.099-64.21-17.468-97.28c-1.371-30.181,0.843-60.418,6.596-90.078
+				                        c128.691,29.918,193.946-41.156,214.997-71.023c21.077,29.867,86.443,101.086,215.339,70.938
+				                        c10.035,47.915,44.723,284.518-215.33,398.293c-8.969-4.181-18.057-8.141-26.812-12.715c-4.135-2.149-9.229-0.56-11.409,3.558
+				                        c-2.197,4.219-0.573,9.421,3.635,11.639c9.933,5.171,20.241,9.583,30.362,14.353c1.225,0.734,2.617,1.142,4.045,1.186h0.341
+				                        c1.615,0.005,3.197-0.464,4.548-1.348C556.612,380.945,482.475,86.118,481.69,83.132c-1.205-4.55-5.867-7.264-10.419-6.067
+				                        C325.752,115.354,267.392,19.686,259.96,6.135z" />
+                                <path class="svg-color-4" d="M251.742,456.576c-17.539-8.291-34.472-17.81-50.671-28.484c-3.922-2.507-9.13-1.408-11.705,2.471
+				                        c-2.575,3.878-1.566,9.104,2.267,11.746c18.026,11.876,36.914,22.387,56.508,31.445c1.13,0.516,2.358,0.784,3.601,0.785
+				                        c1.244,0.001,2.473-0.27,3.601-0.794c206.123-96.017,207.932-276.07,199.151-349.013c-0.275-2.283-1.46-4.359-3.287-5.757
+				                        c-1.827-1.398-4.14-1.999-6.416-1.667c-12.628,1.858-25.372,2.808-38.135,2.842c-4.713,0-8.533,3.821-8.533,8.533
+				                        s3.82,8.533,8.533,8.533c10.631-0.019,21.253-0.645,31.812-1.877C445.449,208.785,436.591,368.478,251.742,456.576z" />
+                                <path class="svg-color-4" d="M96.836,137.207c57.535,1.174,113.206-20.416,154.906-60.075
+				                        c23.48,22.576,51.848,39.437,82.901,49.271c4.491,1.43,9.292-1.051,10.722-5.542c1.43-4.491-1.051-9.292-5.542-10.722
+				                        c-31.136-9.88-59.3-27.403-81.92-50.97c-3.417-3.319-8.854-3.319-12.271,0c-38.969,40.115-92.874,62.205-148.787,60.971
+				                        c-12.697-0.034-25.376-0.975-37.939-2.816c-2.286-0.352-4.615,0.267-6.426,1.707c-1.826,1.408-3.005,3.495-3.268,5.786
+				                        c-4.463,38.825-2.825,78.11,4.855,116.429c10.84,55.539,36.903,106.973,75.281,148.557c2.073,2.236,5.182,3.197,8.155,2.519
+				                        c2.973-0.677,5.359-2.889,6.259-5.803c0.9-2.913,0.177-6.086-1.896-8.322c-36.259-39.303-60.879-87.912-71.108-140.399
+				                        c-6.753-33.691-8.607-68.18-5.504-102.4C75.739,136.6,86.283,137.204,96.836,137.207z" />
+                                <path class="svg-color-4" d="M47.113,401.067c-4.713,0-8.533,3.821-8.533,8.533v17.067H21.513c-4.713,0-8.533,3.82-8.533,8.533
+				                        s3.821,8.533,8.533,8.533h17.067V460.8c0,4.713,3.821,8.533,8.533,8.533s8.533-3.82,8.533-8.533v-17.067h17.067
+				                        c4.713,0,8.533-3.821,8.533-8.533s-3.821-8.533-8.533-8.533H55.646V409.6C55.646,404.887,51.825,401.067,47.113,401.067z" />
+                                <path class="svg-color-4" d="M499.379,477.867c0-4.713-3.82-8.533-8.533-8.533h-17.067v-17.067c0-4.713-3.82-8.533-8.533-8.533
+				                        s-8.533,3.82-8.533,8.533v17.067h-17.067c-4.713,0-8.533,3.821-8.533,8.533s3.82,8.533,8.533,8.533h17.067v17.067
+				                        c0,4.713,3.82,8.533,8.533,8.533s8.533-3.82,8.533-8.533V486.4h17.067C495.559,486.4,499.379,482.58,499.379,477.867z" />
+                                <path class="svg-color-4" d="M439.646,0c-4.713,0-8.533,3.821-8.533,8.533v8.533h-8.533c-4.713,0-8.533,3.821-8.533,8.533
+				                        s3.821,8.533,8.533,8.533h8.533v8.533c0,4.713,3.82,8.533,8.533,8.533s8.533-3.821,8.533-8.533v-8.533h8.533
+				                        c4.713,0,8.533-3.821,8.533-8.533s-3.82-8.533-8.533-8.533h-8.533V8.533C448.179,3.821,444.359,0,439.646,0z" />
+                                <path class="svg-color-4" d="M221.875,392.533h68.267c32.972-0.042,59.691-26.761,59.733-59.733v-93.867
+				                        c0-9.426-7.641-17.067-17.067-17.067h-8.533v-25.6c0-37.703-30.564-68.267-68.267-68.267s-68.267,30.564-68.267,68.267v25.6
+				                        h-8.533c-9.426,0-17.067,7.641-17.067,17.067V332.8C162.184,365.772,188.903,392.491,221.875,392.533z M204.809,196.267
+				                        c0-28.277,22.923-51.2,51.2-51.2c28.277,0,51.2,22.923,51.2,51.2v25.6h-102.4V196.267z M196.275,238.933h136.533V256h-17.067
+				                        c-4.713,0-8.533,3.821-8.533,8.533s3.821,8.533,8.533,8.533h17.067v17.067h-17.067c-4.713,0-8.533,3.82-8.533,8.533
+				                        s3.821,8.533,8.533,8.533h17.067v17.067h-17.067c-4.713,0-8.533,3.82-8.533,8.533s3.821,8.533,8.533,8.533h16.213
+				                        c-4.083,19.852-21.546,34.108-41.813,34.133h-68.267c-20.268-0.026-37.731-14.281-41.813-34.133h16.213
+				                        c4.713,0,8.533-3.82,8.533-8.533s-3.821-8.533-8.533-8.533h-17.067V307.2h17.067c4.713,0,8.533-3.82,8.533-8.533
+				                        s-3.821-8.533-8.533-8.533h-17.067v-17.067h17.067c4.713,0,8.533-3.82,8.533-8.533S200.988,256,196.275,256h-17.067v-17.067
+				                        H196.275z" />
+                                <path class="svg-color-4" d="M247.475,314.163V332.8c0,4.713,3.82,8.533,8.533,8.533c4.713,0,8.533-3.82,8.533-8.533v-18.637
+				                        c11.755-4.156,18.806-16.176,16.698-28.465c-2.108-12.289-12.763-21.271-25.231-21.271c-12.468,0-23.123,8.982-25.231,21.271
+				                        C228.669,297.987,235.72,310.007,247.475,314.163z M256.009,281.6c4.713,0,8.533,3.821,8.533,8.533
+				                        c0,4.713-3.821,8.533-8.533,8.533c-4.713,0-8.533-3.821-8.533-8.533C247.475,285.421,251.296,281.6,256.009,281.6z" />
+                                    </g>
+                                </g>
+                            </g>
+                        </svg>
+                            </div>
+                            <div class="col-11 pt-2 pb-2 box-border-left-light">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="card-info-desc d-flex flex-column py-3">
+                                        <h5 class="fw-5 title-section">SIN</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                @* tabs *@
+
+                @Html.Partial("FirewallTabs")
+
+                <div class="row">
+
+                    <div class="col-8">
+                        <div class="card card-table mb-3">
+                            <div class="card-header card-header-options">
+                                <span>Firewall Reglas</span>
+                                <button type="button" class="btn btn-primary btn-sm btn-sm-2x regla-nueva">Nueva regla</button>
+                            </div>
+                            <div class="card-block p-0">
+                                <div class="d-flex flex-column p-0">
+                                    <table class="table table-small table-striped p-0 border-top-none">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-center">Fecha</th>
+                                                <th class="text-center">Usuario</th>
+                                                <th>Regla</th>
+                                                <th>Aplicación</th>
+                                                <th class="text-center">Ip</th>
+                                                <th class="text-center w-10">Acceso</th>
+                                                <th class="text-center w-5"><i class="fa fa-times"></i></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (Model.Model.det != null)
+                                                {
+                                            @for (Int32 t = 0; t < Model.Model.det.Length; t++)
+                                                    {
+                                            <tr>
+                                                <td class="text-center">@Model.Model.det[t].Fe_Al</td>
+                                                <td class="text-center"><span class="fs-0-75">@Model.Model.det[t].Usu</span></td>
+                                                <td>@Model.Model.det[t].ExpoR</td>
+                                                <td>@Model.Model.det[t].App</td>
+                                                <td class="text-center">
+                                                    <p>@Model.Model.det[t].IP</p>
+                                                    <p>@Model.Model.det[t].ExpoIP</p>
+                                                </td>
+                                                <td class="text-center">
+                                                    @if (Model.Model.det[t].Blo)
+                                                    {
+                                                        <i class="fa fa-ban text-danger" data-toggle="tooltip" data-placement="right" title="" data-original-title="Acceso denegado"></i>
+                                                    }
+                                                    else
+                                                    {
+                                                        <i class="fa fa-check text-success" data-toggle="tooltip" data-placement="right" title="" data-original-title="Acceso permitido"></i>
+                                                    }
+                                                </td>
+                                                <td class="text-center"><a href="#" class="fw-5 eli-rule" id="rule_@Model.Model.det[t].ID_Rule"><i class="fa fa-times text-danger"></i></a></td>
+                                            </tr>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                            <tr><td colspan="7"><p class='fw-5 text-danger mb-0'><i class='fa fa-exclamation-circle mr-1'></i> No hay resultados</p></td></tr>
+                                                }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-4">
+
+                        <div class="card-info-wrapper w-100 mb-3" id="sindatos">
+                            <div class="card-info">
+                                <div class="d-flex justify-content-center align-items-center">
+                                    <img src="https://image.flaticon.com/icons/svg/609/609998.svg" style="width: 20%;">
+                                    <p class="mb-2 ml-3">Selecciona la ip que deseas modificar (añadir a White List o Black List) o añade una nueva.</p>
+                                </div>
+                            </div>
+                            <svg class="card-info-triangle">
+                                <polygon points="0,0 200,0 0,200" fill="currentColor"></polygon>
+                            </svg>
+                        </div>
+
+                        <div class="card card-table mb-3" id="regla-nueva" style="display:none;">
+                            <div class="card-header card-header-options">
+                                <span>Nueva regla</span>
+                                <input type="hidden" id="" value="" />
+                            </div>
+                            <div class="card-block p-0">
+                                <div class="d-flex flex-column p-2">
+
+                                    <div class="d-flex mb-1">
+                                        <div class="input-group input-group-sm mb-0">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">IP</span>
+                                            </div>
+                                            <select class="custom-select" id="ID_IPs"></select>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex mb-1">
+                                        <div class="input-group input-group-sm mb-0">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Aplicación</span>
+                                            </div>
+                                            <select class="custom-select" id="ID_App"></select>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex mb-1">
+                                        <div class="input-group input-group-sm mb-0">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Exposición</span>
+                                            </div>
+                                            <textarea class="form-control" rows="3" placeholder="Exposición" maxlength="200" id="regla-expo"></textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex">
+                                        <div class="box-labels w-50 mr-1">
+                                            <div class="d-flex align-items-center align-self-stretch">
+                                                <label class="m-0 box-label-label align-self-stretch">Permitir</label>
+                                                <input type="radio" class="ml-2" id="Per" name="blo" checked>
+                                            </div>
+                                        </div>
+                                        <div class="box-labels w-50">
+                                            <div class="d-flex align-items-center align-self-stretch">
+                                                <label class="m-0 box-label-label align-self-stretch">Denegar</label>
+                                                <input type="radio" class="ml-2" id="NoPer" name="blo">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="d-flex justify-content-center box-guardar">
+                                    <a href="#" target="_blank" class="btn btn-sm btn-primary regla-guardar">Guardar</a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                }
+
+            </div>
+        </div>
+
+    </div>
+
+</div>

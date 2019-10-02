@@ -1,0 +1,350 @@
+﻿@model ModuloContabilidadLibrary.ContabilidadCuentasCuentaMovimientosViewModel
+
+@{
+    Layout = "~/Views/Shared/Modulo-Contabilidad/_Modulo-Contabilidad-Cuentas-Bancarias.cshtml";
+    ViewData["Title"] = "Módulo Contabilidad - Cuenta bancaria";
+}
+
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+                @if (Model.Model.Err.eserror)
+                {
+                    ViewData["err"] = Model.Model.Err.mensaje;
+                    @Html.Partial("AccesoDenegado");
+                }
+                else
+                {
+
+
+                    @* Buscar usuarios *@
+
+                    <div class="card mb-3">
+                        <div class="card-header card-header-options">
+                            <span>Buscar movimiento</span>
+                        </div>
+                        <div class="card-block p-0">
+
+                            <div class="d-flex justify-content-center align-items-center">
+                                <div class="col-1 pb-2 pt-2 box-border-right-light">
+                                    <img src="~/flaticons/pie-chart-1.svg" style="width: 100%;">
+                                </div>
+                                <div class="col-11 pt-2 pb-2">
+
+                                    <form method="post" action="@ViewData["form"]" class="">
+
+                                        <div class="p-2 d-flex flex-column">
+                                            <div class="d-flex mb-2">
+
+                                                <div class="input-group mb-0 mr-2 w-25">
+                                                    <div class="input-group-prepend">
+                                                        <label class="input-group-text">Inicio</label>
+                                                    </div>
+                                                    <input type="text" class="form-control form-control-sm" name="Fe_In" placeholder="Fecha valor inicio" value="@ViewData["Fe_In"]">
+                                                </div>
+
+                                                <div class="input-group mb-0 mr-2 w-25">
+                                                    <div class="input-group-prepend">
+                                                        <label class="input-group-text">Fin</label>
+                                                    </div>
+                                                    <input type="text" class="form-control form-control-sm" name="Fe_Fi" placeholder="Fecha valor fin" value="@ViewData["Fe_Fi"]">
+                                                </div>
+
+                                                <div class="input-group mb-0 mr-2 w-50">
+                                                    <div class="input-group-prepend">
+                                                        <label class="input-group-text">Concepto</label>
+                                                    </div>
+                                                    <input type="text" class="form-control form-control-sm" name="buscar" placeholder="Concepto" value="@ViewData["buscar"]">
+                                                </div>
+
+                                            </div>
+
+                                            <div class="d-flex mb-0">
+
+                                                <div class="input-group mb-0 mr-2 w-25">
+                                                    <div class="input-group-prepend">
+                                                        <label class="input-group-text">Entre €</label>
+                                                    </div>
+                                                    <input type="text" class="form-control form-control-sm" name="Imp_In" placeholder="De importe" value="@ViewData["Imp_In"]">
+                                                </div>
+
+                                                <div class="input-group mb-0 mr-2 w-25">
+                                                    <div class="input-group-prepend">
+                                                        <label class="input-group-text">Y €</label>
+                                                    </div>
+                                                    <input type="text" class="form-control form-control-sm" name="Imp_Fi" placeholder="A importe" value="@ViewData["Imp_Fi"]">
+                                                </div>
+
+                                                <div class="input-group mb-0 mr-2 w-50">
+                                                    <div class="input-group-prepend">
+                                                        <label class="input-group-text">Tipo movimiento</label>
+                                                    </div>
+                                                    <select class="custom-select" name="ID_Tipo">
+                                                        @if (ViewData["ID_Tipo"].ToString() == "0")
+                                                        {
+                                                            <option value="0" selected>- Todos -</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="0">- Todos -</option>
+                                                        }
+                                                        @if (ViewData["ID_Tipo"].ToString() == "1")
+                                                        {
+                                                            <option value="1" selected>- Solo ingresos -</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="1">- Solo ingresos -</option>
+                                                        }
+                                                        @if (ViewData["ID_Tipo"].ToString() == "2")
+                                                        {
+                                                            <option value="2" selected>- Solo pagos -</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="2">- Solo pagos -</option>
+                                                        }
+                                                    </select>
+                                                    <input type="hidden" name="ID_Cue" value="@ViewData["ID_Cue"]">
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="d-flex justify-content-center align-self-baseline col-12 mb-2">
+                                            <button type="submit" class="btn btn-sm btn-primary">Buscar</button>
+                                        </div>
+                                    </form>
+
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    @* Listado de movimientos *@
+
+                    <div class="row">
+
+                        <div class="col-8">
+                            <div class="card card-table mb-3">
+                                <div class="card-header card-header-options">
+                                    <span>@ViewData["Title"]</span>
+                                </div>
+                                <div class="card-block">
+
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-center w-5">Operacion</th>
+                                                <th class="text-center w-5">Valor</th>
+                                                <th>Concepto</th>
+                                                <th class="text-center w-5">Conciliado</th>
+                                                <th class="text-right w-10">Importe</th>
+                                                <th class="text-right w-10">Saldo</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (Model.Model.det != null)
+                                            {
+                                                @for (Int32 t = 0; t < Model.Model.det.Length; t++)
+                                                {
+                                            <tr>
+                                                <td class="text-center">@Model.Model.det[t].Fe_Ope</td>
+                                                <td class="text-center">@Model.Model.det[t].Fe_Val</td>
+                                                <td><small>@Model.Model.det[t].Conc</small></td>
+                                                <td class="text-center">
+                                                    @if (Model.Model.det[t].Conci)
+                                                    {
+                                                        <i class="fa fa-check text-success"></i>
+                                                    }
+                                                    else
+                                                    {
+                                                        <i class="fa fa-exclamation-circle text-danger"></i>
+                                                    }
+                                                </td>
+                                                @if (Model.Model.det[t].Ingreso != "")
+                                                {
+                                                    <td class="text-right">@Model.Model.det[t].Ingreso</td>
+                                                }
+                                                else
+                                                {
+                                                    <td class="text-right text-danger">- @Model.Model.det[t].Pago</td>
+                                                }
+                                                <td class="text-right">@Model.Model.det[t].Saldo</td>
+                                            </tr>
+                                                }
+
+                                            }
+                                            else
+                                            {
+                                                <tr>
+                                                    <td colspan="7"><p class="mb-0 fw-5 p-3 text-danger"><i class="fa fa-times"></i> No hay resultados</p></td>
+                                                </tr>
+
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                @Html.Raw(Model.Model.Paginador)
+                            </div>
+                        </div>
+
+                        <div class="col-4">
+
+
+                            <div class="card mb-3">
+                                <div class="card-header card-header-options">
+                                    <span id="tit">Información de la cuenta</span>
+                                </div>
+
+                                <div class="card-block p-2">
+
+                                    @if (Model.Model.EsGlo)
+                                    {
+                                        <div class="d-flex justify-content-center box-border-top p-2 mdc-bg-blue-grey-50 mb-1">
+                                            <label class="m-0 box-label-label align-self-stretch">Cuenta Global</label>
+                                        </div>
+                                    }
+
+                                    <div class="box-labels mb-1">
+                                        <div class="d-flex align-items-center align-self-stretch box-labels-divider">
+                                            <label class="m-0 box-label-label align-self-stretch">Alta</label>
+                                            <p class="mb-0 px-2">@Model.Model.Fe_Al - @Model.Model.UsuAl</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="box-labels mb-1">
+                                        <div class="d-flex align-items-center align-self-stretch box-labels-divider">
+                                            <label class="m-0 box-label-label align-self-stretch">Cuenta</label>
+                                            <p class="mb-0 px-2">@Model.Model.Cue</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="box-labels mb-1">
+                                        <div class="d-flex align-items-center align-self-stretch box-labels-divider">
+                                            <label class="m-0 box-label-label align-self-stretch">Banco</label>
+                                            <p class="mb-0 px-2">@Model.Model.Banco</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex mb-1">
+                                        <div class="box-labels mr-2 w-50">
+                                            <div class="d-flex align-items-center align-self-stretch box-labels-divider">
+                                                <label class="m-0 box-label-label align-self-stretch">Swift</label>
+                                                <p class="mb-0 px-2">@Model.Model.Swift</p>
+                                            </div>
+                                        </div>
+                                        <div class="box-labels w-50">
+                                            <div class="d-flex align-items-center align-self-stretch box-labels-divider">
+                                                <label class="m-0 box-label-label align-self-stretch">Sufijo</label>
+                                                <p class="mb-0 px-2">@Model.Model.Sufijo</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="box-labels mb-1">
+                                        <div class="d-flex align-items-center align-self-stretch box-labels-divider">
+                                            <label class="m-0 box-label-label align-self-stretch">Banco</label>
+                                            <p class="mb-0 px-2">@Model.Model.Pai</p>
+                                        </div>
+                                    </div>
+
+                                    @if (Model.Model.Obs != "")
+                                    {
+                                        <div class="box-labels mb-1">
+                                            <div class="d-flex align-items-center align-self-stretch box-labels-divider">
+                                                <label class="m-0 box-label-label align-self-stretch">Observaciones</label>
+                                                <p class="mb-0 px-2">@Model.Model.Obs</p>
+                                            </div>
+                                        </div>
+                                    }
+
+                                    <div class="d-flex mb-1">
+                                        <div class="box-labels mr-2 w-50">
+                                            <div class="d-flex align-items-center align-self-stretch box-labels-divider">
+                                                <label class="m-0 box-label-label align-self-stretch">Saldo</label>
+                                                <p class="mb-0 px-2">@Model.Model.Saldo</p>
+                                            </div>
+                                        </div>
+                                        <div class="box-labels w-50">
+                                            <div class="d-flex align-items-center align-self-stretch box-labels-divider">
+                                                <label class="m-0 box-label-label align-self-stretch">Fecha</label>
+                                                <p class="mb-0 px-2">@Model.Model.Fe_Saldo</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    @if (Model.Model.EsOcul)
+                                    {
+                                        <div class="d-flex mb-1">
+                                            <div class="box-labels mr-2 w-50">
+                                                <div class="d-flex align-items-center align-self-stretch box-labels-divider">
+                                                    <label class="m-0 box-label-label align-self-stretch">Oculta</label>
+                                                    <p class="mb-0 px-2">@Model.Model.Fe_Ocul</p>
+                                                </div>
+                                            </div>
+                                            <div class="box-labels w-50">
+                                                <div class="d-flex align-items-center align-self-stretch box-labels-divider">
+                                                    <label class="m-0 box-label-label align-self-stretch">Por</label>
+                                                    <p class="mb-0 px-2">@Model.Model.UsuOcul</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+
+                                    @if (Model.Model.Fe_Ba != "")
+                                    {
+                                        <div class="d-flex mb-1">
+                                            <div class="box-labels mr-2 w-50">
+                                                <div class="d-flex align-items-center align-self-stretch box-labels-divider">
+                                                    <label class="m-0 box-label-label align-self-stretch">Cancelada</label>
+                                                    <p class="mb-0 px-2">@Model.Model.Fe_Ba</p>
+                                                </div>
+                                            </div>
+                                            <div class="box-labels w-50">
+                                                <div class="d-flex align-items-center align-self-stretch box-labels-divider">
+                                                    <label class="m-0 box-label-label align-self-stretch">Por</label>
+                                                    <p class="mb-0 px-2">@Model.Model.UsuBaj</p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="box-labels mb-1">
+                                            <div class="d-flex align-items-center align-self-stretch box-labels-divider">
+                                                <label class="m-0 box-label-label align-self-stretch">Motivo</label>
+                                                <p class="mb-0 px-2">@Model.Model.MotBaj</p>
+                                            </div>
+                                        </div>
+                                    }
+
+
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+</div>

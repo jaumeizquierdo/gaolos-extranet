@@ -1,0 +1,272 @@
+﻿@model MiEmpresaLibrary.MiEmpresaUsuariosViewModel
+@{
+    Layout = "~/Views/Shared/Modulo-Mi-Empresa/_Usuarios.cshtml";
+    ViewData["Title"] = "Mi Empresa: Usuarios";
+    ViewData["Message"] = "Página de Clientes - Gaolos App v2017";
+}
+
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+                @if (Model.Datos.Err.eserror)
+                {
+                    ViewData["err"] = Model.Datos.Err.mensaje;
+                    @Html.Partial("AccesoDenegado");
+                }
+                else
+                {
+
+                    @* Buscar usuarios *@
+
+                    <div class="card mb-3">
+                        <div class="card-header card-header-options">
+                            <span>Buscar usuarios</span>
+
+                            <div class="card-actions">
+                                <ul>
+                                    <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card-block p-0">
+                            <form action="@ViewData["Form"]" method="post">
+                                <div class="d-flex justify-content-center align-items-center">
+                                    <div class="col-1 text-center box-border-right-light py-2">
+                                        <img src="~/flaticons/business/038-user-1.svg" style="width: 100%;">
+                                    </div>
+                                    <div class="col-11">
+
+                                        <div class="row p-0">
+                                            <div class="col-12 p-0">
+                                                <div class="d-flex mb-0 px-3">
+
+                                                    <div class="input-group card-search-box">
+                                                        <input type="text" class="form-control" placeholder="Buscar por..." name="buscar" value="@ViewData["buscar"]">
+                                                        <span class="input-group-append">
+                                                            <button class="btn btn-primary btn-sm" type="submit">BUSCAR</button>
+                                                        </span>
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    @* Listado de usuarios *@
+
+                    <div class="card card-table mb-3">
+                        <div class="card-header card-header-options">
+                            <span>@ViewData["Title"]</span>
+                        </div>
+                        <div class="card-block">
+
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th class="w-20">Nombre</th>
+                                        <th>NIC</th>
+                                        <th>Departamento</th>
+                                        <th>Web</th>
+                                        <th>App</th>
+                                        <th>Agente</th>
+                                        <th>Técnico</th>
+                                        <th>Alta</th>
+                                        <th>Tel. / Mail</th>
+                                        <th>Último acceso</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (Model.Datos.Usu != null)
+                                    {
+                                        for (int i = 0; i < Model.Datos.Usu.Length; i++)
+                                        {
+                                            <tr @{ if (Model.Datos.Usu[i].Blo)
+                                                { @Html.Raw("class='tr-block'")  ;
+                                                } }>
+                                                <td>
+                                                    @{
+                                                        if (Model.Datos.Usu[i].Blo)
+                                                        { @Html.Raw("<i class='fa fa-lock icon-lock mr-1 text-danger' aria-hidden='true' data-toggle='tooltip' data-placement='top' title='' data-original-title='Usuario bloqueado'></i> ");
+                                                        }
+                                                        if (Model.Datos.Usu[i].Eli)
+                                                        { @Html.Raw("<i class='fa fa-exclamation-triangle mr-1 text-danger' aria-hidden='true' data-toggle='tooltip' data-placement='top' title='' data-original-title='Usuario eliminado'></i> ");
+                                                        }
+                                                    }
+                                                    @if (Model.Datos.Usu[i].NIC == "")
+                                                    {
+                                                        <span data-toggle="tooltip" data-placement="right" title="" data-original-title="Usuario sin NIC. Contacte con el soporte técnico."><i class="fa fa-chain-broken text-danger" aria-hidden="true"></i> <strong>@Model.Datos.Usu[i].Nom</strong></span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <a href="/modulo-mi-empresa/usuarios/usuario?NIC=@Model.Datos.Usu[i].NIC"><strong>@Model.Datos.Usu[i].Nom</strong></a><br />
+                                                        @if (Model.Datos.Usu[i].Fe_Eli != "")
+                                                        {
+                                                            <i class="fa fa-exclamation-circle text-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="El usuario será borrado definitivamente en la siguiente fecha"></i> <small class="@Html.Raw("timer_" + i) fw-5 text-danger"></small>
+                                                        }
+                                                    }
+                                                </td>
+                                                <td><strong>@Model.Datos.Usu[i].NIC</strong></td>
+                                                <td><strong>@Model.Datos.Usu[i].Dep</strong></td>
+                                                <td class="text-center">
+                                                    @if (Model.Datos.Usu[i].AccWeb)
+                                                    {
+                                                        <i class="fa fa-check text-success"></i>
+                                                    }
+                                                    else
+                                                    {
+                                                        <i class="fa fa-times text-danger"></i>
+                                                    }
+                                                </td>
+                                                <td class="text-center">
+                                                    @if (Model.Datos.Usu[i].AccApp)
+                                                    {
+                                                        <i class="fa fa-check text-success"></i>
+                                                    }
+                                                    else
+                                                    {
+                                                        <i class="fa fa-times text-danger"></i>
+                                                    }
+                                                </td>
+                                                <td class="text-center">
+                                                    @if (Model.Datos.Usu[i].EsAgente)
+                                                    {
+                                                        <i class="fa fa-check text-success"></i>
+                                                    }
+                                                    else
+                                                    {
+                                                        <i class="fa fa-times text-danger"></i>
+                                                    }
+                                                </td>
+                                                <td class="text-center">
+                                                    @if (Model.Datos.Usu[i].EsTecnico)
+                                                    {
+                                                        <i class="fa fa-check text-success"></i>
+                                                    }
+                                                    else
+                                                    {
+                                                        <i class="fa fa-times text-danger"></i>
+                                                    }
+                                                </td>
+                                                <td><strong>@Model.Datos.Usu[i].Fe_Al</strong></td>
+                                                @{
+                                                    string cont = "";
+                                                    if (Model.Datos.Usu[i].Tel != "") { if (cont != "") { cont += " - "; } cont += "<strong>" + Model.Datos.Usu[i].Tel + "</strong>"; }
+                                                    if (Model.Datos.Usu[i].Mail != "") { if (cont != "") { cont += " - "; } cont += "<a href='mailto:" + @Model.Datos.Usu[i].Mail + "' class='fw-5'>" + Model.Datos.Usu[i].Mail + "</a>"; }
+                                                }
+                                                <td>@Html.Raw(cont)</td>
+                                                <td>
+                                                    @if (Model.Datos.Usu[i].NumAcc != "0")
+                                                    {
+                                                    <strong>@Html.Raw(Model.Datos.Usu[i].Fe_Ul_Acc + " (" + Model.Datos.Usu[i].NumAcc + ")")</strong>
+                                                    }
+                                                </td>
+                                            </tr>
+                                                        }
+                                                    }
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    @Html.Raw(Model.Datos.Paginador)
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            @* Nuevo usuario *@
+
+                            <div class="card mt-4 mb-4">
+
+                                <div class="card-header card-header-options">
+                                    <span>Nuevo usuario</span>
+                                    <div class="card-actions">
+                                        <ul>
+                                            <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="card-block">
+
+                                    <div class="row justify-content-md-center">
+
+                                        <div class="col-10">
+                                            <div class="form-group row">
+                                                <label for="zonasSelect" class="col-sm-2 col-form-label">Nombre</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" class="form-control" id="Nom" />
+                                                </div>
+                                            </div>
+                                            <div class="form-group mb row">
+                                                <label for="tiposSelect" class="col-sm-2 col-form-label">NIC</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" class="form-control" id="NIC" />
+                                                </div>
+                                            </div>
+                                            <div class="form-group mb-0 row">
+                                                <label for="tiposSelect" class="col-sm-2 col-form-label">Clave</label>
+                                                <div class="col-sm-10">
+                                                    <input type="password" class="form-control" id="Pass" />
+                                                </div>
+                                            </div>
+                                            <div class="form-group mt-3 text-center">
+                                                <button type="button" class="btn btn-primary btn-sm usuario-nuevo">Crear usuario</button>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            @* Nuevo usuario explicación *@
+
+                            <div class="card-info-wrapper w-100 mt-4 mb-4" id="sindatos">
+                                <div class="card-info">
+                                    <div class="d-flex justify-content-center align-items-center">
+                                        <img src="https://image.flaticon.com/icons/svg/609/609998.svg" style="width: 15%;">
+                                        <p class="mb-2 ml-4">El coste por cada usuario nuevo es de <span class="fw-5">25€</span>. Dicho coste se cargará en la factura de mantenimiento del próximo mes.</p>
+                                    </div>
+                                </div>
+                                <svg class="card-info-triangle">
+                                    <polygon points="0,0 200,0 0,200" fill="currentColor"></polygon>
+                                </svg>
+                            </div>
+
+                        </div>
+                    </div>
+
+                                                    }
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (Model.Datos.Usu != null) { 
+
+    @for (int i = 0; i < Model.Datos.Usu.Length; i++)
+    {
+        <script>
+            @Html.Raw("var d = new Date('" + @Model.Datos.Usu[i].Fe_Eli + "');")
+            @Html.Raw("$('.timer_" + i + "').tinyTimer({ to: d, format: '%d días, %h horas, %m minutos, %s segundos' });")
+        </script>
+
+        }
+}

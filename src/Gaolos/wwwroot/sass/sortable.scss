@@ -1,0 +1,93 @@
+﻿/* Sortable */
+
+@import "variables.scss";
+@import "materialdesign.scss";
+
+/* class name for the drop placeholder */
+.sortable-ghost {
+    border: 2px dashed $md-blue-grey-100;
+    //box-shadow: 0 0 2px $md-blue-100;
+    border-radius: 3px;
+    margin: 0.5em 0;
+    background: $md-blue-grey-50;
+    text-align: center;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+}
+
+.sortable-ghost:after {
+    font-family: 'FontAwesome';
+    content: '\f047';
+    text-align: center;
+    font-size: 3em;
+    color: $md-blue-grey-100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* class name for the chosen item */
+.sortable-chosen {
+}
+
+.sortable-dragging {
+    //filter: blur(5px);
+}
+
+/* class name for the dragging item */
+.sortable-drag {
+    border: 3px solid $md-blue-300;
+    box-shadow: 0 0 2px $md-blue-100;
+    border-radius: 3px;
+    margin: 0.5em;
+}
+
+.moverItem,
+.moverSubItem {
+    cursor: pointer;
+}
+
+.js-sortable-connected {
+    border-radius: 2px;
+}
+
+.js-sortable-inner-connected {
+    .sortable-ghost {
+        border: 2px dashed $md-blue-grey-100;
+        //box-shadow: 0 0 2px $md-blue-100;
+        border-radius: 3px;
+        margin: 0.5em 0;
+        background: $md-blue-grey-50;
+        text-align: center;
+        display: flex;
+        align-content: center;
+        justify-content: center;
+    }
+
+    .sortable-ghost:after {
+        font-family: 'FontAwesome';
+        content: '\f047';
+        text-align: center;
+        font-size: 1em;
+        color: $md-blue-grey-100;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+.main-item {
+    border: 1px solid $md-blue-grey-100;
+    border-left: 2px solid $md-blue-500;
+    margin-bottom: 0.5rem;
+    border-radius: 2px;
+    box-shadow: 0 0 1px $md-blue-grey-100;
+    background: #fff;
+    @include fade-link;
+
+    &:hover {
+        border: 1px solid $md-blue-500;
+        border-left: 2px solid $md-blue-500;
+    }
+}

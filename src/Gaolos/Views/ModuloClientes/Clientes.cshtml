@@ -1,0 +1,224 @@
+﻿@model ModuloClientesLibrary.ModuloClientesClientesListadoViewModel
+@{
+    Layout = "~/Views/Shared/Modulo-Clientes/_Modulo-Clientes.cshtml";
+    ViewData["Title"] = "Listado de clientes";
+}
+
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+@if(Model.Model.Err.eserror)
+    {
+        ViewData["err"] = Model.Model.Err.mensaje;
+        @Html.Partial("AccesoDenegado");
+    }
+    else
+    {
+
+                @* Buscar usuarios *@
+
+                <div class="card mb-3">
+                    <div class="card-header card-header-options">
+                        <span>Buscar cliente</span>
+
+                        <div class="card-actions">
+                            <ul>
+                                <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-block p-0">
+
+
+                        <div class="d-flex justify-content-center align-items-center">
+                            <div class="col-1 pb-2 pt-2">
+                                <img src="~/flaticons/business/038-user-1.svg" style="width: 100%;">
+                            </div>
+                            <div class="col-11 pt-2 pb-2 box-border-left-light">
+                                <form method="post" action="@ViewData["form"]" class="">
+                                    <div class="d-flex justify-content-center align-items-center mb-2 w-100">
+
+                                        <div class="input-group input-group-sm mb-0 mr-2">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text input-group-text-auto mw-80">Buscar</span>
+                                            </div>
+                                            <input type="text" class="form-control" name="buscar" placeholder="Buscar por cliente, NIF, CC y nº" value="@ViewData["buscar"]">
+                                            <span class="input-group-append">
+                                                <button type="submit" class="btn btn-primary btn-sm form-buscar"><i class="fa fa-search"></i></button>
+                                            </span>
+                                        </div>
+
+                                        <div class="input-group input-group-sm mb-0 mr-2">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text input-group-text-auto mw-85">Dirección</span>
+                                            </div>
+                                            <input type="text" class="form-control" name="Dir" placeholder="Buscar por dirección" value="@ViewData["Dir"]">
+                                            <span class="input-group-append">
+                                                <button type="submit" class="btn btn-primary btn-sm form-buscar"><i class="fa fa-search"></i></button>
+                                            </span>
+                                        </div>
+
+                                        <div class="input-group input-group-sm mb-0 mr-2">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text input-group-text-auto mw-85">Población</span>
+                                            </div>
+                                            <input type="text" class="form-control" name="Pob" placeholder="Buscar por población" value="@ViewData["Pob"]">
+                                            <span class="input-group-append">
+                                                <button type="submit" class="btn btn-primary btn-sm form-buscar"><i class="fa fa-search"></i></button>
+                                            </span>
+                                        </div>
+
+                                        <div class="input-group input-group-sm mb-0 mr-2">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text input-group-text-auto mw-115">Provincia</span>
+                                            </div>
+                                            <input type="text" class="form-control" name="Pro" placeholder="Buscar por provincia" value="@ViewData["Pro"]">
+                                            <span class="input-group-append">
+                                                <button type="submit" class="btn btn-primary btn-sm form-buscar"><i class="fa fa-search"></i></button>
+                                            </span>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="d-flex justify-content-center align-items-center w-100">
+
+                                        <div class="input-group input-group-sm mb-0 mr-2">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text input-group-text-auto mw-80" id="">Mail</span>
+                                            </div>
+                                            <input type="text" class="form-control" name="Mail" placeholder="Buscar por mail" value="@ViewData["Mail"]">
+                                            <span class="input-group-append">
+                                                <button type="submit" class="btn btn-primary btn-sm form-buscar"><i class="fa fa-search"></i></button>
+                                            </span>
+                                        </div>
+
+                                        <div class="input-group input-group-sm mb-0 mr-2">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text input-group-text-auto mw-85" id="">Teléfono</span>
+                                            </div>
+                                            <input type="text" class="form-control" name="Tel" placeholder="Buscar por teléfono" value="@ViewData["Tel"]">
+                                            <span class="input-group-append">
+                                                <button type="submit" class="btn btn-primary btn-sm form-buscar"><i class="fa fa-search"></i></button>
+                                            </span>
+                                        </div>
+
+                                        <div class="input-group input-group-sm mb-0 mr-2">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text input-group-text-auto mw-85" id="">Contacto</span>
+                                            </div>
+                                            <input type="text" class="form-control" name="Cont" placeholder="Buscar por contacto" value="@ViewData["Cont"]">
+                                            <span class="input-group-append">
+                                                <button type="submit" class="btn btn-primary btn-sm form-buscar"><i class="fa fa-search"></i></button>
+                                            </span>
+                                        </div>
+
+                                        <div class="input-group input-group-sm mb-0 mr-2">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text input-group-text-auto mw-115" id="">Tipo de cliente</span>
+                                            </div>
+                                            <select class="custom-select" name="ID_Tipo">
+                                                @if (Model.Model.TiposCli != null)
+                                                {
+                                                    for (Int32 t = 0; t < Model.Model.TiposCli.Length; t++)
+                                                    {
+                                                        if (Model.Model.TiposCli[t].id.ToString() == ViewData["ID_Tipo"].ToString())
+                                                        {
+                                                            <option value="@Model.Model.TiposCli[t].id" selected>@Model.Model.TiposCli[t].det</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="@Model.Model.TiposCli[t].id">@Model.Model.TiposCli[t].det</option>
+                                                        }
+                                                    }
+                                                }
+                                            </select>
+                                            <span class="input-group-append">
+                                                <button type="submit" class="btn btn-primary btn-sm form-buscar"><i class="fa fa-search"></i></button>
+                                            </span>
+                                        </div>
+
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+
+                        @*
+                        
+                        *@
+
+                    </div>
+                </div>
+
+                @* Listado de usuarios *@
+
+                <div class="card card-table mb-3">
+                    <div class="card-header card-header-options">
+                        <span>@ViewData["Title"]</span>
+                    </div>
+                    <div class="card-block">
+
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th class="text-center w-5">Nº</th>
+                                    <th>Cliente</th>
+                                    <th>Dirección</th>
+                                    <th class="text-center w-10">Teléfono</th>
+                                    <th class="text-center w-10">NIF</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+@if (Model.Model.det != null)
+{
+@for (Int32 t = 0; t < Model.Model.det.Length; t++)
+{
+    <tr>
+        <td class="text-center"><a href="@ViewData["Form"]/cliente?ID_Cli2=@Model.Model.det[t].ID_Cli2" class="fw-5" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="Ir a la ficha del cliente">@Model.Model.det[t].ID_Cli2</a></td>
+        <td>@if (Model.Model.det[t].Blo)
+        {
+            <i class="fa fa-exclamation-triangle mr-1 text-danger" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="Cliente bloqueado"></i>
+        }
+        @Model.Model.det[t].Emp</td>
+        <td>
+            <p class="fw-5 mb-0">@Model.Model.det[t].Dir</p>
+            <p class="fs-0-7 mb-0">@Model.Model.det[t].Pob</p>
+        </td>
+        <td class="text-center">@Model.Model.det[t].Tel</td>
+        <td class="text-center">@Model.Model.det[t].NIF</td>
+    </tr>
+}
+
+}
+else
+{
+<tr>
+    <td colspan="5"><p class="mb-0 fw-5 py-2 px-1 text-danger"><i class="fa fa-times"></i> No hay resultados</p></td>
+</tr>
+
+}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    @Html.Raw(Model.Model.Paginador)
+                </div>
+}
+            </div>
+        </div>
+    </div>
+</div>

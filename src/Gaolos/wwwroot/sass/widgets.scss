@@ -1,0 +1,12 @@
+﻿/* Dashboards Widgets */
+
+@import "variables.scss";
+@import "materialdesign.scss";
+
+.widget {
+    border: $widget-border-size $widget-border-color;
+    padding: $widget-padding;
+    margin: $widget-margin;
+    box-shadow: $widget-box-shadow $widget-box-shadow-color;
+    border-radius: $border-radius-global;
+}

@@ -1,0 +1,16 @@
+/* Full Image Parallax */
+/* Mixins */
+/* Skin v4.6 - White / Dark / Blue */
+.full-image-parallax {
+  background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)), url(../images/gaolos-login-bg.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  padding: 5rem 0;
+  margin: 0;
+  text-align: center; }
+  .full-image-parallax h2 {
+    font-size: 4em;
+    color: #fff;
+    margin: 0;
+    padding: 0; }

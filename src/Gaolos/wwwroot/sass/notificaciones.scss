@@ -1,0 +1,31 @@
+﻿/* Notificaciones */
+
+@import "variables.scss";
+@import "materialdesign.scss";
+
+.notificaciones {
+    background: $notificaciones-bg;
+    padding: $notificaciones-padding;
+    margin: $notificaciones-margin;
+}
+
+// Notificaciones Plugin PNotify
+// https://github.com/sciactive/pnotify
+
+.ui-pnotify {
+    .ui-pnotify-title {
+        font-size: $ui-pnotify-title-size;
+    }
+    .ui-pnotify-text {
+        font-size: $ui-pnotify-text-size;
+    }
+    // Iconos
+    .ui-pnotify-closer,
+    .ui-pnotify-sticker {
+        outline: 0;
+        &:active,
+        &:focus {
+            outline: 0;
+        }
+    }
+}

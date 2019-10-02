@@ -1,0 +1,49 @@
+/* Header */
+/* Mixins */
+/* Skin v4.6 - White / Dark / Blue */
+header {
+  margin: 0;
+  background: #2196f3;
+  color: #fff; }
+  header h1 {
+    padding: 1em; }
+
+.header-section {
+  border-bottom: 1px solid #455a64;
+  border-top: 1px solid #455a64;
+  margin-bottom: 1rem;
+  height: 5.5rem;
+  background-color: #546e7a;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4' viewBox='0 0 4 4'%3E%3Cpath fill='%23718a96' fill-opacity='0.4' d='M1 3h1v1H1V3zm2-2h1v1H3V1z'%3E%3C/path%3E%3C/svg%3E"); }
+  .header-section a, .header-section i {
+    color: #fff; }
+  .header-section a:hover {
+    color: #b0bec5; }
+  .header-section h2 {
+    font-size: 1.5rem;
+    color: #fff;
+    margin-top: 1rem;
+    font-weight: 500;
+    text-shadow: 0 0 1px #263238; }
+  .header-section img {
+    margin: 0 1em; }
+
+.header-section-icon {
+  border-bottom: 1px solid #455a64;
+  border-top: 1px solid #455a64;
+  margin-bottom: 1rem;
+  height: 5.5rem;
+  background-color: #546e7a;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4' viewBox='0 0 4 4'%3E%3Cpath fill='%23718a96' fill-opacity='0.4' d='M1 3h1v1H1V3zm2-2h1v1H3V1z'%3E%3C/path%3E%3C/svg%3E"); }
+  .header-section-icon a, .header-section-icon i {
+    color: #fff; }
+  .header-section-icon a:hover {
+    color: #b0bec5; }
+  .header-section-icon h2 {
+    font-size: 1.5rem;
+    color: #fff;
+    margin-top: 1rem;
+    font-weight: 500;
+    text-shadow: 0 0 1px #263238; }
+  .header-section-icon img {
+    margin: 0 1em; }

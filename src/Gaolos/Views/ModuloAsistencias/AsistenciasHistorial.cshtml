@@ -1,0 +1,337 @@
+﻿@model ModuloAsistenciasLibrary.ModuloAsisnteicasAsistenciasHistorialListadoViewModel
+
+@{
+    Layout = "~/Views/Shared/Modulo-Asistencias/_Modulo-Asistencias.cshtml";
+    ViewData["Title"] = "Listado historial de Asistencias";
+    ViewData["Message"] = "Modulo de Asistencias - Gaolos App v2018";
+}
+
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+                @if (Model.Model.Err.eserror)
+    {
+        ViewData["err"] = Model.Model.Err.mensaje;
+            @Html.Partial("AccesoDenegado");
+}
+else
+{
+
+            @* Buscar usuarios *@
+
+            <div class="card mb-3">
+                <div class="card-header card-header-options">
+                    <span>Buscar asistencias</span>
+
+                    <div class="card-actions">
+                        <ul>
+                            <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card-block p-0">
+
+                    <form action="@ViewData["Form"]" method="post">
+                        <div class="d-flex justify-content-center align-items-center">
+                            
+                            <div class="col-1 pb-2 pt-2">
+                                <img src="https://image.flaticon.com/icons/svg/321/321863.svg" style="width: 100%;">
+                            </div>
+                            
+                            <div class="col-11 p-0 box-border-left-light">
+
+                                <div class="p-2">
+                                    <div class="d-flex mb-1 px-2 py-3">
+
+                                        <div class="input-group input-group-sm mb-0 mr-2">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Buscar</span>
+                                            </div>
+                                            <input type="text" class="form-control" placeholder="Buscar" id="buscar" name="buscar" value="@ViewData["buscar"]">
+                                        </div>
+
+                                        <div class="input-group input-group-sm mb-0 mr-2">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Cliente</span>
+                                            </div>
+                                            <input type="text" class="form-control" id="Cliente" value="" placeholder="Cliente">
+                                            <input type="hidden" id="vCliente" value=""><input type="hidden" id="tCliente" value="">
+                                        </div>
+
+                                        <div class="input-group input-group-sm mr-2">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Categoría</span>
+                                            </div>
+
+                                            <select class="custom-select" id="ID_Tipo2" name="ID_Tipo2">
+                                                @if (Model.Model.Tipos != null)
+                                                {
+                                                    @for (Int32 t = 0; t < Model.Model.Tipos.Length; t++)
+                                                    {
+                                                        if (ViewData["ID_Tipo2"].ToString() == Model.Model.Tipos[t].id.ToString())
+                                                        {
+                                                            <option selected value="@Model.Model.Tipos[t].id">@Model.Model.Tipos[t].det</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="@Model.Model.Tipos[t].id">@Model.Model.Tipos[t].det</option>
+                                                        }
+                                                    }
+                                                }
+                                            </select>
+
+                                        </div>
+
+                                        <div class="input-group input-group-sm mb-0">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Año</span>
+                                            </div>
+
+                                            <select class="custom-select" id="" name="">
+                                                <option selected value="">Año</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="d-flex justify-content-center box-border-top mdc-bg-blue-grey-50 pt-2 pb-2">
+                                    <button type="submit" class="btn btn-sm btn-primary">Buscar</button>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+
+            <div class="row">
+
+                <div class="col-8">
+                    @* Listado *@
+                    <div class="card card-table mb-3">
+                        <div class="card-header card-header-options">
+                            <span>@ViewData["Title"]</span>
+                        </div>
+                        <div class="card-block">
+
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center w-10">Nº Asis</th>
+                                        <th class="text-left">Fecha</th>
+                                        <th class="text-left w-20">Asignado</th>
+                                        <th class="text-left">Cliente</th>
+                                        <th class="text-left">Categoría</th>
+                                        <th class="text-center">Partes</th>
+                                        <th class="text-center">Estado</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="content">
+
+
+                                    @if (Model.Model.det != null)
+                    {
+                        @for (Int32 t = 0; t < Model.Model.det.Length; t++)
+        {
+                                    <tr>
+                                        <td class="text-left text-center">
+                                            <a href="/modulo-asistencias/historial/asistencia?ID_Asis2=@Model.Model.det[t].ID_Asis2" data-toggle="tooltip" data-placement="top" title="" data-original-title="Ver detalles de la asistencia" class="fw-5">@Model.Model.det[t].ID_Asis2</a>
+                                        </td>
+                                        <td>
+                                            <p class="mb-0">@Model.Model.det[t].Fe_Al</p>
+                                        </td>
+                                        <td>
+                                            <p class="mb-0">@Model.Model.det[t].UsuAsi</p>
+                                        </td>
+                                        <td>
+                                            <p class="mb-0">@Model.Model.det[t].Emp</p>
+                                        </td>
+                                        <td>
+                                            <p class="mb-0">@Model.Model.det[t].Cat</p>
+                                        </td>
+                                        <td>
+                                            <p class="mb-0 text-center">@Model.Model.det[t].Partes</p>
+                                        </td>
+                                        <td>
+                                            <p class="mb-0 text-center">1</p>
+                                        </td>
+                                    </tr>
+}
+    }
+    else
+    {
+                <tr><td colspan="5"><p class='fw-5 text-danger mb-0'><i class='fa fa-exclamation-circle mr-1'></i> No hay resultados</p></td></tr>
+}
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        @Html.Raw(Model.Model.Paginador)
+                    </div>
+
+                </div>
+
+                <div class="col-4">
+                    <div class="card card-table mb-3">
+                        <div class="card-header card-header-options">
+                            <span>Información</span>
+                            <div class="card-actions">
+                                <ul>
+                                    <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card-block" role="tablist" aria-multiselectable="true">
+                            <div class="text-center mt-4 mb-4 p-3 bloque-sin-informacion">
+                                <img src="/flaticons/chat.svg" style="width: 25%;">
+                                <p class="pt-3 fw-5 fs-0-85">Si clica encima del nº de historial de asistencia podrá actualizar la dirección, añadir comentarios a la asistencia o replanificar el mantenimiento.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card card-table mb-3">
+                        <div class="card-header card-header-options">
+                            <span>Asistencia</span>
+                            <span>14290</span>
+                        </div>
+                        <div class="card-block p-0">
+                            <div class="d-flex flex-column">
+
+                                <div class="d-flex align-items-center box-border-bottom">
+                                    <label class="col-3 text-left p-0 m-0 box-border-right py-1 px-3 mdc-bg-blue-grey-50">Empresa</label>
+                                    <p class="mb-0 px-3">MAZINGROW</p>
+                                </div>
+
+                                <div class="d-flex align-items-center box-border-bottom">
+                                    <label class="col-3 text-left p-0 m-0 box-border-right py-1 px-3 mdc-bg-blue-grey-50">Dirección</label>
+                                    <p class="mb-0 px-3">Vidal 112</p>
+                                </div>
+
+                                <div class="d-flex align-items-center box-border-bottom">
+                                    <label class="col-3 text-left p-0 m-0 box-border-right py-1 px-3 mdc-bg-blue-grey-50">Población</label>
+                                    <p class="mb-0 px-3">SABADELL - 08202 - BARCELONA</p>
+                                </div>
+
+                                <div class="d-flex align-items-center box-border-bottom">
+                                    <label class="col-3 text-left p-0 m-0 box-border-right py-1 px-3 mdc-bg-blue-grey-50">Código postal</label>
+                                    <p class="mb-0 px-3">Juan Jose</p>
+                                </div>
+
+                                <div class="d-flex align-items-center box-border-bottom">
+                                    <label class="col-3 text-left p-0 m-0 box-border-right py-1 px-3 mdc-bg-blue-grey-50 align-self-stretch">Expo</label>
+                                    <p class="mb-0 px-3" style="height: 50px; overflow-y: scroll;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras faucibus sed turpis ac vulputate. Aenean id mi dolor. Fusce ut vehicula purus. Donec placerat lectus vitae nisi malesuada, at lacinia lorem faucibus. </p>
+                                </div>
+
+                                <div class="pt-2 pb-1 px-2">
+                                    @for (var i = 0; i < 3; i++)
+                                    {
+                                        <span class="badge badge-pill badge-danger p-2 mr-1 mb-1 fw-6 fs-0-7">PARTE PAUSADO</span>
+                                    }
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card card-table mb-3">
+                        <div class="card-header card-header-options">
+                            <span>Actualizar dirección</span>
+                            <div class="card-actions">
+                                <ul>
+                                    <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card-block" role="tablist" aria-multiselectable="true">
+                            <div class="p-2">
+                                <div class="input-group input-group-sm mb-1">
+                                    <div class="input-group-prepend">
+                                        <label class="input-group-text" for="">Dirección</label>
+                                    </div>
+                                    <select class="custom-select" id="" name="">
+                                        <option selected="" value="0">Actualizar dirección</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-center box-border-top p-2 mdc-bg-blue-grey-50">
+                                <a href="#" class="btn btn-sm btn-primary">Guardar</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card card-table mb-3">
+                        <div class="card-header card-header-options">
+                            <span>Añadir comentario a la asistencia</span>
+                            <div class="card-actions">
+                                <ul>
+                                    <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card-block" role="tablist" aria-multiselectable="true">
+                            <div class="p-2">
+                                <div class="input-group input-group-sm mb-1">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Comentario</span>
+                                    </div>
+                                    <textarea class="form-control" aria-label="" placeholder="Comentario" id=""></textarea>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-center box-border-top p-2 mdc-bg-blue-grey-50">
+                                <a href="#" class="btn btn-sm btn-primary">Guardar</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card card-table mb-3">
+                        <div class="card-header card-header-options">
+                            <span>Reiniciar planificación mantenimiento</span>
+                            <div class="card-actions">
+                                <ul>
+                                    <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card-block" role="tablist" aria-multiselectable="true">
+                            <div class="d-flex align-items-center">
+                                <label class="col-3 text-left p-0 m-0 box-border-right py-1 px-3 mdc-bg-blue-grey-50">Motivo</label>
+                                <p class="mb-0 px-3">Explicación de porqué se ha reiniciado el mantenimiento</p>
+                            </div>
+                            <div class="p-2" style="display: none;">
+                                <div class="input-group input-group-sm mb-1">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Motivo</span>
+                                    </div>
+                                    <textarea class="form-control" aria-label="" placeholder="Motivo" id=""></textarea>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-center box-border-top p-2 mdc-bg-blue-grey-50" style="display: none !important;">
+                                <a href="#" class="btn btn-sm btn-danger">Guardar</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+}
+
+            </div>
+        </div>
+    </div>
+</div>

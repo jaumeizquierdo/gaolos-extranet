@@ -1,0 +1,70 @@
+/* Sortable */
+/* Mixins */
+/* Skin v4.6 - White / Dark / Blue */
+/* class name for the drop placeholder */
+.sortable-ghost {
+  border: 2px dashed #cfd8dc;
+  border-radius: 3px;
+  margin: 0.5em 0;
+  background: #eceff1;
+  text-align: center;
+  display: flex;
+  align-content: center;
+  justify-content: center; }
+
+.sortable-ghost:after {
+  font-family: 'FontAwesome';
+  content: '\f047';
+  text-align: center;
+  font-size: 3em;
+  color: #cfd8dc;
+  display: flex;
+  align-items: center;
+  justify-content: center; }
+
+/* class name for the chosen item */
+/* class name for the dragging item */
+.sortable-drag {
+  border: 3px solid #64b5f6;
+  box-shadow: 0 0 2px #bbdefb;
+  border-radius: 3px;
+  margin: 0.5em; }
+
+.moverItem,
+.moverSubItem {
+  cursor: pointer; }
+
+.js-sortable-connected {
+  border-radius: 2px; }
+
+.js-sortable-inner-connected .sortable-ghost {
+  border: 2px dashed #cfd8dc;
+  border-radius: 3px;
+  margin: 0.5em 0;
+  background: #eceff1;
+  text-align: center;
+  display: flex;
+  align-content: center;
+  justify-content: center; }
+
+.js-sortable-inner-connected .sortable-ghost:after {
+  font-family: 'FontAwesome';
+  content: '\f047';
+  text-align: center;
+  font-size: 1em;
+  color: #cfd8dc;
+  display: flex;
+  align-items: center;
+  justify-content: center; }
+
+.main-item {
+  border: 1px solid #cfd8dc;
+  border-left: 2px solid #2196f3;
+  margin-bottom: 0.5rem;
+  border-radius: 2px;
+  box-shadow: 0 0 1px #cfd8dc;
+  background: #fff;
+  transition: all ease-in-out .3s; }
+  .main-item:hover {
+    border: 1px solid #2196f3;
+    border-left: 2px solid #2196f3; }

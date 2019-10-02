@@ -1,0 +1,21 @@
+/* Notificaciones */
+/* Mixins */
+/* Skin v4.6 - White / Dark / Blue */
+.notificaciones {
+  background: #cfd8dc;
+  padding: 0;
+  margin: 0; }
+
+.ui-pnotify .ui-pnotify-title {
+  font-size: 1em; }
+
+.ui-pnotify .ui-pnotify-text {
+  font-size: 0.9em; }
+
+.ui-pnotify .ui-pnotify-closer,
+.ui-pnotify .ui-pnotify-sticker {
+  outline: 0; }
+  .ui-pnotify .ui-pnotify-closer:active, .ui-pnotify .ui-pnotify-closer:focus,
+  .ui-pnotify .ui-pnotify-sticker:active,
+  .ui-pnotify .ui-pnotify-sticker:focus {
+    outline: 0; }

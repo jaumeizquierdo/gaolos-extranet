@@ -1,0 +1,18 @@
+﻿@* tabs *@
+
+@* btn-tab-active *@
+
+@{
+    string Clss = "mr-1 ml-1 btn btn-tab";
+    string ClssSel = "mr-1 ml-1 btn btn-tab btn-tab-active";
+    string ClssApli = "";
+}
+
+<div class="d-flex pt-3 pb-0 pl-0 mb-3 box-tab">
+    @if (ViewData["Form"].ToString() == "/modulo-mantenimientos/mantenimientos/mantenimiento") { ClssApli = ClssSel; } else { ClssApli = Clss; }
+    <a href="/modulo-mantenimientos/mantenimientos/mantenimiento?ID_Man2=@Model.Model.Cab.ID_Man2" class="@Html.Raw(ClssApli)">Mantenimiento</a>
+    @if (ViewData["Form"].ToString() == "/modulo-mantenimientos/mantenimientos/mantenimiento/elementos") { ClssApli = ClssSel; } else { ClssApli = Clss; }
+    <a href="/modulo-mantenimientos/mantenimientos/mantenimiento/elementos?ID_Man2=@Model.Model.Cab.ID_Man2" class="@Html.Raw(ClssApli)">Elementos</a>
+    @if (ViewData["Form"].ToString() == "/modulo-mantenimientos/mantenimientos/mantenimiento/historial") { ClssApli = ClssSel; } else { ClssApli = Clss; }
+    <a href="/modulo-mantenimientos/mantenimientos/mantenimiento/historial?ID_Man2=@Model.Model.Cab.ID_Man2" class="@Html.Raw(ClssApli)">Historial</a>
+</div>

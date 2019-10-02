@@ -1,0 +1,39 @@
+﻿/* Header */
+
+@import "variables.scss";
+@import "materialdesign.scss";
+
+.tags {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.tag {
+    padding: 0.4em;
+    border: 1px solid $md-grey-300;
+    background: $md-grey-100;
+    color: $md-grey-500;
+    font-size: 0.9rem;
+    margin: 0.3em;
+    i {
+        color: $md-grey-500;
+    }
+}
+
+.badge {
+    a {
+        color: #fff;
+    }
+    i {
+        padding: 0 0.2rem;
+    }
+}
+
+.badge-default {
+    background: $md-blue-grey-500;
+    &:hover {
+        @include fade-link;
+        //background: darken($md-blue-grey-500, 10%);
+        background: $md-red-a400;
+    }
+}

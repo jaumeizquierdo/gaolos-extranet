@@ -1,0 +1,659 @@
+﻿@model ModuloContactosLibrary.ModuloContactosContactoGeneralViewModel
+@{
+    Layout = "~/Views/Shared/Modulo-Contactos/_Modulo-Contactos-Contacto.cshtml";
+    ViewData["Title"] = "Contactos";
+}
+
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+                @if (Model.Model.Err.eserror)
+                {
+                    ViewData["err"] = Model.Model.Err.mensaje;
+                    @Html.Partial("AccesoDenegado");
+                }
+                else
+                {
+
+                    @* cabecera cliente *@
+
+                    @Html.Partial("Contacto-Cabecera")
+
+                    @* tabs *@
+
+                    @Html.Partial("Contacto-Tabs")
+
+                    @* Listado de direcciones *@
+
+                    <div class="row">
+                        <div class="col-9">
+
+                            @* Direcciones *@
+                            <div class="card card-table mb-3">
+                                <div class="card-header card-header-options">
+                                    @if (Model.Model.Dirs != null)
+                                    {
+                                        @if (Model.Model.Dirs.Length > 1)
+                                        {
+                                            <span>Direcciones [@Model.Model.Dirs.Length localizadas]</span>
+                                        }
+                                        else
+                                        {
+                                            <span>Direcciones [@Model.Model.Dirs.Length localizada]</span>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <span>Direcciones [0 localizadas]</span>
+                                    }
+                                    <button type="button" class="btn btn-primary btn-sm nueva-dir btn-sm-2x">Nueva</button>
+                                </div>
+
+                                <div class="card-block">
+
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th class="w-25">Dirección</th>
+                                                <th>Población</th>
+                                                <th>Provincia</th>
+                                                <th class="text-center">Código Postal</th>
+                                                <th>País</th>
+                                                <th class="text-center w-10">Dir. fact. <span data-toggle="tooltip" data-placement="top" title="" data-original-title="Seleccionar para generar hoja de dirección al facturar"><i class="fa fa-question mr-1"></i></span></th>
+                                                <th class="text-center w-10">Dir. com. <span data-toggle="tooltip" data-placement="top" title="" data-original-title="Seleccionar como dirección comercial"><i class="fa fa-question mr-1"></i></span></th>
+                                                <th class="text-center w-10">Dir. fiscal <span data-toggle="tooltip" data-placement="top" title="" data-original-title="Seleccionar como dirección fiscal"><i class="fa fa-question mr-1"></i></span></th>
+                                                <th class="text-center w-5"><i class="fa fa-times"></i></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (Model.Model.Dirs != null)
+                                            {
+                                                for (Int32 t = 0; t < Model.Model.Dirs.Length; t++)
+                                                {
+                                                    <tr>
+                                                        <td>
+                                                            @if (Model.Model.Dirs[t].Vali)
+                                                            {
+                                                                <a href="#" data-toggle="tooltip" data-placement="top" title="" data-original-title="Dirección geolocalizada"><i class="fa fa-map-marker mr-1"></i></a>
+                                                            }
+                                                            else
+                                                            {
+                                                                <a href="#" data-toggle="tooltip" data-placement="top" title="" data-original-title="Esta dirección no está validada geográficamente"><i class="fa fa-map-marker mr-1 text-danger"></i></a>
+                                                            }
+                                                            <a href="#" class="fw-5 sel-dir" id="dir_@Model.Model.Dirs[t].ID_Dir" data-toggle="tooltip" data-placement="top" title="" data-original-title="Modificar dirección">@Model.Model.Dirs[t].Dir</a>
+                                                        </td>
+                                                        <td>@Model.Model.Dirs[t].Pob</td>
+                                                        <td>@Model.Model.Dirs[t].Pro</td>
+                                                        <td class="text-center">@Model.Model.Dirs[t].CP</td>
+                                                        <td>@Model.Model.Dirs[t].Pai</td>
+                                                        <td class="text-center">
+                                                            <input type="checkbox" class="sel-dir-docu" id="dirdocu_@Model.Model.Dirs[t].ID_Dir" @if (Model.Model.Dirs[t].EsDocu) { @Html.Raw("checked") }>
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <input name="EsCom" class="sel-dir-com" id="dircom_@Model.Model.Dirs[t].ID_Dir" type="radio" @if (Model.Model.Dirs[t].EsCom) { @Html.Raw("checked") }>
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <input name="EsFis" class="sel-dir-fis" id="dirfis_@Model.Model.Dirs[t].ID_Dir" type="radio" @if (Model.Model.Dirs[t].EsFis) { @Html.Raw("checked") }>
+                                                        </td>
+                                                        <td class="text-center"><a href="#" class="text-danger contacto-dir-eliminar" id="dirdel_@Model.Model.Dirs[t].ID_Dir"><i class="fa fa-times"></i></a></td>
+                                                    </tr>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <tr><td colspan="9"><p class='fw-5 text-danger mb-0'><i class='fa fa-exclamation-circle mr-1'></i> No hay resultados</p></td></tr>
+
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            @* Teléfonos *@
+                            <div class="card card-table mb-3">
+                                <div class="card-header card-header-options">
+                                    @if (Model.Model.Tels != null)
+                                    {
+                                        @if (Model.Model.Tels.Length > 1)
+                                        {
+                                            <span>Teléfonos [@Model.Model.Tels.Length localizados]</span>
+                                        }
+                                        else
+                                        {
+                                            <span>Teléfonos [1 localizado]</span>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <span>Teléfonos [0 localizados]</span>
+                                    }
+                                    <button type="button" class="btn btn-primary btn-sm btn-sm-2x nuevo-tel">Nuevo</button>
+                                </div>
+
+                                <div class="card-block">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th class="w-25">Teléfono</th>
+                                                <th>Observaciones</th>
+                                                <th class="text-center w-10">Teléfono <span data-toggle="tooltip" data-placement="top" title="" data-original-title="Seleccionar teléfono como predeterminado"><i class="fa fa-question mr-1"></i></span></th>
+                                                <th class="text-center w-5"><i class="fa fa-times"></i></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (Model.Model.Tels != null)
+                                            {
+                                                for (Int32 t = 0; t < Model.Model.Tels.Length; t++)
+                                                {
+                                                    <tr>
+                                                        <td><a href="#" class="mr-1 copy" data-clipboard-text="@Model.Model.Tels[t].datoS1"><i class="fa fa-clipboard"></i> <a href="#" class="fw-5 sel-tel" id="Tel_@Model.Model.Tels[t].datoI">@Model.Model.Tels[t].datoS1</a></td>
+                                                        <td>@Model.Model.Tels[t].datoS2</td>
+                                                        <td class="text-center">
+                                                            <input name="TelPred" id="tel-pred_@Model.Model.Tels[t].datoI" class="contacto-tel-pred" type="radio" @if (Model.Model.Tels[t].datoS3 != "") { @Html.Raw("checked") }>
+                                                        </td>
+                                                        <td class="text-center"><a href="#" class="text-danger contacto-tel-eliminar" id="tel-eli_@Model.Model.Tels[t].datoI"><i class="fa fa-times"></i></a></td>
+                                                    </tr>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <tr><td colspan="4"><p class='fw-5 text-danger mb-0'><i class='fa fa-exclamation-circle mr-1'></i> No hay resultados</p></td></tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            @* Mails *@
+                            <div class="card card-table mb-3">
+                                <div class="card-header card-header-options">
+                                    @if (Model.Model.Mails != null)
+                                    {
+                                        @if (Model.Model.Mails.Length > 1)
+                                        {
+                                            <span>Mails [@Model.Model.Mails.Length localizados]</span>
+                                        }
+                                        else
+                                        {
+                                            <span>Mails [1 localizado]</span>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <span>Mails [0 localizados]</span>
+                                    }
+                                    <button type="button" class="btn btn-primary btn-sm btn-sm-2x nuevo-mail">Nuevo</button>
+                                </div>
+
+                                <div class="card-block">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th class="w-25">Mail</th>
+                                                <th>Observaciones</th>
+                                                <th class="text-center w-10">Comercial <span data-toggle="tooltip" data-placement="top" title="" data-original-title="Comercial. Seleccionar para enviar newsletters y copia de presupuestos para mail"><i class="fa fa-question mr-1"></i></span></th>
+                                                @*<th class="text-center w-10">Pedidos <span data-toggle="tooltip" data-placement="top" title="" data-original-title="Seleccionar para enviar copia de pedidos por mail"><i class="fa fa-question mr-1"></i></span></th>*@
+                                                <th class="text-center w-10">Factura <span data-toggle="tooltip" data-placement="top" title="" data-original-title="Seleccionar para enviar copia de facturas por mail"><i class="fa fa-question mr-1"></i></span></th>
+                                                <th class="text-center w-5"><i class="fa fa-times"></i></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (Model.Model.Mails != null)
+                                            {
+                                                for (Int32 t = 0; t < Model.Model.Mails.Length; t++)
+                                                {
+                                                    <tr>
+                                                        <td><a href="#" class="mr-1 copy" data-clipboard-text="@Model.Model.Mails[t].datoS1"><i class="fa fa-clipboard"></i> @*<a href="#"><i class="fa fa-edit"></i></a>*@ </a><a href="#" class="fw-5 sel-mail" id="Mail_@Model.Model.Mails[t].datoI">@Model.Model.Mails[t].datoS1</a></td>
+                                                        <td>@Model.Model.Mails[t].datoS2</td>
+                                                        <td class="text-center">
+                                                            <input name="EsCom" id="es-com_@Model.Model.Mails[t].datoI" class="sel-mail-com" type="checkbox" @if (Model.Model.Mails[t].datoS4 != "") { @Html.Raw("checked") }>
+                                                        </td>
+                                                        @*<td class="text-center">
+                                                                <input name="EsPed" id="es-ped_@Model.Model.Mails[t].datoI" class="sel-mail-ped" type="checkbox" @if (Model.Model.Mails[t].datoS5 != "") { @Html.Raw("checked") }>
+                                                            </td>*@
+                                                        <td class="text-center">
+                                                            <input name="EsFac" id="es-fac_@Model.Model.Mails[t].datoI" class="sel-mail-fac" type="checkbox" @if (Model.Model.Mails[t].datoS3 != "") { @Html.Raw("checked") }>
+                                                        </td>
+                                                        <td class="text-center"><a href="#" class="text-danger contacto-mail-eliminar" id="mail-eli_@Model.Model.Mails[t].datoI"><i class="fa fa-times"></i></a></td>
+                                                    </tr>
+                                                }
+
+                                            }
+                                            else
+                                            {
+                                                <tr><td colspan="6"><p class='fw-5 text-danger mb-0'><i class='fa fa-exclamation-circle mr-1'></i> No hay resultados</p></td></tr>
+                                            }
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            @* Centros *@
+                            <div class="card card-table mb-3">
+                                <div class="card-header card-header-options">
+                                    @if (Model.Model.Centros != null)
+                                    {
+                                        @if (Model.Model.Centros.Length > 1)
+                                        {
+                                    <span>Centros de coste [@Model.Model.Centros.Length localizados]</span>
+                                        }
+                                        else
+                                        {
+                                            <span>Centros de coste [1 localizado]</span>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <span>Centros de coste [0 localizados]</span>
+                                    }
+                                    <button type="button" class="btn btn-primary btn-sm btn-sm-2x nuevo-centro">Nuevo</button>
+                                </div>
+
+                                <div class="card-block">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th class="w-25">Centro de coste</th>
+                                                <th>Observaciones</th>
+                                                <th class="text-center w-5"><i class="fa fa-times"></i></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (Model.Model.Centros != null)
+                                            {
+                                                for (Int32 t = 0; t < Model.Model.Centros.Length; t++)
+                                                {
+                                                    <tr>
+                                                        <td><a href="#" class="fw-5 sel-centro" id="Centro_@Model.Model.Centros[t].datoI">@Model.Model.Centros[t].datoS1</a></td>
+                                                        <td>@Model.Model.Centros[t].datoS2</td>
+                                                        <td class="text-center"><a href="#" class="text-danger contacto-centro-eliminar" id="centro-eli_@Model.Model.Centros[t].datoI"><i class="fa fa-times"></i></a></td>
+                                                    </tr>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <tr><td colspan="3"><p class='fw-5 text-danger mb-0'><i class='fa fa-exclamation-circle mr-1'></i> No hay resultados</p></td></tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            @* Webs *@
+                            <div class="card card-table mb-3">
+                                <div class="card-header card-header-options">
+                                    @if (Model.Model.Webs != null)
+                                    {
+                                        @if (Model.Model.Webs.Length > 1)
+                                        {
+                                            <span>Webs [@Model.Model.Webs.Length localizadas]</span>
+                                        }
+                                        else
+                                        {
+                                            <span>Webs [1 localizada]</span>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <span>Webs [0 localizadas]</span>
+                                    }
+                                    <button type="button" class="btn btn-primary btn-sm btn-sm-2x nueva-web">Nueva</button>
+                                </div>
+
+                                <div class="card-block">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th class="w-25">Web</th>
+                                                <th>Observaciones</th>
+                                                <th class="text-center w-5"><i class="fa fa-times"></i></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (Model.Model.Webs != null)
+                                            {
+                                                for (Int32 t = 0; t < Model.Model.Webs.Length; t++)
+                                                {
+                                                    <tr>
+                                                        <td><a href="#" class="fw-5 sel-web" id="Web_@Model.Model.Webs[t].datoI">@Model.Model.Webs[t].datoS1</a></td>
+                                                        <td>@Model.Model.Webs[t].datoS2</td>
+                                                        <td class="text-center"><a href="#" class="text-danger contacto-web-eliminar" id="web-eli_@Model.Model.Webs[t].datoI"><i class="fa fa-times"></i></a></td>
+                                                    </tr>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <tr><td colspan="3"><p class='fw-5 text-danger mb-0'><i class='fa fa-exclamation-circle mr-1'></i> No hay resultados</p></td></tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3">
+
+                            @*<div class="card card-table mb-3" id="versininfo">
+                                    <div class="card-header card-header-options">
+                                        <span>Información</span>
+                                        <div class="card-actions">
+                                            <ul>
+                                                <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="card-block" role="tablist" aria-multiselectable="true">
+                                        <div class="text-center mt-4 mb-4 p-5 bloque-sin-informacion">
+                                            <img src="/flaticons/chat.svg" style="width: 25%;">
+                                            <p class="pt-4 fw-5">Sin información.</p>
+                                        </div>
+                                    </div>
+                                </div>*@
+
+
+
+                            <div class="card-info-wrapper w-100" id="sindatos" style="display: none;">
+                                <div class="card-info">
+                                    <div class="d-flex justify-content-center align-items-center">
+
+                                        <div class="d-flex flex-column">
+                                            <p class="pb-2"><img src="https://image.flaticon.com/icons/svg/609/609998.svg" style="width: 20%;"></p>
+                                            <p class="pb-2">En esta pantalla podrá modificar o añadir información básica de su cliente</p>
+                                            <p class="pb-2 mt-2 fs-0-8">Las opciones disponibles son:</p>
+                                            <p class="fs-0-8"><i class="fa fa-check mr-1 text-danger"></i> Modificar o crear una nueva dirección</p>
+                                            <p class="fs-0-8"><i class="fa fa-check mr-1 text-danger"></i> Modificar o añadir un nuevo teléfono</p>
+                                            <p class="fs-0-8"><i class="fa fa-check mr-1 text-danger"></i> Modificar o añadir un nuevo email</p>
+                                            <p class="fs-0-8"><i class="fa fa-check mr-1 text-danger"></i> Modificar o añadir un nuevo centro de coste</p>
+                                            <p class="fs-0-8"><i class="fa fa-check mr-1 text-danger"></i> Modificar o añadir una nueva web corporativa</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <svg class="card-info-triangle">
+                                    <polygon points="0,0 200,0 0,200" fill="currentColor"></polygon>
+                                </svg>
+                            </div>
+
+
+                            @* Modificar dirección *@
+
+                            <div class="card card-table mb-3" id="verdir" style="display: none;">
+                                <div class="card-header card-header-options">
+                                    <span id="dir-titulo">Modificar dirección</span>
+                                </div>
+                                <div class="card-block p-0">
+                                    <div class="d-flex flex-column p-2">
+
+                                        <div class="input-group input-group-sm mb-1">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="">Dirección</span>
+                                            </div>
+                                            <input type="text" class="form-control" id="Dir" aria-describedby="" value="" maxlength="200">
+                                            <input type="hidden" id="ID_Dir" value="0">
+                                        </div>
+
+                                        <div class="input-group input-group-sm mb-1">
+                                            <div class="input-group-prepend">
+                                                <label class="input-group-text">País</label>
+                                            </div>
+                                            <div id="DirPai1" style="flex-grow: 1;"></div>
+                                        </div>
+
+                                        <div class="input-group input-group-sm mb-1">
+                                            <div class="input-group-prepend">
+                                                <label class="input-group-text">Provincia</label>
+                                            </div>
+                                            <div id="DirPro1" style="flex-grow: 1;"></div>
+                                        </div>
+
+                                        <div class="input-group input-group-sm mb-1">
+                                            <div class="input-group-prepend">
+                                                <label class="input-group-text">Código Postal</label>
+                                            </div>
+                                            <div id="DirCP1" style="flex-grow: 1;"></div>
+                                        </div>
+
+                                        <div class="input-group input-group-sm mb-1">
+                                            <div class="input-group-prepend">
+                                                <label class="input-group-text">Población</label>
+                                            </div>
+                                            <div id="DirPob1" style="flex-grow: 1;"></div>
+                                        </div>
+
+                                        <div class="input-group input-group-sm mb-1">
+                                            <div class="input-group-prepend">
+                                                <label class="input-group-text">Centro de coste</label>
+                                            </div>
+                                            <select class="custom-select" id="ID_Centro"></select>
+                                        </div>
+
+                                        <div class="input-group input-group-sm mb-1">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Observaciones</span>
+                                            </div>
+                                            <textarea class="form-control" aria-label="With textarea" placeholder="Observaciones" id="Obs"></textarea>
+                                        </div>
+
+                                        <div class="input-group input-group-sm mb-1">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="basic-addon3">Empresa aux.</span>
+                                            </div>
+                                            <input type="text" class="form-control" id="EmpAux" aria-describedby="basic-addon3" placeholder="Empresa auxiliar" maxlength="100">
+                                        </div>
+
+                                        <div class="input-group input-group-sm mb-1">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="basic-addon3">Horario</span>
+                                            </div>
+                                            <input type="text" class="form-control" id="Horario" aria-describedby="basic-addon3" placeholder="Horario" maxlength="50">
+                                        </div>
+
+                                    </div>
+                                    <div class="d-flex justify-content-center box-border-top p-2 mdc-bg-blue-grey-50">
+                                        <a href="#" class="btn btn-sm btn-primary contacto-direccion-guardar">Guardar</a>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            @*Maps*@
+                            <div class="card card-table mb-3" id="ver-maps" style="display:none;">
+                                <div class="card-header card-header-options">
+                                    <span>Geolocalizar</span>
+                                </div>
+                                <div class="card-block p-0">
+
+                                    <div class="d-flex flex-column p-2">
+                                        <div class="input-group input-group-sm mb-1">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="basic-addon3">Latitud</span>
+                                            </div>
+                                            <input type="text" class="form-control" id="Lat" aria-describedby="basic-addon3" placeholder="Latitud" maxlength="20">
+                                        </div>
+
+                                        <div class="input-group input-group-sm">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="basic-addon3">Longitud</span>
+                                            </div>
+                                            <input type="text" class="form-control" id="Lon" aria-describedby="basic-addon3" placeholder="Longitud" maxlength="20">
+                                        </div>
+
+                                        <div id="clientes-general-map" class="mt-2"></div>
+                                    </div>
+
+                                    <div class="d-flex justify-content-center box-border-top p-2 mdc-bg-blue-grey-50">
+                                        <a href="#" class="btn btn-sm btn-primary mr-1 dir-geo">Geolocalizar</a>
+                                        <button class="btn btn-sm btn-primary dir-geo-save">Guardar</button>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            @* Modificar teléfono *@
+                            <div class="card card-table mb-3" id="vertel" style="display: none;">
+                                <div class="card-header card-header-options">
+                                    <span id="tel-titulo">Modificar teléfono</span>
+                                </div>
+                                <div class="card-block p-0">
+                                    <div class="d-flex flex-column p-2">
+
+                                        <div class="input-group input-group-sm mb-1" id="altaFieldTelefono">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="basic-addon3">Alta</span>
+                                            </div>
+                                            <label class="form-control" id="AltaTelefono"></label>
+                                        </div>
+                                        <div class="input-group input-group-sm mb-1">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Teléfono</span>
+                                            </div>
+                                            <input type="text" class="form-control" id="Tel" aria-describedby="basic-addon3" placeholder="Teléfono" maxlength="20">
+                                            <input type="hidden" id="ID_Tel" value="0">
+                                        </div>
+
+                                        <div class="input-group input-group-sm">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Observaciones</span>
+                                            </div>
+                                            <input type="text" class="form-control" id="ObsTel" aria-describedby="basic-addon3" placeholder="Observaciones" maxlength="50">
+                                        </div>
+
+                                    </div>
+                                    <div class="d-flex justify-content-center box-border-top p-2 mdc-bg-blue-grey-50">
+                                        <a href="#" class="btn btn-sm btn-primary contacto-tel-guardar">Guardar</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            @* Modificar mail *@
+                            <div class="card card-table mb-3" id="vermail" style="display: none;">
+                                <div class="card-header card-header-options">
+                                    <span id="mail-titulo">Modificar mail</span>
+                                </div>
+                                <div class="card-block p-0">
+                                    <div class="d-flex flex-column p-2">
+
+                                        <div class="input-group input-group-sm mb-1" id="altaFieldMail">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="basic-addon3">Alta</span>
+                                            </div>
+                                            <label class="form-control" id="AltaMail"></label>
+                                        </div>
+                                        <div class="input-group input-group-sm mb-1">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="basic-addon3">Mail</span>
+                                            </div>
+                                            <input type="text" class="form-control" id="Mail" aria-describedby="basic-addon3" placeholder="Mail" maxlength="100">
+                                            <input type="hidden" id="ID_Mail" value="0">
+                                        </div>
+
+                                        <div class="input-group input-group-sm mb-0">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="basic-addon3">Observaciones</span>
+                                            </div>
+                                            <input type="text" class="form-control" id="ObsMail" aria-describedby="basic-addon3" placeholder="Observaciones" maxlength="50">
+                                        </div>
+
+                                    </div>
+                                    <div class="d-flex justify-content-center box-border-top p-2 mdc-bg-blue-grey-50">
+                                        <a href="#" class="btn btn-sm btn-primary contacto-mail-guardar">Guardar</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            @* Modificar web *@
+                            <div class="card card-table mb-3" id="verweb" style="display: none;">
+                                <div class="card-header card-header-options">
+                                    <span id="web-titulo">Modificar web</span>
+                                </div>
+                                <div class="card-block p-0">
+                                    <div class="d-flex flex-column p-2">
+
+                                        <div class="input-group input-group-sm mb-1">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="basic-addon3">Web</span>
+                                            </div>
+                                            <input type="text" class="form-control" id="Web" aria-describedby="basic-addon3" placeholder="Web" maxlength="100">
+                                            <input type="hidden" id="ID_Web" value="0">
+                                        </div>
+
+                                        <div class="input-group input-group-sm mb-0">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="basic-addon3">Observaciones</span>
+                                            </div>
+                                            <input type="text" class="form-control" id="ObsWeb" aria-describedby="basic-addon3" placeholder="Observaciones" maxlength="50">
+                                        </div>
+
+                                    </div>
+                                    <div class="d-flex justify-content-center box-border-top p-2 mdc-bg-blue-grey-50">
+                                        <a href="#" class="btn btn-sm btn-primary contacto-web-guardar">Guardar</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            @* Modificar Centro *@
+                            <div class="card card-table mb-3" id="vercentro" style="display: none;">
+                                <div class="card-header card-header-options">
+                                    <span id="centro-titulo">Centro de coste</span>
+                                </div>
+                                <div class="card-block p-0">
+                                    <div class="d-flex flex-column p-2">
+
+                                        <div class="input-group input-group-sm mb-1" id="altaFieldCentro">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Alta</span>
+                                            </div>
+                                            <label class="form-control" id="AltaCentro"></label>
+                                        </div>
+                                        <div class="input-group input-group-sm mb-1">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="basic-addon3">Centro de coste</span>
+                                            </div>
+                                            <input type="text" class="form-control" id="Centro" aria-describedby="basic-addon3" placeholder="Centro de coste" maxlength="200">
+                                            <input type="hidden" id="ID_CentroMod" value="0">
+                                        </div>
+
+                                        <div class="input-group input-group-sm mb-1">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="basic-addon3">Observaciones</span>
+                                            </div>
+                                            <input type="text" class="form-control" id="ObsCentro" aria-describedby="basic-addon3" placeholder="Observaciones" maxlength="100">
+                                        </div>
+                                        <div class="input-group input-group-sm mb-0">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="basic-addon3">Referencia</span>
+                                            </div>
+                                            <input type="text" class="form-control" id="Referencia" aria-describedby="basic-addon3" placeholder="Referencia" maxlength="100">
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-center box-border-top p-2 mdc-bg-blue-grey-50">
+                                        <a href="#" class="btn btn-sm btn-primary contacto-centro-guardar">Guardar</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDp_XTA4o-Cd-BBZIgqGc4EDno6sbgsIaI&callback=initMap">
+</script>
+
+

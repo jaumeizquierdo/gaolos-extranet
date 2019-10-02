@@ -1,0 +1,239 @@
+﻿@model ModuloBibliotecaLibrary.ModuloBibliotecaDocumentosListadoViewModel
+
+@{
+    Layout = "~/Views/Shared/Modulo-Biblioteca/_Modulo-Biblioteca.cshtml";
+    ViewData["Title"] = "Biblioteca - Listado de documentos";
+}
+
+<div class="main-content m-0">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+                @if (Model.Model.Err.eserror)
+                {
+                    ViewData["err"] = Model.Model.Err.mensaje;
+                    @Html.Partial("AccesoDenegado");
+                }
+                else
+                {
+
+                    @* Buscador de documentos *@
+
+                <div class="card mb-3">
+                    <div class="card-header card-header-options">
+                        <span>Buscar documento</span>
+
+                        <div class="card-actions">
+                            <ul>
+                                <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="card-block p-0">
+                        <form action="@ViewData["Form"]" method="post">
+                            <div class="d-flex justify-content-center align-items-center">
+                                <div class="col-1 text-center box-border-right-light py-2">
+                                    <img src="~/flaticons/folder-1.svg" style="width: 100%;">
+                                </div>
+                                <div class="col-11">
+
+                                    <div class="row p-0">
+                                        <div class="col-12 p-0">
+                                            <div class="d-flex mb-0 px-3">
+
+                                                <div class="input-group card-search-box">
+                                                    <input type="text" class="form-control" placeholder="Buscar por..." name="buscar" value="@ViewData["buscar"]">
+                                                    <span class="input-group-append">
+                                                        <button class="btn btn-primary btn-sm" type="submit">BUSCAR</button>
+                                                    </span>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+
+                    @* Añadir documentos *@
+
+                    <div class="card mb-3">
+                        <div class="card-header card-header-options">
+                            <span>Añadir documentos</span>
+
+                            <div class="card-actions">
+                                <ul>
+                                    <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card-block">
+
+                            <div class="row">
+                                <div class="col-6">
+                                    <form id="uploadForm" asp-action="FileUpload" asp-controller="Content" method="post" enctype="multipart/form-data">
+                                        <input type="file" class="form-control-file" id="UploadFormFile" multiple>
+                                        <div class="form-group mt-4 mb-0">
+                                            <label class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" id="autor">
+                                                
+                                                <span class="custom-control-label">Estos documentos sólo los puedo ver yo</span>
+                                            </label>
+                                        </div>
+                                        <a href="#" class="btn btn-sm btn-primary mt-3 publicar" id="uploadButton">Publicar</a>
+                                    </form>
+                                </div>
+                                <div class="col-6">
+
+                                    <div class="form-group text-center">
+
+                                        <div class="input-group ui-widget">
+                                            <input type="text" class="form-control ui-autocomplete-input" value="" placeholder="Dar permisos a" id="findcarac1" name="findcarac1" autocomplete="off">
+                                            <input id="vfindcarac1" name="vfindcarac1" type="hidden" value=""><input id="tfindcarac1" name="tfindcarac1" type="hidden" value="">
+                                            <span class="input-group-append">
+                                                <button class="btn btn-primary btn-sm docu-usu-add" type="button">AÑADIR</button>
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="card card-table mt-4 mb-4" id="tabla-usu" style="display:none;">
+                                        <div class="card-header card-header-options">
+                                            <span>Permisos usuarios</span>
+                                            <div class="d-flex justify-content-between align-items-center">
+                                            </div>
+                                        </div>
+                                        <div class="card-block">
+                                            <table class="table permisos permisos-table">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="w-75">Usuarios</th>
+                                                        <th><i class="fa fa-pencil" data-toggle="tooltip" data-placement="top" title="" data-original-title="Modificar"></i></th>
+                                                        <th><i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="" data-original-title="Eliminar"></i></th>
+                                                        <th><i class="fa fa-ban" data-toggle="tooltip" data-placement="top" title="" data-original-title="Denegar"></i></th>
+                                                        <th class="text-center"><i class="fa fa-times" data-toggle="tooltip" data-placement="top" title="" data-original-title="Quitar permiso"></i></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="docu-usus"></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    @* Listado de documentos *@
+
+                    <div class="card card-table">
+                        <div class="card-header card-header-options">
+                            <span>Documentos</span>
+                        </div>
+                        <div class="card-block">
+                            @if (Model.Model.det != null)
+                            {
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center w-5">Tipo</th>
+                                            <th class="text-center"><i class="fa fa-globe" data-toggle="tooltip" data-placement="top" title="" data-original-title="Documento Público"></i></th>
+                                            <th>Título</th>
+                                            <th class="text-center">Vista previa</th>
+                                            <th>Actualizado / Autor</th>
+                                            <th class="text-center">Actualizado / Publicado</th>
+                                            <th class="text-center">Fecha fichero</th>
+                                            <th class="text-right">Tamaño</th>
+                                            <th class="text-center">Eliminar</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @* Documentos *@
+                                        @for (Int32 t = 0; t < Model.Model.det.Length; t++)
+                                        {
+                                            <tr>
+                                                <td class="text-center">
+                                                    <img src="@Model.Model.det[t].Icono" style="width: 50px;" />
+                                                </td>
+                                                <td class="text-center">
+                                                    @{
+                                                        if (Model.Model.det[t].NumPub > 0)
+                                                        {
+                                                            string txt = "1 documento público";
+                                                            if (Model.Model.det[t].NumPub>1) { txt = Model.Model.det[t].NumPub.ToString() + " documentos públicos"; }
+                                                            <a href="/modulo-biblioteca/documentos/documento?ID_Doc2=@Model.Model.det[t].ID_Doc2&ID_Idi=@ViewData["ID_Idi"]" data-toggle="tooltip" data-placement="left" title="" data-original-title="@txt"><i class="fa fa-globe"></i></a>
+                                                        }
+
+                                                    }
+                                                    
+                                                </td>
+                                                <td>
+                                                    <p class="mb-1"><a href="/modulo-biblioteca/documentos/documento?ID_Doc2=@Model.Model.det[t].ID_Doc2&ID_Idi=@ViewData["ID_Idi"]" class="fw-5">@Model.Model.det[t].Titulo</a></p>
+                                                    <p class="mb-0"><small class="fw-5">@Model.Model.det[t].Fichero</small></p>
+                                                </td>
+                                                <td class="fw-5 text-center">
+                                                    <a href="/modulo-biblioteca/documentos/documento/descargar?ID_Doc2=@Model.Model.det[t].ID_Doc2&ID_Idi=@ViewData["ID_Idi"]" class="btn btn-sm btn-sm-2x btn-primary" target="_blank">Descargar</a>
+                                                </td>
+                                                <td class="">
+                                                    <p class="mb-0">@Model.Model.det[t].UsuUl</p>
+                                                    @if (Model.Model.det[t].NumRev > 1)
+                                                    {
+                                                        <p class="mb-0 text-info"><small class=""><i class="fa fa-user-circle"></i> @Model.Model.det[t].Usu</small></p>
+                                                    }
+                                                </td>
+                                                <td class="text-center">
+                                                    <p class="mb-0 fw-5">@Model.Model.det[t].Fe_Ul</p>
+                                                    @if (Model.Model.det[t].NumRev > 1)
+                                                    {
+                                                        <p class="mb-0 text-info"><small class="fw-5">@Model.Model.det[t].Fe_Al</small></p>
+                                                    }
+                                                </td>
+
+                                                <td class="text-center">
+                                                    <p class="mb-0 fw-5">@Model.Model.det[t].Fe_Mod</p>
+                                                </td>
+
+                                                <td class="text-right">
+                                                    <p class="mb-0">@Model.Model.det[t].TamUl</p>
+                                                    @if (Model.Model.det[t].NumRev > 1)
+                                                    {
+                                                        <p class="mb-0 text-info"><small class="fw-5">(@Model.Model.det[t].NumRev) @Model.Model.det[t].TamTot</small></p>
+                                                    }
+                                                </td>
+                                                <td class="text-center">
+                                                    <a href="#" class="fw-5 text-danger documento-eliminar" id="docueli_@Model.Model.det[t].ID_Doc2"><i class="fa fa-times"></i></a>
+                                                </td>
+                                            </tr>
+
+                                                        }
+                                    </tbody>
+                                </table>
+                                                        }
+                                                        else
+                                                        {
+                                                            <p class="mb-0 fw-5 p-3 text-danger"><i class="fa fa-times"></i> No hay resultados</p>
+
+                                                        }
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        @Html.Raw(Model.Model.Paginador)
+                    </div>
+
+                                                        }
+            </div>
+        </div>
+    </div>
+</div>

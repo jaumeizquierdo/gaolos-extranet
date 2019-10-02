@@ -1,0 +1,44 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Gaolos</title>
+
+    @Html.Partial("Estilos")
+    @Html.Partial("Scripts")
+
+    <link rel="stylesheet" href="~/css/login.css" />
+    <link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">
+
+</head>
+<body class="bg-login">
+
+    <header>
+        <h1>Gaolos version @DateTime.Now.Year Development Edition</h1>
+    </header>
+
+    <div class="layout__body">
+
+        <main class="layout__content">
+            @RenderBody()
+        </main>
+
+    </div>
+
+    @*<footer id="MenuFooterComponent" class="footer-login">
+            @await Component.InvokeAsync(nameof(MenuFooterLibrary.MenuFooterComponent))
+        </footer>*@
+
+    @* GAOLOS CORE *@
+    @Html.Partial("ScriptsCoreGaolos")
+
+    @* Gaolos Section Scripts *@
+    <script src="~/js/login.js" asp-append-version="true"></script>
+
+    @RenderSection("scripts", required: false)
+
+</body>
+
+
+</html>

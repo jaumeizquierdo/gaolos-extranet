@@ -1,0 +1,68 @@
+﻿@model ModuloClientesLibrary.ModuloClientesClienteClientesRelacionadosCobrosPendientesViewModel
+@{
+    Layout = "~/Views/Shared/Modulo-Clientes/_Modulo-Clientes.cshtml";
+    ViewData["Title"] = "Cliente";
+    ViewData["Message"] = "Modulo de Clientes - Gaolos App v2017";
+}
+
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section mb-0">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 mt-3">
+
+                @if (Model.Model.Err.eserror)
+    {
+        ViewData["err"] = Model.Model.Err.mensaje;
+            @Html.Partial("AccesoDenegado");
+}
+else
+{
+
+            @* cabecera cliente *@
+
+            @Html.Partial("Cliente-Cabecera")
+
+            @* tabs *@
+
+            @Html.Partial("Cliente-Tabs")
+
+            <div class="card">
+                <div class="card-block">
+
+                    @* tabs *@
+
+                    @Html.Partial("Cliente-ClientesRelacionados-Tabs")
+
+                    <div class="row">
+
+                        <div class="col-12">
+                            <div class="card-info-wrapper w-100 mb-3">
+                                <div class="card-info p-3">
+                                    <div class="d-flex justify-content-center align-items-center">
+                                        <img src="https://image.flaticon.com/icons/svg/609/609998.svg" style="width: 80px;">
+                                        <p class="mb-2 ml-4">En este apartado se muestran los datos de los clientes relacionados con este cliente, es decir, los clientes que supervisa</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+}
+            </div>
+        </div>
+    </div>
+</div>

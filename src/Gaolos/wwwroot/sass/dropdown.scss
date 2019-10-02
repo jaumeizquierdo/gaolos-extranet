@@ -1,0 +1,69 @@
+﻿/* Dropdown menus */
+
+@import "variables.scss";
+@import "materialdesign.scss";
+
+.dropup,
+.dropdown {
+    margin: 0;
+    list-style: none;
+}
+
+.dropdown-menu {
+    border: $dropdown-menu-border;
+    background: #1e272b;
+    border-radius: $border-radius-menu;
+    min-width: 20rem;
+    padding: 0;
+    //max-height: $dropdown-menu-max-height;
+    //overflow: $dropdown-menu-overflow;
+    li {
+        margin: $dropdown-menu-li-margin;
+        padding: $dropdown-menu-li-padding;
+
+        a, button {
+            font-size: $dropdown-menu-li-a-size;
+            font-weight: $dropdown-menu-li-a-weight;
+            background: $dropdown-menu-li-a-bg;
+            border: none;
+            //border-bottom: $dropdown-menu-li-a-border-width $dropdown-menu-li-a-border-color;
+            margin: $dropdown-menu-li-a-margin;
+            padding: $dropdown-menu-li-a-padding;
+            color: $dropdown-menu-li-a-color;
+            display: $dropdown-menu-li-a-display;
+            width: $dropdown-menu-li-a-width;
+            text-align: $dropdown-menu-li-a-align;
+            @include fade-link;
+
+            &:hover {
+                
+            }
+        }
+
+        button {
+            cursor: pointer;
+        }
+    }
+
+    li:last-child {
+        a, button {
+            border-bottom: 0;
+        }
+    }
+
+    .divider {
+        background: $md-blue-grey-900;
+        height: 1px;
+    }
+
+    /*&:after {
+        content: "\f0d8";
+        font-family: 'FontAwesome';
+        display: inline-block;
+        color: #1e272b;
+        font-size: 1em;
+        position: absolute;
+        top: -15px;
+        left: 20px;
+    }*/
+}

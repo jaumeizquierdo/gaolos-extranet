@@ -1,0 +1,482 @@
+﻿@model ModuloAsistenciasLibrary.ModuloAsisnteicasAsistenciasHistorialAsistenciaViewModel
+
+@{
+    Layout = "~/Views/Shared/Modulo-Asistencias/_Modulo-Asistencias.cshtml";
+    ViewData["Title"] = "Historial de la asistencia";
+    ViewData["Message"] = "Modulo de Asistencias - Gaolos App v2018";
+}
+
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+                @if (Model.Model.Err.eserror)
+                {
+                    ViewData["err"] = Model.Model.Err.mensaje;
+                    @Html.Partial("AccesoDenegado");
+                }
+                else
+                {
+
+                    @* Buscar usuarios *@
+
+                    <div class="card mb-3">
+                        <div class="card-header card-header-options mdc-bg-white" style="border-bottom: none;">
+
+                            <div class="d-flex align-items-center">
+                                <img src="https://image.flaticon.com/icons/svg/427/427132.svg" style="width: 30px;" class="pt-2" />
+                                <h5 class="fw-5 title-section fs-1-2 pt-3 px-2">
+                                    Asistencia nº @Model.Model.ID_Asis2
+                                    @if (Model.Model.ID_Man2 > 0)
+                                    {
+                                        @Html.Raw("- Mantenimiento nº " + Model.Model.ID_Man2 + " - Planificación nº <a href='/modulo-mantenimientos/mantenimientos/mantenimiento/historial/imprimir-informe?ID_ManPlan2=" + Model.Model.ID_ManPlan2 + "' target='_blank'>" + Model.Model.ID_ManPlan2 + "</a> - <a href='/modulo-mantenimientos/mantenimientos/mantenimiento/historial/imprimir-certificado?ID_ManPlan2=" + Model.Model.ID_ManPlan2 + "' target='_blank'>Certificado</a>")
+                                    }
+
+                                </h5>
+                            </div>
+
+                            <div class="div">
+                                @if (@Model.Model.Urg)
+                                {
+                                    <span class="badge badge-pill badge-danger p-2 mt-1 mr-1 fw-6 fs-0-7"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> URGENTE</span>
+                                }
+                                @if (@Model.Model.CliParado)
+                                {
+                                    <span class="badge badge-pill badge-danger p-2 mt-1 mr-1 fw-6 fs-0-7"><i class="fa fa-stop" aria-hidden="true"></i> CLIENTE PARADO</span>
+                                }
+                                @if (@Model.Model.EnPause)
+                                {
+                                    <span class="badge badge-pill badge-danger p-2 mt-1 mr-1 fw-6 fs-0-7"><i class="fa fa-pause" aria-hidden="true"></i> ASISTENCIA PAUSADA</span>
+                                }
+                            </div>
+                        </div>
+                        <div class="card-block">
+
+                            <div class="row">
+
+                                @* Asistencia *@
+                                <div class="col-6 p-0 px-2">
+
+                                    <div class="box-labels mb-2">
+
+                                        <div class="d-flex align-items-center align-self-stretch box-labels-divider">
+                                            <label class="m-0 box-label-label align-self-stretch">Asistencia</label>
+                                            <p class="mb-0 px-2">@Model.Model.ID_Asis2</p>
+                                        </div>
+
+                                        <div class="d-flex align-items-center align-self-stretch box-labels-divider">
+                                            <label class="m-0 box-label-label align-self-stretch">Alta</label>
+                                            <p class="mb-0 px-2">@Model.Model.Fe_Al - @Model.Model.UsuAl</p>
+                                        </div>
+                                        @if (Model.Model.Mantenimiento)
+                                        {
+                                            <div class="d-flex align-items-center align-self-stretch box-labels-divider">
+                                                <label class="m-0 box-label-label align-self-stretch">Mantenimiento</label>
+                                                <p class="mb-0 px-2">Mantenimiento</p>
+                                            </div>
+                                        }
+                                        <div class="d-flex align-items-center align-self-stretch box-labels-divider">
+                                            <label class="m-0 box-label-label align-self-stretch">Asignado a</label>
+                                            <p class="mb-0 px-2">@Model.Model.UsuAsig</p>
+                                        </div>
+
+                                        <div class="d-flex align-items-center align-self-stretch box-labels-divider">
+                                            <label class="m-0 box-label-label align-self-stretch">Cliente</label>
+                                            <p class="mb-0 px-2">@Model.Model.Cli</p>
+                                        </div>
+
+                                        @if (Model.Model.Centro != "")
+                                        {
+                                            <div class="d-flex align-items-center align-self-stretch box-labels-divider">
+                                                <label class="m-0 box-label-label align-self-stretch">Centro de coste</label>
+                                                <p class="mb-0 px-2">@Model.Model.Centro</p>
+                                            </div>
+                                        }
+
+                                        @if (Model.Model.ID_Soli2 > 0)
+                                        {
+                                            <div class="d-flex align-items-center align-self-stretch box-labels-divider">
+                                                <label class="m-0 box-label-label align-self-stretch">Nº de solicitud</label>
+                                                <p class="mb-0 px-2"><a href="/tareas-pendientes/tarea-pendiente?ID_Soli2=@Model.Model.ID_Soli2" target="_blank" class="fw-5">@Model.Model.ID_Soli2</a></p>
+                                            </div>
+
+                                        }
+
+                                        <div class="d-flex align-items-center align-self-stretch box-labels-divider">
+                                            <label class="m-0 box-label-label align-self-stretch">Total partes</label>
+                                            <p class="mb-0 px-2">@Model.Model.NumPartes</p>
+                                        </div>
+
+                                        <div class="d-flex align-items-center align-self-stretch box-labels-divider">
+                                            <label class="m-0 box-label-label align-self-stretch">Solicitado por</label>
+                                            <p class="mb-0 px-2">@Model.Model.SoliPor</p>
+                                        </div>
+
+                                        @if (@Model.Model.Dom != "")
+                                        {
+                                            <div class="d-flex align-items-center align-self-stretch box-labels-divider">
+                                                <label class="m-0 box-label-label align-self-stretch">Web</label>
+                                                <p class="mb-0 px-2">@Model.Model.Dom</p>
+                                            </div>
+                                        }
+
+                                        <div class="d-flex align-items-center align-self-stretch box-labels-divider">
+                                            <label class="m-0 box-label-label align-self-stretch">Breve</label>
+                                            <p class="mb-0 px-2">@Model.Model.Breve</p>
+                                        </div>
+
+                                        <div class="d-flex align-items-center align-self-stretch">
+                                            <label class="m-0 box-label-label align-self-stretch">Exposición</label>
+                                            <p class="mb-0 px-2">@Model.Model.Expo</p>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                                @* Dirección *@
+                                <div class="col-6 p-0 px-2">
+
+                                    <div class="box-labels mb-2">
+
+                                        <div class="d-flex align-items-center align-self-stretch box-labels-divider">
+                                            <label class="m-0 box-label-label align-self-stretch">Empresa</label>
+                                            <p class="mb-0 px-2">@Model.Model.Emp</p>
+                                        </div>
+
+                                        <div class="d-flex align-items-center align-self-stretch box-labels-divider">
+                                            <label class="m-0 box-label-label align-self-stretch">Dirección</label>
+                                            <p class="mb-0 px-2">@Model.Model.Dir</p>
+                                        </div>
+
+                                        <div class="d-flex align-items-center align-self-stretch box-labels-divider">
+                                            <label class="m-0 box-label-label align-self-stretch">Población</label>
+                                            <p class="mb-0 px-2">@Model.Model.Pob - @Model.Model.CP - @Model.Model.Pro</p>
+                                        </div>
+
+                                        <div class="d-flex align-items-center align-self-stretch box-labels-divider">
+                                            <label class="m-0 box-label-label align-self-stretch">Contacto</label>
+                                            <p class="mb-0 px-2">@Model.Model.Cont</p>
+                                        </div>
+
+                                        <div class="d-flex align-items-center align-self-stretch box-labels-divider">
+                                            <label class="m-0 box-label-label align-self-stretch">Teléfono</label>
+                                            <p class="mb-0 px-2">@Model.Model.Tel</p>
+                                        </div>
+
+                                        <div class="d-flex align-items-center align-self-stretch box-labels-divider">
+                                            <label class="m-0 box-label-label align-self-stretch">Mail</label>
+                                            <p class="mb-0 px-2">Falta variable</p>
+                                        </div>
+
+                                        <div class="d-flex align-items-center align-self-stretch box-labels-divider">
+                                            <label class="m-0 box-label-label align-self-stretch">Horario</label>
+                                            <p class="mb-0 px-2">@Model.Model.Horario</p>
+                                        </div>
+
+                                        @if (Model.Model.Lat != "" && Model.Model.Lon != "")
+                                        {
+                                            <div class="d-flex align-items-center align-self-stretch box-labels-divider">
+                                                <label class="m-0 box-label-label align-self-stretch">Mapa</label>
+                                                <p class="mb-0 px-2">Mapa</p>
+                                            </div>
+                                        }
+
+                                        <div class="d-flex align-items-center align-self-stretch">
+                                            <label class="m-0 box-label-label align-self-stretch">Observaciones</label>
+                                            <p class="mb-0 px-2">@Model.Model.Obs</p>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                @* Finalizada *@
+                                <div class="col-6 p-0 px-2">
+                                    <div class="box-labels mb-2">
+
+                                        <div class="d-flex align-items-center align-self-stretch box-labels-divider">
+                                            <label class="m-0 box-label-label align-self-stretch">Finalizada</label>
+                                            <p class="mb-0 px-2">@Model.Model.Fe_Fin - @Model.Model.UsuFin</p>
+                                        </div>
+
+                                        <div class="d-flex align-items-center align-self-stretch">
+                                            <label class="m-0 box-label-label align-self-stretch">Resolución</label>
+                                            <p class="mb-0 px-2">@Model.Model.Reso</p>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                                @* Cerrada *@
+                                <div class="col-6 p-0 px-2">
+
+                                    <div class="box-labels mb-2">
+
+                                        <div class="d-flex align-items-center align-self-stretch box-labels-divider">
+                                            <label class="m-0 box-label-label align-self-stretch">Cerrada</label>
+                                            <p class="mb-0 px-2">@Model.Model.Fe_Cerr - @Model.Model.UsuCerr</p>
+                                        </div>
+
+                                        <div class="d-flex align-items-center align-self-stretch">
+                                            <label class="m-0 box-label-label align-self-stretch">Observaciones</label>
+                                            <p class="mb-0 px-2">@Model.Model.ObsCerr</p>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    @if (Model.Model.ManDet != null)
+                    {
+                        @* Detalles mantenimientos *@
+                        <div class="card mb-3">
+                            <div class="card-header card-header-options mdc-bg-white pt-2" style="border-bottom: none;">
+                                <div class="d-flex align-items-center">
+                                    <img src="https://image.flaticon.com/icons/svg/321/321777.svg" style="width: 30px;" class="pt-2" />
+                                    <h5 class="fw-5 title-section fs-1-2 pt-3 px-2">Detalles del mantenimiento</h5>
+                                </div>
+                            </div>
+                            <div class="card-block">
+
+                                <div class="row">
+
+                                    <div class="col-12 p-0 px-2">
+
+                                        <div class="box-labels">
+                                            <table class="table table-small table-striped border-top-none">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="box-border-right">Tipo</th>
+                                                        <th class="box-border-right">Ubicación</th>
+                                                        <th class="box-border-right">Ref. Cli.</th>
+                                                        <th class="text-center box-border-right">Bastidor</th>
+                                                        <th class="text-center box-border-right">Finalizado</th>
+                                                        <th class="text-center box-border-right">Resultado</th>
+                                                        <th class="text-center box-border-right"><i class="fa fa-times" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Indica que el elemento ha sido eliminado"></i></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @for (Int32 t = 0; t < Model.Model.ManDet.Length; t++)
+                                                    {
+                                                    <tr>
+                                                        <td class="box-border-right">@Model.Model.ManDet[t].Tipo</td>
+                                                        <td class="box-border-right">@Model.Model.ManDet[t].Ubi</td>
+                                                        <td class="box-border-right">@Model.Model.ManDet[t].RefCli</td>
+                                                        <td class="text-center box-border-right">@Model.Model.ManDet[t].Bastidor</td>
+                                                        <td class="text-center box-border-right">
+                                                            @if (Model.Model.ManDet[t].Fe_Fin == "")
+                                                            {
+                                                                <i class="fa fa-exclamation-triangle text-danger" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Elemento no finalizado"></i>
+                                                            }
+                                                            else
+                                                            {
+                                                                @Model.Model.ManDet[t].Fe_Fin
+                                                            }
+                                                        </td>
+                                                        <td class="text-center">@Model.Model.ManDet[t].ValorOK</td>
+                                                        <td class="text-center">
+                                                            @if (Model.Model.ManDet[t].Eli)
+                                                            {
+                                                                <i class="fa fa-times text-danger" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Elemento eliminado"></i>
+                                                            }
+                                                        </td>
+                                                    </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+
+                    @if (Model.Model.det != null)
+                    {
+                        for (Int32 t = 0; t < Model.Model.det.Length; t++)
+                        {
+
+                            @* PARTE *@
+                            <div class="card mb-3">
+                                <div class="card-header card-header-options mdc-bg-white pt-2" style="border-bottom: none;">
+
+                                    <div class="d-flex align-items-center">
+                                        <img src="https://image.flaticon.com/icons/svg/432/432026.svg" style="width: 30px;" class="pt-2" />
+                                        <h5 class="fw-5 title-section fs-1-2 pt-3 px-2">Parte nº @Model.Model.det[t].NumParte</h5>
+                                    </div>
+
+                                    <div class="div">
+                                        @if (@Model.Model.det[t].MalUso)
+                                        {
+                                            <span class="badge badge-pill badge-danger p-2 mt-1 mr-1 fw-6 fs-0-7"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> MAL USO</span>
+                                        }
+                                        @if (@Model.Model.det[t].EsPause)
+                                        {
+                                            <span class="badge badge-pill badge-danger p-2 mt-1 mr-1 fw-6 fs-0-7"><i class="fa fa-pause" aria-hidden="true"></i> PARTE PAUSADO</span>
+                                        }
+                                    </div>
+
+                                </div>
+                                <div class="card-block">
+
+                                    <div class="row">
+
+                                        @* Parte *@
+                                        <div class="col-6 p-0 px-2">
+
+                                            <div class="box-labels mb-2">
+
+                                                <div class="d-flex align-items-center align-self-stretch box-labels-divider">
+                                                    <label class="m-0 box-label-label align-self-stretch">Parte nº</label>
+                                                    <p class="mb-0 px-2">@Model.Model.det[t].NumParte</p>
+                                                </div>
+
+                                                <div class="d-flex align-items-center align-self-stretch box-labels-divider">
+                                                    <label class="m-0 box-label-label align-self-stretch">Fecha</label>
+                                                    <p class="mb-0 px-2">@Model.Model.det[t].Fe_Al</p>
+                                                </div>
+
+                                                <div class="d-flex align-items-center align-self-stretch">
+                                                    <label class="m-0 box-label-label align-self-stretch">Usuario</label>
+                                                    <p class="mb-0 px-2">@Model.Model.det[t].UsuAl</p>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="box-labels mb-2">
+                                                <div class="d-flex align-items-center align-self-stretch">
+                                                    <label class="m-0 box-label-label align-self-stretch">Trabajo<br />realizado</label>
+                                                    <p class="mb-0 px-2">@Model.Model.det[t].Reso</p>
+                                                </div>
+                                            </div>
+
+                                            <div class="box-labels">
+                                                <div class="d-flex align-items-center align-self-stretch">
+                                                    <label class="m-0 box-label-label align-self-stretch">Trabajos<br />pendientes</label>
+                                                    <p class="mb-0 px-2">@Model.Model.det[t].ObsNoFin</p>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        @* Solicitud *@
+                                        <div class="col-6 p-0 px-2">
+
+                                            <div class="box-labels mb-2">
+
+                                                @if (Model.Model.det[t].ID_Soli2 > 0)
+                                                {
+                                                    <div class="d-flex align-items-center align-self-stretch box-labels-divider">
+                                                        <label class="m-0 box-label-label align-self-stretch">Solicitud</label>
+                                                        <p class="mb-0 px-2"><a href="/tareas-pendientes/tarea-pendiente?ID_Soli2=@Model.Model.det[t].ID_Soli2" target="_blank" class="fw-5">@Model.Model.det[t].ID_Soli2</a></p>
+                                                    </div>
+                                                }
+
+                                                <div class="d-flex align-items-center align-self-stretch box-labels-divider">
+                                                    <label class="m-0 box-label-label align-self-stretch">Fecha cierre</label>
+                                                    <p class="mb-0 px-2">@Model.Model.det[t].Fe_Cerr</p>
+                                                </div>
+
+                                                <div class="d-flex align-items-center align-self-stretch">
+                                                    <label class="m-0 box-label-label align-self-stretch">Usuario cierre</label>
+                                                    <p class="mb-0 px-2">@Model.Model.det[t].UsuCerr</p>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="box-labels mb-2">
+                                                <div class="d-flex align-items-center align-self-stretch">
+                                                    <label class="m-0 box-label-label align-self-stretch">Obs. internas</label>
+                                                    <p class="mb-0 px-2">@Model.Model.det[t].ObsInt</p>
+                                                </div>
+                                            </div>
+
+                                            <div class="box-labels">
+                                                <div class="d-flex align-items-center align-self-stretch box-labels-divider">
+                                                    <label class="m-0 box-label-label align-self-stretch">Contacto</label>
+                                                    <p class="mb-0 px-2">@Model.Model.det[t].Cont</p>
+                                                </div>
+                                                <div class="d-flex align-items-center align-self-stretch box-labels-divider">
+                                                    <label class="m-0 box-label-label align-self-stretch">Tel. contacto</label>
+                                                    <p class="mb-0 px-2">@Model.Model.det[t].Tel</p>
+                                                </div>
+                                                <div class="d-flex align-items-center align-self-stretch">
+                                                    <label class="m-0 box-label-label align-self-stretch">Mail contacto</label>
+                                                    <p class="mb-0 px-2">@Model.Model.det[t].Mail</p>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="row mt-0">
+                                    <div class="col-6 p-0 px-2">
+                                        <div class="d-flex flex-column p-3 box-grey-bg ml-3 mb-3 text-center" style="background: #fff;">
+                                            <label class="mb-3 mdc-text-grey-400">Firma Cliente</label>
+                                            @if (Model.Model.det[t].SigCliJpg != "")
+                                            {
+                                            <div class="text-center">
+                                                <img src="data:image/jpg;base64,@Html.Raw(Model.Model.det[t].SigCliJpg)" style="width: 40%;" />
+                                            </div>
+                                            }
+                                        </div>
+
+                                    </div>
+                                    <div class="col-6 p-0 px-2">
+                                        <div class="d-flex flex-column p-3 mr-3 box-grey-bg mb-3 text-center" style="background: #fff;">
+                                            <label class="mb-3 mdc-text-grey-400">Firma Técnico</label>
+                                            @if (Model.Model.det[t].SigTecJpg != "")
+                                            {
+                                            <div class="text-center">
+                                                <img src="data:image/jpg;base64,@Html.Raw(Model.Model.det[t].SigTecJpg)" style="width: 40%;" />
+                                            </div>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        }
+
+                    }
+                    else
+                    {
+                        <div class="card-header card-header-options mdc-bg-white pt-2" style="border-bottom: none;">
+                            <span>No hay partes</span>
+                        </div>
+                    }
+
+
+                }
+
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,415 @@
+﻿@model SituacionLibrary.SituacionEmpresaViewModel
+@{
+    Layout = "~/Views/Shared/Modulo-Situacion/_Situacion.cshtml";
+    ViewData["Title"] = "Situación - Empresa";
+    ViewData["Message"] = "Situación - Gaolos App v2017";
+}
+
+<div class="main-content m-0" id="widget-area">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                
+                    @if (Model.Model.Err.eserror)
+                    {
+                        ViewData["err"] = Model.Model.Err.mensaje;
+                        @Html.Partial("AccesoDenegado");
+                    }
+                    else
+                    {
+                
+
+                <div class="card mb-3 animated fadeIn">
+                    <div class="card-block p-0">
+                        <form action="@ViewData["Form"]" method="post" class="sel-dates">
+                            <div class="d-flex justify-content-center align-items-center">
+                                <div class="col-1 text-center box-border-right-light py-2">
+                                    <img src="https://image.flaticon.com/icons/svg/321/321764.svg" style="width: 100%;">
+                                </div>
+                                <div class="col-11">
+
+                                    <div class="row p-0">
+                                        <div class="col-12 p-0">
+                                            <div class="d-flex mb-0 px-3">
+
+                                                <div class="input-group input-group-sm mr-3 seldate date">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text" id="basic-addon3">Fecha de inicio</span>
+                                                    </div>
+                                                    <input type="text" class="form-control" aria-describedby="basic-addon3" placeholder="Fecha Inicio" value="@Model.Model.Fe_In" name="Fe_In">
+                                                </div>
+
+                                                <div class="input-group input-group-sm seldate date">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text" id="basic-addon3">Fecha final</span>
+                                                    </div>
+                                                    <input type="text" class="form-control" aria-describedby="basic-addon3" placeholder="Fecha Inicio" value="@Model.Model.Fe_Fi" name="Fe_Fi">
+                                                </div>
+
+                                                <button type="submit" class="btn btn-primary ml-2 cargargraficasbloque1 btn-sm btn-sm-2x">ACTUALIZAR</button>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+
+                @* Clientes *@
+
+                <div class="card card-table mb-3">
+                    <div class="card-header card-header-options">
+                        <span>Clientes</span>
+                    </div>
+                    <div class="card-block p-0">
+
+                        <div class="d-flex">
+
+                            <div class="col-2 p-4">
+                                <div class="d-flex flex-column">
+                                    <h5 class="fw-5 title-section mb-4">Nuevos</h5>
+                                    <div class="badge-dashboard">
+                                        <i class="material-icons">sentiment_very_satisfied</i>
+                                        <p class="mb-0">Clientes nuevos: <span class="text-danger">@Model.Model.NumCliNew</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-10 pr-2 pl-0 py-2">
+                                <table class="table table-striped table-small border-left border-right border-bottom">
+                                    <thead>
+                                        <tr>
+                                            <th class="w-5 text-center">Nº Cli</th>
+                                            <th>Cliente</th>
+                                            <th class="w-5 text-center">NIF</th>
+                                            <th class="w-10 text-center">CP</th>
+                                            <th class="w-10 text-center">Pob</th>
+                                            <th class="w-10 text-right">Base (€)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @for (int i = 0; i < 0; i++)
+                                        {
+                                            <tr>
+                                                <td class="text-center">123</td>
+                                                <td>Grup Read, SLU</td>
+                                                <td class="text-center">12345678N</td>
+                                                <td class="text-center">08013</td>
+                                                <td class="text-center">Barcelona</td>
+                                                <td class="text-right">1234€</td>
+                                            </tr>
+                                        }
+
+                                    </tbody>
+                                </table>
+                                @* @Html.Raw(Model.Datos.Paginador) *@
+                            </div>
+
+                        </div>
+
+                        <hr class="m-0" />
+
+                        <div class="d-flex">
+
+                            <div class="col-2 p-4">
+                                <h5 class="fw-5 title-section mb-4">Facturas</h5>
+                                <div class="badge-dashboard badge-dashboard-bg badge-dashboard-bg-receipt mb-2">
+                                    <i class="material-icons">receipt</i>
+                                    <p class="mb-0">Nº de facturas: <span class="text-danger">@Model.Model.NumFacCliNew</span></p>
+                                </div>
+                                <div class="badge-dashboard badge-dashboard-bg badge-dashboard-bg-euro">
+                                    <i class="material-icons">euro_symbol</i>
+                                    <p class="mb-0">Imp. base facturación: <span class="text-danger">@Model.Model.ImpFacCliNew</span></p>
+                                </div>
+                            </div>
+                            <div class="col-10 pr-2 pl-0 py-2">
+                                <table class="table table-striped table-small border-left border-right border-bottom">
+                                    <thead>
+                                        <tr>
+                                            <th class="w-5 text-center">Nº Cli</th>
+                                            <th>Cliente</th>
+                                            <th class="w-5 text-center">NIF</th>
+                                            <th class="w-10 text-center">CP</th>
+                                            <th class="w-10 text-center">Pob</th>
+                                            <th class="w-10 text-right">Base (€)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @for (int i = 0; i < 0; i++)
+                                        {
+                                            <tr>
+                                                <td class="text-center">123</td>
+                                                <td>Grup Read, SLU</td>
+                                                <td class="text-center">12345678N</td>
+                                                <td class="text-center">08013</td>
+                                                <td class="text-center">Barcelona</td>
+                                                <td class="text-right">1234€</td>
+                                            </tr>
+                                        }
+
+                                    </tbody>
+                                </table>
+                                @* @Html.Raw(Model.Datos.Paginador) *@
+                            </div>
+
+                        </div>
+
+                        <hr class="m-0" />
+
+                        <div class="d-flex">
+
+                            <div class="col-2 p-4">
+                                <h5 class="fw-5 title-section mb-4">Bajas</h5>
+                                <div class="badge-dashboard mb-2">
+                                    <i class="material-icons">sentiment_very_dissatisfied</i>
+                                    <p class="mb-0">Nº de bajas: <span class="text-danger">@Model.Model.NumCliDel</span></p>
+                                </div>
+                            </div>
+                            <div class="col-10 pr-2 pl-0 py-2">
+                                <table class="table table-striped table-small border-left border-right border-bottom">
+                                    <thead>
+                                        <tr>
+                                            <th class="w-5 text-center">Nº Cli</th>
+                                            <th>Cliente</th>
+                                            <th class="w-5 text-center">NIF</th>
+                                            <th class="w-10 text-center">CP</th>
+                                            <th class="w-10 text-center">Pob</th>
+                                            <th class="w-10 text-right">Base (€)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @for (int i = 0; i < 0; i++)
+                                        {
+                                            <tr>
+                                                <td class="text-center">123</td>
+                                                <td>Grup Read, SLU</td>
+                                                <td class="text-center">12345678N</td>
+                                                <td class="text-center">08013</td>
+                                                <td class="text-center">Barcelona</td>
+                                                <td class="text-right">1234€</td>
+                                            </tr>
+                                        }
+
+                                    </tbody>
+                                </table>
+                                @* @Html.Raw(Model.Datos.Paginador) *@
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+                @* Presupuestos *@
+
+                <div class="card card-table mb-3">
+                    <div class="card-header card-header-options">
+                        <span>Presupuestos</span>
+                    </div>
+                    <div class="card-block p-0">
+
+                        <div class="d-flex">
+
+                            <div class="col-12 p-4">
+                                <div class="d-flex">
+                                    <div class="badge-dashboard mr-3">
+                                        <i class="material-icons">list_alt</i>
+                                        <p class="mb-0">Nº presupuestos nuevos: <span class="text-danger">@Model.Model.NumPresNew</span></p>
+                                    </div>
+                                    <div class="badge-dashboard">
+                                        <i class="material-icons">euro_symbol</i>
+                                        <p class="mb-0">Importe presupuestos nuevos: <span class="text-danger">@Model.Model.ImpPresNew</span></p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <hr class="m-0" />
+
+                        <div class="d-flex">
+
+                            <div class="col-2 p-4">
+                                <h5 class="fw-5 title-section mb-4">Presupuestos aceptados</h5>
+                                <div class="badge-dashboard mb-2">
+                                    <i class="material-icons">receipt</i>
+                                    <p class="mb-0">Nº presupuestos aceptados: <span class="text-danger">@Model.Model.NumPresAcep</span></p>
+                                </div>
+                                <div class="badge-dashboard">
+                                    <i class="material-icons">euro_symbol</i>
+                                    <p class="mb-0">Importe presupuestos aceptados: <span class="text-danger">@Model.Model.ImpPresAcep</span></p>
+                                </div>
+                            </div>
+                            <div class="col-10 pr-2 pl-0 py-2">
+                                <table class="table table-striped table-small border-left border-right border-bottom">
+                                    <thead>
+                                        <tr>
+                                            <th class="w-5 text-center">Nº Cli</th>
+                                            <th>Cliente</th>
+                                            <th class="w-5 text-center">NIF</th>
+                                            <th class="w-10 text-center">CP</th>
+                                            <th class="w-10 text-center">Población</th>
+                                            <th class="w-10 text-right">Base (€)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @for (int i = 0; i < 0; i++)
+                                        {
+                                            <tr>
+                                                <td class="text-center">123</td>
+                                                <td>Grup Read, SLU</td>
+                                                <td class="text-center">12345678N</td>
+                                                <td class="text-center">08013</td>
+                                                <td class="text-center">Barcelona</td>
+                                                <td class="text-right">1234€</td>
+                                            </tr>
+                                        }
+
+                                    </tbody>
+                                </table>
+                                @* @Html.Raw(Model.Datos.Paginador) *@
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+                @* Facturación / Cobros *@
+
+                <div class="card card-table mb-3">
+                    <div class="card-block p-0">
+
+                        <div class="d-flex">
+
+                            <div class="col-6 p-4">
+                                <div class="d-flex flex-column">
+                                    <h5 class="fw-5 title-section mb-3">Facturación</h5>
+                                    <div class="d-flex">
+                                        <div class="w-50 mr-3">
+                                            <div class="badge-dashboard mb-2">
+                                                <i class="material-icons">receipt</i>
+                                                <p class="mb-0">Número de facturas: <span class="text-danger">@Model.Model.NumFac</span></p>
+                                            </div>
+                                        </div>
+                                        <div class="w-50">
+                                            <div class="badge-dashboard">
+                                                <i class="material-icons">euro_symbol</i>
+                                                <p class="mb-0">Facturación: <span class="text-danger">@Model.Model.ImpFac</span></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6 p-4">
+                                <div class="d-flex flex-column">
+                                    <h5 class="fw-5 title-section mb-3">Cobros</h5>
+                                    <div class="d-flex">
+                                        <div class="w-50 mr-3">
+                                            <div class="badge-dashboard mb-2">
+                                                <i class="material-icons">receipt</i>
+                                                <p class="mb-0">Número de recibos: <span class="text-danger">@Model.Model.NumCob</span></p>
+                                            </div>
+                                        </div>
+                                        <div class="w-50">
+                                            <div class="badge-dashboard">
+                                                <i class="material-icons">euro_symbol</i>
+                                                <p class="mb-0">Importe recibos: <span class="text-danger">@Model.Model.ImpCob</span></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+                @* Asistencias / Mantenimientos *@
+
+                <div class="row">
+                    <div class="col-6">
+                        <div class="card card-table mb-3">
+                            <div class="card-block p-0">
+
+                                <div class="d-flex">
+
+                                    <div class="col-12 p-4">
+                                        <div class="d-flex flex-column">
+                                            <h5 class="fw-5 title-section mb-3">Asistencias</h5>
+                                            <div class="d-flex">
+                                                <div class="badge-dashboard mr-3">
+                                                    <i class="material-icons">assignment</i>
+                                                    <p class="mb-0">Asistencias nuevas: <span class="text-danger">@Model.Model.NumAsisNew</span></p>
+                                                </div>
+                                                <div class="badge-dashboard mr-3">
+                                                    <i class="material-icons">check</i>
+                                                    <p class="mb-0">Asistencias finalizadas: <span class="text-danger">@Model.Model.NumAsisFin</span></p>
+                                                </div>
+                                                <div class="badge-dashboard">
+                                                    <i class="material-icons">check</i>
+                                                    <p class="mb-0">Partes generados: <span class="text-danger">@Model.Model.NumPartesCerr</span></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="card card-table mb-3">
+                            <div class="card-block p-0">
+
+                                <div class="d-flex">
+
+                                    <div class="col-12 p-4">
+                                        <div class="d-flex flex-column">
+                                            <h5 class="fw-5 title-section mb-3">Mantenimientos</h5>
+                                            <div class="d-flex">
+                                                <div class="w-50 mr-3">
+                                                    <div class="badge-dashboard badge-dashboard-bg badge-dashboard-bg-receipt">
+                                                        <i class="material-icons">receipt</i>
+                                                        <p class="mb-0">Alta mantenimientos: <span class="text-danger">@Model.Model.NumManNew</span></p>
+                                                    </div>
+                                                </div>
+                                                <div class="w-50">
+                                                    <div class="badge-dashboard badge-dashboard-bg badge-dashboard-bg-receipt">
+                                                        <i class="material-icons">euro_symbol</i>
+                                                        <p class="mb-0">Baja mantenimientos: <span class="text-danger">@Model.Model.NumManDel</span></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                
+                    }
+                
+            </div>
+        </div>
+
+    </div>
+
+</div>

@@ -1,0 +1,167 @@
+﻿@model CursosLibrary.ModuloCursosCursosListadoViewModel
+@{
+    Layout = "~/Views/Shared/Modulo-Cursos/_Cursos.cshtml";
+    ViewData["Title"] = "Cursos Configuracion";
+    ViewData["Message"] = "Cursos - Gaolos App v2017";
+}
+
+<div class="main-content m-0" id="widget-area">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                
+    @if (Model.Model.Err.eserror)
+    {
+        ViewData["err"] = Model.Model.Err.mensaje;
+        @Html.Partial("AccesoDenegado");
+    }
+    else
+    {
+                
+
+                    <div class="card mb-3">
+                        <div class="card-header card-header-options">
+                            <span>@ViewData["Title"]</span>
+                            @Html.Partial("PanelActions")
+                        </div>
+                        <div class="card-block p-5">
+
+                            <div class="row mb-4">
+                                <div class="col-3 text-center col-conf">
+                                    <figure>
+                                        <a href="/modulo-cursos/configuracion/temarios">
+                                            <img src="https://image.flaticon.com/icons/svg/747/747130.svg" style="width: 64px">
+                                            <h5 class="fs-1-1 mt-2">Temarios</h5>
+                                        </a>
+                                    </figure>
+                                </div>
+                                <div class="col-md-3 text-center col-conf">
+                                    <figure>
+                                        <a href="/modulo-cursos/configuracion/asignaturas">
+                                            <img src="https://image.flaticon.com/icons/svg/746/746980.svg" style="width: 64px">
+                                            <h5 class="fs-1-1 mt-2">Asignaturas</h5>
+                                        </a>
+                                    </figure>
+                                </div>
+                                <div class="col-md-3 text-center col-conf">
+                                    <figure>
+                                        <a href="/modulo-cursos/configuracion/titulaciones">
+                                            <img src="https://image.flaticon.com/icons/svg/747/747023.svg" style="width: 64px">
+                                            <h5 class="fs-1-1 mt-2">Titulaciones</h5>
+                                        </a>
+                                    </figure>
+                                </div>
+                                <div class="col-md-3 text-center col-conf">
+                                    <figure>
+                                        <a href="/modulo-cursos/configuracion/familias-tipos-curso">
+                                            <img src="https://image.flaticon.com/icons/svg/747/747099.svg" style="width: 64px">
+                                            <h5 class="fs-1-1 mt-2">Tipos familias</h5>
+                                        </a>
+                                    </figure>
+                                </div>
+                            </div>
+
+                            <div class="row mb-4">
+                                <div class="col-md-3 text-center col-conf">
+                                    <figure>
+                                        <a href="/modulo-cursos/configuracion/tipos-curso">
+                                            <img src="https://image.flaticon.com/icons/svg/747/747119.svg" style="width: 64px">
+                                            <h5 class="fs-1-1 mt-2">Tipos</h5>
+                                        </a>
+                                    </figure>
+                                </div>
+                                <div class="col-md-3 text-center col-conf">
+                                    <figure>
+                                        <a href="/modulo-cursos/configuracion/tipos-asignaturas">
+                                            <img src="https://image.flaticon.com/icons/svg/747/747020.svg" style="width: 64px">
+                                            <h5 class="fs-1-1 mt-2">Tipos asignaturas</h5>
+                                        </a>
+                                    </figure>
+                                </div>
+                                <div class="col-md-3 text-center col-conf">
+                                    <figure>
+                                        <a href="/modulo-cursos/configuracion/tipos-temarios">
+                                            <img src="https://image.flaticon.com/icons/svg/747/747048.svg" style="width: 64px">
+                                            <h5 class="fs-1-1 mt-2">Tipos temario</h5>
+                                        </a>
+                                    </figure>
+                                </div>
+                                <div class="col-md-3 text-center col-conf">
+                                    <figure>
+                                        <a href="/modulo-cursos/configuracion/tipos-titulaciones">
+                                            <img src="https://image.flaticon.com/icons/svg/746/746981.svg" style="width: 64px">
+                                            <h5 class="fs-1-1 mt-2">Tipos titulaciones</h5>
+                                        </a>
+                                    </figure>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-3 text-center col-conf">
+                                    <figure>
+                                        <a href="#">
+                                            <img src="https://image.flaticon.com/icons/svg/747/747101.svg" style="width: 64px">
+                                            <h5 class="fs-1-1 mt-2">Tipos ubicaciones</h5>
+                                        </a>
+                                    </figure>
+                                </div>
+                                <div class="col-md-3 text-center col-conf">
+                                    <figure>
+                                        <a href="/modulo-cursos/configuracion/tipos-ubicaciones">
+                                            <img src="https://image.flaticon.com/icons/svg/747/747049.svg" style="width: 64px">
+                                            <h5 class="fs-1-1 mt-2">Tipos horas</h5>
+                                        </a>
+                                    </figure>
+                                </div>
+                                <div class="col-md-3 text-center col-conf">
+                                    <figure>
+                                        <a href="/modulo-cursos/configuracion/tipos-horas">
+                                            <img src="https://image.flaticon.com/icons/svg/747/747025.svg" style="width: 64px">
+                                            <h5 class="fs-1-1 mt-2">Plantillas</h5>
+                                        </a>
+                                    </figure>
+                                </div>
+                                <div class="col-md-3 text-center col-conf">
+                                    <figure>
+                                        <a href="/modulo-cursos/configuracion/formadores">
+                                            <img src="https://image.flaticon.com/icons/svg/747/747025.svg" style="width: 64px">
+                                            <h5 class="fs-1-1 mt-2">Formadores</h5>
+                                        </a>
+                                    </figure>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                
+    }
+                
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+
+    $(".col-conf figure").mouseover(function () {
+        $(this).find("img").addClass("animated infinite bounce");
+    });
+    $(".col-conf figure").mouseout(function () {
+        $(this).find("img").removeClass("animated infinite bounce");
+    });
+</script>

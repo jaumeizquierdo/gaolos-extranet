@@ -1,0 +1,788 @@
+﻿@model MyGaolosLibrary.MyGaolosTareasPendienesTareaPendienteViewModel
+
+@{
+    Layout = "~/Views/Shared/MyGaolos/_MyGaolos.cshtml";
+    ViewData["Title"] = "Tarea pendiente [tarea]";
+}
+
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+                @if (Model.Model.Err.eserror)
+                {
+                    ViewData["err"] = Model.Model.Err.mensaje;
+                    @Html.Partial("AccesoDenegado");
+                }
+                else
+                {
+
+
+                    @* Buscar usuarios *@
+
+                    <div class="card mb-3">
+                        <div class="card-header card-header-options">
+                            <span>Tarea</span>
+                        </div>
+                        <div class="card-block p-0">
+
+                            <div class="d-flex justify-content-center align-items-center">
+                                <div class="col-1 pb-2 pt-2">
+                                    <img src="https://image.flaticon.com/icons/svg/607/607629.svg" style="width: 100%">
+                                </div>
+                                <div class="col-11 pt-2 pb-2 box-border-left-light">
+                                    <h5 class="fw-5 title-section">@Html.Raw(Model.Model.ExpoIni)</h5>
+                                    <div class="d-flex">
+
+                                        <div class="box-grey-bg mr-2 mdc-bg-white">
+                                            <p class="mb-1 fs-0-8 fw-5"><span class="mr-1">Usuario:</span> <span class="text-danger">@Model.Model.Usu</span></p>
+                                            <p class="mb-1 fs-0-8 fw-5"><span class="mr-1">Comentarios:</span> <span class="text-danger">@Model.Model.Num</span></p>
+
+                                            @if (Model.Model.MultiNeg)
+                                            {
+                                                <p class="mb-1 fs-0-8 fw-5"><span class="mr-1">Negocio:</span> <span class="text-danger">@Model.Model.Neg</span></p>
+                                            }
+                                            @if (Model.Model.Emps != null)
+                                            {
+                                                <p class="mb-1 fs-0-8 fw-5">
+                                                    <span class="mr-1">Empresas relacionadas:</span>
+
+                                                    @{
+                                                        string txt = "";
+
+                                                        @for (Int32 t = 0; t < Model.Model.Emps.Length; t++)
+                                                        {
+                                                            if (txt != "") { txt += " - "; }
+                                                            txt += "<span class='text-danger'>" + Model.Model.Emps[t].datoS1 + "</span>";
+                                                        }
+                                                        @Html.Raw(txt)
+                                                    }
+
+                                                </p>
+                                            }
+                                            <hr class="mb-2 mt-2" />
+                                            <p class="mb-1 fs-0-8 fw-5">
+                                                <span class="mr-1">Prioridad:</span>
+                                                @if (Model.Model.Prio < 100)
+                                                {
+                                                    <span class="badge badge-danger fs-0-7 fw-5 mb-0">Alta</span>
+                                                }
+                                                else if (Model.Model.Prio == 100)
+                                                {
+                                                    <span class="badge badge-warning fs-0-7 fw-5 mb-0">Media</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="badge badge-success fs-0-7 fw-5 mb-0">Baja</span>
+                                                }
+                                            </p>
+                                        </div>
+
+                                        <div class="box-grey-bg mr-2 mdc-bg-white">
+
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <p class="mb-0 fs-0-8 fw-5"><span class="mr-2">Tags</span></p>
+                                                <a href="#" class="btn btn-primary btn-sm btn-sm-2x fs-0-7 nuevo-tag">Nuevo tag</a>
+                                            </div>
+                                            <hr class="mb-2 mt-2" />
+                                            <div class="d-flex">
+                                                @for (Int32 i = 0; i < 1; i++)
+                                                {
+                                                    <span class="badge badge-tag fs-0-7 fw-5 mb-1 mr-1"><a href="#"><i class="fa fa-times m-0 p-0"></i></a> Tag</span>
+                                                }
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex px-2 mb-1 align-content-stretch" style="display: none !important;">
+                                            <span class="badge badge-pill badge-default p-2 pr-3 mt-1 mr-2 text-white"><i class="fa fa-tag text-white"></i> Cobrado</span>
+                                            <span class="badge badge-pill badge-default p-2 pr-3 mt-1 mr-2 text-white"><i class="fa fa-tag text-white"></i> Pendiente</span>
+                                            <span class="badge badge-pill badge-default p-2 pr-3 mt-1 mr-2 text-white"><i class="fa fa-tag text-white"></i> Parcial</span>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div id="modalNuevoTag" tabindex="-1" role="dialog" aria-labelledby="" class="modal fade" aria-hidden="true">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="fs-1 mb-0" id="">Añadir Tag</h4>
+                                    <a href="#" data-dismiss="modal" aria-label="Cerrar"><i class="fa fa-times"></i></a>
+                                </div>
+                                <div class="modal-body p-3">
+
+                                    <div class="input-group input-group-sm">
+                                        <input type="text" class="form-control form-control-sm" id="empresa" placeholder="Añadir tag">
+                                        <input id="" name="" type="hidden" value="" /><input id="" name="" type="hidden" value="" />
+                                        <span class="input-group-append">
+                                            <button type="button" class="btn btn-primary btn-sm">Añadir</button>
+                                        </span>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    @* Solicitud *@
+
+                    @if (Model.Model.Soli != null)
+                    {
+                        <div class="card mb-3">
+                            <div class="card-header card-header-options">
+                                <span>Solicitud nº @Model.Model.Soli.ID_Soli2</span><input type="hidden" value="@Model.Model.Soli.ID_Soli2" id="ID_Soli2" />
+                            </div>
+                            <div class="card-block p-0">
+
+                                <div class="d-flex flex-column p-2">
+
+                                    @{
+                                        string SoliCerr = "";
+                                        bool HayCurso = false;
+
+                                        if (Model.Model.Soli.Vinc != null)
+                                        {
+                                            for (Int32 t = 0; t < Model.Model.Soli.Vinc.Length; t++)
+                                            {
+                                                switch (Model.Model.Soli.Vinc[t].ID_Tipo)
+                                                {
+                                                    case 15: // Curso
+                                                        HayCurso = true;
+                                                        break;
+                                                }
+
+                                            }
+
+                                        }
+                                    }
+
+                                    @if (Model.Model.Soli.Fe_Cerr == "")
+                                    {
+                                        if (Model.Model.Cerrada)
+                                        {
+                                            SoliCerr = " - <i class='fa fa-exclamation-triangle mr-1 text-danger' aria-hidden='true' data-toggle='tooltip' data-placement='left' title='La tarea está cerrada pero la solicitud no'></i> <a href='#' class='text-danger cerrar-solicitud-sin-tarea-pendiente'>Cerrar solicitud</a>";
+                                        }
+                                    }
+                                    else
+                                    {
+                                        SoliCerr = " - Cerrada: <span class='text-success'>" + Model.Model.Soli.UsuCerr + " - " + Model.Model.Soli.Fe_Cerr + "</span>";
+                                    }
+
+                                    <p class="mb-0 fw-5 fs-0-8">
+
+                                        @if (Model.Model.Soli.ID_Cli2 > 0)
+                                        {
+                                            <i class="fa fa-hand-o-right mdc-text-blue-grey-200 mr-1"></i> <span>Cliente:</span> <span class="mdc-text-blue-grey-600">@Model.Model.Soli.Emp</span> <a href="/modulo-clientes/clientes/cliente?ID_Cli2=@Model.Model.Soli.ID_Cli2" class="fw-5 mr-2" target="_blank" aria-hidden='true' data-toggle='tooltip' data-placement='top' title='Ir a la ficha del cliente'>(@Model.Model.Soli.ID_Cli2)</a> }
+                                        else
+                                        {
+                                            <i class="fa fa-hand-o-right mdc-text-blue-grey-200 mr-1"></i> <span>Contacto:</span> <span class="mdc-text-blue-grey-600">@Model.Model.Soli.Emp</span> <a href="#?ID_Cont2=@Model.Model.Soli.ID_Con2" class="fw-5 mr-2" target="_blank" aria-hidden='true' data-toggle='tooltip' data-placement='top' title='Ir a la ficha del contacto'>(@Model.Model.Soli.ID_Con2)</a>
+                                        }
+
+                                        <i class="fa fa-hand-o-right mdc-text-blue-grey-200 mr-1"></i> Asignado a: <span class="mdc-text-blue-grey-600 mr-2">@Model.Model.Soli.UsuAsi</span> <i class="fa fa-hand-o-right mdc-text-blue-grey-200 mr-1"></i> Fecha: <span class="mdc-text-blue-grey-600 mr-2">@Model.Model.Soli.Fe_Al</span> <i class="fa fa-hand-o-right mdc-text-blue-grey-200 mr-1"></i> Web: <span class="mdc-text-blue-grey-600 mr-2">@Model.Model.Soli.Dom</span> <i class="fa fa-hand-o-right mdc-text-blue-grey-200 mr-1"></i> Creado: <span class="mdc-text-blue-grey-600 mr-2">@Model.Model.Soli.Usu</span> <i class="fa fa-hand-o-right mdc-text-blue-grey-200 mr-1"></i> Origen: <span class="mdc-text-blue-grey-600 mr-2">@Model.Model.Soli.Origen</span> @Html.Raw(SoliCerr)
+
+                                        @if (Model.Model.Soli.Aux != null)
+                                        {
+                                            string Mail = Model.Model.Soli.Aux.Mail;
+                                            if (Mail != "") { Mail = "<a href='mailto:" + Mail + "' data-toggle='tooltip' data-placement='bottom' title='' data-original-title='Click para enviar un mail' class='fw-5'>" + Mail + "</a>"; } else { Mail = "sin mail"; }
+                                            <span>
+                                                <i class="fa fa-hand-o-right mdc-text-blue-grey-200 mr-1"></i> Contacto: <span class="mdc-text-blue-grey-600 mr-2">@Model.Model.Soli.Aux.Cont</span> <i class="fa fa-hand-o-right mdc-text-blue-grey-200 mr-1"></i> Tel.: <span class="mdc-text-blue-grey-600 mr-2">@Model.Model.Soli.Aux.Tel</span>
+                                                @{
+                                                    if (Model.Model.Soli.Aux.verSMS)
+                                                    {
+                                                        <a href="#" class="mr-2 modificarSms" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Enviar SMS"><i class="fa fa-edit"></i></a>
+                                                    }
+                                                }
+                                                <i class="fa fa-hand-o-right mdc-text-blue-grey-200 mr-1"></i> Mail: <span class="mdc-text-blue-grey-600 mr-2">@Html.Raw(Mail)</span> <a href="#" class="modificarMail mr-2" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Modificar mail"><i class="fa fa-edit"></i></a> <i class="fa fa-hand-o-right mdc-text-blue-grey-200 mr-1"></i> DNI: <span class="mdc-text-blue-grey-600 mr-2">@Model.Model.Soli.Aux.DNI</span> <i class="fa fa-hand-o-right mdc-text-blue-grey-200 mr-1"></i> Dirección: <span class="mdc-text-blue-grey-600 mr-2">@Model.Model.Soli.Aux.Dir - @Model.Model.Soli.Aux.Pob - @Model.Model.Soli.Aux.CP - @Model.Model.Soli.Aux.Pro</span> <i class="fa fa-hand-o-right mdc-text-blue-grey-200 mr-1"></i> Nacimiento: <span class="mdc-text-blue-grey-600 mr-2">@Model.Model.Soli.Aux.Fe_Na</span>
+                                            </span>
+
+                                            <div class="form-inline mt-2 formModificaMail" style="display: none;">
+                                                <input type="text" class="form-control form-control-sm mr-2" placeholder="Modificar email" id="nuevoMail" />
+                                                <input type="hidden" id="MailOri" value="@Html.Raw(Mail)" />
+                                                @if (HayCurso)
+                                                {
+                                                    <label class="custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0">
+                                                        <input type="checkbox" class="custom-control-input" id="EnvComAux">
+
+                                                        <span class="custom-control-label">Enviar información</span>
+                                                    </label>
+                                                }
+                                                <button class="btn btn-primary btn-sm solicitud-enviar-mail-info">Cambiar</button>
+                                            </div>
+
+                                            <div class="form-inline mt-2 formModificaSms" style="display: none;">
+                                                <input type="text" class="form-control form-control-sm mr-2" placeholder="Mensaje" id="nuevoSms" />
+                                                <input type="hidden" id="SmsOri" value="" />
+                                                @if (HayCurso)
+                                                {
+                                                    <label class="custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0">
+                                                        <input type="checkbox" class="custom-control-input" id="EnvComAux">
+
+                                                        <span class="custom-control-label">Enviar información</span>
+                                                    </label>
+                                                }
+                                                <button class="btn btn-primary btn-sm solicitud-enviar-mail-info">Cambiar</button>
+                                            </div>
+                                        }
+                                    </p>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                        @* Vinculaciones *@
+
+                        @if (Model.Model.Soli.Vinc != null)
+                        {
+                            @for (Int32 t = 0; t < Model.Model.Soli.Vinc.Length; t++)
+                            {
+                                @switch (Model.Model.Soli.Vinc[t].ID_Tipo)
+                                {
+                                    case 29: // Facturacion
+                                        Models.strFacturacionInformacionFactura fac = Newtonsoft.Json.JsonConvert.DeserializeObject<Models.strFacturacionInformacionFactura>(Model.Model.Soli.Vinc[t].Obj.ToString());
+                                        <div class="card mb-3">
+                                            @if (fac.FacEli)
+                                            {
+                                                <div class="card-header card-header-options text-danger">
+                                                    <span>Factura Eliminada</span>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div class="card-header card-header-options">
+                                                    <span>Factura nº @fac.Fac</span>
+                                                </div>
+                                                <div class="card-block p-0">
+
+                                                    <div class="d-flex flex-column p-2">
+
+                                                        <p class="mb-0 fw-5 fs-0-8">
+                                                            <i class="fa fa-hand-o-right mdc-text-blue-grey-200 mr-1"></i> Factura: <a href="/modulo-facturacion/informacion-factura/descargar?ID_Fac=@fac.ID_Fac&Tipo=html" target="_blank" class="fw-5"><span class="text-azul">@fac.Fac</span></a> <i class="fa fa-hand-o-right mdc-text-blue-grey-200 ml-2 mr-1"></i> Fecha: <span class="text-success">@fac.Fe_Fa</span> <i class="fa fa-hand-o-right mdc-text-blue-grey-200 ml-2 mr-1"></i> Cliente: <span class="text-success">@fac.Cli</span> <i class="fa fa-hand-o-right mdc-text-blue-grey-200 ml-2 mr-1"></i> NIF: <span class="text-success">@fac.NIF</span> <i class="fa fa-hand-o-right mdc-text-blue-grey-200 ml-2 mr-1"></i> Nº Cliente: <a href="/modulo-clientes/clientes/cliente?ID_Cli2=@fac.ID_Cli2" target="_blank" data-toggle="tooltip" data-placement="top" title="" data-original-title="Ir a la ficha del cliente" class="fw-5"><span class="text-azul">@fac.ID_Cli2</span></a> <i class="fa fa-hand-o-right mdc-text-blue-grey-200 ml-2 mr-1"></i> Nº contable: <span class="text-success">@fac.CCCli</span> <i class="fa fa-hand-o-right mdc-text-blue-grey-200 ml-2 mr-1"></i> Total: <span class="text-success">@fac.Total</span>
+                                                            <i class="fa fa-hand-o-right mdc-text-blue-grey-200 ml-2 mr-1"></i> @fac.TipoCliRel: <span class="text-success">@fac.EmpRel</span> (<a href="/modulo-clientes/clientes/cliente/clientes-relacionados/cobros-pendientes?ID_Cli2=@fac.ID_Cli2Rel" target="_blank" class="fw-5"><span class="text-azul">@fac.ID_Cli2Rel</span></a>)
+                                                        </p>
+                                                        <p class="mb-0 fw-5 fs-0-8">
+                                                            <i class="fa fa-hand-o-right mdc-text-blue-grey-200 mr-1"></i> Usuario: <span class="text-success">@fac.Usu</span><i class="fa fa-hand-o-right mdc-text-blue-grey-200 ml-2 mr-1"></i> Fecha: <span class="text-success">@fac.Fe_Al</span>
+                                                        </p>
+                                                        @if (fac.Fra != null)
+                                                        {
+                                                            <p class="mb-0 fw-5 fs-0-8">
+                                                                @for (Int32 p = 0; p < fac.Fra.Length; p++)
+                                                                {
+                                                                    @if (fac.Fra[p].Fe_Cob == "")
+                                                                    {
+                                                                        @if (fac.Fra[p].Atraso)
+                                                                        {
+                                                                            <i class="fa fa-hand-o-right mdc-text-blue-grey-200 ml-2 mr-1"></i> <label>Vencimiento:</label> <span class="text-danger">@fac.Fra[p].Fe_Ve</span><i class="fa fa-hand-o-right mdc-text-blue-grey-200 ml-2 mr-1"></i> <label>Forma:</label> <span class="text-danger">@fac.Fra[p].Forma</span>
+                                                                            if (fac.Fra[p].Cue != "")
+                                                                            {
+                                                                                <i class="fa fa-hand-o-right mdc-text-blue-grey-200 ml-2 mr-1"></i> <label>Cuenta:</label> <span class="text-danger">@fac.Fra[p].Cue</span>
+                                                                            }
+                                                                            <i class="fa fa-hand-o-right mdc-text-blue-grey-200 ml-2 mr-1"></i> <label>Cobro:</label> <span class="text-danger">Pendiente</span>
+                                                                            <i class="fa fa-hand-o-right mdc-text-blue-grey-200 ml-2 mr-1"></i> <label>Importe:</label> <span class="text-danger">@fac.Fra[p].Imp</span>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <i class="fa fa-hand-o-right mdc-text-blue-grey-200 ml-2 mr-1"></i> <label>Vencimiento:</label> <span class="text-success">@fac.Fra[p].Fe_Ve</span> <label>Forma:</label> <i class="fa fa-hand-o-right mdc-text-blue-grey-200 ml-2 mr-1"></i> <span class="text-success">@fac.Fra[p].Forma</span>
+                                                                            if (fac.Fra[p].Cue != "")
+                                                                            {
+                                                                                <i class="fa fa-hand-o-right mdc-text-blue-grey-200 ml-2 mr-1"></i> <label>Cuenta:</label> <span class="text-success">@fac.Fra[p].Cue</span>
+                                                                            }
+                                                                            <i class="fa fa-hand-o-right mdc-text-blue-grey-200 ml-2 mr-1"></i> <label>Cobro:</label> <span class="text-danger">Pendiente</span>
+                                                                            <i class="fa fa-hand-o-right mdc-text-blue-grey-200 ml-2 mr-1"></i> <label>Importe:</label> <span class="text-success">@fac.Fra[p].Imp</span>
+                                                                        }
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <i class="fa fa-hand-o-right mdc-text-blue-grey-200 ml-2 mr-1"></i> <label>Vencimiento:</label> <span class="text-success">@fac.Fra[p].Fe_Ve</span> <label>Forma:</label> <i class="fa fa-hand-o-right mdc-text-blue-grey-200 ml-2 mr-1"></i> <span class="text-success">@fac.Fra[p].Forma</span>
+                                                                        if (fac.Fra[p].Cue != "")
+                                                                        {
+                                                                            <i class="fa fa-hand-o-right mdc-text-blue-grey-200 ml-2 mr-1"></i> <label>Cuenta:</label> <span class="text-success">@fac.Fra[p].Cue</span>
+                                                                        }
+                                                                        <i class="fa fa-hand-o-right mdc-text-blue-grey-200 ml-2 mr-1"></i> <label>Cobrado:</label> <span class="text-success">@fac.Fra[p].Fe_Cob</span>
+                                                                        <i class="fa fa-hand-o-right mdc-text-blue-grey-200 ml-2 mr-1"></i> <label>Importe:</label> <span class="text-success">@fac.Fra[p].Imp</span>
+                                                                    }
+                                                                    @if (fac.Fra[p].Fe_Dev != "")
+                                                                    {
+                                                                        <i class='fa fa-exclamation-triangle mr-1 text-danger' aria-hidden='true' data-toggle="tooltip" data-placement="left" title="Recibo devuelto"></i>
+                                                                    }
+
+                                                                }
+                                                            </p>
+                                                        }
+                                                    </div>
+
+                                                </div>
+                                            }
+                                        </div>
+
+                                        break;
+
+                                    case 15: //Ocupación
+                                        Models.strSolicitudVinculado_Ocupacion obj = Newtonsoft.Json.JsonConvert.DeserializeObject<Models.strSolicitudVinculado_Ocupacion>(Model.Model.Soli.Vinc[t].Obj.ToString());
+                                        <div class="card mb-3">
+                                            <div class="card-header card-header-options">
+                                                <span>Curso nº @obj.ID_Curso2</span>
+                                            </div>
+                                            <div class="card-block p-0">
+
+                                                <div class="d-flex flex-column p-2">
+                                                    @if (obj.ID_Ocu2 > 0)
+                                                    {
+                                                        <p class="mb-0 fw-5 fs-0-8"><i class="fa fa-hand-o-right mdc-text-blue-grey-200 mr-1"></i> Curso: <a href="/modulo-cursos/cursos/curso-alumnos?ID_Curso2=@obj.ID_Curso2&ID_Ocu2=@obj.ID_Ocu2" target="_blank" class="fw-5" data-toggle="tooltip" data-placement="top" title="" data-original-title="Ir a la ocupación dentro del curso"><span class="text-azul">@obj.Curso</span></a> <i class="fa fa-hand-o-right mdc-text-blue-grey-200 ml-2 mr-1"></i> Ubicación: <span class="mdc-text-blue-grey-600">@obj.Ubi</span> <i class="fa fa-hand-o-right mdc-text-blue-grey-200 ml-2 mr-1"></i> Fecha: <span class="mdc-text-blue-grey-600">@obj.Fe_In</span> <i class="fa fa-hand-o-right mdc-text-blue-grey-200 ml-2 mr-1"></i> Inscritos: <span class="mdc-text-blue-grey-600">@obj.NumPla</span> <i class="fa fa-hand-o-right mdc-text-blue-grey-200 ml-2 mr-1"></i> Interesados: <span class="mdc-text-blue-grey-600">@obj.NumIns</span> <i class="fa fa-hand-o-right mdc-text-blue-grey-200 ml-2 mr-1"></i> Plaza: @obj.Plaza <i class="fa fa-hand-o-right mdc-text-blue-grey-200 ml-2 mr-1"></i> Nº de ocupación: <span class="mdc-text-blue-grey-600">@obj.ID_Ocu2</span></p>
+
+                                                        <hr class="mt-2 mb-2 w-100" />
+
+                                                        <div class="d-flex align-items-center">
+
+                                                            <div class="input-group input-group-sm mb-0 mr-2 col-3 p-0">
+                                                                <div class="input-group-prepend">
+                                                                    <span class="input-group-text input-group-text-auto">Cambiar al curso</span>
+                                                                </div>
+                                                                <input type="text" class="form-control form-control-sm" name="buscar" placeholder="Cambiar al curso" value="" id="ID_Curso2Nuevo">
+                                                                <span class="input-group-append">
+                                                                    <button type="submit" class="btn btn-primary btn-sm cambiar-curso-inscripcion-curso-tarea">Cambiar</button>
+                                                                </span>
+                                                            </div>
+
+                                                            <a href="#" class="ml-2 text-danger fw-5 eliminar-inscripcion-curso-tarea fs-0-8" id="eli_@obj.ID_Ocu2">Eliminar inscripción</a>
+                                                        </div>
+
+                                                    }
+                                                    else
+                                                    {
+                                                        <p class="mb-0 fw-5 fs-0-8"><span class="text-azul">@obj.Curso</span></p>
+                                                    }
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        break;
+
+                                    case 45: //Presupuestos
+                                        Models.strSolicitudVinculado_Presupuesto pres = Newtonsoft.Json.JsonConvert.DeserializeObject<Models.strSolicitudVinculado_Presupuesto>(Model.Model.Soli.Vinc[t].Obj.ToString());
+                                        <div class="card mb-3">
+                                            <div class="card-header card-header-options">
+                                                <span>Presupuesto nº <a href="/modulo-presupuestos/presupuestos/presupuesto?ID_Pres2=@pres.ID_Pres2" target="_blank">@pres.ID_Pres2</a></span>
+                                            </div>
+                                            <div class="card-block p-0">
+
+                                                <div class="d-flex flex-column p-2">
+                                                    <p class="mb-0 fw-5 fs-0-8"><i class="fa fa-hand-o-right mdc-text-blue-grey-200 mr-1"></i> Fecha: <span class="text-success">@pres.Fe_Al</span> - Creado: <span class="text-success">@pres.Usu</span> <i class="fa fa-hand-o-right mdc-text-blue-grey-200 ml-2 mr-1"></i> Asignado: <span class="text-success">@pres.UsuAsi</span> <i class="fa fa-hand-o-right mdc-text-blue-grey-200 ml-2 mr-1"></i> Empresa: <a href="http://extranet.gaolos.net/CGIPresupuesto.aspx?ID_Pres2=@pres.ID_Pres2" class="fw-5" target="_blank"><span class="text-azul">@pres.Emp</span></a><i class="fa fa-hand-o-right mdc-text-blue-grey-200 ml-2 mr-1"></i> Dirección: <span class="text-success">@pres.Dir - @pres.Pob - @pres.CP - @pres.Pro - @pres.Pai</span> <i class="fa fa-hand-o-right mdc-text-blue-grey-200 ml-2 mr-1"></i> Total: <span class="text-success">@pres.Total</span></p>
+                                                    @if (pres.Breve != "")
+                                                    {<p class="mb-0 fw-5">Breve: <span class="text-success">@pres.Breve</span></p>}
+                                                    @if (pres.ExpoPres != "")
+                                                    {<p class="mb-0 fw-5">Exposición: <span class="text-success">@pres.ExpoPres</span></p>}
+                                                    @if (pres.Obs != "")
+                                                    {<p class="mb-0 fw-5">Observaciones: <span class="text-success">@pres.Obs</span></p>}
+                                                    @if (pres.ObsPriv != "")
+                                                    {<p class="mb-0 fw-5">Observaciones privadas: <span class="text-success">@pres.ObsPriv</span></p>}
+                                                    @if (pres.Procesado == "")
+                                                    {
+                                                        <hr class="mb-2 mt-2 w-100" />
+                                                        <p class="mb-0 fw-5 fs-0-8"><i class="fa fa-hand-o-right mdc-text-blue-grey-200 mr-1"></i> Estado: <span class="text-azul">Pendiente de aceptar</span></p>
+                                                    }
+                                                    else
+                                                    {
+                                                        if (pres.Aceptado)
+                                                        {
+                                                            <hr class="mb-2 mt-2 w-100" />
+                                                            <p class="mb-0 fw-5 fs-0-8"><i class="fa fa-hand-o-right mdc-text-blue-grey-200 mr-1"></i> Estado: <span class="text-success">Aceptado <i class="fa fa-hand-o-right mdc-text-blue-grey-200 ml-2 mr-1"></i> @pres.Procesado</span></p>
+                                                            <p class="mb-0 fw-5 fs-0-8"><i class="fa fa-hand-o-right mdc-text-blue-grey-200 mr-1"></i> Fecha: <span class="text-success">@pres.Fe_Ace</span> <i class="fa fa-hand-o-right mdc-text-blue-grey-200 ml-2 mr-1"></i> Por: <span class="text-success">@pres.Us_Ace</span></p>
+                                                            if (pres.Fe_Rev != "")
+                                                            {
+                                                                <p class="mb-0 fw-5 fs-0-8"><i class="fa fa-hand-o-right mdc-text-blue-grey-200 mr-1"></i> Revisado: <span class="text-success">@pres.Fe_Rev</span> <i class="fa fa-hand-o-right mdc-text-blue-grey-200 ml-2 mr-1"></i> Por: <span class="text-success">@pres.Us_Rev</span></p>
+                                                            }
+                                                        }
+                                                        else
+                                                        {
+                                                            <hr class="mb-2 mt-2 w-100" />
+                                                            <p class="mb-0 fw-5 fs-0-8"><i class="fa fa-hand-o-right mdc-text-blue-grey-200 mr-1"></i> Estado: <span class="text-danger">No aceptado <i class="fa fa-hand-o-right mdc-text-blue-grey-200 ml-2 mr-1"></i> @pres.Procesado</span></p>
+                                                        }
+
+                                                    }
+                                                    @if (pres.Tels != null)
+                                                    {
+                                                        <p class="mb-0 fw-5 fs-0-8">
+                                                            <i class="fa fa-hand-o-right mdc-text-blue-grey-200 mr-1"></i> Telefonos:
+                                                            @{
+                                                                string tel = "";
+                                                                for (Int32 e = 0; e < pres.Tels.Length; e++)
+                                                                {
+                                                                    if (tel != "") { tel += " , "; }
+                                                                    tel += pres.Tels[e].datoS1;
+                                                                    if (pres.Tels[e].datoS2 != "") { tel += " (" + pres.Tels[e].datoS2 + ")"; }
+                                                                }
+                                                            }
+                                                            <span class="text-success">@Html.Raw(tel)</span>
+                                                        </p>
+                                                    }
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        break;
+                                    case 41: //Ordenes produccion
+                                        break;
+                                    case 48: //Calendario
+                                        break;
+
+                                }
+                            }
+                        }
+                    }
+
+                    @* Listado de twits *@
+
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="card card-table mb-3">
+                                <div class="card-header card-header-options">
+                                    <span>@ViewData["Title"]</span>
+                                </div>
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Tarea</th>
+                                            <th class="text-center w-10">Creada</th>
+                                            <th class="text-center w-10">Prevista</th>
+                                            <th class="text-center w-10">Realizada</th>
+                                            <th class="text-center w-10">Días</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @for (Int32 t = 0; t < Model.Model.det.Length; t++)
+                                        {
+                                            string str = " class='tr-no-priority' ";
+                                            string clssInfo = " class='text-info' ";
+                                            string clssInfo2 = " class='text-info fw-5' ";
+                                            if (Model.Model.det[t].Atraso) { str = " class='tr-priority' "; }
+                                            if (Model.Model.det[t].EsNota || Model.Model.det[t].Fe_Res != "") { clssInfo = ""; clssInfo2 = " class='fw-5' "; }
+                                            <tr @Html.Raw(str)>
+                                                <td>
+                                                    <div class="priority">
+                                                        <p class="fw-5 mb-0">@Html.Raw(Model.Model.det[t].Expo)</p>
+                                                        <p class="mb-0"><small class="mb-0 fw-5 text-info">@Model.Model.det[t].Usu</small></p>
+                                                        @if (Model.Model.MultiNeg)
+                                                        {
+                                                            <small class="mb-0 fw-5 text-danger">@Model.Model.det[t].Neg</small>
+                                                        }
+                                                    </div>
+                                                </td>
+                                                <td class="fw-5 text-center">
+                                                    <span>@Model.Model.det[t].Fe_Al</span> <small class="fw-5">@Model.Model.det[t].Ho_Al</small>
+                                                </td>
+                                                <td class="fw-5 text-center">
+                                                    @if (!Model.Model.det[t].EsNota)
+                                                    {
+                                                        <span @Html.Raw(clssInfo)>@Model.Model.det[t].Fe_Prev_Ini</span> <small @Html.Raw(clssInfo2)>@Model.Model.det[t].Ho_Prev_Ini</small>
+                                                    }
+                                                </td>
+                                                <td class="fw-5 text-center">
+                                                    @if (!Model.Model.det[t].Abierto && !Model.Model.det[t].EsNota)
+                                                    {
+                                                        <span>@Model.Model.det[t].Fe_Res</span> <small class="fw-5">@Model.Model.det[t].Ho_Res</small>
+                                                    }
+                                                    else
+                                                    {
+                                                        if (!Model.Model.det[t].EsNota)
+                                                        {
+                                                            if (!Model.Model.det[t].Atraso)
+                                                            {
+                                                                <i class='fa fa-clock-o mr-1 text-success' aria-hidden='true' data-toggle="tooltip" data-placement="top" title="" data-original-title="Tarea pendiente"></i>
+                                                            }
+                                                            else
+                                                            {
+                                                                <i class='fa fa-exclamation-triangle mr-1 text-danger' aria-hidden='true' data-toggle="tooltip" data-placement="top" title="" data-original-title="Tarea pendiente atrasada"></i>
+                                                            }
+                                                        }
+                                                        else
+                                                        {
+                                                            <i class='fa fa-sticky-note-o mr-1 text-success' aria-hidden='true' data-toggle="tooltip" data-placement="top" title="" data-original-title="Nota"></i>
+                                                        }
+                                                    }
+                                                </td>
+                                                <td class="text-center fw-5">
+                                                    @if (!Model.Model.det[t].EsNota)
+                                                    {
+                                                        @if (Model.Model.det[t].Atraso)
+                                                        {
+                                                            <p class="mb-0 text-danger">@Model.Model.det[t].Dias</p>
+                                                        }
+                                                        else
+                                                        {
+                                                            <p class="mb-0 text-success">@Model.Model.det[t].Dias</p>
+                                                        }
+                                                    }
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            @if (!Model.Model.Cerrada)
+                            {
+                                @* Replanificar *@
+                                <div class="card card-table mb-3">
+                                    <div class="card-header card-header-options">
+                                        <span>Replanificar tarea</span>
+                                    </div>
+                                    <div class="card-block p-3">
+                                        <textarea class="form-control mb-2" id="Expo" rows="5" placeholder="Exposición"></textarea>
+                                        <div class="form-inline justify-content-between mb-2">
+                                            <input type="text" class="form-control" id="Fe_Apa" placeholder="Fecha planificación">
+                                            <input type="text" class="form-control" id="Ho_In" placeholder="Hora" value="">
+                                        </div>
+                                        <input type="hidden" value="@Model.Model.ID_Twit" id="ID_Twit" />
+                                        <input type="hidden" value="@Model.Model.ID_TwitIni" id="ID_TwitIni" />
+                                        <select class="custom-select col-12 mb-2" id="Min">
+                                            <option value="">- aplazar rápido -</option>
+                                            <option value="30">30 minutos</option>
+                                            <option value="60">1 hora</option>
+                                            <option value="120">2 horas</option>
+                                            <option value="1440">1 dia</option>
+                                        </select>
+
+                                        @if (Model.Model.Negs.Length > 1)
+                                        {
+                                            <select class="custom-select col-12 mb-2 cambio-neg" id="RefNeg">
+                                                @{
+                                                    for (Int32 t = 0; t < Model.Model.Negs.Length; t++)
+                                                    {
+                                                        <option value="@Model.Model.Negs[t].id">@Model.Model.Negs[t].det</option>
+                                                    }
+                                                }
+                                            </select>
+                                        }
+                                        else
+                                        {
+                                            <input type="hidden" id="RefNeg" value="@Model.Model.Negs[0].id" />
+                                        }
+
+                                        <input type="text" class="form-control mb-2" value="" placeholder="Re-Asignar tarea a ..." id="findcarac1" name="findcarac1">
+
+                                        <input id="vfindcarac1" name="vfindcarac1" type="hidden" value="" /><input id="tfindcarac1" name="tfindcarac1" type="hidden" value="" />
+
+                                        <select class="custom-select col-12" id="Prio">
+                                            <option value="100">Prioridad media</option>
+                                            <option value="99">Prioridad alta</option>
+                                            <option value="101">Prioridad baja</option>
+                                        </select>
+
+
+                                        <div class="text-center">
+                                            <button type="button" class="btn btn-primary btn-sm mt-3 replanificar-tarea">Replanificar</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                @* Finalizar *@
+                                <div class="card card-table mb-3">
+                                    <div class="card-header card-header-options">
+                                        <span>Finalizar tarea</span>
+                                        <div class="card-actions">
+                                            <ul>
+                                                <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="card-block p-3">
+                                        <textarea class="form-control" id="ExpoFin" rows="5" placeholder="Exposición"></textarea>
+                                        <div class="text-center">
+                                            <button type="button" class="btn btn-primary btn-sm mt-3 cerrar-tarea">Finalizar</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                @if (Model.Model.ID_Tipos != null)
+                                {
+                                    @for (Int32 t = 0; t < Model.Model.ID_Tipos.Length; t++)
+                                    {
+                                        switch (Model.Model.ID_Tipos[t])
+                                        {
+                                            case 15:
+                                                @* Vincular a un curso *@
+                                                <div class="card card-table mb-3">
+                                                    <div class="card-header card-header-options">
+                                                        <span>Curso</span>
+                                                        <div class="card-actions">
+                                                            <ul>
+                                                                <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-block p-3">
+
+
+                                                        <div class="form-group">
+                                                            <label for="">Inscribir en el curso</label>
+                                                            <input type="text" class="form-control" value="" placeholder="Buscar por nº curso, fecha inicio, ubicación y curso" id="findcurso" name="findcurso">
+                                                            <input id="vfindcurso" name="vfindcurso" type="hidden" value="" /><input id="tfindcurso" name="tfindcurso" type="hidden" value="" />
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label>Precios</label>
+                                                            <select class="custom-select form-control-sm col-12" id="ID_Precio" disabled></select>
+                                                        </div>
+                                                        <div class="form-group mb-0">
+                                                            <label class="custom-control custom-checkbox mb-0">
+                                                                <input type="checkbox" class="custom-control-input" id="EnvCom" />
+                                                                <span class="custom-control-label">Enviar comunicación</span>
+
+                                                            </label>
+                                                        </div>
+                                                        <div class="text-center">
+                                                            <button type="button" class="btn btn-primary btn-sm mt-3 solicitud-inscripcion-curso">Inscribir</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                break;
+
+                                        }
+
+                                    }
+
+                                }
+
+
+                            }
+                            else
+                            {
+
+                                <div class="card card-table mb-3">
+                                    <div class="card-header card-header-options">
+                                        <span>Tarea cerrada</span>
+                                        <div class="card-actions">
+                                            <ul>
+                                                <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="card-block p-3">
+                                        <textarea class="form-control" id="rExpo" rows="5" placeholder="Motivo reapertura"></textarea>
+                                        <input type="hidden" id="rID_TwitIni" value="@Model.Model.ID_TwitIni" />
+                                        <input type="hidden" id="rID_Twit" value="@Model.Model.ID_Twit" />
+                                        <div class="text-center">
+                                            <button type="button" class="btn btn-primary btn-sm mt-3 reabrir-tarea">Re-abrir</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            @* Empresas relacionadas *@
+
+                            <div class="card card-table mb-3">
+                                <div class="card-header card-header-options">
+                                    <span>Empresas relacionadas</span>
+                                </div>
+
+                                <div class="p-3">
+                                    <div class="input-group input-group-sm">
+                                        <input type="text" class="form-control form-control-sm" id="empresa" placeholder="Buscar empresa">
+                                        <input id="vempresa" name="vempresa" type="hidden" value="" /><input id="tempresa" name="tempresa" type="hidden" value="" />
+                                        <span class="input-group-append">
+                                            <button type="button" class="btn btn-primary btn-sm relacionar-empresa">Relacionar</button>
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="card-block">
+                                    <table class="table table-striped" id="empresas-rel">
+                                        <thead>
+                                            <tr>
+                                                <th>Empresa</th>
+                                                <th class="text-center">Tipo</th>
+                                                <th class="text-center">Quitar</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (Model.Model.Emps != null)
+                                            {
+                                                @for (Int32 t = 0; t < Model.Model.Emps.Length; t++)
+                                                {
+                                                    <tr>
+                                                        <td>
+                                                            <span data-toggle="tooltip" data-placement="left" title="@Model.Model.Emps[t].datoS3 - @Model.Model.Emps[t].datoS2" class="mb-0"><small class="fw-5">@Model.Model.Emps[t].datoS1</small></span>
+                                                        </td>
+                                                        <td class="text-center">
+                                                            @if (Model.Model.Emps[t].datoB)
+                                                            {
+                                                                <small class="fw-5">Cliente</small>
+                                                            }
+                                                            else
+                                                            {
+                                                                <small class="fw-5">Proveedor</small>
+                                                            }
+                                                        </td>
+                                                        <td class="text-center"><a href="#" class="eliminar-empresa-rel" id="eliemprel_@Model.Model.Emps[t].datoI.ToString()"><i class="fa fa-times text-danger"></i></a></td>
+                                                    </tr>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <tr><td colspan="3"><p class="fw-5 mb-0 text-danger">No hay empresas relacionadas</p></td></tr>
+                                            }
+                                        </tbody>
+
+                                    </table>
+                                </div>
+
+                            </div>
+
+                            @* Calendario *@
+
+                            <div class="card card-table mb-3" style="min-height: 460px;">
+                                <div class="card-header card-header-options">
+                                    <span>Calendario</span>
+                                </div>
+                                <div class="card-block">
+                                    <table class="table-condensed table-striped w-100 calendario-tareas" id="Calendario-Tareas"></table>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (!Model.Model.Err.eserror)
+{
+    <script>
+    Calendario(@Html.Raw(DateTime.Now.Month), @Html.Raw(DateTime.Now.Year), 'Calendario-Tareas');
+    </script>
+}
+<script>
+    $(".modificarMail").click(function () {
+        $(".formModificaMail").toggle();;
+    });
+    $(".modificarSms").click(function () {
+        $(".formModificaSms").toggle();;
+    });
+</script>
+
+<style>
+    p {
+        margin-bottom: 0 !important;
+    }
+</style>

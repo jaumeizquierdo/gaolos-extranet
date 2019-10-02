@@ -1,0 +1,229 @@
+﻿@model ModuloElementosLibrary.ElementosCaracteristicasListadoViewModel
+@{
+    Layout = "~/Views/Shared/Modulo-Elementos/_Modulo-Elementos.cshtml";
+    ViewData["Title"] = "Elementos Características";
+    ViewData["ElementosTitle"] = "Elementos";
+    ViewData["ElementosCaracteristicas"] = "Editar Características";
+    ViewData["ElementosListado"] = "Características";
+}
+
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+
+                @if (Model.Model.Err.eserror)
+                {
+                    ViewData["err"] = Model.Model.Err.mensaje;
+                    @Html.Partial("AccesoDenegado");
+                }
+                else
+                {
+
+                    @* Buscar webs *@
+
+                    <div class="card mb-3">
+                        <div class="card-header card-header-options">
+                            <span>Buscar características</span>
+
+                            <div class="card-actions">
+                                <ul>
+                                    <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="card-block p-0">
+                            <form action="@ViewData["Form"]" method="post">
+                                <div class="d-flex justify-content-center align-items-center">
+                                    <div class="col-1 text-center box-border-right-light py-2">
+                                        <img src="/flaticons/notepad.svg" style="width: 100%;">
+                                    </div>
+                                    <div class="col-11">
+
+                                        <div class="row p-0">
+                                            <div class="col-12 p-0">
+                                                <div class="d-flex mb-0 px-3">
+
+                                                    <div class="input-group card-search-box">
+                                                        <input type="text" class="form-control" placeholder="Buscar por..." name="buscar" value="@ViewData["buscar"]">
+                                                        <input type="hidden" id="ID_Idi" value="1">
+                                                        <span class="input-group-append">
+                                                            <button class="btn btn-primary btn-sm" type="submit">BUSCAR</button>
+                                                        </span>
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-8">
+
+                            @* Resultado Búsqueda *@
+
+                            <div class="card card-table mb-3">
+                                <div class="card-header card-header-options">
+                                    <span>@ViewData["ElementosListado"]</span>
+                                    <div class="input-group input-group-sm col-5 mr-0 pr-0">
+                                        <input type="text" class="form-control form-control-sm" id="nueva-carac" placeholder="Nueva característica" maxlength="100">
+                                        <span class="input-group-append">
+                                            <button type="button" class="btn btn-primary btn-sm elem-carac-nueva">Nueva</button>
+                                        </span>
+                                    </div>
+
+                                </div>
+                                <div class="card-block">
+
+                                    <form>
+                                        <table class="table table-striped table-select permisos" id="tabla-permisos">
+                                            <thead>
+                                                <tr>
+                                                    <th class="w-10">ID <a href="#" class="sort-active"><i class="fa fa-chevron-down"></i></a><a href="#"><i class="fa fa-chevron-up"></i></a></th>
+                                                    <th>Característica <a href="#"><i class="fa fa-chevron-down"></i></a><a href="#"><i class="fa fa-chevron-up"></i></a></th>
+                                                    <th>Observación</th>
+                                                    <th class="w-10 text-center">Uso <i class="fa fa-exclamation-circle mr-1" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="Nº de plantillas en las que se usa esta característica"></i></th>
+                                                    <th class="w-10 text-center">Libre</th>
+                                                    <th class="w-10 text-center">Eli.</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @if (Model.Model.dat != null)
+                                                {
+                                                    @for (int i = 0; i < Model.Model.dat.Length; i++)
+                                                    {
+                                                        <tr>
+                                                            <td>
+                                                                <p class="mt-0 mb-0">@Model.Model.dat[i].datoI</p>
+                                                            </td>
+                                                            <td>
+                                                                <p class="fw-5 mb-0"><a href="#" class="elem-carac-sel fw-5" id="elem-carac-sel_@Model.Model.dat[i].datoI">@Model.Model.dat[i].datoS1</a></p>
+                                                            </td>
+                                                            <td>
+                                                                <p class="m-0">@Model.Model.dat[i].datoS2</p>
+                                                            </td>
+                                                            <td class="text-center">
+                                                                <p class="m-0">@Model.Model.dat[i].datoS4</p>
+                                                            </td>
+                                                            <td class="text-center">
+                                                                <p class="m-0">@Model.Model.dat[i].datoS3</p>
+                                                            </td>
+                                                            <td class="text-center">
+                                                                <p class="m-0 fw-5"><a href="#" class="elem-carac-eli" id="eli_@Model.Model.dat[i].datoI"><i class="fa fa-times text-danger"></i></a></p>
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <tr><td colspan="4"><p class='fw-5 text-danger mb-0'><i class='fa fa-exclamation-circle mr-1'></i> No hay resultados</p></td></tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </form>
+                                </div>
+                            </div>
+
+                            @* Resultado Búsqueda Paginador *@
+
+                            <nav aria-label="Búsqueda Listado" class="mb-3">
+                                @Html.Raw(Model.Model.Paginador)
+                            </nav>
+
+                        </div>
+
+                        <div class="col-4">
+
+                            @* Sin datos *@
+                            <div class="card card-table mb-3" id="versininfo">
+                                <div class="card-header card-header-options">
+                                    <span>Información</span>
+                                    <div class="card-actions">
+                                        <ul>
+                                            <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="card-block" role="tablist" aria-multiselectable="true">
+                                    <div class="text-center mt-4 mb-4 p-5 bloque-sin-informacion">
+                                        <img src="~/flaticons/chat.svg" style="width: 25%;">
+                                        <p class="pt-4 fw-5">Si clica encima del nombre de la característica, le aparecerán todas las propiedades.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card card-table mb-3" style="display:none;" id="elem-det">
+                                <div class="card-header card-header-options">
+                                    <span>@ViewData["ElementosCaracteristicas"]</span>
+                                    @Html.Partial("PanelActions")
+                                </div>
+                                <div class="card-block" role="tablist" aria-multiselectable="true">
+                                    <form class="p-3 mb-0">
+                                        <div class="form-group">
+                                            <input type="hidden" id="elementoCaracteristica-id">
+                                            <input type="text" class="form-control form-control-sm" id="elementoCaracteristica" placeholder="Característica" maxlength="100">
+                                        </div>
+                                        <div class="form-group">
+                                            <textarea class="form-control form-control-sm" id="elementoObservaciones" rows="5" placeholder="Observaciones"></textarea>
+                                        </div>
+                                        <div class="form-group mb-0">
+                                            <label class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" id="elementolibre" disabled>
+                                                <span class="custom-control-label">Libre</span>
+                                            </label>
+                                        </div>
+                                        <div class="form-group mb-0 text-center">
+                                            <button type="button" class="btn btn-primary btn-sm elem-carac-guardar">Guardar</button>
+                                        </div>
+                                    </form>
+                                    <hr class="mt-0 mb-0" />
+                                    <table class="table table-striped table-condensed mt-0">
+                                        <thead>
+                                            <tr>
+                                                <th class="w-50">Valor</th>
+                                                <th class="w-25">Valor ok</th>
+                                                <th class="w-10">Orden</th>
+                                                <th class="w-10">Guardar</th>
+                                                <th class="w-10 text-center"><i class="fa fa-times"></i></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="valores"></tbody>
+                                    </table>
+                                    <hr class="mt-0" />
+                                    <div class="form-group text-center px-3">
+                                        <div class="input-group input-group-sm">
+                                            <input type="text" class="form-control form-control-sm" id="nuevo-valor" placeholder="Nuevo valor" maxlength="50">
+                                            <span class="input-group-append">
+                                                <button type="button" class="btn btn-primary btn-sm elem-carac-valor-nuevo">Añadir</button>
+                                            </span>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

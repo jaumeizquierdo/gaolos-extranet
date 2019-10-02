@@ -1,0 +1,531 @@
+﻿@model ModuloAsistenciasLibrary.ModuloAsisnteicasAsistenciasComisionarFacturaViewModel
+
+@{
+    Layout = "~/Views/Shared/Modulo-Asistencias/_Modulo-Asistencias.cshtml";
+    ViewData["Title"] = "Comisionar";
+    ViewData["Message"] = "Modulo de Asistencias - Gaolos App v2018";
+}
+
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+                @if (Model.Model.Err.eserror)
+                {
+                    ViewData["err"] = Model.Model.Err.mensaje;
+                    @Html.Partial("AccesoDenegado");
+                }
+                else
+                {
+
+
+                    <div class="row">
+                        <div class="col-8">
+
+                            @* Facturas *@
+
+                            <div class="card card-table mb-3">
+                                <div class="card-header card-header-options">
+                                    <span>Factura</span>
+                                </div>
+                                <div class="card-block p-0">
+                                    <div class="d-flex py-2">
+                                        <div class="col-6 p-0 px-2">
+                                            <div class="box-labels">
+
+                                                <div class="d-flex align-items-center align-self-stretch box-labels-divider">
+                                                    <label class="m-0 box-label-label align-self-stretch">Factura</label>
+                                                    <p class="mb-0 px-2">@Model.Model.Fac</p>
+                                                </div>
+
+                                                <div class="d-flex align-items-center align-self-stretch box-labels-divider">
+                                                    <label class="m-0 box-label-label align-self-stretch">Fecha</label>
+                                                    <p class="mb-0 px-2">@Model.Model.Fe_Fa</p>
+                                                </div>
+
+                                                <div class="d-flex align-items-center align-self-stretch box-labels-divider">
+                                                    <label class="m-0 box-label-label align-self-stretch">Total</label>
+                                                    <p class="mb-0 px-2">@Model.Model.Total</p>
+                                                </div>
+
+                                                <div class="d-flex align-items-center align-self-stretch box-labels-divider">
+                                                    <label class="m-0 box-label-label align-self-stretch">Empresa</label>
+                                                    <p class="mb-0 px-2">@Model.Model.Emp <a href="/modulo-clientes/clientes/cliente?ID_Cli2=@Model.Model.ID_Cli2" target="_blank" class="fw-5">(@Model.Model.ID_Cli2)</a></p>
+                                                </div>
+
+                                                <div class="d-flex align-items-center align-self-stretch">
+                                                    <label class="m-0 box-label-label align-self-stretch">Tags</label>
+                                                    @if (Model.Model.CliNuevo)
+                                                    {
+                                                        <span class="badge badge-pill badge-danger p-2 m-2 fw-6 fs-0-7">CLIENTE NUEVO</span>
+                                                    }
+                                                    @if (Model.Model.Man)
+                                                    {
+                                                        <span class="badge badge-pill badge-danger p-2 m-2 fw-6 fs-0-7">MANTENIMIENTO</span>
+                                                    }
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-6 p-0 px-2">
+
+                                            <div class="box-labels mb-3">
+                                                <table class="table table-striped">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="text-center w-30">Fecha vencimiento</th>
+                                                            <th class="text-center w-30">Cobrado</th>
+                                                            <th class="text-right">Importe</th>
+
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="lis-det">
+                                                        @if (Model.Model.Venci != null)
+                                                        {
+                                                            @for (Int32 t = 0; t < Model.Model.Venci.Length; t++)
+                                                            {
+                                                                <tr>
+                                                                    <td class="text-center">@Model.Model.Venci[t].datoS1</td>
+                                                                    <td class="text-center">@Model.Model.Venci[t].datoS3</td>
+                                                                    <td class="text-right">@Model.Model.Venci[t].datoS2</td>
+                                                                </tr>
+
+                                                            }
+                                                        }
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+                                            <div class="box-labels">
+                                                @if (Model.Model.EmpRel != "")
+                                                {
+                                                    <div class="d-flex align-items-center align-self-stretch box-labels-divider">
+                                                        <label class="m-0 box-label-label align-self-stretch">@Model.Model.EmpRelTipo</label>
+                                                        <p class="mb-0 px-2">@Model.Model.EmpRel <a href="/modulo-clientes/clientes/cliente?ID_Cli2=@Model.Model.ID_Cli2Rel" target="_blank" class="fw-5">(@Model.Model.ID_Cli2Rel)</a></p>
+                                                    </div>
+
+                                                    <div class="d-flex align-items-center align-self-stretch">
+                                                        <label class="m-0 box-label-label align-self-stretch">Comisión</label>
+                                                        <p class="mb-0 px-2">@Model.Model.ComPorRel %</p>
+                                                    </div>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            @if (Model.Model.Alb != null)
+                            {
+                                for (Int32 t = 0; t < Model.Model.Alb.Length; t++)
+                                {
+                                    if (Model.Model.Alb[t].ID_Pres2 != "")
+                                    {
+                                        @* Presupuestos *@
+
+                                        <div class="card mb-3">
+                                            <div class="card-header card-header-options">
+                                                <span>Presupuesto</span>
+                                            </div>
+                                            <div class="card-block p-2">
+
+                                                <div class="d-flex mb-1">
+                                                    <div class="col-4 p-0 pr-2">
+                                                        <div class="box-labels d-flex align-items-center align-self-stretch">
+                                                            <label class="m-0 box-label-label align-self-stretch">Presupuesto</label>
+                                                            <p class="mb-0 px-2">@Model.Model.Alb[t].ID_Pres2</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-4 p-0 pr-2">
+                                                        <div class="box-labels d-flex align-items-center align-self-stretch">
+                                                            <label class="m-0 box-label-label align-self-stretch">Realizado</label>
+                                                            <p class="mb-0 px-2">@Model.Model.Alb[t].Pres2Rea</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-4 p-0">
+                                                        <div class="box-labels d-flex align-items-center align-self-stretch">
+                                                            <label class="m-0 box-label-label align-self-stretch">Asignado</label>
+                                                            <p class="mb-0 px-2">@Model.Model.Alb[t].Pres2Asi</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="d-flex">
+                                                    <div class="col-4 p-0 pr-2">
+                                                        <div class="box-labels d-flex align-items-center align-self-stretch">
+                                                            <label class="m-0 box-label-label align-self-stretch">Comercial</label>
+                                                            <p class="mb-0 px-2">@Model.Model.Alb[t].Pres2Com</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-4 p-0 pr-2">
+                                                        <div class="box-labels d-flex align-items-center align-self-stretch">
+                                                            <label class="m-0 box-label-label align-self-stretch">Aceptado</label>
+                                                            <p class="mb-0 px-2">@Model.Model.Alb[t].Pres2Acep</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-4 p-0">
+                                                        <div class="box-labels d-flex align-items-center align-self-stretch">
+                                                            <label class="m-0 box-label-label align-self-stretch">Total</label>
+                                                            <div class="text-right"><p class="mb-0 px-2">@Model.Model.Alb[t].Pres2Total</p></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+
+
+                                    }
+                                    else
+                                    {
+                                        <div class="card mb-3">
+                                            <div class="card-block">
+                                                <div class="d-flex align-content-center">
+                                                    <i class="material-icons mr-2 text-danger">announcement</i> <span class="text-danger fw-5">No hay presupuesto vinculado</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+
+
+                                    @* Albaran *@
+                                    <div class="card card-table mb-3">
+                                        <div class="card-header card-header-options">
+                                            <span>Albarán</span>
+                                        </div>
+                                        <div class="card-block p-0">
+
+                                            <div class="d-flex flex-column py-2">
+
+                                                <div class="d-flex mb-1">
+                                                    <div class="col-6 p-0 pr-2 pl-2">
+                                                        <div class="box-labels d-flex align-items-center align-self-stretch">
+                                                            <label class="m-0 box-label-label box-label-label-auto align-self-stretch">Albarán</label>
+                                                            <p class="mb-0 px-2"><a href="#" class="fw-5">@Model.Model.Alb[t].ID_Al2</a></p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-6 p-0 pr-2">
+                                                        <div class="box-labels d-flex align-items-center align-self-stretch">
+                                                            <label class="m-0 box-label-label box-label-label-auto align-self-stretch">Comisión @Model.Model.EmpRelTipo</label>
+                                                            <p class="mb-0 px-2">@Model.Model.ComPorRel %</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="d-flex mb-1">
+                                                    <div class="col-2 p-0 pr-2 pl-2">
+                                                        <div class="box-labels d-flex align-items-center align-self-stretch">
+                                                            <label class="m-0 box-label-label box-label-label-auto align-self-stretch">Asistencia</label>
+                                                            <p class="mb-0 px-2"><a href="/modulo-asistencias/historial/asistencia?ID_Asis2=@Model.Model.Alb[t].ID_Asis2" target="_blank" class="fw-5">@Model.Model.Alb[t].ID_Asis2</a></p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-4 p-0 pr-2">
+                                                        <div class="box-labels d-flex align-items-center align-self-stretch">
+                                                            <label class="m-0 box-label-label box-label-label-auto align-self-stretch">Tipo</label>
+                                                            <p class="mb-0 px-2">@Model.Model.Alb[t].AsisTipo</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-6 p-0 pr-2">
+                                                        <div class="box-labels d-flex align-items-center align-self-stretch">
+                                                            <label class="m-0 box-label-label box-label-label-auto align-self-stretch">Dirección</label>
+                                                            <p class="mb-0 px-2">@Model.Model.Alb[t].AsisDir</p>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                </div>
+
+                                                <div class="d-flex mb-1">
+                                                    <div class="col-3 p-0 pr-2 pl-2">
+                                                        <div class="box-labels d-flex align-items-center align-self-stretch">
+                                                            <label class="m-0 box-label-label box-label-label-auto align-self-stretch">1º Técnico</label>
+                                                            <div class="text-right"><p class="mb-0 px-2">@Model.Model.Alb[t].AsisPrimUsu</p></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-3 p-0 pr-2">
+                                                        <div class="box-labels d-flex align-items-center align-self-stretch">
+                                                            <label class="m-0 box-label-label box-label-label-auto align-self-stretch">Parte</label>
+                                                            <p class="mb-0 px-2"><a href="/modulo-asistencias/historial/asistencia?ID_Asis2=@Model.Model.Alb[t].ID_Asis2" target="_blank" class="fw-5">@Model.Model.Alb[t].ID_Parte2</a></p>
+                                                        </div>
+                                                    </div>
+                                                    @if (Model.Model.Alb[t].ID_Man2 != "")
+                                                    {
+                                                        <div class="col-3 p-0 pr-2">
+                                                            <div class="box-labels d-flex align-items-center align-self-stretch">
+                                                                <label class="m-0 box-label-label box-label-label-auto align-self-stretch">Mantenimiento</label>
+                                                                <p class="mb-0 px-2"><a href="/modulo-mantenimientos/mantenimientos/mantenimiento?ID_Man2=@Model.Model.Alb[t].ID_Man2" target="_blank" class="fw-5">@Model.Model.Alb[t].ID_Man2</a></p>
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                    @if (Model.Model.Alb[t].ID_ManPlan2 != "")
+                                                    {
+                                                        <div class="col-3 p-0 pr-2">
+                                                            <div class="box-labels d-flex align-items-center align-self-stretch">
+                                                                <label class="m-0 box-label-label box-label-label-auto align-self-stretch">Planificación</label>
+                                                                <p class="mb-0 px-2"><a href="/modulo-mantenimientos/mantenimientos/mantenimiento?ID_Man2=@Model.Model.Alb[t].ID_Man2" target="_blank" class="fw-5">@Model.Model.Alb[t].ID_ManPlan2</a></p>
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                </div>
+
+                                                <div class="d-flex mt-2 mb-2">
+                                                    <div class="col-12 p-0 pr-2 pl-2">
+                                                        <div class="box-labels">
+                                                            <table class="table table-striped">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th class="">Exposición</th>
+                                                                        <th class="text-center"><div class="d-flex align-items-center">CT <a href="#" role="button" data-container="body" data-toggle="popover" data-placement="top" data-trigger="focus" title="Cantidad" data-content="Cantidad"><i class="fa fa-info ml-1"></i></a></div></th>
+                                                                        <th class="text-right"><div class="d-flex align-items-center">CS <a href="#" role="button" data-container="body" data-toggle="popover" data-placement="top" data-trigger="focus" title="Coste" data-content="Coste / Coste final"><i class="fa fa-info ml-1"></i></a></div></th>
+                                                                        <th class="text-center"><div class="d-flex align-items-center"><a href="#" role="button" data-container="body" data-toggle="popover" data-placement="top" data-trigger="focus" title="Modificar coste" data-content="Modificar coste"><i class="fa fa-info ml-1"></i></a></div></th>
+                                                                        <th class="text-right"><div class="d-flex align-items-center">PR <a href="#" role="button" data-container="body" data-toggle="popover" data-placement="top" data-trigger="focus" title="Precio" data-content="Precio / Precio final"><i class="fa fa-info ml-1"></i></a></div></th>
+                                                                        <th class="text-right"><div class="d-flex align-items-center">BB <a href="#" role="button" data-container="body" data-toggle="popover" data-placement="top" data-trigger="focus" title="Beneficio bruto" data-content="Beneficio bruto"><i class="fa fa-info ml-1"></i></a></div></th>
+                                                                        <th class="text-right"><div class="d-flex align-items-center">CM <a href="#" role="button" data-container="body" data-toggle="popover" data-placement="top" data-trigger="focus" title="Comisión (€)" data-content="Comisión empresa relacionada"><i class="fa fa-info ml-1"></i></a></div></th>
+                                                                        <th class="text-right"><div class="d-flex align-items-center">BE2 <a href="#" role="button" data-container="body" data-toggle="popover" data-placement="top" data-trigger="focus" title="Beneficio bruto 2" data-content="Precio final - Coste final - Comisión empresa relacionada"><i class="fa fa-info ml-1"></i></a></div></th>
+                                                                        <th class="text-right"><div class="d-flex align-items-center">BE2/u <a href="#" role="button" data-container="body" data-toggle="popover" data-placement="top" data-trigger="focus" title="Base 2" data-content="Precio final - Coste final - Comisión empresa relacionada "><i class="fa fa-info ml-1"></i></a></div></th>
+                                                                        <th class="text-right"><div class="d-flex align-items-center">BA2 <a href="#" role="button" data-container="body" data-toggle="popover" data-placement="top" data-trigger="focus" title="Base 2" data-content="Precio final - Comisión empresa relacionada"><i class="fa fa-info ml-1"></i></a></div></th>
+
+                                                                        <th class="text-right"><div class="d-flex align-items-center">CO <a href="#" role="button" data-container="body" data-toggle="popover" data-placement="top" data-trigger="focus" title="Comisión Operario" data-content="Comisión Operario"><i class="fa fa-info ml-1"></i></a></div></th>
+                                                                        <th class="text-center"><a href="#" class="fw-5">Sel</a></th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    @for (Int32 b = 0; b < Model.Model.Alb[t].det.Length; b++)
+                                                                    {
+                                                                        <tr id="tr_@Model.Model.Alb[t].det[b].ID_De_Al" class="findtr">
+                                                                            <td class="">
+                                                                                <p class="mb-0">@Model.Model.Alb[t].det[b].Expo</p>
+                                                                                @if (Model.Model.Alb[t].det[b].Codigo != "")
+                                                                                {
+                                                                                    <p class="mb-0"><small>@Model.Model.Alb[t].det[b].Codigo</small></p>
+                                                                                }
+                                                                            </td>
+                                                                            <td class="text-center">@Model.Model.Alb[t].det[b].Can</td>
+                                                                            <td class="text-right">
+                                                                                <p class="mb-0">@Model.Model.Alb[t].det[b].Coste €</p>
+                                                                                <p class="mb-0"><small class="fs-0-7">@Model.Model.Alb[t].det[b].CosteF €</small></p>
+                                                                            </td>
+                                                                            <td class="text-center">
+                                                                                @if (!Model.Model.Alb[t].det[b].Lock)
+                                                                                {
+                                                                                <a href="#" class="popoverModificarCoste" data-container="body" data-toggle="popover" data-placement="top" title="Modificar coste" data-html="true" data-popover-content="#modificarCosteContent"><i class="fa fa-edit"></i></a>
+                                                                                }
+                                                                            </td>
+                                                                            <td class="text-right">
+                                                                                <p class="mb-0">@Model.Model.Alb[t].det[b].Precio €</p>
+                                                                                <p class="mb-0"><small class="fs-0-7">@Model.Model.Alb[t].det[b].PrecioF €</small></p>
+                                                                            </td>
+                                                                            <td class="text-right">@Model.Model.Alb[t].det[b].Benef €</td>
+                                                                            <td class="text-right">@Model.Model.Alb[t].det[b].ComiRel €</td>
+                                                                            <td class="text-right">@Model.Model.Alb[t].det[b].Benef2 €</td>
+                                                                            <td class="text-right">@Model.Model.Alb[t].det[b].Be2u €</td>
+                                                                            <td class="text-right">@Model.Model.Alb[t].det[b].Base2 €</td>
+                                                                            <td class="text-right">@Model.Model.Alb[t].det[b].ComOpe</td>
+                                                                            @{
+                                                                                string txt = "sel_" + Model.Model.Alb[t].ID_Al2 + "_" + Model.Model.Alb[t].det[b].ID_De_Al;
+                                                                            }
+                                                                            <td class="text-center">
+                                                                                @if (!Model.Model.Alb[t].det[b].Lock)
+                                                                                {
+                                                                                    <input type="radio" name="sel" class="seldet" id="@Html.Raw(txt)" />
+                                                                                }
+                                                                            </td>
+                                                                        </tr>
+                                                                    }
+                                                                </tbody>
+                                                            </table>
+
+                                                            <!-- Popover modificar coste -->
+
+                                                            <div id="modificarCosteContent" class="d-none">
+                                                                <div class="input-group input-group-sm mb-0 mr-2">
+                                                                    <div class="input-group-prepend">
+                                                                        <div class="input-group-text input-group-text-auto">€</div>
+                                                                    </div>
+                                                                    <input type="text" class="form-control" placeholder="" id="" value="">
+                                                                    <div class="input-group-append">
+                                                                        <button type="button" class="btn btn-primary btn-sm">Guardar</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="card mb-3">
+                                        <div class="card-header card-header-options">
+                                            <span>Cerrar comisión</span>
+                                        </div>
+                                        <div class="card-block p-3">
+                                            <div class="d-flex justify-content-center">
+                                                <a href="#" class="btn btn-sm btn-primary btn-danger comi-cerrar">Cerrar comisión</a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                }
+
+                            }
+
+                        </div>
+                        <div class="col-4">
+
+                            <div class="card-info-wrapper w-100" id="sindatos">
+                                <div class="card-info">
+                                    <div class="d-flex justify-content-center align-items-center">
+                                        <img src="https://image.flaticon.com/icons/svg/609/609998.svg" style="width: 20%;">
+                                        <p class="mb-2 ml-3">Seleccione el detalle de la factura a comisionar</p>
+                                    </div>
+                                </div>
+                                <svg class="card-info-triangle">
+                                    <polygon points="0,0 200,0 0,200" fill="currentColor"></polygon>
+                                </svg>
+                            </div>
+
+                            <div id="verdet" style="display: none;">
+
+                                <div class="card card-table mb-3">
+                                    <div class="card-header card-header-options">
+                                        <span id="spandet">Exposición</span>
+                                        <input type="hidden" id="ID_Fac" value="@ViewData["ID_Fac"]" />
+                                        <input type="hidden" id="tmpID_Us_Asi" value="@ViewData["ID_Us_Asi"]" />
+                                        <input type="hidden" id="tmppag" value="@ViewData["pag"]" />
+                                        <input type="hidden" id="tmpFe_Fi" value="@ViewData["Fe_Fi"]" />
+                                        <input type="hidden" id="ID_De_Al" value="0" />
+                                        <input type="hidden" id="ID_Al2" value="0" />
+                                    </div>
+                                    <div class="card-block p-0">
+
+                                        <div class="d-flex my-2">
+                                            <div class="col-12 px-2">
+                                                <div class="box-labels d-flex align-items-center align-self-stretch">
+                                                    <label class="m-0 box-label-label align-self-stretch">Exposición</label>
+                                                    <p class="mb-0 px-2" id="Expo"></p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex mb-2">
+                                            <div class="col-6 p-0 pr-2 pl-2">
+                                                <div class="box-labels d-flex align-items-center align-self-stretch justify-content-between">
+                                                    <label class="m-0 box-label-label box-label-label-auto align-self-stretch">Beneficio 2</label>
+                                                    <p class="mb-0 px-2"><span id="Be2"></span> €</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-6 p-0 pr-2">
+                                                <div class="box-labels d-flex align-items-center align-self-stretch justify-content-between">
+                                                    <label class="m-0 box-label-label box-label-label-auto align-self-stretch">Base 2</label>
+                                                    <p class="mb-0 px-2"><span id="Ba2"></span> €</p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex mt-2 mb-2">
+                                            <div class="col-12 p-0 pr-2 pl-2">
+                                                <div class="box-labels">
+                                                    <table class="table table-striped">
+                                                        <thead>
+                                                            <tr>
+                                                                <th class="w-30">Operario</th>
+                                                                <th class="text-center">Beneficio 2</th>
+                                                                <th class="text-center">Base 2</th>
+                                                                <th class="text-center">Importe</th>
+                                                                <th class="text-center"><i class="fa fa-times"></i></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="lis-com"></tbody>
+                                                    </table>
+                                                    <div class="d-flex justify-content-center box-guardar">
+                                                        <a href="#" target="_blank" class="btn btn-sm btn-primary guardar-comi">Guardar</a>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex mb-2">
+                                            <div class="col-12 p-0 pr-2 pl-2">
+                                                <div class="box-labels d-flex align-items-center align-self-stretch justify-content-between">
+                                                    <label class="m-0 box-label-label box-label-label-auto align-self-stretch">Total</label>
+                                                    <p class="mb-0 px-2 fw-5" id="comi"></p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex mb-2">
+                                            <div class="col-12 p-0 pr-2 pl-2">
+                                                <div class="box-labels d-flex align-items-center align-self-stretch justify-content-between">
+                                                    <label class="m-0 box-label-label box-label-label-auto align-self-stretch">Beneficio Total</label>
+                                                    <p class="mb-0 px-2 fw-5" id="benef"></p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <hr class="divider" />
+
+                                        <div class="d-flex mb-3">
+                                            <div class="col-12 p-0 px-2">
+                                                <div class="input-group input-group-sm mb-0">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">Añadir operario</span>
+                                                    </div>
+                                                    <input type="text" class="form-control form-control-sm ui-autocomplete-input" placeholder="Añadir operario" name="opecom" id="opecom" value="">
+                                                    <input type="hidden" value="" name="vopecom" id="vopecom" />
+                                                    <input type="hidden" value="" name="topecom" id="topecom" />
+                                                    <div class="input-group-append">
+                                                        <button class="btn btn-primary btn-aux addopecom" type="button">Añadir</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                }
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('.popoverModificarCoste').popover({
+            container: 'body',
+            html: true,
+            content: function () {
+                var clone = $($(this).data('popover-content')).clone(true).removeClass('d-none');
+                return clone;
+            }
+        });
+
+    })
+    
+</script>

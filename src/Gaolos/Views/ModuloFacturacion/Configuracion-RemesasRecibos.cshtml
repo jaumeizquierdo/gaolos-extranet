@@ -1,0 +1,247 @@
+﻿@model ModuloFacturacionLibrary.ModuloFacturacionConfiguracionRecibosRemesasViewModel
+@{
+    Layout = "~/Views/Shared/Modulo-Facturacion/_Facturacion-Configuracion.cshtml";
+    ViewData["Title"] = "Configuración Recibos y Remesas";
+}
+
+<div class="main-content m-0" id="widget-area">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+
+                @if (Model.Model.Err.eserror)
+                {
+                    ViewData["err"] = Model.Model.Err.mensaje;
+                    @Html.Partial("AccesoDenegado");
+                }
+                else
+                {
+
+                    <div class="card mb-3">
+                        <div class="card-block card-info-header card-info-header-modulo p-0">
+                            <div class="d-flex justify-content-center align-items-center">
+                                <div class="col-1 pb-2 pt-2 d-flex justify-content-center align-items-center">
+                                    <img src="~/flaticons/pie-chart-1.svg" style="width: 64px">
+                                </div>
+                                <div class="col-11 pt-2 pb-2 box-border-left-light">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="card-info-desc d-flex flex-column py-3">
+                                            <h5 class="fw-5 title-section">Recibos y Remesas</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="card mb-3">
+
+                                <div class="card-header card-header-options">
+                                    <span>Recibos valores predeterminados</span>
+                                </div>
+
+                                <div class="card-block p-0">
+
+                                    <div class="p-2">
+                                        <div class="d-flex align-items-center mb-1">
+                                            <div class="input-group input-group-sm mb-0">
+                                                <div class="input-group-prepend">
+                                                    <label class="input-group-text" for="">Cuenta</label>
+                                                </div>
+
+                                                <select class="custom-select" id="ID_Cue">
+                                                    @if (Model.Model.Cues != null)
+                                                    {
+                                                        for (Int32 t = 0; t < Model.Model.Cues.Length; t++)
+                                                        {
+                                                            if (Model.Model.Cues[t].id == Model.Model.ID_Cue)
+                                                            {
+                                                                <option value="@Model.Model.Cues[t].id" selected>@Model.Model.Cues[t].det</option>
+                                                            }
+                                                            else
+                                                            {
+                                                                <option value="@Model.Model.Cues[t].id">@Model.Model.Cues[t].det</option>
+                                                            }
+                                                        }
+                                                    }
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex align-items-center mb-1">
+                                            <div class="input-group input-group-sm mb-0">
+                                                <div class="input-group-prepend">
+                                                    <label class="input-group-text" for="">Norma</label>
+                                                </div>
+
+                                                <select class="custom-select" id="ID_Norma">
+                                                    @if (Model.Model.Normas != null)
+                                                    {
+                                                        for (Int32 t = 0; t < Model.Model.Normas.Length; t++)
+                                                        {
+                                                            if (Model.Model.Normas[t].id == Model.Model.ID_Norma)
+                                                            {
+                                                                <option value="@Model.Model.Normas[t].id" selected>@Model.Model.Normas[t].det</option>
+                                                            }
+                                                            else
+                                                            {
+                                                                <option value="@Model.Model.Normas[t].id">@Model.Model.Normas[t].det</option>
+                                                            }
+                                                        }
+                                                    }
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex align-items-center mb-1">
+                                            <div class="input-group input-group-sm mb-0">
+                                                <div class="input-group-prepend">
+                                                    <label class="input-group-text" for="">Tipo</label>
+                                                </div>
+
+                                                <select class="custom-select" id="ID_Tipo">
+                                                    @if (Model.Model.Tipos != null)
+                                                    {
+                                                        for (Int32 t = 0; t < Model.Model.Tipos.Length; t++)
+                                                        {
+                                                            if (Model.Model.Tipos[t].id == Model.Model.ID_Tipo)
+                                                            {
+                                                                <option value="@Model.Model.Tipos[t].id" selected>@Model.Model.Tipos[t].det</option>
+                                                            }
+                                                            else
+                                                            {
+                                                                <option value="@Model.Model.Tipos[t].id">@Model.Model.Tipos[t].det</option>
+                                                            }
+                                                        }
+                                                    }
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <hr class="mb-2 mt-2" />
+
+                                        <div class="d-flex align-items-center">
+                                            @if (Model.Model.RecRemPropDia)
+                                            {
+                                                <input type="checkbox" class="mr-2" id="RecRemPropDia" checked>
+                                            }
+                                            else
+                                            {
+                                                <input type="checkbox" class="mr-2" id="RecRemPropDia">
+                                            }
+                                            <span class="fw-5">Proponer fecha del día</span>
+                                        </div>
+
+                                        <div class="d-flex align-items-center">
+                                            @if (Model.Model.RecRemNoBor)
+                                            {
+                                                <input type="checkbox" class="mr-2" id="RecRemNoBor" checked>
+                                            }
+                                            else
+                                            {
+                                                <input type="checkbox" class="mr-2" id="RecRemNoBor">
+                                            }
+                                            <span class="fw-5">No borrar los campos después de generar una remesa</span>
+                                        </div>
+
+                                        <hr class="mb-2 mt-2" />
+
+                                        <div class="input-group input-group-sm mb-0">
+                                            <div class="input-group-prepend">
+                                                <label class="input-group-text" for="">Margen de días desde la factura</label>
+                                            </div>
+                                            <input type="text" class="form-control" id="RecRemMargenDias" aria-describedby="" value="@Model.Model.RecRemMargenDias" placeholder="Margen de días desde la factura" />
+                                        </div>
+
+                                    </div>
+
+                                    <div class="d-flex justify-content-center box-border-top p-2 mdc-bg-blue-grey-50">
+                                        <a href="#" class="btn btn-sm btn-primary config-recibos-guardar">Guardar</a>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-4">
+                            <div class="card mb-3">
+
+                                <div class="card-header card-header-options">
+                                    <span>Remesas valores predeterminados</span>
+                                </div>
+
+                                <div class="card-block p-0">
+
+                                    <div class="p-2">
+                                        <div class="d-flex flex-column mb-0">
+
+                                            <div class="d-flex align-items-center mb-2">
+                                                @if (Model.Model.RecRemEnvMail)
+                                                {
+                                                    <input type="checkbox" class="mr-2" id="RecRemEnvMail" checked>
+                                                }
+                                                else
+                                                {
+                                                    <input type="checkbox" class="mr-2" id="RecRemEnvMail">
+                                                }
+                                                <span class="fw-5">Enviar por mail</span>
+                                            </div>
+
+                                            <div class="input-group input-group-sm mb-0">
+                                                <div class="input-group-prepend">
+                                                    <label class="input-group-text" for="">Mail envío</label>
+                                                </div>
+                                                <select class="custom-select" id="ID_Mail">
+                                                    @if (Model.Model.Mails != null)
+                                                    {
+                                                        for (Int32 t = 0; t < Model.Model.Mails.Length; t++)
+                                                        {
+                                                            if (Model.Model.Mails[t].id == Model.Model.ID_Mail)
+                                                            {
+                                                                <option value="@Model.Model.Mails[t].id" selected>@Model.Model.Mails[t].det</option>
+                                                            }
+                                                            else
+                                                            {
+                                                                <option value="@Model.Model.Mails[t].id">@Model.Model.Mails[t].det</option>
+                                                            }
+                                                        }
+                                                    }
+                                                </select>
+                                                <div class="input-group-append input-group-text-auto">
+                                                    <button type="button" class="btn btn-sm btn-primary config-remesas-probar-mail">Probar</button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="d-flex justify-content-center box-border-top p-2 mdc-bg-blue-grey-50">
+                                        <a href="#" class="btn btn-sm btn-primary config-remesas-guardar">Guardar</a>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                }
+
+            </div>
+        </div>
+
+    </div>
+
+</div>

@@ -1,0 +1,50 @@
+﻿@* tabs *@
+
+@* btn-tab-active *@
+
+@{
+    string Clss = "mr-1 ml-1 btn btn-tab";
+    string ClssSel = "mr-1 ml-1 btn btn-tab btn-tab-active";
+    string ClssApli = "";
+}
+
+<div class="d-flex pt-3 pb-0 pl-0 mb-3 box-tab">
+    @if (ViewData["Form"].ToString() == "/modulo-articulos/articulos/articulo") { ClssApli = ClssSel; } else { ClssApli = Clss; }
+    <a href="/modulo-articulos/articulos/articulo?ID_Art2=@Model.Model.Cab.ID_Art2" class="@Html.Raw(ClssApli)">General</a>
+
+    @if (ViewData["Form"].ToString() == "/modulo-articulos/articulos/articulo/precios") { ClssApli = ClssSel; } else { ClssApli = Clss; }
+    <a href="/modulo-articulos/articulos/articulo/precios?ID_Art2=@Model.Model.Cab.ID_Art2" class="@Html.Raw(ClssApli)">Precios</a>
+
+    @if (ViewData["Form"].ToString() == "/modulo-articulos/articulos/articulo/proveedores") { ClssApli = ClssSel; } else { ClssApli = Clss; }
+    <a href="/modulo-articulos/articulos/articulo/proveedores?ID_Art2=@Model.Model.Cab.ID_Art2" class="@Html.Raw(ClssApli)">Proveedores</a>
+
+    @if (ViewData["Form"].ToString() == "/modulo-articulos/articulos/articulo/control") { ClssApli = ClssSel; } else { ClssApli = Clss; }
+    <a href="/modulo-articulos/articulos/articulo/control?ID_Art2=@Model.Model.Cab.ID_Art2" class="@Html.Raw(ClssApli)">Control</a>
+
+    @if (ViewData["Form"].ToString() == "/modulo-articulos/articulos/articulo/stock") { ClssApli = ClssSel; } else { ClssApli = Clss; }
+    <a href="/modulo-articulos/articulos/articulo/stock?ID_Art2=@Model.Model.Cab.ID_Art2" class="@Html.Raw(ClssApli)">Stock</a>
+
+    @if (ViewData["Form"].ToString() == "/modulo-articulos/articulos/articulo/almacenes") { ClssApli = ClssSel; } else { ClssApli = Clss; }
+    <a href="/modulo-articulos/articulos/articulo/almacenes?ID_Art2=@Model.Model.Cab.ID_Art2" class="@Html.Raw(ClssApli)">Almacenes</a>
+
+    @if (ViewData["Form"].ToString() == "/modulo-articulos/articulos/articulo/transporte") { ClssApli = ClssSel; } else { ClssApli = Clss; }
+    <a href="/modulo-articulos/articulos/articulo/transporte?ID_Art2=@Model.Model.Cab.ID_Art2" class="@Html.Raw(ClssApli)">Transporte</a>
+
+    @if (ViewData["Form"].ToString() == "/modulo-articulos/articulos/articulo/coste") { ClssApli = ClssSel; } else { ClssApli = Clss; }
+    <a href="/modulo-articulos/articulos/articulo/coste?ID_Art2=@Model.Model.Cab.ID_Art2" class="@Html.Raw(ClssApli)">Coste</a>
+
+    @*@if (ViewData["Form"].ToString() == "/modulo-articulos/articulo/internet") { ClssApli = ClssSel; } else { ClssApli = Clss; }
+        <a href="/modulo-articulos/articulo/internet" class="@Html.Raw(ClssApli)">Internet</a>
+        @if (ViewData["Form"].ToString().IndexOf("/modulo-articulos/articulo/transporte") != -1) { ClssApli = ClssSel; } else { ClssApli = Clss; }
+        <a href="/modulo-articulos/articulo/transporte" class="@Html.Raw(ClssApli)">Transporte</a>
+        @if (ViewData["Form"].ToString().IndexOf("/modulo-articulos/articulo/imagenes") != -1) { ClssApli = ClssSel; } else { ClssApli = Clss; }
+        <a href="/modulo-articulos/articulo/imagenes" class="@Html.Raw(ClssApli)">Imágenes</a>
+        @if (ViewData["Form"].ToString().IndexOf("/modulo-articulos/articulo/relacionados") != -1) { ClssApli = ClssSel; } else { ClssApli = Clss; }
+        <a href="/modulo-articulos/articulo/relacionados" class="@Html.Raw(ClssApli)">Relacionados</a>
+
+        @if (ViewData["Form"].ToString().IndexOf("/modulo-articulos/articulo/competencia") != -1) { ClssApli = ClssSel; } else { ClssApli = Clss; }
+        <a href="/modulo-articulos/articulo/competencia" class="@Html.Raw(ClssApli)">Competencia</a>
+
+        @if (ViewData["Form"].ToString().IndexOf("/modulo-articulos/articulo/tracert") != -1) { ClssApli = ClssSel; } else { ClssApli = Clss; }
+        <a href="/modulo-articulos/articulo/tracert" class="@Html.Raw(ClssApli)">Tracert</a>*@
+</div>

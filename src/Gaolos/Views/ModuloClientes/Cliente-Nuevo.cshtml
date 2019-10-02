@@ -1,0 +1,523 @@
+﻿@model ModuloClientesLibrary.ModuloClientesClienteNuevoViewModel
+@{
+    Layout = "~/Views/Shared/Modulo-Clientes/_Modulo-Clientes-Nuevo.cshtml";
+    ViewData["Title"] = "Nuevo Cliente";
+}
+
+<div class="main-content m-0" id="widget-area">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+
+                @if (Model.Model.Err.eserror)
+                {
+                    ViewData["err"] = Model.Model.Err.mensaje;
+                    @Html.Partial("AccesoDenegado");
+                }
+                else
+                {
+
+                    <div class="card mb-3">
+                        <div class="card-block card-info-header card-info-header-modulo p-0">
+                            <div class="d-flex justify-content-center align-items-center">
+                                <div class="col-1 pb-2 pt-2 d-flex justify-content-center align-items-center box-border-right-light">
+                                    <img src="https://image.flaticon.com/icons/svg/431/431985.svg" style="width: 100%">
+                                </div>
+                                <div class="col-11 pt-2 pb-2">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="card-info-desc d-flex flex-column py-3">
+                                            <h5 class="fw-5 title-section">Nuevo cliente</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-8">
+                            @* Listado de mantenimientos *@
+                            <div class="card mb-3">
+                                <div class="card-header card-header-options">
+                                    <span>Nuevo cliente</span>
+                                </div>
+                                <div class="card-block p-0">
+
+                                    <div class="p-2">
+
+                                        @* Empresa *@
+
+                                        <div class="d-flex mb-1">
+
+                                            <div class="input-group input-group-sm mb-0">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">Empresa</span>
+                                                </div>
+                                                <input type="text" class="form-control" id="nuevoCliEmp" value="" placeholder="Empresa">
+                                            </div>
+
+                                        </div>
+
+                                        <div class="d-flex mb-1">
+
+                                            <div class="input-group input-group-sm mb-0 w-75 mr-2">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">Empresa fiscal</span>
+                                                </div>
+                                                <input type="text" class="form-control" id="nuevoCliEmpFis" value="" placeholder="Empresa fiscal">
+                                            </div>
+
+                                            <div class="input-group input-group-sm w-25 mb-0">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">NIF</span>
+                                                </div>
+                                                <input type="text" class="form-control" id="nuevoCliNIF" value="" placeholder="NIF">
+                                            </div>
+
+                                        </div>
+
+                                        @* Dirección comercial *@
+
+                                        <h5 class="fw-5 title-section fs-1-1 mt-3">Dirección comercial</h5>
+
+                                        <div class="d-flex mb-1">
+
+                                            <div class="input-group input-group-sm mb-0">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">Dirección</span>
+                                                </div>
+                                                <input type="text" class="form-control" id="nuevoCliDir" value="" placeholder="Dirección">
+                                            </div>
+
+                                        </div>
+
+                                        <div class="d-flex">
+
+                                            <div class="input-group input-group-sm mb-0 mr-2">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">País</span>
+                                                </div>
+                                                <select class="custom-select cambio-pais" id="UbiPai_1">
+                                                    @if (Model.Model.Pais != null)
+                                                    {
+                                                        for (Int32 t = 0; t < Model.Model.Pais.Length; t++)
+                                                        {
+                                                            if (Model.Model.Pais[t].det == Model.Model.Pai)
+                                                            {
+                                                                <option value="@Model.Model.Pais[t].det" selected>@Model.Model.Pais[t].det</option>
+                                                            }
+                                                            else
+                                                            {
+                                                                <option value="@Model.Model.Pais[t].det">@Model.Model.Pais[t].det</option>
+                                                            }
+                                                        }
+                                                    }
+                                                </select>
+                                            </div>
+
+                                            <div class="input-group input-group-sm mb-0 mr-2">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text input-group-text-auto">Provincia</span>
+                                                </div>
+                                                <select class="custom-select cambio-provincia" id="UbiPro_1">
+                                                    @if (Model.Model.Pros != null)
+                                                    {
+                                                        for (Int32 t = 0; t < Model.Model.Pros.Length; t++)
+                                                        {
+                                                            if (Model.Model.Pros[t].det == Model.Model.Pro)
+                                                            {
+                                                                <option value="@Model.Model.Pros[t].det" selected>@Model.Model.Pros[t].det</option>
+                                                            }
+                                                            else
+                                                            {
+                                                                <option value="@Model.Model.Pros[t].det">@Model.Model.Pros[t].det</option>
+                                                            }
+                                                        }
+                                                    }
+                                                </select>
+                                            </div>
+
+                                            <div class="input-group input-group-sm mb-0 mr-2">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text input-group-text-auto">Código postal</span>
+                                                </div>
+                                                <select class="custom-select cambio-cp" id="UbiCP_1">
+                                                    @if (Model.Model.CPs != null)
+                                                    {
+                                                        for (Int32 t = 0; t < Model.Model.CPs.Length; t++)
+                                                        {
+                                                            <option value="@Model.Model.CPs[t].det">@Model.Model.CPs[t].det</option>
+                                                        }
+                                                    }
+                                                </select>
+                                            </div>
+
+                                            <div class="input-group input-group-sm mb-0">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text input-group-text-auto">Población</span>
+                                                </div>
+                                                <select class="custom-select" id="UbiPob_1" disabled>
+                                                    <option value="0" selected="">- Población -</option>
+                                                </select>
+                                            </div>
+
+                                        </div>
+
+                                        @* Dirección fiscal *@
+
+                                        <div class="d-flex align-items-center mt-3 mb-2">
+                                            <h5 class="fw-5 title-section mb-0 fs-1-1">Dirección fiscal</h5>
+                                            <div class="box-labels ml-3">
+                                                <div class="d-flex align-items-center align-self-stretch">
+                                                    <label class="m-0 box-label-label align-self-stretch mdc-bg-white" style="min-width: 140px;">Deseo utilizar la misma dirección que la comercial</label>
+                                                    <input type="checkbox" class="mx-3" id="nuevoCliMismaDireccion" name="nuevoCliMismaDireccion" checked />
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div id="direccionFiscalCard" style="display: none;">
+
+                                            <div class="d-flex mb-1">
+
+                                                <div class="input-group input-group-sm mb-0">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">Dirección</span>
+                                                    </div>
+                                                    <input type="text" class="form-control" id="nuevoCliDirFis" value="" placeholder="Dirección">
+                                                </div>
+
+                                            </div>
+
+                                            <div class="d-flex">
+
+                                                <div class="input-group input-group-sm mb-0 mr-2">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">País</span>
+                                                    </div>
+                                                    <select class="custom-select cambio-pais" id="UbiPai_2">
+                                                        @if (Model.Model.Pais != null)
+                                                        {
+                                                            for (Int32 t = 0; t < Model.Model.Pais.Length; t++)
+                                                            {
+                                                                if (Model.Model.Pais[t].det == Model.Model.Pai)
+                                                                {
+                                                                    <option value="@Model.Model.Pais[t].det" selected>@Model.Model.Pais[t].det</option>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <option value="@Model.Model.Pais[t].det">@Model.Model.Pais[t].det</option>
+                                                                }
+                                                            }
+                                                        }
+                                                    </select>
+                                                </div>
+
+                                                <div class="input-group input-group-sm mb-0 mr-2">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text input-group-text-auto">Provincia</span>
+                                                    </div>
+                                                    <select class="custom-select cambio-provincia" id="UbiPro_2">
+                                                        @if (Model.Model.Pros != null)
+                                                        {
+                                                            for (Int32 t = 0; t < Model.Model.Pros.Length; t++)
+                                                            {
+                                                                if (Model.Model.Pros[t].det == Model.Model.Pro)
+                                                                {
+                                                                    <option value="@Model.Model.Pros[t].det" selected>@Model.Model.Pros[t].det</option>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <option value="@Model.Model.Pros[t].det">@Model.Model.Pros[t].det</option>
+                                                                }
+                                                            }
+                                                        }
+                                                    </select>
+                                                </div>
+
+                                                <div class="input-group input-group-sm mb-0 mr-2">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text input-group-text-auto">Código postal</span>
+                                                    </div>
+                                                    <select class="custom-select cambio-cp" id="UbiCP_2">
+                                                        @if (Model.Model.CPs != null)
+                                                        {
+                                                            for (Int32 t = 0; t < Model.Model.CPs.Length; t++)
+                                                            {
+                                                                <option value="@Model.Model.CPs[t].det">@Model.Model.CPs[t].det</option>
+                                                            }
+                                                        }
+                                                    </select>
+                                                </div>
+
+                                                <div class="input-group input-group-sm mb-0">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text input-group-text-auto">Población</span>
+                                                    </div>
+                                                    <select class="custom-select" id="UbiPob_2" disabled>
+                                                        <option value="0" selected="">- Población -</option>
+                                                    </select>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        @* Contacto *@
+
+                                        <h5 class="fw-5 title-section fs-1-1 mt-3">Datos comerciales</h5>
+
+                                        <div class="d-flex mb-1">
+
+                                            <div class="input-group input-group-sm mb-0">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">Contacto</span>
+                                                </div>
+                                                <input type="text" class="form-control" id="nuevoCliContacto" value="" placeholder="Contacto">
+                                            </div>
+
+                                        </div>
+
+                                        <div class="d-flex mb-1">
+
+                                            <div class="input-group input-group-sm mb-0 mr-2">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">Teléfono</span>
+                                                </div>
+                                                <input type="text" class="form-control" id="nuevoCliTel" value="" placeholder="Teléfono">
+                                            </div>
+
+                                            <div class="input-group input-group-sm mb-0">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">Móvil</span>
+                                                </div>
+                                                <input type="text" class="form-control" id="nuevoCliMovil" value="" placeholder="Móvil">
+                                            </div>
+
+                                        </div>
+
+                                        <div class="d-flex mb-1">
+
+                                            <div class="input-group input-group-sm mb-0 mr-2">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">Mail 1</span>
+                                                </div>
+                                                <input type="text" class="form-control" id="nuevoCliMail1" value="" placeholder="Mail 1">
+                                            </div>
+
+                                            <div class="input-group input-group-sm mb-0 mr-2">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">Mail 2</span>
+                                                </div>
+                                                <input type="text" class="form-control" id="nuevoCliMail2" value="" placeholder="Mail 2">
+                                            </div>
+
+                                            <div class="box-labels">
+                                                <div class="d-flex align-items-center align-self-stretch">
+                                                    <label class="m-0 box-label-label align-self-stretch" style="min-width: 70px;">Mailing</label>
+                                                    <input type="checkbox" class="mx-3" id="nuevoCliMailing" checked />
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="d-flex mb-1">
+                                            <div class="input-group input-group-sm mb-0">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">Web</span>
+                                                </div>
+                                                <input type="text" class="form-control" id="nuevoCliWeb" value="" placeholder="Web">
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex mb-1">
+
+                                            <div class="input-group input-group-sm mb-0 mr-2">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">Agente</span>
+                                                </div>
+                                                <input type="text" class="form-control" id="Agente" name="Agente" value="" placeholder="Agente">
+                                                <input type="hidden" id="vAgente" name="vAgente" value=""><input type="hidden" id="tAgente" name="tAgente" value="">
+                                            </div>
+
+                                            <div class="input-group input-group-sm mb-0">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">Tipo cliente</span>
+                                                </div>
+                                                <select class="custom-select" id="ID_TipCli">
+                                                    @if (Model.Model.TiposCli != null)
+                                                    {
+                                                        for (Int32 t = 0; t < Model.Model.TiposCli.Length; t++)
+                                                        {
+                                                            <option value="@Model.Model.TiposCli[t].id">@Model.Model.TiposCli[t].det</option>
+                                                        }
+                                                    }
+                                                </select>
+                                            </div>
+
+                                        </div>
+
+                                        @* Facturación *@
+
+                                        <h5 class="fw-5 title-section fs-1-1 mt-3">Facturación</h5>
+
+                                        <div class="d-flex mb-1">
+
+                                            <div class="input-group input-group-sm mb-0">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">Cuenta</span>
+                                                </div>
+                                                <input type="text" class="form-control" id="nuevoCliCuenta" value="" placeholder="Cuenta">
+                                            </div>
+
+                                        </div>
+
+                                        <div class="d-flex mb-1">
+
+                                            <div class="input-group input-group-sm mb-0 mr-2">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">Forma de pago</span>
+                                                </div>
+                                                <select class="custom-select" id="nuevoCliFormaPago" value="" placeholder="Forma de pago">
+                                                    @if (Model.Model.ForsPag != null)
+                                                    {
+                                                        for (Int32 t = 0; t < Model.Model.ForsPag.Length; t++)
+                                                        {
+                                                        <option value="@Model.Model.ForsPag[t].id">@Model.Model.ForsPag[t].det</option>
+                                                        }
+                                                    }
+                                                </select>
+                                            </div>
+
+                                            <div class="box-labels mr-2">
+                                                <div class="d-flex align-items-center align-self-stretch">
+                                                    <label class="m-0 box-label-label align-self-stretch" style="min-width: 130px;">Facturar via email</label>
+                                                    <input type="checkbox" class="mx-3" id="nuevoCliFacViaMail" checked />
+                                                </div>
+                                            </div>
+
+                                            <div class="input-group input-group-sm mb-0 mr-2">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text input-group-text-auto">A x días</span>
+                                                </div>
+                                                <input type="text" class="form-control" id="nuevoCliAxDias" value="" placeholder="A x días">
+                                            </div>
+
+                                            <div class="input-group input-group-sm mb-0 mr-2">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text input-group-text-auto">Día</span>
+                                                </div>
+                                                <input type="text" class="form-control" id="nuevoCliDia" value="" placeholder="Día">
+                                            </div>
+
+                                            <div class="box-labels">
+                                                <div class="d-flex align-items-center align-self-stretch">
+                                                    <label class="m-0 box-label-label align-self-stretch" style="min-width: 50px;">REQ</label>
+                                                    <input type="checkbox" class="mx-3" id="nuevoCliREQ" />
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="d-flex mb-1">
+
+                                            <div class="input-group input-group-sm mb-0">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">Cliente rel.</span>
+                                                </div>
+                                                <input type="text" class="form-control" id="emprelvin" name="emprelvin" value="" placeholder="Cliente relacionado">
+                                                <input type="hidden" id="vemprelvin" name="vemprelvin" value=""><input type="hidden" id="temprelvin" name="temprelvin" value="">
+                                            </div>
+
+                                        </div>
+
+                                        @* Observaciones *@
+
+                                        <h5 class="fw-5 title-section fs-1-1 mt-3">Observaciones</h5>
+
+                                        <div class="d-flex mb-1">
+
+                                            <div class="input-group input-group-sm mb-0">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">Observaciones</span>
+                                                </div>
+                                                <textarea rows="4" class="form-control" id="nuevoCliObs" placeholder="Observaciones"></textarea>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="d-flex mb-1">
+
+                                            <div class="input-group input-group-sm mb-0">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">Obs. adm.</span>
+                                                </div>
+                                                <textarea rows="4" class="form-control" id="nuevoCliObsAdm" placeholder="Observaciones Administrativas"></textarea>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="d-flex mb-1">
+
+                                            <div class="input-group input-group-sm mb-0">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">Actividad</span>
+                                                </div>
+                                                <textarea rows="4" class="form-control" id="nuevoCliObsAct" placeholder="Actividad"></textarea>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                                <div class="d-flex justify-content-center box-border-top p-2 mdc-bg-blue-grey-50">
+                                    <a href="#" class="btn btn-sm btn-primary generar-cliente">Crear nuevo cliente</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-4">
+
+                            @* Sin datos *@
+                            <div class="card-info-wrapper w-100" id="sindatos" style="display: none;">
+                                <div class="card-info">
+                                    <div class="d-flex align-items-center">
+                                        <img src="https://image.flaticon.com/icons/svg/609/609998.svg" style="width: 20%;">
+                                        <div class="d-flex flex-column ml-3">
+                                            <p class="mb-2 ">En esta pantalla podrá crear un nuevo cliente</p>
+                                            <p class="mb-0 mt-2 fs-0-8">Las opciones disponibles son:</p>
+                                            <p class="mb-0 mt-2 fw-5 fs-0-8 text-danger">Datos de empresa</p>
+                                            <p class="mb-0 fw-5 fs-0-8 text-danger">Dirección comercial</p>
+                                            <p class="mb-0 fw-5 fs-0-8 text-danger">Datos comerciales</p>
+                                            <p class="mb-0 fw-5 fs-0-8 text-danger">Facturación</p>
+                                            <p class="mb-0 fw-5 fs-0-8 text-danger">Observaciones</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <svg class="card-info-triangle">
+                                    <polygon points="0,0 200,0 0,200" fill="currentColor"></polygon>
+                                </svg>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                }
+
+            </div>
+        </div>
+
+    </div>
+
+</div>

@@ -1,0 +1,202 @@
+﻿@model ModuloFacturacionLibrary.ModuloFacturacionFacturacionVencimientosFacturaViewModel
+
+@{
+    Layout = "~/Views/Shared/Modulo-Facturacion/_Facturacion-Facturas-factura.cshtml";
+    ViewData["Title"] = "Vencimientos de la factura";
+}
+
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+                @if (Model.Model.Err.eserror)
+                {
+                    ViewData["err"] = Model.Model.Err.mensaje;
+                @Html.Partial("AccesoDenegado");
+                }
+                else
+                {
+
+                @* Cabecera *@
+
+                <div class="card mb-3">
+                    <div class="card-header card-header-options">
+                        <span>Total albaranes</span>
+
+                        <div class="card-actions">
+                            <ul>
+                                <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-block p-0">
+
+                        <div class="d-flex justify-content-center align-items-center">
+                            <div class="col-lg-1 pb-2 pt-2 hidden-md hidden-md-down">
+                                <img src="https://image.flaticon.com/icons/svg/321/321863.svg" style="width: 100%;">
+                            </div>
+                            <div class="col-lg-11 col-sm-12 pt-2 pb-2">
+                                <h5 class="fw-5 title-section">
+                                    @Html.Raw(Model.Model.Emp)
+                                </h5>
+                                <div class="d-flex">
+                                    <div class="box-grey-bg mr-2">
+                                        <p class="mb-0"><small class="fw-5"><span class="mr-1">Cliente nº:</span> <a href="/modulo-clientes/clientes/cliente/fiscal?ID_Cli2=@Model.Model.ID_Cli2" target="_blank"><span class="text-danger">@Model.Model.ID_Cli2</span></a> - @Model.Model.CCCli</small></p>
+                                        <p class="mb-0"><small class="fw-5"><span class="mr-1">Dirección:</span> <span class="text-danger">@Model.Model.Dir - @Model.Model.Pob - @Model.Model.CP - @Model.Model.Pro</span></small></p>
+                                        <p class="mb-0"><small class="fw-5"><span class="mr-1">NIF:</span> <span class="text-danger">@Model.Model.NIF</span></small></p>
+
+                                        @if (Model.Model.Obs != "")
+                                        {
+                                            <p class="mb-0"><small class="fw-5"><span class="mr-1">Tiene observaciones:</span> <a href="/modulo-clientes/clientes/cliente/fiscal?ID_Cli2=@Model.Model.ID_Cli2" target="_blank">Abrir ficha de cliente</a></small></p>
+                                        }
+                                    </div>
+
+                                    <div class="box-grey-bg mr-2">
+                                        <p class="mb-0"><small class="fw-5"><span class="mr-1">Factura:</span> <span class="text-danger">@Model.Model.Fac</span></small></p>
+                                        <p class="mb-0"><small class="fw-5"><span class="mr-1">Fecha:</span> <span class="text-danger">@Model.Model.Fe_Fa</span></small></p>
+                                        <p class="mb-0"><small class="fw-5"><span class="mr-1">Base:</span> <span class="text-danger">@Model.Model.Base</span></small></p>
+                                        <p class="mb-0"><small class="fw-5"><span class="mr-1">Total:</span> <span class="text-danger">@Model.Model.Total</span></small></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row">
+
+                    <div class="col-md-12 col-lg-8 col-sm-12">
+
+
+                        @* Vencimientos *@
+
+
+                        <div class="card card-table mb-3">
+                            <div class="card-header card-header-options">
+                                <span>Vencimientos</span>
+                                <div class="card-actions">
+                                    <ul>
+                                        <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="card-block" role="tablist" aria-multiselectable="true">
+                                <div>
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th class="w-5">Nº</th>
+                                                <th class="w-10">Vencimiento</th>
+                                                <th class="w-15">Forma</th>
+                                                <th class="w-20">Cuenta cliente</th>
+                                                <th class="w-20">Cuenta destino</th>
+                                                <th class="w-5 text-center">Ajustar</th>
+                                                <th class="text-right">Importe</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="vencimientos">
+                                            <tr>
+                                                <td colspan="7" class="text-center">
+                                                    <div class="d-flex align-items-center py-2">
+                                                        <i class="fa fa-cog fa-spin fa-2x fa-fw text-success"></i> <span class="text-success fs-1-1">Buscando vencimientos</span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+
+                                    <div class="d-flex justify-content-center align-items-center box-border-top pt-2 pb-2 mdc-bg-blue-grey-50">
+                                        <button type="button" class="btn btn-primary btn-sm">Guardar</button>
+                                        <input type="hidden" id="ID_Fac" value="@ViewData["ID_Fac"]" />
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+
+                    <div class="col-md-12 col-lg-4 col-sm-12">
+
+                        @*<div class="card card-table mb-3">
+                            <div class="card-header card-header-options">
+                                <span>Series</span>
+                                <div class="card-actions">
+                                    <ul>
+                                        <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="card-block" role="tablist" aria-multiselectable="true">
+                                <div>
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th class="">Serie</th>
+                                                <th class="">Nº</th>
+                                                <th class="">Fecha</th>
+                                                <th class="">Observaciones</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (Model.Model.Series != null)
+                                            {
+                                                for (Int32 t = 0; t < Model.Model.Series.Length; t++)
+                                                {
+                                                    @if (Model.Model.Series[t].datoB)
+                                                    {
+                                                        <tr class="bg-danger">
+                                                            <td class=""><p><small><a href="#" class="sel-serie" id="serie_@Html.Raw(Model.Model.Series[t].datoI + "_" + Convert.ToInt32(Model.Model.Series[t].datoD))">@Model.Model.Series[t].datoS1</a></small></p></td>
+                                                            <td class=""><p><small>@Model.Model.Series[t].datoS2</small></p></td>
+                                                            <td class=""><p><small>@Model.Model.Series[t].datoS3</small></p></td>
+                                                            <td class=""><p><small>@Model.Model.Series[t].datoS4</small></p></td>
+                                                        </tr>
+
+                                                    }
+                                                    else
+                                                    {
+                                                        <tr>
+                                                            <td class=""><p><small><a href="#" class="sel-serie" id="serie_@Html.Raw(Model.Model.Series[t].datoI + "_" + Convert.ToInt32(Model.Model.Series[t].datoD))">@Model.Model.Series[t].datoS1</a></small></p></td>
+                                                            <td class=""><p><small>@Model.Model.Series[t].datoS2</small></p></td>
+                                                            <td class=""><p><small>@Model.Model.Series[t].datoS3</small></p></td>
+                                                            <td class=""><p><small>@Model.Model.Series[t].datoS4</small></p></td>
+                                                        </tr>
+                                                    }
+                                                }
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>*@
+
+
+                    </div>
+
+                </div>
+
+
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    actualizarVencimientos();
+</script>

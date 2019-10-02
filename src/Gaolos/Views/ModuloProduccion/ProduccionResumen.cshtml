@@ -1,0 +1,190 @@
+﻿
+@{
+    ViewData["Title"] = "Órdenes de producción";
+    ViewData["TitleOrdenesProduccionAbiertas"] = "Órdenes de producción abiertas";
+    Layout = "~/Views/Shared/Modulo-Produccion/_ProduccionOrdenes.cshtml";
+}
+<div class="main-content m-0" id="widget-area">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+
+                @* Buscador *@
+                <div class="card mb-3">
+                    <div class="card-header card-header-options">
+                        <span>Buscar </span>
+
+                        <div class="card-actions">
+                            <ul>
+                                <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="card-block p-0">
+
+                        <form action="@ViewData["Form"]" method="post" class="">
+                            <div class="d-flex justify-content-center align-items-center">
+                                <div class="col-1 pb-2 pt-2">
+                                    <img src="https://image.flaticon.com/icons/svg/427/427132.svg" style="width: 100%;">
+                                </div>
+                                <div class="col-11 box-border-left-light">
+
+                                    <div class="row p-0">
+                                        <div class="col-12 p-0">
+                                            <div class="d-flex mb-0 px-3 pt-3 mb-2">
+                                                <div class="form-group mb-2 mr-2 col-12 p-0">
+                                                    <label>Buscar</label>
+                                                    <input type="text" class="form-control" placeholder="Buscar ..." name="buscar" value="@ViewData["buscar"]">
+                                                </div>
+                                            </div>
+
+                                            <div class="d-flex justify-content-center mt-2 box-border-top mdc-bg-blue-grey-50 pt-2 pb-2">
+                                                <button type="submit" class="btn btn-sm btn-primary">Buscar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </form>
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-8">
+                        <div class="card mb-3 card-table">
+                            <div class="card-header card-header-options">
+                                <span>Resumen por orden de producción (11)</span>
+
+                                <div class="card-actions">
+                                    <ul>
+                                        <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="card-block">
+                                <table class="table table-striped">
+
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center">Id Ord2</th>
+                                            <th class="text-center">Id Ctrl2</th>
+                                            <th>Operario</th>
+                                            <th class="text-center">Día</th>
+                                            <th class="text-center">Hora Inicio</th>
+                                            <th class="text-center">Hora Fin</th>
+                                            <th class="text-center">Durada Minuto</th>
+                                            <th class="text-center">Durada Horas</th>
+                                            <th class="text-center">Coste horas</th>
+                                            <th class="text-center">Coste total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        <tr>
+                                            <td class="text-center"><a href="#" class="fw-5">2878</a></td>
+                                            <td class="text-center">3174</td>
+                                            <td><a href="#" class="fw-5">Francisco Latorre</a></td>
+                                            <td class="text-center">14/05/2018</td>
+                                            <td class="text-center">08:31</td>
+                                            <td class="text-center">08:50</td>
+                                            <td class="text-center">0,18</td>
+                                            <td class="text-center">0,18</td>
+                                            <td class="text-center">30</td>
+                                            <td class="text-center">43</td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="card mb-3 card-table">
+                            <div class="card-header card-header-options">
+                                <span>Resumen por orden de producción (xx)</span>
+
+                                <div class="card-actions">
+                                    <ul>
+                                        <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="card-block">
+                                <table class="table table-striped">
+
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center">Id Ord2</th>
+                                            <th class="text-center">Num</th>
+                                            <th class="text-center">Día</th>
+                                            <th class="text-center">Inicio</th>
+                                            <th class="text-center">Hora Inicio</th>
+                                            <th class="text-center">Hora Fin</th>
+                                            <th class="text-center">Durada Minuto</th>
+                                            <th class="text-center">Durada Horas</th>
+                                            <th class="text-center">Coste horas</th>
+                                            <th class="text-center">Coste total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        <tr>
+                                            <td class="text-center"><a href="#" class="fw-5">2878</a></td>
+                                            <td class="text-center">1</td>
+                                            <td class="text-center">14/05/2018</td>
+                                            <td class="text-center">08:31</td>
+                                            <td class="text-center">08:31</td>
+                                            <td class="text-center">08:50</td>
+                                            <td class="text-center">0,18</td>
+                                            <td class="text-center">0,18</td>
+                                            <td class="text-center">30</td>
+                                            <td class="text-center">43</td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="card card-table mb-3">
+                            <div class="card-header card-header-options">
+                                <span>Información</span>
+                                <div class="card-actions">
+                                    <ul>
+                                        <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="card-block" role="tablist" aria-multiselectable="true">
+                                <div class="text-center mt-4 mb-4 p-5 bloque-sin-informacion">
+                                    <img src="/flaticons/chat.svg" style="width: 25%;">
+                                    <p class="pt-4 fw-5">Sin acción</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                
+
+                <div class="mb-3">
+                    @* Paginador *@
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

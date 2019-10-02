@@ -1,0 +1,1906 @@
+/* CSS Document */
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,100italic,100,300,300italic,400italic,500,500italic,700italic,700,900,900italic|Roboto+Condensed:400,300,300italic,400italic,700,700italic);
+@font-face {
+  font-family: 'FrancoisOneRegular';
+  src: url("https://www.hidralec.com/fonts/FrancoisOne-webfont.eot");
+  src: url("https://www.hidralec.com/fonts/FrancoisOne-webfont.eot?#iefix") format("embedded-opentype"), url("https://www.hidralec.com/fonts/FrancoisOne-webfont.woff") format("woff"), url("https://www.hidralec.com/fonts/FrancoisOne-webfont.ttf") format("truetype"), url("https://www.hidralec.com/fonts/FrancoisOne-webfont.svg#FrancoisOneRegular") format("svg");
+  font-weight: normal;
+  font-style: normal; }
+
+ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, body, html, p, blockquote, fieldset, input {
+  margin: 0;
+  padding: 0; }
+
+ul li, ol li {
+  list-style-type: none; }
+
+body {
+  font-family: Roboto, sans-serif;
+  font-size: 13px;
+  color: #656565;
+  margin: 0;
+  padding: 0;
+  /*background-image: url(https://public.gaolos.com/cdn/public/hidralec/img/bkg_wrapper.png);*/
+  background: #f2ebd8; }
+
+img {
+  border: 0; }
+
+a {
+  color: #64644B;
+  outline: none;
+  text-decoration: none; }
+
+a:hover {
+  text-decoration: underline; }
+
+a.groc {
+  color: #FAB418;
+  outline: none; }
+
+p.imgLeft {
+  float: left;
+  margin-right: 1em;
+  margin-bottom: 0; }
+
+p.imgRight {
+  float: left;
+  margin-right: 1em;
+  margin-bottom: 0; }
+
+p.imgCenter {
+  text-align: center;
+  margin-bottom: 0; }
+
+.textLeft {
+  text-align: left; }
+
+.textRight {
+  text-align: right; }
+
+.textCenter {
+  text-align: center; }
+
+h3.groc {
+  padding: 0.5em;
+  color: #ffffff;
+  text-transform: uppercase;
+  overflow: hidden;
+  clear: both;
+  background: #fab418;
+  /* Old browsers */
+  background: -moz-linear-gradient(top, #fab418 0%, #faa01d 100%);
+  /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #fab418), color-stop(100%, #faa01d));
+  /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, #fab418 0%, #faa01d 100%);
+  /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, #fab418 0%, #faa01d 100%);
+  /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, #fab418 0%, #faa01d 100%);
+  /* IE10+ */
+  background: linear-gradient(to bottom, #fab418 0%, #faa01d 100%);
+  /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fab418', endColorstr='#faa01d',GradientType=0 );
+  /* IE6-9 */ }
+
+h3.groc span {
+  float: left; }
+
+h3.groc span + span {
+  float: right; }
+
+div.destacat {
+  padding: 0.5em;
+  color: #ffffff;
+  text-transform: uppercase;
+  overflow: hidden;
+  clear: both;
+  background: #63634a;
+  /* Old browsers */
+  background: -moz-linear-gradient(top, #63634a 0%, #494937 100%);
+  /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #63634a), color-stop(100%, #494937));
+  /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, #63634a 0%, #494937 100%);
+  /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, #63634a 0%, #494937 100%);
+  /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, #63634a 0%, #494937 100%);
+  /* IE10+ */
+  background: linear-gradient(to bottom, #63634a 0%, #494937 100%);
+  /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#63634a', endColorstr='#494937',GradientType=0 );
+  /* IE6-9 */ }
+
+/*********************************************MAIN SECTIONS****************************************************/
+#wrapper {
+  margin: 0 auto;
+  width: 982px; }
+
+#content {
+  /*background: none repeat scroll 0 0 #FEFEFE;
+    border: 1px solid #FFFFFF;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.08) inset;*/
+  line-height: 18px;
+  margin: 1em 0 0 0;
+  overflow: hidden; }
+
+#header {
+  width: 100%;
+  position: relative; }
+
+#main {
+  width: 65%;
+  /*min-height:563px;*/
+  float: left;
+  margin-bottom: 0.5em;
+  background: #ffffff;
+  overflow: hidden;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  border-radius: 8px;
+  behavior: url(/pie/PIE.htc);
+  border: 1px solid #CCCD96; }
+
+#mainNav {
+  padding: 0;
+  clear: both;
+  overflow: hidden;
+  -moz-border-radius: 8px;
+  /* Firefox */
+  -webkit-border-radius: 8px;
+  /* Safari and Chrome */
+  border-radius: 8px;
+  /* Opera 10.5+, future browsers, and now also Internet Explorer 6+ using IE-CSS3 */
+  behavior: url(css/pie/PIE.htc);
+  position: relative;
+  /*background: none repeat scroll 0 0 #FAA01D;*/
+  border: 1px solid #CCCD96;
+  background: #fab418;
+  /* Old browsers */
+  background: -moz-linear-gradient(top, #fab418 0%, #faa01d 100%);
+  /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #fab418), color-stop(100%, #faa01d));
+  /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, #fab418 0%, #faa01d 100%);
+  /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, #fab418 0%, #faa01d 100%);
+  /* Opera 11.10+ */
+  background: linear-gradient(to bottom, #fab418 0%, #faa01d 100%);
+  /* W3C */ }
+
+#complementary {
+  width: 33.5%;
+  float: right;
+  margin-bottom: 1em;
+  /*min-height:563px;*/ }
+
+#footer {
+  background: none repeat scroll 0 0 #E1E2B5;
+  -moz-border-radius: 8px;
+  /* Firefox */
+  -webkit-border-radius: 8px;
+  /* Safari and Chrome */
+  border-radius: 8px;
+  /* Opera 10.5+, future browsers, and now also Internet Explorer 6+ using IE-CSS3 */
+  behavior: url(css/pie/PIE.htc);
+  clear: both;
+  padding: 1em;
+  margin: 0;
+  border: 1px solid #CCCD96; }
+
+/*********************************************HEADER SECTION****************************************************/
+#header #logo {
+  width: 300px;
+  float: left;
+  margin: 30px 20px 15px 0; }
+
+#header #login {
+  float: right;
+  /*width:380px;*/
+  min-height: 125px;
+  margin: 0;
+  font-family: Roboto, sans-serif; }
+
+#header #login p,
+#header #login ul li {
+  text-align: right;
+  margin: 0.5em 0;
+  font-size: 11px; }
+
+#header #login p a {
+  color: #64644B;
+  font-size: 10px;
+  font-weight: normal;
+  padding: 0; }
+
+#header #login p a.selected {
+  background: #64644B;
+  color: #ffffff; }
+
+#header #login ul {
+  float: right;
+  margin-top: 0;
+  margin-bottom: 0; }
+
+#header #login ul li {
+  float: left;
+  margin-left: 1em;
+  border-right: 1px dotted #404030;
+  padding-right: 1em; }
+
+#header #login ul li:last-child {
+  border-right: 0;
+  padding-right: 0; }
+
+/*#header #login ul li:first-child a { 
+	margin:0; 
+	padding:0;
+	border:0;}
+
+#header #login ul li:last-child a {
+	border:0; 
+	padding-right:0;
+	padding-left:0;}
+
+#header #login ul li a {
+	border-right:1px solid #64644B; 
+	margin-left:1em;
+	padding-right:1em;
+	}
+	
+#header #login ul li + li a {
+	border-left:1px solid #64644B; 
+	margin-left:1em;
+	padding-left:1em;}*/
+#header #login input {
+  background: white;
+  /* Old browsers */
+  background: -moz-linear-gradient(top, white 0%, #f8f8f8 100%);
+  /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, white), color-stop(100%, #f8f8f8));
+  /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, white 0%, #f8f8f8 100%);
+  /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, white 0%, #f8f8f8 100%);
+  /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, white 0%, #f8f8f8 100%);
+  /* IE10+ */
+  background: linear-gradient(to bottom, white 0%, #f8f8f8 100%);
+  /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#f8f8f8',GradientType=0 );
+  /* IE6-9 */
+  -moz-border-radius: 5px;
+  /* Firefox */
+  -webkit-border-radius: 5px;
+  /* Safari and Chrome */
+  border-radius: 5px;
+  /* Opera 10.5+, future browsers, and now also Internet Explorer 6+ using IE-CSS3 */
+  behavior: url(css/pie/PIE.htc);
+  position: relative;
+  border: 1px solid #CCCD96;
+  height: 25px;
+  padding-left: 0.5em;
+  font-size: 11px;
+  color: #686868;
+  width: 160px; }
+
+#header #login button {
+  background: #63634a;
+  /* Old browsers */
+  background: -moz-linear-gradient(top, #63634a 0%, #494937 100%);
+  /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #63634a), color-stop(100%, #494937));
+  /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, #63634a 0%, #494937 100%);
+  /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, #63634a 0%, #494937 100%);
+  /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, #63634a 0%, #494937 100%);
+  /* IE10+ */
+  background: linear-gradient(to bottom, #63634a 0%, #494937 100%);
+  /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#63634a', endColorstr='#494937',GradientType=0 );
+  /* IE6-9 */
+  float: right;
+  height: 60px;
+  font-size: 11px;
+  margin-left: 0.5em;
+  border: 0;
+  color: #ffffff;
+  text-align: center;
+  -moz-border-radius: 5px;
+  /* Firefox */
+  -webkit-border-radius: 5px;
+  /* Safari and Chrome */
+  border-radius: 5px;
+  /* Opera 10.5+, future browsers, and now also Internet Explorer 6+ using IE-CSS3 */
+  behavior: url(css/pie/PIE.htc);
+  padding: 0.2em;
+  cursor: pointer; }
+
+#header #login button:hover {
+  background: #CCCD96;
+  color: #63634a; }
+
+#header #login input.usuario {
+  background: url(https://public.gaolos.com/cdn/public/hidralec/img/user-ico.png) no-repeat 141px 0 #ffffff; }
+
+#header #login input.password {
+  background: url(https://public.gaolos.com/cdn/public/hidralec/img/password-ico.png) no-repeat 141px 0 #ffffff; }
+
+#header #login #menuUsuari {
+  overflow: hidden;
+  margin-top: 45px;
+  margin-bottom: 0.5em;
+  float: right; }
+
+#header #login #menuUsuari ul {
+  vertical-align: bottom;
+  float: right;
+  overflow: hidden; }
+
+#header #login #menuUsuari ul + ul {
+  clear: both; }
+
+#header #login #menuUsuari ul li {
+  border-right: 1px dotted #404030;
+  float: left;
+  margin-left: 1em;
+  padding-right: 1em;
+  width: auto; }
+
+#header #login #menuUsuari ul li img {
+  float: right;
+  padding-left: 1em; }
+
+#header #login #menuUsuari ul li:last-child {
+  border-right: 0;
+  padding-right: 0; }
+
+/***********************************MAINNAV SECTIONS**********************************/
+#mainNav ul {
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  list-style-type: none; }
+
+#mainNav ul li {
+  float: left;
+  background: #E1E2B5;
+  position: relative;
+  border-right: 1px solid #d2d39f; }
+
+#mainNav ul li a:hover, #mainNav ul li a.selected {
+  background: #CCCD96; }
+
+#mainNav ul li:last-child,
+#mainNav ul li:last-child a.selected {
+  background: none !important;
+  border-right: none; }
+
+#mainNav ul li:last-child a:hover {
+  background: none !important; }
+
+#mainNav ul li:last-child a {
+  color: #ffffff;
+  padding-left: 16px; }
+
+#mainNav ul li a {
+  color: #404030;
+  display: block;
+  font-family: Roboto, sans-serif;
+  font-size: 1.1em;
+  font-weight: 500;
+  line-height: 21px;
+  padding: 12px 50.2px;
+  position: relative;
+  text-decoration: none; }
+
+#mainNav ul li a img {
+  float: right;
+  margin-left: 1em;
+  margin-top: -11px;
+  position: relative;
+  z-index: 10; }
+
+div.img-contact {
+  position: absolute;
+  right: 12px;
+  top: 120px;
+  z-index: 1; }
+
+/***************************************************INTERIOR*********************************************/
+#main p + strong {
+  margin-bottom: 0 !important; }
+
+#main p {
+  margin-bottom: 1em; }
+
+#main .foto1 {
+  background-image: url(https://public.gaolos.com/cdn/public/hidralec/img/img-venda.png);
+  background-repeat: no-repeat; }
+
+#main .foto2 {
+  background-image: url(https://public.gaolos.com/cdn/public/hidralec/img/img-alquiler.png);
+  background-repeat: no-repeat; }
+
+#main .foto3 {
+  background-image: url(https://public.gaolos.com/cdn/public/hidralec/img/img-asistencia.png);
+  background-repeat: no-repeat; }
+
+#main .foto4 {
+  background-image: url(https://public.gaolos.com/cdn/public/hidralec/img/img-contacto.png);
+  background-repeat: no-repeat; }
+
+#main .foto5 {
+  background-image: url(https://public.gaolos.com/cdn/public/hidralec/img/img-recambios.png);
+  background-repeat: no-repeat; }
+
+#main .foto6 {
+  background-image: url(https://public.gaolos.com/cdn/public/hidralec/img/img-registrese.png);
+  background-repeat: no-repeat; }
+
+#main .foto {
+  float: left;
+  height: 563px;
+  width: 210px;
+  position: relative; }
+
+#main .foto .short-text {
+  bottom: 0;
+  color: #000000;
+  min-height: 80px;
+  padding: 1em;
+  position: absolute;
+  width: 184px;
+  -moz-border-radius: 0 0 0 8px;
+  /* Firefox */
+  -webkit-border-radius: 0 0 0 8px;
+  /* Safari and Chrome */
+  border-radius: 0 0 0 8px;
+  /* Opera 10.5+, future browsers, and now also Internet Explorer 6+ using IE-CSS3 */
+  behavior: url(css/pie/PIE.htc);
+  background: #fab418;
+  /* Old browsers */
+  background: -moz-linear-gradient(top, #fab418 0%, #faa01d 100%);
+  /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #fab418), color-stop(100%, #faa01d));
+  /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, #fab418 0%, #faa01d 100%);
+  /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, #fab418 0%, #faa01d 100%);
+  /* Opera 11.10+ */
+  background: linear-gradient(to bottom, #fab418 0%, #faa01d 100%);
+  /* W3C */ }
+
+#main .foto .short-text h3 {
+  color: #FFFFFF;
+  font-family: Roboto;
+  font-size: 1.2em;
+  font-weight: 400;
+  text-transform: uppercase;
+  margin-bottom: 0.5em;
+  line-height: 25px; }
+
+#main .text {
+  float: right;
+  padding: 1em;
+  width: 400px; }
+
+#main .text h3 {
+  border-bottom: 1px dotted #FAB418;
+  color: #FAB418;
+  margin-bottom: 0.5em; }
+
+#main .text p span {
+  font-family: 'Roboto', sans-serif;
+  font-size: 2.5em;
+  margin-top: 1em;
+  display: block;
+  font-weight: 800; }
+
+#main .text ul {
+  margin: 1em 2em; }
+
+#main .text ul li {
+  list-style: disc;
+  line-height: 18px; }
+
+/************************************************COMPLEMENTARY***********************************************/
+#complementary div:first-child {
+  margin: 0 0 0.9em 0; }
+
+#complementary .contact {
+  -moz-border-radius: 8px;
+  /* Firefox */
+  -webkit-border-radius: 8px;
+  /* Safari and Chrome */
+  border-radius: 8px;
+  /* Opera 10.5+, future browsers, and now also Internet Explorer 6+ using IE-CSS3 */
+  behavior: url(css/pie/PIE.htc);
+  position: relative;
+  padding: 0;
+  overflow: hidden;
+  margin-bottom: 0.5em;
+  height: 84px;
+  background: #fab418;
+  /* Old browsers */
+  background: -moz-linear-gradient(top, #fab418 0%, #faa01d 100%);
+  /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #fab418), color-stop(100%, #faa01d));
+  /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, #fab418 0%, #faa01d 100%);
+  /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, #fab418 0%, #faa01d 100%);
+  /* Opera 11.10+ */
+  background: linear-gradient(to bottom, #fab418 0%, #faa01d 100%);
+  /* W3C */ }
+
+#complementary .contact img {
+  float: left;
+  margin-right: 1em; }
+
+#complementary .contact p.imgLeft {
+  margin-right: 0.5em;
+  padding: 0; }
+
+#complementary .contact div {
+  padding-top: 1em; }
+
+#complementary .contact p {
+  color: #FFFFFF;
+  font-family: Roboto, sans-serif;
+  font-size: 1.5em;
+  margin: 0;
+  padding: 0; }
+
+#complementary .contact p a {
+  color: #FFFFFF; }
+
+#complementary .contact p span {
+  color: #000000;
+  font-size: 13px;
+  font-family: Roboto, Arial, Helvetica, sans-serif; }
+
+#complementary .banner {
+  background-color: #ffffff;
+  height: 360px;
+  -moz-border-radius: 8px;
+  /* Firefox */
+  -webkit-border-radius: 8px;
+  /* Safari and Chrome */
+  border-radius: 8px;
+  /* Opera 10.5+, future browsers, and now also Internet Explorer 6+ using IE-CSS3 */
+  behavior: url(css/pie/PIE.htc);
+  margin-bottom: 0.5em;
+  border: 1px solid #CCCD96;
+  overflow: hidden; }
+
+#complementary .nueva {
+  background: url("https://public.gaolos.com/cdn/public/hidralec/img/banner-img2.gif") repeat-y scroll 0 0 #FFFFFF; }
+
+#complementary .seminueva {
+  background: url("https://public.gaolos.com/cdn/public/hidralec/img/banner-img3.gif") no-repeat 0 -70px #FFFFFF; }
+
+#complementary .banner2 {
+  height: 204px;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.08) inset;
+  -moz-border-radius: 8px;
+  /* Firefox */
+  -webkit-border-radius: 8px;
+  /* Safari and Chrome */
+  border-radius: 8px;
+  /* Opera 10.5+, future browsers, and now also Internet Explorer 6+ using IE-CSS3 */
+  behavior: url(css/pie/PIE.htc);
+  margin-bottom: 0.5em;
+  border: 1px solid #CCCD96;
+  overflow: hidden;
+  padding: 1em;
+  text-shadow: 0 1px 1px #FFFFFF; }
+
+#complementary .banner2 h3 {
+  font-family: Roboto, sans-serif;
+  font-size: 1.4em;
+  line-height: 1em;
+  font-weight: normal;
+  margin: 0 0 0.5em 0; }
+
+#complementary .banner2 h4 a {
+  font-family: Roboto, sans-serif;
+  font-size: 1.1em;
+  line-height: 1em;
+  font-weight: normal;
+  margin: 0 0 0.5em 0; }
+
+#complementary .banner img {
+  -moz-border-radius: 8px;
+  /* Firefox */
+  -webkit-border-radius: 8px;
+  /* Safari and Chrome */
+  border-radius: 8px;
+  /* Opera 10.5+, future browsers, and now also Internet Explorer 6+ using IE-CSS3 */
+  behavior: url(css/pie/PIE.htc);
+  position: relative; }
+
+#complementary .recambios {
+  background: url("https://public.gaolos.com/cdn/public/hidralec/img/recambios-bkg.png") repeat-y scroll 141px -16px #FFFFFF;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.08) inset;
+  height: 80px;
+  background-color: #ffffff;
+  -moz-border-radius: 8px;
+  /* Firefox */
+  -webkit-border-radius: 8px;
+  /* Safari and Chrome */
+  border-radius: 8px;
+  /* Opera 10.5+, future browsers, and now also Internet Explorer 6+ using IE-CSS3 */
+  behavior: url(css/pie/PIE.htc);
+  border: 1px solid #CCCD96;
+  overflow: hidden;
+  padding: 1em; }
+
+#complementary .recambios h3 {
+  color: #FAB418;
+  font-family: Roboto;
+  font-size: 1.3em;
+  font-weight: 500;
+  margin: 0 0 0.8em 0; }
+
+#complementary .recambios p.imgLeft {
+  margin-right: 0.5em; }
+
+#complementary .recambios p.imgLeft + p {
+  padding-left: 2.5em; }
+
+#complementary .recambios p a {
+  font-weight: bold;
+  text-decoration: underline; }
+
+/**************************************************BANNER IMPLEMENTOS***************************************/
+#complementary .implementos {
+  background: #63634a;
+  /* Old browsers */
+  background: -moz-linear-gradient(top, #63634a 0%, #494937 100%);
+  /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #63634a), color-stop(100%, #494937));
+  /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, #63634a 0%, #494937 100%);
+  /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, #63634a 0%, #494937 100%);
+  /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, #63634a 0%, #494937 100%);
+  /* IE10+ */
+  background: linear-gradient(to bottom, #63634a 0%, #494937 100%);
+  /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#63634a', endColorstr='#494937',GradientType=0 );
+  /* IE6-9 */
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.08) inset;
+  background-color: #ffffff;
+  -moz-border-radius: 8px;
+  /* Firefox */
+  -webkit-border-radius: 8px;
+  /* Safari and Chrome */
+  border-radius: 8px;
+  /* Opera 10.5+, future browsers, and now also Internet Explorer 6+ using IE-CSS3 */
+  behavior: url(css/pie/PIE.htc);
+  border: 1px solid #494937;
+  overflow: hidden;
+  padding: 1em; }
+
+#complementary .implementos h3 {
+  font-family: 'FrancoisOneRegular';
+  font-size: 21px;
+  font-weight: normal;
+  line-height: 30px; }
+
+#complementary .implementos h3 a {
+  color: #ffffff;
+  text-decoration: none; }
+
+#complementary .implementos h3 a:hover {
+  text-decoration: underline; }
+
+/**********************************************BUSCADORES**************************************/
+#complementary .buscador {
+  background-color: #ffffff;
+  -moz-border-radius: 8px;
+  /* Firefox */
+  -webkit-border-radius: 8px;
+  /* Safari and Chrome */
+  border-radius: 8px;
+  /* Opera 10.5+, future browsers, and now also Internet Explorer 6+ using IE-CSS3 */
+  behavior: url(css/pie/PIE.htc);
+  margin: 0.9em 0;
+  border: 1px solid #CCCD96;
+  overflow: hidden; }
+
+#complementary .buscador .form {
+  padding: 1em 1em 0 1em; }
+
+#complementary .buscador .form div {
+  width: 100%;
+  margin-bottom: 1em; }
+
+#complementary .buscador .form div label {
+  float: left;
+  margin-right: 1em; }
+
+#complementary .buscador .form div.opcion1 label {
+  background-image: url(https://public.gaolos.com/cdn/public/hidralec/img/fabricante-ico.png);
+  width: 24px;
+  height: 24px; }
+
+#complementary .buscador .form div.opcion2 label {
+  background-image: url(https://public.gaolos.com/cdn/public/hidralec/img/propulsio-ico.png);
+  width: 24px;
+  height: 24px; }
+
+#complementary .buscador .form div.opcion2 + div label {
+  background-image: url(https://public.gaolos.com/cdn/public/hidralec/img/construccion-icon.png);
+  width: 24px;
+  height: 24px; }
+
+#complementary .buscador .form div.opcion2 + div + div label {
+  background-image: url(https://public.gaolos.com/cdn/public/hidralec/img/capacidad-carga-ico.png);
+  width: 24px;
+  height: 21px; }
+
+#complementary .buscador .form div.opcion2 + div + div + div label {
+  background-image: url(https://public.gaolos.com/cdn/public/hidralec/img/elevacion-ico.png);
+  width: 24px;
+  height: 24px; }
+
+#complementary .buscador .form div.opcion2 + div + div + div + div label {
+  background-image: url(https://public.gaolos.com/cdn/public/hidralec/img/tipo-mastil-ico.png);
+  width: 24px;
+  height: 24px; }
+
+#complementary .buscador .form div.opcion2 + div + div + div + div + div label {
+  background-image: url(https://public.gaolos.com/cdn/public/hidralec/img/anyo-ico.png);
+  width: 24px;
+  height: 24px; }
+
+#complementary .buscador .form div select,
+#complementary .buscador .form div input {
+  width: 85%;
+  height: 25px;
+  border: 1px solid #CCCCCC;
+  padding: 0.2em;
+  font-family: Roboto, sans-serif;
+  font-size: 11px;
+  color: #666666; }
+
+#complementary .buscador2 {
+  background-color: #ffffff;
+  -moz-border-radius: 8px;
+  /* Firefox */
+  -webkit-border-radius: 8px;
+  /* Safari and Chrome */
+  border-radius: 8px;
+  /* Opera 10.5+, future browsers, and now also Internet Explorer 6+ using IE-CSS3 */
+  behavior: url(css/pie/PIE.htc);
+  margin: 0.9em 0;
+  border: 1px solid #CCCD96;
+  overflow: hidden; }
+
+#complementary .buscador2 .form {
+  padding: 1em 1em 0 1em; }
+
+#complementary .buscador2 .form div.opcion1 {
+  width: 100%;
+  margin-bottom: 0.5em; }
+
+#complementary .buscador2 .form div.opcion1 label,
+#complementary .buscador2 .form div.opcion2 label {
+  float: left;
+  margin-right: 1em; }
+
+#complementary .buscador2 .form div.opcion1 input {
+  width: 85%;
+  height: 25px;
+  border: 1px solid #CCCCCC;
+  padding: 0.2em;
+  font-family: Roboto, sans-serif;
+  font-size: 11px;
+  color: #666666; }
+
+#complementary .buscador2 .form div.opcion2 {
+  margin-left: 0; }
+
+#complementary .buscador2 .form div.opcion2 div {
+  float: left;
+  margin-right: 1em; }
+
+#complementary .buscador2 .form div.opcion1 select,
+#complementary .buscador2 .form div.opcion2 select {
+  float: right;
+  width: 120px; }
+
+#complementary .buscador2 .form div.opcion2 div label {
+  float: right;
+  margin: 0 0.5em; }
+
+#complementary .buscador2 .form div.opcion2 div input {
+  margin-top: 3px; }
+
+#complementary .buscador2 .form div.opcion3 {
+  float: right;
+  width: 22%; }
+
+#complementary .buscador .form div button,
+#complementary .buscador2 .form div button,
+.buscadorMain .form button {
+  background: #63634a;
+  /* Old browsers */
+  background: -moz-linear-gradient(top, #63634a 0%, #494937 100%);
+  /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #63634a), color-stop(100%, #494937));
+  /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, #63634a 0%, #494937 100%);
+  /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, #63634a 0%, #494937 100%);
+  /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, #63634a 0%, #494937 100%);
+  /* IE10+ */
+  background: linear-gradient(to bottom, #63634a 0%, #494937 100%);
+  /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#63634a', endColorstr='#494937',GradientType=0 );
+  /* IE6-9 */
+  color: #ffffff;
+  text-align: center;
+  border: 0;
+  -moz-border-radius: 8px;
+  /* Firefox */
+  -webkit-border-radius: 8px;
+  /* Safari and Chrome */
+  border-radius: 8px;
+  /* Opera 10.5+, future browsers, and now also Internet Explorer 6+ using IE-CSS3 */
+  behavior: url(css/pie/PIE.htc);
+  width: 100%;
+  padding: 0.2em;
+  cursor: pointer; }
+
+.buscadorMain .form {
+  margin: 0.5em 0;
+  padding: 0.5em; }
+
+.buscadorMain .form label {
+  float: left;
+  margin-right: 1em; }
+
+.buscadorMain .form select,
+.buscadorMain .form input {
+  width: 75%;
+  height: 20px;
+  float: left;
+  margin-right: 0.5em;
+  border: 1px solid #CCCCCC;
+  padding: 0.2em;
+  font-family: Roboto, sans-serif;
+  font-size: 11px;
+  color: #666666;
+  -moz-border-radius: 8px;
+  /* Firefox */
+  -webkit-border-radius: 8px;
+  /* Safari and Chrome */
+  border-radius: 8px;
+  /* Opera 10.5+, future browsers, and now also Internet Explorer 6+ using IE-CSS3 */
+  behavior: url(css/pie/PIE.htc); }
+
+.buscadorMain .form button {
+  width: 100px; }
+
+/***********************************MAPS**********************************************************************/
+#complementary .googleMaps {
+  background-color: #ffffff;
+  -moz-border-radius: 8px;
+  /* Firefox */
+  -webkit-border-radius: 8px;
+  /* Safari and Chrome */
+  border-radius: 8px;
+  /* Opera 10.5+, future browsers, and now also Internet Explorer 6+ using IE-CSS3 */
+  behavior: url(css/pie/PIE.htc);
+  margin: 0.9em 0;
+  border: 1px solid #CCCD96;
+  overflow: hidden; }
+
+#complementary .googleMaps iframe {
+  -moz-border-radius: 8px;
+  /* Firefox */
+  -webkit-border-radius: 8px;
+  /* Safari and Chrome */
+  border-radius: 8px;
+  /* Opera 10.5+, future browsers, and now also Internet Explorer 6+ using IE-CSS3 */
+  behavior: url(css/pie/PIE.htc);
+  position: relative; }
+
+/***************************************************FORMULARIO CONTACTO******************************************/
+#form_contacto {
+  margin: 2em 0 1em 0;
+  padding: 0 0 1em 0;
+  border-bottom: 1px solid #cccccc; }
+
+#form_contacto ul {
+  margin: 0 !important;
+  padding: 0; }
+
+#form_contacto li {
+  overflow: hidden;
+  margin-bottom: 0.5em;
+  list-style-type: none !important;
+  list-style: none !important; }
+
+#form_contacto li.privacidad {
+  text-align: right; }
+
+#form_contacto li.privacidad input[type="checkbox"] {
+  float: right;
+  height: auto;
+  margin: 0 0 0 1em;
+  padding: 0;
+  width: auto; }
+
+#form_contacto li label {
+  margin-left: 0;
+  float: left;
+  padding-top: 0;
+  font-weight: bold; }
+
+#form_contacto li input,
+#form_contacto li textarea {
+  width: 60%;
+  height: 25px;
+  float: right;
+  border: 1px solid #cccccc;
+  padding-left: 1em;
+  color: #333333; }
+
+#form_contacto li textarea {
+  height: 100px; }
+
+#form_contacto li input,
+#form_contacto li textarea,
+#form_contacto li select {
+  border: 1px solid #cccccc;
+  -moz-border-radius: 2px;
+  /* Firefox */
+  -webkit-border-radius: 2px;
+  /* Safari and Chrome */
+  border-radius: 2px;
+  /* Opera 10.5+, future browsers, and now also Internet Explorer 6+ using IE-CSS3 */
+  behavior: url(css/pie/PIE.htc);
+  color: #888;
+  font-size: 12px;
+  -moz-transition: padding .25s;
+  -webkit-transition: padding .25s;
+  -o-transition: padding .25s;
+  transition: padding .25s; }
+
+#form_contacto li input:focus,
+#form_contacto li textarea:focus,
+#form_contacto li select:focus {
+  background: #fff;
+  border: 1px solid #555;
+  box-shadow: 0 0 3px #aaa; }
+
+#form_contacto li input:required:valid,
+#form_contacto li textarea:required:valid,
+#form_contacto li select:required:valid {
+  /*box-shadow: 0 0 5px #5cd053;*/
+  border-color: #7AB20E; }
+
+#form_contacto li input:focus:invalid,
+#form_contacto li textarea:focus:invalid,
+#form_contacto li select:focus:invalid {
+  /*box-shadow: 0 0 5px #d45252;*/
+  border-color: #FF0000; }
+
+#form_contacto li button {
+  background: #63634a;
+  /* Old browsers */
+  background: -moz-linear-gradient(top, #63634a 0%, #494937 100%);
+  /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #63634a), color-stop(100%, #494937));
+  /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, #63634a 0%, #494937 100%);
+  /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, #63634a 0%, #494937 100%);
+  /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, #63634a 0%, #494937 100%);
+  /* IE10+ */
+  background: linear-gradient(to bottom, #63634a 0%, #494937 100%);
+  /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#63634a', endColorstr='#494937',GradientType=0 );
+  /* IE6-9 */
+  color: #ffffff;
+  text-align: center;
+  border: 0;
+  -moz-border-radius: 8px;
+  /* Firefox */
+  -webkit-border-radius: 8px;
+  /* Safari and Chrome */
+  border-radius: 8px;
+  /* Opera 10.5+, future browsers, and now also Internet Explorer 6+ using IE-CSS3 */
+  behavior: url(css/pie/PIE.htc);
+  width: 64%;
+  float: right;
+  padding: 0.2em;
+  cursor: pointer; }
+
+#form_contacto li p {
+  font-size: 10px;
+  line-height: 16px; }
+
+/***************************************************FORMULARIO REGISTRO******************************************/
+.form {
+  margin: 0;
+  padding: 0; }
+
+.form div {
+  overflow: hidden;
+  margin-bottom: 0.5em; }
+
+.form ul {
+  margin: 0 !important; }
+
+.form li {
+  overflow: hidden;
+  margin-bottom: 0.5em;
+  list-style-type: none !important;
+  list-style: none !important; }
+
+.form li.privacidad {
+  text-align: right; }
+
+.form li.privacidad input[type="checkbox"] {
+  float: right;
+  height: auto;
+  margin: 0 0 0 1em;
+  padding: 0;
+  width: auto; }
+
+.form li input[type=radio],
+.form li input[type=checkbox] {
+  float: left;
+  margin-right: 1em;
+  margin-top: 0;
+  outline: none;
+  width: auto;
+  border: 1px solid #cccccc;
+  color: #333333;
+  margin-left: 1em; }
+
+.form li label {
+  margin-left: 0;
+  float: left;
+  padding-top: 0;
+  font-weight: bold; }
+
+.form li input,
+.form li select,
+.form li textarea {
+  width: 60%;
+  height: 25px;
+  float: right;
+  border: 1px solid #cccccc;
+  padding-left: 0.5em;
+  color: #333333; }
+
+.form li select {
+  padding: 0.2em;
+  width: 62%; }
+
+.form li textarea {
+  height: 100px; }
+
+.form li input,
+.form li textarea,
+.form li select {
+  border: 1px solid #cccccc;
+  -moz-border-radius: 2px;
+  /* Firefox */
+  -webkit-border-radius: 2px;
+  /* Safari and Chrome */
+  border-radius: 2px;
+  /* Opera 10.5+, future browsers, and now also Internet Explorer 6+ using IE-CSS3 */
+  behavior: url(css/pie/PIE.htc);
+  color: #888;
+  font-size: 12px;
+  box-shadow: 0px 0px 3px #ccc, 0 10px 15px #eee inset;
+  -moz-transition: padding .25s;
+  -webkit-transition: padding .25s;
+  -o-transition: padding .25s;
+  transition: padding .25s; }
+
+.form li input:focus,
+.form li textarea:focus,
+.form li select:focus {
+  background: #fff;
+  border: 1px solid #555;
+  box-shadow: 0 0 3px #aaa; }
+
+.form li input:required:valid,
+.form li textarea:required:valid,
+.form li select:required:valid {
+  /*box-shadow: 0 0 5px #5cd053;*/
+  border-color: #7AB20E; }
+
+.form li input:focus:invalid,
+.form li textarea:focus:invalid,
+.form li select:focus:invalid {
+  /*box-shadow: 0 0 5px #d45252;*/
+  border-color: #FF0000; }
+
+.form li button {
+  background: #63634a;
+  /* Old browsers */
+  background: -moz-linear-gradient(top, #63634a 0%, #494937 100%);
+  /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #63634a), color-stop(100%, #494937));
+  /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, #63634a 0%, #494937 100%);
+  /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, #63634a 0%, #494937 100%);
+  /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, #63634a 0%, #494937 100%);
+  /* IE10+ */
+  background: linear-gradient(to bottom, #63634a 0%, #494937 100%);
+  /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#63634a', endColorstr='#494937',GradientType=0 );
+  /* IE6-9 */
+  color: #ffffff;
+  text-align: center;
+  border: 0;
+  -moz-border-radius: 8px;
+  /* Firefox */
+  -webkit-border-radius: 8px;
+  /* Safari and Chrome */
+  border-radius: 8px;
+  /* Opera 10.5+, future browsers, and now also Internet Explorer 6+ using IE-CSS3 */
+  behavior: url(css/pie/PIE.htc);
+  width: 62%;
+  float: right;
+  padding: 0.2em;
+  cursor: pointer; }
+
+.form li p {
+  font-size: 11px;
+  line-height: 16px; }
+
+/***************************************************FORM POPUP******************************************/
+#form_popup {
+  margin: 0;
+  padding: 0; }
+
+#form_popup ul {
+  padding: 1em; }
+
+#form_popup li {
+  overflow: hidden;
+  margin-bottom: 0.5em; }
+
+#form_popup li.privacidad {
+  text-align: right; }
+
+#form_popup li.privacidad input[type="checkbox"] {
+  float: right;
+  height: auto;
+  margin: 0 0 0 1em;
+  padding: 0;
+  width: auto; }
+
+#form_popup li label {
+  margin-left: 0;
+  float: left;
+  padding-top: 0;
+  font-weight: bold; }
+
+#form_popup li input,
+#form_popup li select,
+#form_popup li textarea {
+  width: 60%;
+  height: 25px;
+  float: right;
+  border: 1px solid #cccccc;
+  padding-left: 0.5em;
+  color: #333333; }
+
+#form_popup li select {
+  padding-top: 0.2em;
+  width: 62%; }
+
+#form_popup li textarea {
+  height: 100px; }
+
+#form_popup li input,
+#form_popup li textarea,
+#form_popup li select {
+  border: 1px solid #cccccc;
+  -moz-border-radius: 2px;
+  /* Firefox */
+  -webkit-border-radius: 2px;
+  /* Safari and Chrome */
+  border-radius: 2px;
+  /* Opera 10.5+, future browsers, and now also Internet Explorer 6+ using IE-CSS3 */
+  behavior: url(css/pie/PIE.htc);
+  color: #888;
+  font-size: 12px;
+  -moz-transition: padding .25s;
+  -webkit-transition: padding .25s;
+  -o-transition: padding .25s;
+  transition: padding .25s; }
+
+#form_popup li input:focus,
+#form_popup li textarea:focus,
+#form_popup li select:focus {
+  background: #fff;
+  border: 1px solid #555;
+  box-shadow: 0 0 3px #aaa; }
+
+#form_popup li input:required:valid,
+#form_popup li textarea:required:valid,
+#form_popup li select:required:valid {
+  /*box-shadow: 0 0 5px #5cd053;*/
+  border-color: #7AB20E; }
+
+#form_popup li input:focus:invalid,
+#form_popup li textarea:focus:invalid,
+#form_popup li select:focus:invalid {
+  /*box-shadow: 0 0 5px #d45252;*/
+  border-color: #FF0000; }
+
+#form_popup li button {
+  background: #63634a;
+  /* Old browsers */
+  background: -moz-linear-gradient(top, #63634a 0%, #494937 100%);
+  /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #63634a), color-stop(100%, #494937));
+  /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, #63634a 0%, #494937 100%);
+  /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, #63634a 0%, #494937 100%);
+  /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, #63634a 0%, #494937 100%);
+  /* IE10+ */
+  background: linear-gradient(to bottom, #63634a 0%, #494937 100%);
+  /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#63634a', endColorstr='#494937',GradientType=0 );
+  /* IE6-9 */
+  color: #ffffff;
+  text-align: center;
+  border: 0;
+  -moz-border-radius: 8px;
+  /* Firefox */
+  -webkit-border-radius: 8px;
+  /* Safari and Chrome */
+  border-radius: 8px;
+  /* Opera 10.5+, future browsers, and now also Internet Explorer 6+ using IE-CSS3 */
+  behavior: url(css/pie/PIE.htc);
+  width: 62%;
+  float: right;
+  padding: 0.2em;
+  cursor: pointer; }
+
+#form_popup li p {
+  font-size: 10px;
+  line-height: 16px; }
+
+/*************************************************TABLA ESTILO GENERAL*******************************************/
+#main table {
+  width: 100%;
+  border-spacing: 0;
+  border-collapse: collapse;
+  border: 0; }
+
+#main table th {
+  padding: 0.5em;
+  background: #F8EB91; }
+
+#main table td {
+  padding: 0.5em;
+  vertical-align: middle;
+  border-right: 1px solid #CCCD96; }
+
+#main table td:last-child {
+  border-right: 0; }
+
+#main table tr:nth-child(odd) {
+  overflow: hidden;
+  background: #FDF9D8; }
+
+#main table tr:nth-child(even) {
+  overflow: hidden;
+  background: #ffffff; }
+
+#main table tr:hover {
+  background: #F8EB91 !important; }
+
+/*************************************************TABLA RECAMBIOS*******************************************/
+.paginador {
+  background: none repeat scroll 0 0 #F8EB91;
+  padding: 0.5em; }
+
+.paginador ul {
+  overflow: hidden; }
+
+.paginador ul li {
+  float: left;
+  margin-right: 0.5em;
+  padding-right: 0.5em;
+  border-right: 1px solid #656565; }
+
+.paginador ul li.PaginadorSelected {
+  font-weight: bold; }
+
+.paginador ul li:last-child {
+  margin-right: 0;
+  border-right: 0; }
+
+.paginador ul li a {
+  text-decoration: underline; }
+
+/*************************************************TABLA PRODUCTOS*******************************************/
+#main table.productos {
+  width: 100%;
+  border-spacing: 0;
+  border-collapse: collapse; }
+
+#main table.productos tr {
+  background: #ffffff !important; }
+
+#main table.productos tr td {
+  padding: 1em 1em 0 1em; }
+
+#main table.productos table.producto {
+  border-bottom: 1px dotted #eeeeee;
+  width: 100%; }
+
+#main table.productos table.producto td {
+  width: 130px;
+  text-align: left;
+  border-right: 0;
+  padding: 0 1em 0 0;
+  vertical-align: top; }
+
+#main table.productos table.producto td + td {
+  width: 100%;
+  text-align: left; }
+
+#main table.productos table.producto td img {
+  border: 1px solid #eeeeee;
+  padding: 0.5em; }
+
+#main table.productos table.producto td h3 {
+  border-bottom: 1px solid #CCCD96;
+  color: #CCCD96;
+  margin-bottom: 0.5em;
+  padding-bottom: 0.2em; }
+
+#main table.productos table.producto td h3 a {
+  color: #CCCD96;
+  text-decoration: none; }
+
+#main table.productos table.producto td h3 a:hover {
+  text-decoration: underline; }
+
+#main table.productos table.producto td.info {
+  width: 50%;
+  padding: 0; }
+
+#main table.productos table.producto td.info ul {
+  padding: 0 0 1em; }
+
+#main table.productos table.producto td.info ul li {
+  list-style-type: disc;
+  list-style-position: inside;
+  line-height: 22px; }
+
+#main table.productos table.producto td.info2 {
+  border-top: 1px solid #EEEEEE;
+  margin: 1em 0;
+  padding: 1em 0; }
+
+#main table.productos table.producto td p.galeriaFotos {
+  margin: 0.2em 0; }
+
+#main table.productos table.producto td p.galeriaFotos img {
+  margin: 0; }
+
+#main table.productos table.producto div.precio {
+  background: #E1E2B5;
+  padding: 0.5em;
+  margin-top: 1em; }
+
+#main table.productos table.producto div.precio p {
+  color: #404030;
+  margin-bottom: 0;
+  text-align: center; }
+
+#main table.productos table.producto div.precio p span {
+  color: #404030;
+  font-size: 2em;
+  line-height: normal;
+  margin-bottom: 0; }
+
+#main table.productos table.producto div.accesorios {
+  background: #494937;
+  padding: 0.5em;
+  margin-top: 1em; }
+
+#main table.productos table.producto div.accesorios p {
+  margin-bottom: 0;
+  padding: 0 0 0 2.5em;
+  text-align: left;
+  text-transform: uppercase; }
+
+#main table.productos table.producto div.accesorios p a {
+  color: #ffffff; }
+
+#main table.productos table.producto div.accesorios p.imgRight {
+  margin: 0 0.5em 0 0;
+  padding: 0; }
+
+#main table.productos table.producto div.accesorios p.imgRight img {
+  border: 0;
+  padding: 0; }
+
+/*************************************************TABLA IMPLEMENTOS*******************************************/
+#main table.implementos {
+  width: 100%;
+  border-spacing: 0;
+  border-collapse: collapse; }
+
+#main table.implementos tr {
+  background: #ffffff !important; }
+
+#main table.implementos tr td {
+  padding: 1em 1em 0 1em;
+  border-right: 1px dotted #EEEEEE; }
+
+#main table.implementos table.implemento {
+  border-bottom: 1px dotted #eeeeee;
+  width: 100%; }
+
+#main table.implementos table.implemento td {
+  width: 100px;
+  text-align: left;
+  border-right: 0;
+  padding: 0 1em 0 0;
+  vertical-align: top; }
+
+#main table.implementos table.implemento td + td {
+  width: 100%;
+  text-align: left; }
+
+#main table.implementos table.implemento td img {
+  border: 1px solid #eeeeee;
+  padding: 0.5em; }
+
+#main table.implementos table.implemento td h3 {
+  border-bottom: 1px solid #CCCD96;
+  color: #CCCD96;
+  margin-bottom: 0.5em;
+  padding-bottom: 0.2em; }
+
+#main table.implementos table.implemento td h3 a {
+  color: #CCCD96;
+  text-decoration: none; }
+
+#main table.implementos table.implemento td h3 a:hover {
+  text-decoration: underline; }
+
+#main table.implementos table.implemento td.info {
+  width: 50%;
+  padding: 0; }
+
+#main table.implementos table.implemento td.info ul {
+  padding: 0 0 1em; }
+
+#main table.implementos table.implemento td.info ul li {
+  list-style-type: disc;
+  list-style-position: inside;
+  line-height: 22px; }
+
+#main table.implementos table.implemento td.info2 {
+  border-top: 1px solid #EEEEEE;
+  margin: 1em 0;
+  padding: 1em 0; }
+
+#main table.implementos table.implemento td.info3 {
+  padding: 0; }
+
+#main table.implementos table.implemento td.info3 ul {
+  padding: 0 0 1em; }
+
+#main table.implementos table.implemento td.info3 ul li {
+  list-style-type: disc;
+  list-style-position: inside;
+  line-height: 22px; }
+
+#main table.implementos table.implemento td p.galeriaFotos {
+  margin: 0.2em 0; }
+
+#main table.implementos table.implemento td p.galeriaFotos img {
+  margin: 0; }
+
+#main table.implementos table.implemento div.precio {
+  background: #E1E2B5;
+  padding: 0.5em;
+  margin-top: 1em; }
+
+#main table.implementos table.implemento div.precio p {
+  color: #404030;
+  margin-bottom: 0;
+  text-align: center; }
+
+#main table.implementos table.implemento div.precio p span {
+  color: #404030;
+  font-size: 2em;
+  line-height: normal;
+  margin-bottom: 0; }
+
+#main table.implementos table.implemento div.accesorios {
+  background: #494937;
+  padding: 0.5em;
+  margin-top: 1em; }
+
+#main table.implementos table.implemento div.accesorios p {
+  margin-bottom: 0;
+  padding: 0 0 0 2.5em;
+  text-align: left;
+  text-transform: uppercase; }
+
+#main table.implementos table.implemento div.accesorios p a {
+  color: #ffffff; }
+
+#main table.implementos table.implemento div.accesorios p.imgRight {
+  margin: 0 0.5em 0 0;
+  padding: 0; }
+
+#main table.implementos table.implemento div.accesorios p.imgRight img {
+  border: 0;
+  padding: 0; }
+
+/********************************************************PAGINADOR***************************************/
+#main table.paginador {
+  height: 100%; }
+
+#main table.paginador td {
+  padding: 0.5em;
+  background: #F8EB91;
+  text-align: right; }
+
+#main table.paginador td span {
+  float: left; }
+
+#main table.paginador td span + span {
+  float: right; }
+
+/*************************************************TABLA FACTURAS*******************************************/
+#main table.facturas th {
+  width: 20%;
+  text-align: center; }
+
+#main table.facturas th + th {
+  width: 20%;
+  text-align: center; }
+
+#main table.facturas th + th + th {
+  width: 20%;
+  text-align: center; }
+
+#main table.facturas th + th + th + th {
+  width: 20%;
+  text-align: right; }
+
+#main table.facturas th + th + th + th + th {
+  width: 20%;
+  text-align: right; }
+
+#main table.facturas td {
+  text-align: center; }
+
+#main table.facturas td + td {
+  text-align: center; }
+
+#main table.facturas td + td + td {
+  text-align: center; }
+
+#main table.facturas td + td + td + td {
+  text-align: right; }
+
+#main table.facturas td + td + td + td + td {
+  text-align: right; }
+
+/*************************************************TABLA PAGOS*******************************************/
+#main table.pagos th {
+  width: 12%;
+  text-align: center; }
+
+#main table.pagos th + th {
+  width: 12%;
+  text-align: center; }
+
+#main table.pagos th + th + th {
+  width: 12%;
+  text-align: center; }
+
+#main table.pagos th + th + th + th {
+  width: 6%;
+  text-align: center; }
+
+#main table.pagos th + th + th + th + th {
+  width: 16%;
+  text-align: left; }
+
+#main table.pagos th + th + th + th + th + th {
+  width: 16%;
+  text-align: center; }
+
+#main table.pagos th + th + th + th + th + th + th {
+  width: 12%;
+  text-align: right; }
+
+#main table.pagos td {
+  text-align: center; }
+
+#main table.pagos td + td {
+  text-align: center; }
+
+#main table.pagos td + td + td {
+  text-align: center; }
+
+#main table.pagos td + td + td + td {
+  text-align: center; }
+
+#main table.pagos td + td + td + td + td {
+  text-align: left; }
+
+#main table.pagos td + td + td + td + td + td {
+  text-align: center; }
+
+#main table.pagos td + td + td + td + td + td + td {
+  text-align: right; }
+
+/******************************************MODELO**************************************************/
+#main table.modelo th {
+  width: 25%;
+  text-align: center; }
+
+#main table.modelo th + th {
+  width: 25%;
+  text-align: center; }
+
+#main table.modelo th + th + th {
+  width: 25%;
+  text-align: center; }
+
+#main table.modelo th + th + th + th {
+  width: 25%;
+  text-align: center; }
+
+#main table.modelo td {
+  text-align: center; }
+
+#main table.modelo td + td {
+  text-align: center; }
+
+#main table.modelo td + td + td {
+  text-align: center; }
+
+#main table.modelo td + td + td + td {
+  text-align: center; }
+
+#main table.modelo tr:last-child td {
+  text-align: right;
+  font-weight: bold; }
+
+#main table.modelo tr td span {
+  color: #FF0000;
+  font-weight: bold;
+  font-size: 1.4em; }
+
+/********************************************TABLA MAQUINARIA PROPIEDAD***************************************/
+#main table.propiedad th {
+  width: 16%;
+  text-align: center; }
+
+#main table.propiedad th + th {
+  width: 16%;
+  text-align: center; }
+
+#main table.propiedad th + th + th {
+  width: 16%;
+  text-align: center; }
+
+#main table.propiedad th + th + th + th {
+  width: 16%;
+  text-align: left; }
+
+#main table.propiedad th + th + th + th + th {
+  width: 16%;
+  text-align: left; }
+
+#main table.propiedad th + th + th + th + th + th {
+  width: 16%;
+  text-align: left; }
+
+#main table.propiedad td {
+  text-align: center; }
+
+#main table.propiedad td + td {
+  text-align: center; }
+
+#main table.propiedad td + td + td {
+  text-align: center; }
+
+#main table.propiedad td + td + td + td {
+  text-align: left; }
+
+#main table.propiedad td + td + td + td + td {
+  text-align: left; }
+
+#main table.propiedad td + td + td + td + td + td {
+  text-align: left; }
+
+/********************************************SUBMENU*****************************************************/
+#main table.submenu {
+  width: 100%;
+  border-spacing: 0;
+  border-collapse: collapse;
+  border: 0; }
+
+#main table.submenu th {
+  width: 40%;
+  background: #ffffff;
+  padding: 0.5em;
+  text-align: left;
+  border-left: 1px solid #ffffff;
+  border-bottom: 1px solid #ffffff; }
+
+#main table.submenu th:first-child {
+  border-left: 0; }
+
+#main table.submenu th:first-child:hover {
+  background: #ffffff; }
+
+#main table.submenu th + th {
+  width: 20%;
+  text-align: center;
+  background: #fab418;
+  /* Old browsers */
+  background: -moz-linear-gradient(top, #fab418 0%, #faa01d 100%);
+  /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #fab418), color-stop(100%, #faa01d));
+  /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, #fab418 0%, #faa01d 100%);
+  /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, #fab418 0%, #faa01d 100%);
+  /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, #fab418 0%, #faa01d 100%);
+  /* IE10+ */
+  background: linear-gradient(to bottom, #fab418 0%, #faa01d 100%);
+  /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fab418', endColorstr='#faa01d',GradientType=0 );
+  /* IE6-9 */ }
+
+#main table.submenu th:last-child {
+  padding-right: 0; }
+
+#main table.submenu tr th:hover {
+  background: #E1E2B5;
+  color: #656565; }
+
+#main table.submenu tr th.selected {
+  background: #F8EB91;
+  color: #656565; }
+
+#main table.submenu tr th.selected {
+  border-bottom: 0; }
+
+#main table.submenu tr th:hover a,
+#main table.submenu tr th.selected a {
+  color: #656565; }
+
+#main table.submenu a {
+  color: #ffffff;
+  display: block;
+  text-decoration: none; }
+
+/***********************************POPUP*****************************************/
+#tools {
+  background: #ffffff;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.6) 0px 2px 12px;
+  -moz-box-shadow: rgba(0, 0, 0, 0.6) 0px 2px 12px;
+  padding: 0;
+  width: 500px;
+  position: relative;
+  overflow: hidden;
+  display: none; }
+
+#tools .header {
+  -webkit-border-radius: 5px 5px 0 0;
+  -moz-border-radius: 5px 5px 0 0;
+  border-radius: 5px 5px 0 0;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  width: 100%;
+  background: #fab418;
+  /* Old browsers */
+  background: -moz-linear-gradient(top, #fab418 0%, #faa01d 100%);
+  /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #fab418), color-stop(100%, #faa01d));
+  /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, #fab418 0%, #faa01d 100%);
+  /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, #fab418 0%, #faa01d 100%);
+  /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, #fab418 0%, #faa01d 100%);
+  /* IE10+ */
+  background: linear-gradient(to bottom, #fab418 0%, #faa01d 100%);
+  /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fab418', endColorstr='#faa01d',GradientType=0 );
+  /* IE6-9 */ }
+
+#tools .header h3 {
+  padding: 0.5em;
+  color: #ffffff;
+  float: left;
+  margin: 0;
+  text-transform: uppercase; }
+
+#tools .header span {
+  float: right;
+  padding: 0.3em 0.5em; }
+
+#tools .header + #contacto {
+  padding: 1em;
+  margin: 0;
+  border: 0;
+  -webkit-border-radius: 0 0 5px 5px;
+  -moz-border-radius: 0 0 5px 5px;
+  border-radius: 0 0 5px 5px;
+  border-right: 1px solid #CCCD96;
+  border-left: 1px solid #CCCD96;
+  border-bottom: 1px solid #CCCD96; }
+
+#tools .header + #contacto p {
+  line-height: 18px; }
+
+#tools .header .close {
+  background: url(https://public.gaolos.com/cdn/public/hidralec/img/close.png);
+  background-repeat: no-repeat; }
+
+#tools .header #close_x {
+  width: 24px;
+  height: 23px;
+  overflow: hidden;
+  line-height: 1000px;
+  display: block;
+  position: absolute;
+  top: 10px;
+  right: 0; }
+
+/*********************************************FOOTER SECTIONS****************************************************/
+#footer p {
+  margin: 0;
+  color: #403F2F;
+  font-family: Roboto, sans-serif;
+  font-size: 11px;
+  text-align: right;
+  overflow: hidden; }
+
+#footer a {
+  color: #403F2F;
+  text-decoration: underline; }
+
+#footer span {
+  float: left; }
+
+#footer span + span {
+  float: right; }

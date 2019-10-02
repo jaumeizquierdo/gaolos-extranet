@@ -1,0 +1,250 @@
+﻿@model CursosLibrary.ModuloCursosCursoDetallesEditar_CalendarioViewModel
+@{
+    Layout = "~/Views/Shared/Modulo-Cursos/_Cursos-curso.cshtml";
+    ViewData["Title"] = "Curso";
+    ViewData["Message"] = "Modulo de cursos - Gaolos App v2017";
+}
+
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section mb-0">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+@if(Model.Model.Err.eserror)
+{
+    ViewData["err"] = Model.Model.Err.mensaje;
+    @Html.Partial("AccesoDenegado");
+}
+else
+{
+    @* tabs *@
+
+    @Html.Partial("Curso-Tabs")
+
+    @* cabecera *@
+
+    @Html.Partial("Curso-Cabecera")
+
+                <div class="row">
+                    <div class="col-8">
+                        <div class="card card-table">
+                            <div class="card-header card-header-options">
+                                <span>Calendario del curso</span>
+                                <a href="#" class="add-fecha btn btn-sm btn-primary">Nueva fecha</a>
+                            </div>
+                            <div class="card-block">
+                                <table class="table table-striped table-select">
+                                    <thead>
+                                        <tr>
+                                            <th class="">Inicio</th>
+                                            <th class="">Fin</th>
+                                            <th class="">Asignatura / Temario</th>
+                                            <th class="">Ubicación / Profesores</th>
+                                            <th class="">Tipo</th>
+                                            <th class="">Horas</th>
+                                            <th class="text-center w-5"><i class="fa fa-times"></i></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (Model.Model.det!=null)
+                                        {
+                                            @for (Int32 t = 0; t < Model.Model.det.Length; t++)
+                                            {
+                                                <tr>
+                                                    <td><p class="mb-0"><small><a href="#" class="sel-fecha fw-5" id="cale_@Model.Model.det[t].ID_Cale">@Model.Model.det[t].Fe_In</a></small></p></td>
+                                                    <td><p class="mb-0"><small>@Model.Model.det[t].Fe_Fi</small></p></td>
+                                                    <td>
+                                                        <p class="mb-0 fw-5">@Model.Model.det[t].Asig</p>
+                                                        <p class="mb-0 fw-5"><small>@Model.Model.det[t].Tema</small></p>
+                                                    </td>
+                                                    <td><p class="mb-0">@Model.Model.det[t].Ubi</p>
+                                                    @if (Model.Model.det[t].Prof != null)
+                                                    {
+                                                        @for (Int32 h = 0; h < Model.Model.det[t].Prof.Length; h++)
+                                                        {
+                                                            <p class="mb-0 fw-5"><small>@Model.Model.det[t].Prof[h]</small></p>
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        <p class="mb-0 fw-5">---</p>
+                                                    }
+                                                    </td>
+                                                    <td><p class="mb-0"><small>@Model.Model.det[t].Tipo</small></p></td>
+                                                    <td class="text-center"><p class="mb-0">@Model.Model.det[t].Horas</p></td>
+                                                    <td class="text-center w-5"><p class="mb-0"><a href="#" id="del_@Model.Model.det[t].ID_Cale" class="text-danger cursos-curso-quitar-calendario"><i class="fa fa-times"></i></a></p></td>
+                                                </tr>
+                                            }
+
+                                        }
+                                        else
+                                        {
+                                            <tr>
+                                                <td colspan="8">
+                                                    <p class='fw-5 text-danger mb-0'><i class='fa fa-exclamation-circle mr-1'></i> No hay resultados</p>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4">
+
+                        @* Sin datos *@
+                        <div class="card card-table mb-3" id="versininfo">
+                            <div class="card-header card-header-options">
+                                <span>Información</span>
+                                <div class="card-actions">
+                                    <ul>
+                                        <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="card-block" role="tablist" aria-multiselectable="true">
+                                <div class="text-center mt-4 mb-4 p-5 bloque-sin-informacion">
+                                    <img src="~/flaticons/chat.svg" style="width: 25%;">
+                                    <p class="pt-4">Si clica encima de la fecha de inicio podrá modificar los datos o si clica encima de Nueva fecha podrá dar de alta.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card mb-3" id="ver-contenido" style="display: none;">
+                            <div class="card-header card-header-options">
+                                <span id="titulo-fecha">Añadir fecha</span><input type="hidden" id="ID_Cale" value="0" />
+                                <div class="card-actions">
+                                    <ul>
+                                        <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="card-block p-0">
+                                <div class="d-flex flex-column p-2">
+                                    <div class="input-group input-group-sm mb-2">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Inicio</span>
+                                        </div>
+                                        <input type="text" class="form-control" placeholder="(Ej. 31/08/18 10:00)" id="Fe_In">
+                                    </div>
+                                    <div class="input-group input-group-sm mb-2">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Fin</span>
+                                        </div>
+                                        <input type="text" class="form-control" placeholder="(Ej. 31/08/18 18:00)" id="Fe_Fi">
+                                    </div>
+                                    <div class="input-group input-group-sm mb-2">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Durada en minutos</span>
+                                        </div>
+                                        <input type="text" class="form-control" placeholder="Durada en minutos" id="TotalMin">
+                                    </div>
+
+                                    <div class="input-group input-group-sm mb-2">
+                                        <div class="input-group-prepend">
+                                            <label class="input-group-text">Asignatura</label>
+                                        </div>
+                                        <select class="custom-select form-control-sm col-12 cargar-temarios" id="ID_Asig2">
+                                            @if (Model.Model.Asigs != null)
+                                            {
+                                                @for (Int32 t = 0; t < Model.Model.Asigs.Length; t++)
+                                                {
+                                                    <option value="@Model.Model.Asigs[t].datoI">@Model.Model.Asigs[t].datoS</option>
+                                                }
+                                            }
+                                        </select>
+                                    </div>
+
+                                    <div class="input-group input-group-sm mb-2">
+                                        <div class="input-group-prepend">
+                                            <label class="input-group-text">Temario</label>
+                                        </div>
+                                        <select class="custom-select form-control-sm col-12" id="ID_Temario2" disabled>
+                                            <option value="">- seleccione asignatura -</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="input-group input-group-sm mb-2">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Ubicación</span>
+                                        </div>
+                                        <input type="text" class="form-control" placeholder="Ubicación" name="findubi" id="findubi">
+                                        <input type="hidden" name="vfindubi" id="vfindubi" value="" /><input type="hidden" name="tfindubi" id="tfindubi" value="" />
+                                    </div>
+
+                                    <div class="input-group input-group-sm mb-0">
+                                        <div class="input-group-prepend">
+                                            <label class="input-group-text">Tipo hora</label>
+                                        </div>
+                                        <select class="custom-select" id="ID_TipoH">
+                                            @if (Model.Model.TipoH != null)
+                                            {
+                                                @for (Int32 t = 0; t < Model.Model.TipoH.Length; t++)
+                                                {
+                                                    <option value="@Model.Model.TipoH[t].datoI">@Model.Model.TipoH[t].datoS</option>
+                                                }
+                                            }
+                                        </select>
+                                    </div>
+
+                                </div>
+                                <div class="d-flex justify-content-center box-guardar">
+                                    <button type="submit" class="btn btn-sm btn-primary cursos-curso-guardar-calendario">Guardar</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card card-table mb-3" id="ver-contenido-prof" style="display:none;">
+                            <div class="card-header card-header-options">
+                                <span>Profesores</span>
+                                <div class="input-group input-group-sm col-6 mr-0 pr-0">
+                                    <input type="text" class="form-control form-control-sm" id="findprof" name="findprof" placeholder="Añadir profesor">
+                                    <input type="hidden" id="vfindprof" name="vfindprof" value="" /><input type="hidden" id="tfindprof" name="tfindprof" value="" />
+                                    <div class="input-group-append">
+                                        <button type="button" class="btn btn-primary btn-sm cursos-curso-add-formador">Añadir</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-block">
+                                <table class="table table-striped table-select">
+                                    <thead>
+                                        <tr>
+                                            <th class="">Profesor</th>
+                                            <th class="text-center w-5"><i class="fa fa-times"></i></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="card-prof">
+                                        <tr>
+                                            <td><p class="mb-0"><a href="#" class="fw-5">Angel Oliveros Pérez</a></p></td>
+                                            <td class="text-center"><a href="#" class="text-danger"><i class="fa fa-times"></i></a></td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <p class="mb-0"><a href="#" class="fw-5">Borja Martínez Rey</a></p>
+                                            </td>
+                                            <td class="text-center"><a href="#" class="text-danger"><i class="fa fa-times"></i></a></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+}
+            </div>
+        </div>
+    </div>
+</div>

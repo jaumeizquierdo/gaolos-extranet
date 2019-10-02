@@ -1,0 +1,721 @@
+﻿@model ModuloFacturacionLibrary.ModuloFacturacionFacturacionCobrosListadoViewModel
+
+@{
+    Layout = "~/Views/Shared/Modulo-Facturacion/_Facturacion-Cobros.cshtml";
+    ViewData["Title"] = "Listado de cobros";
+    ViewData["TitleBuscar"] = "Buscar ";
+}
+
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                
+    @if (Model.Model.Err.eserror)
+    {
+        ViewData["err"] = Model.Model.Err.mensaje;
+        @Html.Partial("AccesoDenegado");
+    }
+    else
+    {
+
+
+                @* Buscador de facturas *@
+
+                <div class="card mb-3">
+                    <div class="card-header card-header-options">
+                        <span>Buscador de facturas</span>
+
+                        <div class="card-actions">
+                            <ul>
+                                <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-block p-0">
+                        <form method="post" action="@ViewData["form"]" class="sel-dates" name="formmbuscar" id="formmbuscar">
+                            <div class="d-flex justify-content-center align-items-center">
+                                <div class="col-1">
+                                    <img src="~/flaticons/pie-chart-1.svg" style="width: 100%;">
+                                </div>
+                                <div class="col-11 box-border-left-light">
+
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <h5 class="mt-2 mb-2 fs-1-2"> Facturas</h5>
+                                            <div class="form-group">
+                                                <label>Buscar</label>
+                                                <input type="text" class="form-control form-control-sm col-12" placeholder="Buscar por ID de cliente, Empresa, Dirección, CCCli o NIF" name="buscar" value="@ViewData["buscar"]">
+                                            </div>
+                                            <div class="d-flex">
+                                                
+                                                <div class="form-group mr-2">
+                                                    <label>Año</label>
+                                                    <select class="custom-select custom-select-sm form-control-sm col-12" name="Año">
+                                                        <option value="">- año -</option>
+                                                        @for (Int32 t = 0; t < Model.Model.Años.Length; t++)
+                                                        {
+                                                            if (ViewData["Año"].ToString() == Model.Model.Años[t].det)
+                                                            {
+                                                        <option selected value="@Model.Model.Años[t].id">@Model.Model.Años[t].det</option>
+                                                            }
+                                                            else
+                                                            {
+                                                        <option value="@Model.Model.Años[t].id">@Model.Model.Años[t].det</option>
+                                                            }
+                                                        }
+                                                    </select>
+                                                </div>
+                                                <div class="form-group mr-2 ml-2">
+                                                    <label>Mes</label>
+                                                    <select class="custom-select form-control-sm custom-select-sm col-12" name="Mes">
+                                                        <option value="">- mes -</option>
+                                                        @for (Int32 t = 0; t < Model.Model.Meses.Length; t++)
+                                                        {
+                                                            if (ViewData["Mes"].ToString() == Model.Model.Meses[t].id.ToString())
+                                                            {
+                                                        <option selected value="@Model.Model.Meses[t].id">@Model.Model.Meses[t].det</option>
+                                                            }
+                                                            else
+                                                            {
+                                                        <option value="@Model.Model.Meses[t].id">@Model.Model.Meses[t].det</option>
+                                                            }
+                                                        }
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Nº de factura</label>
+                                                    <div class="input-group input-group-sm">
+                                                        <input type="text" class="form-control form-control-sm" placeholder="Nº de factura" name="Fac" value="@ViewData["Fac"]">
+                                                        <span class="input-group-addon" id="" data-toggle="tooltip" data-placement="top" title="" data-original-title="Este filtro desactiva todos los otros"><i class="fa fa-question mt-2 ml-2"></i></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="d-flex">
+                                                <div class="form-group">
+                                                    <label>Fecha factura de</label>
+                                                    <div class="input-group input-group-sm">
+                                                        <input type="text" name="Fe_Fa_In" value="@ViewData["Fe_Fa_In"]" class="form-control" placeholder="Inicio :" />
+                                                        <span class="input-group-addon" id="" data-toggle="tooltip" data-placement="top" title="" data-original-title="Buscar facturas entre fechas"><i class="fa fa-question mt-2 ml-2"></i></span>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group mr-2 ml-2">
+                                                    <label>a</label>
+                                                    <div class="input-group input-group-sm">
+                                                        <input type="text" name="Fe_Fa_Fi" value="@ViewData["Fe_Fa_Fi"]" class="form-control" placeholder="Fin" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-8 box-border-left-light">
+                                            <h5 class="mt-2 mb-2 fs-1-2">Vencimientos</h5>
+                                            <div class="d-flex mt-3 mb-0">
+                                                <div class="form-group mr-3 mb-0">
+                                                    <label class="custom-control custom-radio mb-0 mr-0">
+                                                        <input name="ID_Tipo" type="radio" class="custom-control-input" value="1" @{ if (ViewData["ID_Tipo"].ToString()=="1") { @Html.Raw(" checked ")   } }>
+                                                        
+                                                        <span class="custom-control-label">Solo cobros pendientes</span>
+                                                    </label>
+                                                </div>
+                                                <div class="form-group mr-3 mb-0">
+                                                    <label class="custom-control custom-radio mb-0 mr-0">
+                                                        <input name="ID_Tipo" type="radio" class="custom-control-input" value="0" @{ if (ViewData["ID_Tipo"].ToString()=="0") { @Html.Raw(" checked ")   } }>
+                                                        
+                                                        <span class="custom-control-label">Todos los cobros</span>
+                                                    </label>
+                                                </div>
+                                                <div class="form-group mr-3 mb-0">
+                                                    <label class="custom-control custom-radio mb-0 mr-0">
+                                                        <input name="ID_Tipo" type="radio" class="custom-control-input" value="2" @{ if (ViewData["ID_Tipo"].ToString()=="2") { @Html.Raw(" checked ")   } }>
+                                                        
+                                                        <span class="custom-control-label">Solo impagados</span>
+                                                    </label>
+                                                </div>
+                                                <div class="form-group mr-3 mb-0">
+                                                    <label class="custom-control custom-radio mb-0 mr-0">
+                                                        <input name="ID_Tipo" type="radio" class="custom-control-input" value="3" @{ if (ViewData["ID_Tipo"].ToString()=="3") { @Html.Raw(" checked ")   } }>
+                                                        
+                                                        <span class="custom-control-label">Solo incobrables</span>
+                                                    </label>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="custom-control custom-radio mb-0">
+                                                        <input name="ID_Tipo" type="radio" class="custom-control-input" value="4" @{ if (ViewData["ID_Tipo"].ToString()=="4") { @Html.Raw(" checked ")   } }>
+                                                        
+                                                        <span class="custom-control-label">Solo cobrado</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+
+                                            <div class="d-flex">
+                                                <div class="form-group mr-2 ml-0 col-5 p-0">
+                                                    <label>Forma</label>
+                                                    <select class="custom-select form-control-sm col-12" name="ID_For">
+                                                        @if (Model.Model.Formas != null)
+                                                        {
+                                                            @for (Int32 t = 0; t < Model.Model.Formas.Length; t++)
+                                                            {
+                                                                @if (Model.Model.Formas[t].id.ToString() == ViewData["ID_For"].ToString())
+                                                                {
+                                                                    <option value="@Model.Model.Formas[t].id" selected>@Model.Model.Formas[t].det</option>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <option value="@Model.Model.Formas[t].id">@Model.Model.Formas[t].det</option>
+                                                                }
+                                                            }
+                                                        }
+                                                    </select>
+                                                </div>
+                                                <div class="form-group mr-0 ml-0 col-7 p-0 pr-2">
+                                                    <label>Cuenta</label>
+                                                    <select class="custom-select form-control-sm col-12" name="ID_CueNeg">
+                                                        @if (Model.Model.Cuentas != null)
+                                                        {
+                                                            @for (Int32 t = 0; t < Model.Model.Cuentas.Length; t++)
+                                                            {
+                                                                @if (Model.Model.Cuentas[t].id.ToString() == ViewData["ID_CueNeg"].ToString())
+                                                                {
+                                                                    <option value="@Model.Model.Cuentas[t].id" selected>@Model.Model.Cuentas[t].det</option>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <option value="@Model.Model.Cuentas[t].id">@Model.Model.Cuentas[t].det</option>
+                                                                }
+                                                            }
+                                                        }
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="d-flex mb-2">
+                                                <div class="d-flex box-grey mr-2">
+                                                    <div class="form-group ml-2 mb-2">
+                                                        <small class="fw-5">Fecha vencimiento de</small>
+                                                        <div class="input-group input-group-sm mt-1">
+                                                            <input type="text" class="form-control form-control-sm" placeholder="Inicio" name="Fe_Ve_In" value="@ViewData["Fe_Ve_In"]">
+                                                            <span class="input-group-addon" id="" data-toggle="tooltip" data-placement="top" title="" data-original-title="Buscar recibos por vencimiento entre fechas"><i class="fa fa-question mt-2 ml-2"></i></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group mr-2 ml-2 mb-2">
+                                                        <small class="fw-5">a</small>
+                                                        <div class="input-group input-group-sm mt-1">
+                                                            <input type="text" class="form-control form-control-sm" placeholder="Fin" name="Fe_Ve_Fi" value="@ViewData["Fe_Ve_Fi"]">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="d-flex box-grey mr-2">
+                                                    <div class="form-group ml-2 mb-2">
+                                                        <small class="fw-5">Fecha de cobro</small>
+                                                        <div class="input-group input-group-sm mt-1">
+                                                            <input type="text" class="form-control form-control-sm" placeholder="Inicio" name="Fe_Cob_In" value="@ViewData["Fe_Cob_In"]">
+                                                            <span class="input-group-addon" id="" data-toggle="tooltip" data-placement="top" title="" data-original-title="Buscar recibos cobrados entre fechas"><i class="fa fa-question mt-2 ml-2"></i></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group mr-2 ml-2 mb-2">
+                                                        <small class="fw-5">a</small>
+                                                        <div class="input-group input-group-sm mt-1">
+                                                            <input type="text" class="form-control form-control-sm" placeholder="a" name="Fe_Cob_Fi" value="@ViewData["Fe_Cob_Fi"]">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="d-flex box-grey">
+                                                    <div class="form-group ml-2 mb-2">
+                                                        <small class="fw-5">Importe de</small>
+                                                        <div class="input-group input-group-sm mt-1">
+                                                            <input type="text" class="form-control form-control-sm" placeholder="€" name="Imp_In" value="@ViewData["Imp_In"]">
+                                                            <span class="input-group-addon" id="" data-toggle="tooltip" data-placement="top" title="" data-original-title="Buscar recibos entre importes"><i class="fa fa-question mt-2 ml-2"></i></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group mr-2 ml-2 mb-2">
+                                                        <small class="fw-5">a</small>
+                                                        <div class="input-group input-group-sm mt-1">
+                                                            <input type="text" class="form-control form-control-sm" placeholder="€" name="Imp_Fi" value="@ViewData["Imp_Fi"]">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-center box-border-top p-2 mdc-bg-blue-grey-50">
+                                <button type="submit" class="btn btn-sm btn-primary">Buscar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                @* Listado de facturas *@
+
+                <div class="row">
+                    @* Listado *@
+                    <div class="col-8">
+                        <div class="card card-table mb-0">
+                            <div class="card-header card-header-options">
+                                <span>@ViewData["Title"]</span>
+                                <a href="#" class="btn btn-sm btn-primary" style="display:none;">Exportar</a>
+                            </div>
+                            <div class="card-block">
+
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center w-10">Vencimiento</th>
+                                            <th class="text-center w-10">Factura</th>
+                                            <th>Cliente</th>
+                                            <th class="w-30">Forma</th>
+                                            <th class="w-5 text-center"><i class="fa fa-file-text" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="Indica que hay una solicitud vinculada a la factura"></i></th>
+                                            <th class="text-center w-10">Sel.</th>
+                                            <th class="text-right w-10">Importe</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (Model.Model.det != null)
+                                        {
+                                            for (Int32 t = 0; t < Model.Model.det.Length; t++)
+                                            {
+                                                string classtr = "";
+                                                if (Model.Model.det[t].Atraso)
+                                                {
+                                                    classtr = "class='tr-block'";
+                                                }
+
+                                                <tr @Html.Raw(classtr)>
+                                                    <td class="text-center">
+                                                        @{
+                                                            string txt = "sel-cob_" + Model.Model.det[t].ID_Fra.ToString() + "_" + Model.Model.det[t].ID_Fac.ToString();
+                                                        }
+                                                        <p class="fw-5 mb-0"><a href="#" id="@txt" data-toggle="tooltip" data-placement="top" title="" data-original-title="Ver detalles del vencimiento" class="fw-5 sel-cob">@Model.Model.det[t].Fe_Ve</a></p>
+                                                        @if (Model.Model.det[t].Fe_Dev != "" && Model.Model.det[t].Fe_Cob == "")
+                                                        {
+                                                            <p class="fw-5 mb-0 text-danger"><i class="fa fa-exclamation-triangle mr-1 text-danger" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="Recibo devuelto"></i> <small>@Model.Model.det[t].Fe_Dev</small></p>
+
+
+                                                        }
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <p class="fw-5 mb-0"><a href="/modulo-facturacion/informacion-factura/descargar?ID_Fac=@Model.Model.det[t].ID_Fac&Tipo=html" target="_blank" data-toggle="tooltip" data-placement="top" title="" data-original-title="Ver factura en HTML" class="fw-5">@Model.Model.det[t].Fac</a></p>
+                                                        <p class="fw-5 mb-0"><small>@Model.Model.det[t].Fe_Fa</small></p>
+                                                    </td>
+                                                    <td>
+                                                        <p class="fw-5 mb-0">
+                                                            <a target="_blank" href="/modulo-clientes/clientes/cliente/situacion/cobros-pendientes?ID_Cli2=@Model.Model.det[t].ID_Cli2">@Model.Model.det[t].Emp</a>
+                                                            @if (Model.Model.det[t].NIF != "")
+                                                            {
+                                                                <small>NIF: @Model.Model.det[t].NIF</small>
+                                                            }
+                                                            @if (Model.Model.det[t].CCCli != "")
+                                                            {
+                                                                <small>CC: @Model.Model.det[t].CCCli</small>
+                                                            }
+                                                        </p>
+                                                        <p class="fw-5 mb-0">@Model.Model.det[t].Pob <small>@Model.Model.det[t].Dir</small></p>
+                                                        @if (@Model.Model.det[t].ObsFac != "")
+                                                        {
+                                                            <p class="fw-5 mb-0"><small><b>Observaciones: @Model.Model.det[t].ObsFac</b></small></p>
+                                                        }
+                                                    </td>
+                                                    <td class="">
+                                                        <p class="fw-5 mb-0">@Model.Model.det[t].Forma</p>
+                                                        @if (Model.Model.det[t].ID_For == 3)
+                                                        {
+                                                            if (Model.Model.det[t].Cue != "")
+                                                            {
+                                                                <p class="fw-5 mb-0">
+                                                                    @if (Model.Model.det[t].WarCue != "")
+                                                                    {
+                                                                        <i class='fa fa-exclamation-circle mr-1 text-danger' data-toggle="tooltip" data-placement="top" title="" data-original-title="@Model.Model.det[t].WarCue"></i>
+
+                                                                    }
+                                                                    <small>@Html.Raw(Model.Model.det[t].Cue)</small>
+                                                                </p>
+                                                            }
+                                                            if (Model.Model.det[t].Banco != "")
+                                                            {
+                                                                <p class="fw-5 mb-0"><small>@Html.Raw(Model.Model.det[t].Banco)</small></p>
+                                                            }
+                                                        }
+                                                        else
+                                                        {
+                                                            if (Model.Model.det[t].CueNeg != "")
+                                                            {
+                                                                <p class="fw-5 mb-0"><small>@Html.Raw(Model.Model.det[t].CueNeg)</small></p>
+                                                            }
+                                                        }
+
+                                                    </td>
+                                                    <td class="text-center">
+                                                        @if (Model.Model.det[t].ID_Soli2 > 0)
+                                                        {
+                                                            <a href="/tareas-pendientes/tarea-pendiente?ID_Soli2=@Model.Model.det[t].ID_Soli2" target="_blank"><i class="fa fa-file-text" aria-hidden="true"></i></a>
+                                                        }
+                                                </td>
+                                                <td class="text-center">
+                                                    @if (Model.Model.det[t].Fe_Cob == "")
+                                                    {
+                                                        <input type="checkbox" name="sel" id="sel_@Model.Model.det[t].ID_Fra" class="sel-fra" />
+                                                    }
+                                                    else
+                                                    {
+                                                        <p class="fw-5 mb-0"><small>@Html.Raw(Model.Model.det[t].Fe_Cob)</small></p>
+                                                    }
+                                                </td>
+
+                                                <td class="text-right"><p class="mb-0 fw-5" id="val_@Model.Model.det[t].ID_Fra">@Model.Model.det[t].Imp</p></td>
+                                            </tr>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <tr><td colspan="8"><p class='fw-5 text-danger mb-0'><i class='fa fa-exclamation-circle mr-1'></i> No hay resultados</p></td></tr>
+
+                                    }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            @Html.Raw(Model.Model.Paginador)
+                        </div>
+
+                        @* Marcar como cobrado *@
+                        <div class="card card-table mb-3">
+                            <div class="card-header card-header-options">
+                                <span>Marcar como cobrado</span>
+                                <div class="card-actions">
+                                    <ul>
+                                        <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="card-block" role="tablist" aria-multiselectable="true">
+
+                                <div class="p-0">
+                                    <div class="d-flex flex-column p-2">
+
+                                        <div class="input-group input-group-sm mb-1">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="basic-addon3">Forma de pago</span>
+                                            </div>
+                                            <select class="custom-select form-control-sm" id="ID_For">
+                                                @if (Model.Model.Formas != null)
+                                                {
+                                                    @for (Int32 t = 0; t < Model.Model.Formas.Length; t++)
+                                                    {
+                                                        @if (Model.Model.Formas[t].id.ToString() == ViewData["ID_For"].ToString())
+                                                        {
+                                                            <option value="@Model.Model.Formas[t].id" selected>@Model.Model.Formas[t].det</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="@Model.Model.Formas[t].id">@Model.Model.Formas[t].det</option>
+                                                        }
+                                                    }
+                                                }
+                                            </select>
+                                        </div>
+
+                                        <div class="input-group input-group-sm mb-1">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="basic-addon3">Cuenta destino</span>
+                                            </div>
+                                            <select class="custom-select form-control-sm" id="ID_CueNeg">
+                                                @if (Model.Model.Cuentas != null)
+                                                {
+                                                    @for (Int32 t = 0; t < Model.Model.Cuentas.Length; t++)
+                                                    {
+                                                        @if (Model.Model.Cuentas[t].id.ToString() == ViewData["ID_CueNeg"].ToString())
+                                                        {
+                                                            <option value="@Model.Model.Cuentas[t].id" selected>@Model.Model.Cuentas[t].det</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="@Model.Model.Cuentas[t].id">@Model.Model.Cuentas[t].det</option>
+                                                        }
+                                                    }
+                                                }
+                                            </select>
+                                        </div>
+
+
+
+                                        <div class="input-group input-group-sm mb-0">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="basic-addon3">Fecha de cobro</span>
+                                            </div>
+                                            <input type="text" class="form-control" placeholder="Fecha" id="Fe_Cob" />
+                                        </div>
+
+                                        <div class="flex-column flex-column my-3">
+                                            <p class="mb-0 fw-5">Nº de recibos seleccionados: <span id="numrec" class="text-danger"></span></p>
+                                            <p class="mb-0 fw-5">Total recibos seleccionados: <span id="totrec" class="text-danger">0,00 €</span></p>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="d-flex justify-content-center box-border-top p-2 mdc-bg-blue-grey-50">
+                                        <button type="button" class="btn btn-danger btn-sm facturacion-cobros-marcar-sel">Marcar como cobrado</button>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="col-4">
+                        @{ 
+                            //string verMarcarCobro = "display:block;";
+                            string verSinInfo = "display:none;";
+                            if (ViewData["ID_Tipo"].ToString() == "4")
+                            {
+                                //verMarcarCobro = "display:none;";
+                                verSinInfo = "display:block;";
+                            }
+                        }
+
+                        @* Sin datos *@
+                        <div class="card card-table mb-3" style="@verSinInfo" id="versininfo">
+                            <div class="card-header card-header-options">
+                                <span>Información</span>
+                                <div class="card-actions">
+                                    <ul>
+                                        <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="card-block" role="tablist" aria-multiselectable="true">
+                                <div class="text-center mt-4 mb-4 p-5 bloque-sin-informacion">
+                                    <img src="~/flaticons/chat.svg" style="width: 25%;">
+                                    <p class="pt-4">Si clica encima de la fecha de vencimiento, en este espacio le aparecerán los datos del recibo</p>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+
+
+
+                        <div style="visibility:hidden" id="opciones">
+
+
+                            @* Datos factura *@
+
+                            <div class="card card-table mb-3">
+                                <div class="card-header card-header-options">
+                                    <span>Factura nº <label id="lFac"></label> vencimento <label id="lFe_Ve"></label></span>
+                                    <input type="hidden" id="ID_Fra" value="" />
+                                    <input type="hidden" id="ID_Fac" value="" />
+                                    <div class="card-actions">
+                                        <ul>
+                                            <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="card-block" role="tablist" aria-multiselectable="true">
+                                    <div class="p-0 mb-0">
+
+                                        <div class="py-2 px-3">
+                                            <p class="mb-0"><small><span class="fw-5 mr-1">Expedición:</span> </small><small id="Fe_Exp"></small></p>
+                                            <p class="mb-0"><small><span class="fw-5 mr-1">Vencimiento:</span> </small><small id="Fe_Ve"></small></p>
+                                            <p class="mb-0"><small><span class="fw-5 mr-1">Nº recibo:</span> </small><small id="NumFra"></small></p>
+                                            <p class="mb-0"><small><span class="fw-5 mr-1">Importe:</span> </small><small id="Imp"></small></p>
+                                            <p class="mb-0"><small><span class="fw-5 mr-1">Forma:</span> </small><small id="Forma"></small></p>
+                                            <p class="mb-0" id="verCue"><small><span class="fw-5 mr-1">Cuenta:</span> </small><small id="Cue"></small></p>
+                                            <p class="mb-0" id="verCueNeg"><small><span class="fw-5 mr-1">Destino:</span> </small><small id="CueNeg"></small></p>
+                                            <p class="mt-2 mb-1 badge badge-danger" id="verDev"><a href="javascript:void(0);">Cobro devuelto</a></p>
+                                            <p class="mb-0"><small><span class="fw-5 mr-1">Estado cobro:</span> </small><small id="EstadoCobro"></small></p>
+                                            <p class="mt-2 mb-1 badge badge-warning" id="verEnEspera"><a id="EnEspera" href="javascript:void(0);"></a></p>
+                                            <p class="mt-2 mb-1 badge badge-success" id="verSiEmpRel"><a href="#datosemprel">Ver empresa relacionada</a></p>
+                                            <p class="mb-0" id="SiConta"><small><span class="fw-5 mr-1 text-succes">Cobro traspasado a la contabilidad</span></small></p>
+                                        </div>
+
+                                        <hr class="mb-1 mt-1" id="verCob" />
+
+                                        <div class="py-2 px-3">
+                                            <p class="mb-0" id="verFe_Cob"><small><span class="fw-5 mr-1">Fecha cobro:</span> </small><small id="iFe_Cob"></small></p>
+                                            <p class="mb-0" id="verUs_Al_Cob"><small><span class="fw-5 mr-1">Cobro registrado por:</span> </small><small id="Us_Al_Cob"></small></p>
+                                        </div>
+
+                                        <hr class="mb-1 mt-1" id="hrverinco" />
+
+                                        <div class="py-2 px-3">
+                                            <p class="mb-0" id="verinco"></p>
+                                        </div>
+
+                                        <hr class="mb-1 mt-1" id="hrDevRecibos" />
+
+                                        <div class="py-2 px-3">
+                                            <p class="mb-0" id="DevRecibos"></p>
+                                        </div>
+
+                                        <hr class="mb-1 mt-1" />
+
+                                        <div class="py-2 px-3">
+                                            <p class="mb-0"><small><span class="fw-5 mr-1">Nº factura:</span> </small><small id="Fac"></small></p>
+                                            <p class="mb-0"><small><span class="fw-5 mr-1">Fecha:</span> </small><small id="Fe_Fa"></small></p>
+                                            <p class="mb-0"><small><span class="fw-5 mr-1">Cliente:</span> </small><small id="Emp"></small></p>
+                                            <p class="mb-0"><small><span class="fw-5 mr-1">NIF:</span> </small><small id="NIF"></small></p>
+                                            <p class="mb-0"><small><span class="fw-5 mr-1">Nº Cliente:</span> </small><small><a href="#" target="_blank" id="ID_Cli2" class="fw-5"></a></small></p>
+                                            <p class="mb-0"><small><span class="fw-5 mr-1">Nº contable:</span> </small><small id="CCCli"></small></p>
+                                            <p class="mb-0"><small><span class="fw-5 mr-1">Total:</span> </small><small id="Total"></small></p>
+                                            <p class="mb-0" id="verObsFac"><small><span class="fw-5 mr-1">Observaciones factura:</span> </small><small id="ObsFac"></small></p>
+                                            @*<p class="mb-0 badge badge-success" id="verSiEmpRel"><a href="#datosemprel">Ver empresa relacionada</a></p>*@
+                                            <p class="mb-0" id="verTipoCli"><small><span class="fw-5 mr-1">Tipo cliente:</span> </small><small id="TipoCli"></small></p>
+                                        </div>
+
+                                        <hr class="mb-1 mt-1" />
+
+                                        <div class="py-2 px-3">
+                                            <div id="verDivEmpRel" style="display:none">
+                                                <a name="datosemprel"></a>
+                                                <p class="mb-0"><small><span class="fw-5 mr-1">Cliente relacionado:</span> </small><small id="EmpRel"></small></p>
+                                                <p class="mb-0"><small><span class="fw-5 mr-1">Tipo cliente:</span> </small><small id="TipoCliRel"></small></p>
+                                                <p class="mb-0"><small><span class="fw-5 mr-1">Nº Cliente:</span> </small><small><a href="#" target="_blank" id="ID_Cli2Rel" class="fw-5"></a></small></p>
+                                                <p class="mb-0" id="verDtoRel"><small><span class="fw-5 mr-1">Dto.:</span> </small><small id="DtoRel"></small></p>
+                                                <div class="box-scroll">
+                                                    <p class="mb-0" id="verObsRel"><small><span class="fw-5 mr-1">Observaciones:</span> </small><small id="ObsRel"></small></p>
+                                                </div>
+                                                @*<p class="mb-0" id="NoEnMailRel"><small><span class="fw-5 mr-1 text-danger">Opción enviar por mail no disponible en este cliente</span></small></p>
+                <p class="mb-0" id="SiEnMailRel"><small><span class="fw-5 mr-1" id="lisMailsRel"></span></small></p>*@
+                                            </div>
+                                        </div>
+
+                                        @*<hr class="mb-1 mt-1" />
+
+
+        <div class="mb-1 d-flex align-items-center" id="verPlan">
+            <small class="fw-5 mr-2">Plantilla</small>
+            <select id="Plan" class="custom-select form-control-sm obtener-plantilla-mail"></select>
+        </div>
+        <div class="mb-2 d-flex align-items-center">
+            <small class="fw-5 mr-2">Asunto</small>
+            <input type="text" id="MailAsunto" value="" class="form-control form-control-sm" />
+        </div>
+        <div class="form-group mb-2">
+            <label>Mensaje</label>
+            <textarea class="form-control form-control-sm" rows="5" id="MailTexto" placeholder="Cuero del mensaje"></textarea>
+        </div>
+        <div class="row justify-content-center">
+            <button type="button" class="btn btn-primary btn-sm ">Enviar mail personalizado</button>
+        </div>*@
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            @* Devolución  *@
+                            <div class="card card-table mb-3" style="display:none;" id="verMarcarDev">
+                                <div class="card-header card-header-options">
+                                    <span>Devolución</span>
+                                    <div class="card-actions">
+                                        <ul>
+                                            <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="card-block" role="tablist" aria-multiselectable="true">
+                                    <div class="p-3 mb-0">
+                                        <div class="form-group mb-2">
+                                            <label>Fecha</label>
+                                            <input type="text" class="form-control" placeholder="Fecha devolución" id="Fe_Dev" />
+                                        </div>
+                                        <div class="form-group mb-2">
+                                            <label>Gastos</label>
+                                            <input type="text" class="form-control" placeholder="Gastos" id="Gastos" />
+                                        </div>
+                                        <div class="form-group mb-2">
+                                            <label>Motivo</label>
+                                            <textarea class="form-control form-control-sm" rows="5" id="ObsDev" maxlength="50" placeholder="Motivo de la devolución"></textarea>
+                                        </div>
+                                        <div class="form-group mb-2">
+                                            <label>Asignar nueva solicitud</label>
+                                            <input type="text" class="form-control" value="" placeholder="Buscar usuario" id="findcarac1" name="findcarac1">
+                                            <input id="vfindcarac1" name="vfindcarac1" type="hidden" value="" /><input id="tfindcarac1" name="tfindcarac1" type="hidden" value="" />
+                                        </div>
+                                        <div class="row justify-content-center">
+                                            <button type="button" class="btn btn-danger btn-sm facturacion-cobros-marcar-dev">Marcar como devuelto</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            @* Anular cobro *@
+                            <div class="card card-table mb-3" style="display:none;" id="verAnularCob">
+                                <div class="card-header card-header-options">
+                                    <span>Anular cobro</span>
+                                    <div class="card-actions">
+                                        <ul>
+                                            <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="card-block" role="tablist" aria-multiselectable="true">
+                                    <div class="p-3 mb-0">
+                                        <div class="form-group mb-2">
+                                            <textarea class="form-control form-control-sm" rows="5" id="ObsEli" placeholder="Motivo de la anulación"></textarea>
+                                        </div>
+                                        <div class="row justify-content-center">
+                                            <button type="button" class="btn btn-danger btn-sm facturacion-cobros-anular-cobro">Anular</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            @* Marcar como incobrable *@
+                            <div class="card card-table mb-3" style="display:none;" id="verIncobrable">
+                                <div class="card-header card-header-options">
+                                    <span>Marcar como incobrable</span>
+                                    <div class="card-actions">
+                                        <ul>
+                                            <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="card-block" role="tablist" aria-multiselectable="true">
+                                    <div class="p-3 mb-0">
+                                        <div class="form-group mb-2">
+                                            <textarea class="form-control form-control-sm" rows="5" id="ObsInco" placeholder="Exposición"></textarea>
+                                        </div>
+                                        <div class="row justify-content-center">
+                                            <button type="button" class="btn btn-danger btn-sm facturacion-cobros-marcar-inco">Anular</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                </div>
+                
+    }
+                
+            </div>
+        </div>
+    </div>
+</div>
+

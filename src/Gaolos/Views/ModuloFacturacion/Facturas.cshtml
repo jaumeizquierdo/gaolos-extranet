@@ -1,0 +1,481 @@
+﻿@model ModuloFacturacionLibrary.ModuloFacturacionFacturacionFacturasListadoViewModel
+
+@{
+    Layout = "~/Views/Shared/Modulo-Facturacion/_Facturacion-Facturas.cshtml";
+    ViewData["Title"] = "Listado de facturas";
+}
+
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                
+    @if(Model.Model.Err.eserror)
+    {
+        ViewData["err"] = Model.Model.Err.mensaje;
+        @Html.Partial("AccesoDenegado");
+    }
+    else
+    {
+                 
+                
+                @* Buscador de facturas *@
+
+                <div class="card mb-3">
+                    <div class="card-header card-header-options">
+                        <span>Buscador de facturas</span>
+
+                        <div class="card-actions">
+                            <ul>
+                                <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-block p-0">
+                        <form method="post" action="@ViewData["form"]" class="sel-dates">
+                            <div class="d-flex justify-content-center align-items-center">
+
+                                <div class="col-1 pb-2 pt-2">
+                                    <img src="~/flaticons/pie-chart-1.svg" style="width: 100%">
+                                </div>
+
+                                <div class="col-11 pt-2 pb-2 box-border-left-light">
+
+                                    <div class="row">
+                                        <div class="col-8">
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" placeholder="Buscar por ID de cliente, Empresa, CCCli o NIF" name="buscar" value="@ViewData["buscar"]">
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="d-inline-flex justify-content-end">
+                                                <div class="form-group mr-4">
+                                                    <div class="input-group">
+                                                        <input type="text" name="Fe_In" value="@ViewData["Fe_In"]" class="form-control" placeholder="De fecha:" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="input-group">
+                                                        <input type="text" name="Fe_Fi" value="@ViewData["Fe_Fi"]" class="form-control" placeholder="a fecha:" />
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-12">
+
+                                            <div class="d-flex justify-content-center">
+                                                <div class="form-group mr-3 ml-3">
+                                                    <label>Año</label>
+                                                    <select class="custom-select form-control-sm col-12" name="Año">
+                                                        <option value="">- año -</option>
+                                                        @for (Int32 t = 0; t < Model.Model.Años.Length; t++)
+                                                        {
+                                                            if (ViewData["Año"].ToString() == Model.Model.Años[t].det)
+                                                            {
+                                                                <option selected value="@Model.Model.Años[t].id">@Model.Model.Años[t].det</option>
+                                                            }
+                                                            else
+                                                            {
+                                                                <option value="@Model.Model.Años[t].id">@Model.Model.Años[t].det</option>
+                                                            }
+                                                        }
+                                                    </select>
+                                                </div>
+
+                                                <div class="form-group mr-3 ml-3">
+                                                    <label>Serie</label>
+                                                    <select class="custom-select form-control-sm col-12" name="ID_Serie">
+                                                        @if (Model.Model.Series != null)
+                                                        {
+                                                            @for (Int32 t = 0; t < Model.Model.Series.Length; t++)
+                                                            {
+                                                                if (ViewData["ID_Serie"].ToString() == Model.Model.Series[t].id.ToString())
+                                                                {
+                                                                    <option selected value="@Model.Model.Series[t].id">@Model.Model.Series[t].det</option>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <option value="@Model.Model.Series[t].id">@Model.Model.Series[t].det</option>
+                                                                }
+                                                            }
+                                                        }
+                                                    </select>
+                                                </div>
+
+                                                <div class="form-group mr-3 ml-3">
+                                                    <label>Mes</label>
+                                                    <select class="custom-select form-control-sm col-12" name="Mes">
+                                                        <option value="">- mes -</option>
+                                                        @for (Int32 t = 0; t < Model.Model.Meses.Length; t++)
+                                                        {
+                                                            if (ViewData["Mes"].ToString() == Model.Model.Meses[t].id.ToString())
+                                                            {
+                                                                <option selected value="@Model.Model.Meses[t].id">@Model.Model.Meses[t].det</option>
+                                                            }
+                                                            else
+                                                            {
+                                                                <option value="@Model.Model.Meses[t].id">@Model.Model.Meses[t].det</option>
+                                                            }
+                                                        }
+                                                    </select>
+                                                </div>
+
+                                                <div class="form-group mr-3 ml-3">
+                                                    <label>Nº de factura</label>
+                                                    <div class="input-group input-group-sm">
+                                                        <input type="text" class="form-control form-control-sm" placeholder="Nº de factura" value="@ViewData["Fac"]" name="Fac" />
+                                                        <span class="input-group-addon" id="" data-toggle="tooltip" data-placement="top" title="" data-original-title="Este filtro desactiva todos los otros"><i class="fa fa-question"></i></span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group mr-3 ml-3">
+                                                    <label>Nº de albarán</label>
+                                                    <div class="input-group input-group-sm">
+                                                        <input type="text" class="form-control form-control-sm" placeholder="Nº de albarán" value="@ViewData["ID_Al2"]" name="ID_Al2" />
+                                                        <span class="input-group-addon" id="" data-toggle="tooltip" data-placement="top" title="" data-original-title="Este filtro desactiva todos los otros"><i class="fa fa-question"></i></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-center box-border-top p-2 mdc-bg-blue-grey-50">
+                                <button type="submit" class="btn btn-sm btn-primary">Buscar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                @* Listado de facturas *@
+
+                <div class="row">
+                    @* Listado *@
+                    <div class="col-8">
+                        <div class="card card-table mb-0">
+                            <div class="card-header card-header-options">
+                                <span>@ViewData["Title"]</span>
+                                @*<a href="#" class="btn btn-sm btn-primary" style="display:none;">Exportar</a>*@
+                                <span>@Model.Model.Total</span>
+                            </div>
+                            <div class="card-block">
+
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center w-10">Nº de factura</th>
+                                            <th class="text-center"><i class="fa fa-paper-plane" data-toggle="tooltip" data-placement="top" title="" data-original-title="Nº de veces enviado por mail"></i></th>
+                                            <th class="text-center"><i class="fa fa-envelope" data-toggle="tooltip" data-placement="top" title="" data-original-title="Nº de veces enviado por correo"></i></th>
+                                            <th class="text-center">Fecha</th>
+                                            <th>Cliente</th>
+                                            <th class="">Comentarios</th>
+                                            <th class="text-center w-10">Ver</th>
+                                            <th class="text-right w-10">Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    @if (Model.Model.det != null)
+                                    {
+                                        for (Int32 t = 0; t < Model.Model.det.Length; t++)
+                                        {
+                                        <tr>
+                                            @{
+                                                string txt = "";
+                                                if (Model.Model.det[t].Negativa == true)
+                                                {
+                                                    txt = "text-danger";
+                                                }
+                                            }
+
+                                            <td class="text-center"><a href="#" id="fac_@Model.Model.det[t].ID_Fac" class="fw-5 sel-fac @txt">@Model.Model.det[t].Fac</a></td>
+                                            <td class="text-center">
+                                                @if (!Model.Model.det[t].FacEMail)
+                                                {<i class="fa fa-lock mr-1 text-danger" aria-hidden="true"></i>}
+                                            @if (Model.Model.det[t].EnvFacOK > 0 || Model.Model.det[t].EnvFacKO > 0)
+                                            {
+                                                if (Model.Model.det[t].EnvFacKO > 0)
+                                                {
+                                                    <a href="#" data-toggle="tooltip" data-placement="top" title="" data-original-title="@Model.Model.det[t].EnvFacOK veces enviada por mail, @Model.Model.det[t].EnvFacKO con error" class="fw-5 text-danger">@Model.Model.det[t].EnvFacOK</a>
+                                                }
+                                                else
+                                                {
+                                                    <a href="#" data-toggle="tooltip" data-placement="top" title="" data-original-title="Nº de veces enviada por mail" class="fw-5">@Model.Model.det[t].EnvFacOK</a>
+                                                }
+                                            }
+                                            else
+                                            { <small>0</small>}
+                                        </td>
+                                        <td class="text-center"><small>@Model.Model.det[t].NumCorr</small></td>
+                                        <td class="text-center"><small class="fw-5">@Model.Model.det[t].Fe_Fa</small></td>
+                                        <td>
+                                            <p class="fw-5 mb-0">
+                                                <a target="_blank" href="/modulo-clientes/clientes/cliente/situacion/facturas?ID_Cli2=@Model.Model.det[t].ID_Cli2">@Model.Model.det[t].Emp</a>
+                                                @if (Model.Model.det[t].NIF != "")
+                                                {
+                                                    <small>NIF: @Model.Model.det[t].NIF</small>
+                                                }
+                                                @if (Model.Model.det[t].CCCli != "")
+                                                {
+                                                    <small>CC: @Model.Model.det[t].CCCli</small>
+                                                }
+
+                                            </p>
+                                            <p class="fw-5 mb-0">@Model.Model.det[t].Pob <small>@Model.Model.det[t].Dir</small></p>
+                                            @if (@Model.Model.det[t].Obs != "")
+                                            {
+                                                <p class="fw-5 mb-0"><small><b>Observaciones: @Model.Model.det[t].Obs</b></small></p>
+                                            }
+                                        </td>
+                                        <td class="text-center">
+                                            @if (Model.Model.det[t].ID_Soli2 > 0)
+                                            {
+                                                <a href="/tareas-pendientes/tarea-pendiente?ID_Soli2=@Model.Model.det[t].ID_Soli2" target="_blank"><i class="fa fa-file-text" aria-hidden="true"></i></a>
+                                            }
+                                        </td>
+                                        <td class="text-center">
+                                            @if (Model.Model.det[t].SiConta)
+                                            {
+                                                <a href="#" data-toggle="tooltip" data-placement="top" title="" data-original-title="Factura exportada a la contabilidad"><i class="fa fa-exclamation-triangle mr-1 text-danger"></i></a>
+                                            }
+
+                                            @if (@Model.Model.det[t].Pdf)
+                                            {
+                                                <a href="/modulo-facturacion/informacion-factura/descargar?ID_Fac=@Model.Model.det[t].ID_Fac&Tipo=pdf2" target="_blank" class="mr-1" data-toggle="tooltip" data-placement="top" title="" data-original-title="Ver factura en PDF"><i class="fa fa-file-pdf-o text-danger"></i></a>
+                                            }
+                                            <a href="/modulo-facturacion/informacion-factura/descargar?ID_Fac=@Model.Model.det[t].ID_Fac&Tipo=pdf" target="_blank" data-toggle="tooltip" data-placement="top" title="" data-original-title="Ver factura en PDF"><i class="fa fa-file-pdf-o"></i></a>
+                                            <a href="/modulo-facturacion/informacion-factura/descargar?ID_Fac=@Model.Model.det[t].ID_Fac&Tipo=html" target="_blank" data-toggle="tooltip" data-placement="top" title="" data-original-title="Ver factura en HTML"><i class="fa fa-file-text-o"></i></a>
+                                        </td>
+                                        <td class="text-right @txt"><p class="mb-0 fw-5">@Model.Model.det[t].Total</p></td>
+                                        </tr>
+                                                        }
+                                                    } else
+                                                    {
+                                                        <tr><td colspan="7"><p class='fw-5 text-danger mb-0'><i class='fa fa-exclamation-circle mr-1'></i> No hay resultados</p></td></tr>
+
+                                                    }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            @Html.Raw(Model.Model.Paginador)
+                        </div>                    
+                        
+                    </div>
+
+                    <div class="col-4" id="sindatos">
+                        @* Sin datos *@
+                        <div class="card card-table mb-3">
+                            <div class="card-header card-header-options">
+                                <span>Información</span>
+                                <div class="card-actions">
+                                    <ul>
+                                        <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="card-block" role="tablist" aria-multiselectable="true">
+                                <div class="text-center mt-4 mb-4 p-5 bloque-sin-informacion">
+                                    <img src="~/flaticons/chat.svg" style="width: 25%;">
+                                    <p class="pt-4">Si clica encima del nº de factura, en este espacio le aparecerán los datos de la factura</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="col-4" style="visibility:hidden" id="opciones">
+
+                        @* CRM vinculado *@
+                        <div class="card card-table mb-3" id="crm-vinc" style="display:none;">
+                            <div class="card-header card-header-options">
+                                <span>Solicitud vinculada nº <label id="lnumSoli"></label></span>
+                                <div class="card-actions">
+                                    <ul>
+                                        <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="card-block" role="tablist" aria-multiselectable="true">
+                                <div class="p-3 mb-0">
+                                    <div class="row justify-content-center">
+                                        <a href="#" class="btn btn-sm btn-primary" id="kID_Soli2" target="_blank">Ir a la solicitud nº <span id="numSoli"></span></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        @* Datos factura *@
+
+                        <div class="card card-table mb-3">
+                            <div class="card-header card-header-options">
+                                <span>Factura nº <label id="lFac"></label></span>
+                                <input type="hidden" id="ID_Fac" value="" />
+                                <div class="card-actions">
+                                    <ul>
+                                        <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="card-block" role="tablist" aria-multiselectable="true">
+                                <div class="p-3 mb-0">
+                                    <p class="mb-0"><small><span class="fw-5 mr-1">Creada:</span> </small><small id="Fe_Al"></small></p>
+                                    <p class="mb-0"><small><span class="fw-5 mr-1">Usuario:</span> </small><small id="Usu"></small></p>
+                                    <hr class="mb-1 mt-1" />
+                                    <p class="mb-0"><small><span class="fw-5 mr-1">Nº factura:</span> </small><small id="Fac"></small></p>
+                                    <p class="mb-0"><small><span class="fw-5 mr-1">Fecha:</span> </small><small id="Fe_Fa"></small></p>
+                                    <p class="mb-0"><small><span class="fw-5 mr-1">Cliente:</span> </small><small id="Emp"></small></p>
+                                    <p class="mb-0"><small><span class="fw-5 mr-1">NIF:</span> </small><small id="NIF"></small></p>
+                                    <p class="mb-0"><small><span class="fw-5 mr-1">Nº Cliente:</span> </small><small><a href="#" target="_blank" id="ID_Cli2"></a></small></p>
+                                    <p class="mb-0"><small><span class="fw-5 mr-1">Nº contable:</span> </small><small id="CCCli"></small></p>
+                                    <p class="mb-0"><small><span class="fw-5 mr-1">Dirección:</span> </small><small id="Dir"></small></p>
+                                    <p class="mb-0"><small><span class="fw-5 mr-1">Total:</span> </small><small id="Total"></small></p>
+                                    <p class="mb-0" id="verObsFac"><small><span class="fw-5 mr-1">Observaciones factura:</span> </small><small id="ObsFac"></small></p>
+                                    <p class="mb-0"><small><span class="fw-5 mr-1">Estado cobro:</span> </small><small id="EstadoCobro"></small></p>
+                                    <p class="mb-0" id="SiConta"><small><span class="fw-5 mr-1 text-succes">Factura traspasada a la contabilidad</span></small></p>
+                                    <p class="mb-0 badge badge-success" id="verSiEmpRel"><a href="#datosemprel">Ver empresa relacionada</a></p>
+                                    <p class="mb-0" id="verTipoCli"><small><span class="fw-5 mr-1">Tipo cliente:</span> </small><small id="TipoCli"></small></p>
+                                    <div class="box-scroll">
+                                        <p class="mb-0" id="verObsCli"><small><span class="fw-5 mr-1">Observaciones cliente:</span> </small><small id="ObsCli"></small></p>
+                                    </div>
+                                    <hr class="mb-1 mt-1" />
+                                    <p class="mb-0" id="NoEnMail"><small><span class="fw-5 mr-1 text-danger">Opción enviar por mail no disponible en este cliente</span></small></p>
+                                    <p class="mb-0" id="SiEnMail"><small><span class="fw-5 mr-1" id="lisMails"></span></small></p>
+                                    <p class="mb-0" id="verEnvMail"><small><span class="fw-5 mr-1">Enviar factura por mail:</span> </small><small id="link_env"><a href="#">Enviar</a></small></p>
+                                    <p class="mb-0" id="verEnMiNombre"><small><span class="fw-5 mr-1">Enviar factura por mail en mí nombre:</span> </small><small id="link_env_mi"><a href="#">Enviar</a></small></p>
+                                    <p class="mb-0" id="verEnvOk"><small><span class="fw-5 mr-1">Total envíos correctos:</span> </small><small id="EnvOk"></small></p>
+                                    <p class="mb-0" id="verEnvKo"><small><span class="fw-5 mr-1">Total envíos incorrectos:</span> </small><small id="EnvKo" class="text-danger"></small></p>
+                                    <hr class="mb-1 mt-1" />
+                                    <p class="mb-0" id="Recibos"></p>
+                                    <hr class="mb-1 mt-1" />
+
+                                    <div class="form-group mb-2">
+                                        <label>Observaciones de la factura</label>
+                                        <textarea class="form-control form-control-sm" rows="5" id="ObsFacGua" placeholder="Observaciones de la factura"></textarea>
+                                    </div>
+                                    <div class="row justify-content-center">
+                                        <button type="button" class="btn btn-primary btn-sm facturacion-cambiar-obs-factura">Guardar observaciones</button>
+                                    </div>
+
+                                    <div id="verDivEmpRel" style="display:none">
+                                        <hr class="mb-2 mt-4" /><a name="datosemprel"></a>
+                                        <p class="mb-0"><small><span class="fw-5 mr-1">Cliente relacionado:</span> </small><small id="EmpRel"></small></p>
+                                        <p class="mb-0"><small><span class="fw-5 mr-1">Tipo cliente:</span> </small><small id="TipoCliRel"></small></p>
+                                        <p class="mb-0"><small><span class="fw-5 mr-1">Nº Cliente:</span> </small><small><a href="#" target="_blank" id="ID_Cli2Rel"></a></small></p>
+                                        <p class="mb-0" id="verDtoRel"><small><span class="fw-5 mr-1">Dto.:</span> </small><small id="DtoRel"></small></p>
+                                        <div class="box-scroll">
+                                            <p class="mb-0" id="verObsRel"><small><span class="fw-5 mr-1">Observaciones:</span> </small><small id="ObsRel"></small></p>
+                                        </div>
+                                    </div>
+
+                                    <hr class="mb-1 mt-1" />
+
+
+                                    <div class="mb-1 d-flex align-items-center" id="verPlan">
+                                        <small class="fw-5 mr-2">Plantilla</small>
+                                        <select id="Plan" class="custom-select form-control-sm obtener-plantilla-mail"></select>
+                                    </div>
+                                    <div class="mb-2 d-flex align-items-center">
+                                        <small class="fw-5 mr-2">Asunto</small>
+                                        <input type="text" id="MailAsunto" value="" class="form-control form-control-sm" />
+                                    </div>
+                                    <div class="form-group mb-2">
+                                        <label>Mensaje</label>
+                                        <textarea class="form-control form-control-sm" rows="5" id="MailTexto" placeholder="Cuerpo del mensaje"></textarea>
+                                    </div>
+                                    <div class="row justify-content-center">
+                                        <button type="button" id="btnsnd" class="btn btn-primary btn-sm facturacion-enviar-mail-factura-personalizado">Enviar mail personalizado</button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        @* CRM *@
+                        <div class="card card-table mb-3" id="crm">
+                            <div class="card-header card-header-options">
+                                <span>Solicitud</span>
+                                <div class="card-actions">
+                                    <ul>
+                                        <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="card-block" role="tablist" aria-multiselectable="true">
+                                <div class="p-3 mb-0">
+                                    <div class="form-group mb-2">
+                                        <label>Exposición</label>
+                                        <textarea class="form-control form-control-sm" rows="5" id="Expo" placeholder="Exposición de la solicitud"></textarea>
+                                    </div>
+                                    <div class="form-group mb-2">
+                                        <label>Fecha planificación (Opcional)</label>
+                                        <div class="form-inline justify-content-between mb-2">
+                                            <input type="text" class="form-control" id="Fe_In" placeholder="Fecha" value="" />
+                                            <input type="text" class="form-control" id="Ho_In" placeholder="Hora" value="" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group mb-2">
+                                        <label for="">Asignar (Opcional)</label>
+                                        <input type="text" class="form-control" value="" placeholder="Buscar usuario" id="findcarac1" name="findcarac1">
+                                        <input id="vfindcarac1" name="vfindcarac1" type="hidden" value="" /><input id="tfindcarac1" name="tfindcarac1" type="hidden" value="" />
+                                    </div>
+                                    <div class="row justify-content-center">
+                                        <button type="button" class="btn btn-primary btn-sm facturacion-nueva-solicitud">Generar solicitud</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        @* Anular factura *@
+                        <div class="card card-table mb-3">
+                            <div class="card-header card-header-options">
+                                <span>Anular factura</span>
+                                <div class="card-actions">
+                                    <ul>
+                                        <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="card-block" role="tablist" aria-multiselectable="true">
+                                <div class="p-3 mb-0">
+                                    <div class="form-group mb-2">
+                                        <textarea class="form-control form-control-sm" rows="5" id="ObsEli" placeholder="Motivo de la anulación"></textarea>
+                                    </div>
+                                    <div class="row justify-content-center">
+                                        <button type="button" class="btn btn-danger btn-sm facturacion-eliminar-factura" id="ElimiarFactura">Anular</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+                
+    }
+                
+            </div>
+        </div>
+    </div>
+</div>
+

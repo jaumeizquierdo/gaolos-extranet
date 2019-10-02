@@ -1,0 +1,178 @@
+﻿@model ModuloControlHorarioModelLibrary.ModuloControlHorarioControlHorarioHoyListadoViewModel
+@{
+    Layout = "~/Views/Shared/Modulo-Control-Horario/_Control-Horario.cshtml";
+    ViewData["Title"] = "Control horario - Hoy";
+}
+
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+                @if(Model.Model.Err.eserror)
+{
+    ViewData["err"] = Model.Model.Err.mensaje;
+                @Html.Partial("AccesoDenegado");
+}
+else
+{
+
+                @*<div class="card mb-3">
+                    <div class="card-header card-header-options">
+                        <span>Buscar</span>
+                        @Html.Partial("PanelActions")
+                    </div>
+                    <div class="card-block p-0">
+                        <div class="d-flex justify-content-center align-items-center">
+                            <div class="col-1 pb-2 pt-2 box-border-right-light">
+                                <img src="https://image.flaticon.com/icons/svg/138/138360.svg" style="width: 100%">
+                            </div>
+                            <div class="col-11">
+                                <form action="@ViewData["Form"]" method="post" class="pr-0 pl-0">
+                                    <div class="input-group card-search-box">
+                                        <input type="text" class="form-control" placeholder="Nº presupueso, empresa, dirección, población, NIF, breve, nº cliente y nº cc" name="buscar" value="@ViewData["buscar"]">
+                                        <span class="input-group-append">
+                                            <button class="btn btn-primary" type="submit">Buscar</button>
+                                        </span>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>*@
+
+                <div class="row">
+                    <div class="col-6">
+                        <div class="card card-table mb-3">
+                            <div class="card-header card-header-options">
+                                <span>Entradas y salidas de hoy</span>
+                            </div>
+                            <div class="card-block">
+
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th class="">Usuario</th>
+                                            <th class="w-15 text-center">Inicio</th>
+                                            <th class="w-15 text-center">Fin</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (Model.Model.Hoy != null)
+                                        {
+                                        @for (Int32 t = 0; t < Model.Model.Hoy.Length; t++)
+                                            {
+                                        <tr>
+                                            <td><p class="mb-0 fs-0-8"><small>@Model.Model.Hoy[t].datoS1</small></td>
+                                            <td class="text-center"><p class="mb-0 fs-0-8"><small>@Model.Model.Hoy[t].datoS2</small></p></td>
+                                            <td class="text-center"><p class="mb-0 fs-0-8"><small>@Model.Model.Hoy[t].datoS3</small></p></td>
+                                        </tr>
+                                            }
+                                        }
+                                        else
+                                        {
+                                        <tr>
+                                            <td colspan="3"><p class="mb-0 fw-5 p-3 text-danger"><i class="fa fa-times" style="font-size: 14px;"></i> No hay resultados</p></td>
+                                        </tr>
+                                        }
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+
+                        @if (Model.Model.Inci != null)
+                        {
+                            <div class="card card-table mb-3">
+                                <div class="card-header card-header-options">
+                                    <span>Incidencias</span>
+                                </div>
+                                <div class="card-block">
+
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th class="">Usuario</th>
+                                                <th class="w-15 text-center">Inicio</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                            @for (Int32 t = 0; t < Model.Model.Inci.Length; t++)
+                                            {
+                                                <tr>
+                                                    <td><p class="mb-0 fs-0-8"><small>@Model.Model.Inci[t].datoS1</small></td>
+                                                    <td class="text-center"><p class="mb-0 fs-0-8"><small>@Model.Model.Inci[t].datoS2</small></p></td>
+                                                </tr>
+                                            }
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                        }
+
+                        <div class="card card-table mb-3">
+                            <div class="card-header card-header-options">
+                                <span>Resumen por usuario</span>
+                            </div>
+                            <div class="card-block">
+
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th class="">Usuario</th>
+                                            <th class="w-15 text-center">Inicio</th>
+                                            <th class="w-15 text-center">Fin</th>
+                                            <th class="w-10 text-center">Horas</th>
+                                            <th class="w-10 text-center">Minutos</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (Model.Model.Res != null)
+                                        {
+                                            @for (Int32 t = 0; t < Model.Model.Res.Length; t++)
+                                            {
+                                        <tr>
+                                            <td><p class="mb-0 fs-0-8"><small>@Model.Model.Res[t].datoS1</small></td>
+                                            <td class="text-center"><p class="mb-0 fs-0-8"><small>@Model.Model.Res[t].datoS2</small></p></td>
+                                            <td class="text-center"><p class="mb-0 fs-0-8"><small>@Model.Model.Res[t].datoS3</small></p></td>
+                                            <td class="text-center"><p class="mb-0 fs-0-8"><small>@Model.Model.Res[t].datoS4</small></p></td>
+                                            <td class="text-center"><p class="mb-0 fs-0-8"><small>@Model.Model.Res[t].datoS5</small></p></td>
+                                        </tr>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <tr>
+                                                <td colspan="5"><p class="mb-0 fw-5 p-3 text-danger"><i class="fa fa-times" style="font-size: 14px;"></i> No hay resultados</p></td>
+                                            </tr>
+                                        }
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+
+}
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,345 @@
+﻿@model ModuloProduccionLibrary.ProduccionCargaDeTrabajoListadoViewModel
+@{
+    Layout = "~/Views/Shared/Modulo-Produccion/_ProduccionConsultas.cshtml";
+    ViewData["Title"] = "Carga de trabajo";
+}
+@if (!Model.Model.Err.eserror)
+{
+
+    <script type="text/javascript">
+
+    google.charts.load('current', { 'packages': ['corechart'], 'language': 'es' });
+    google.charts.setOnLoadCallback(fncGrafico);
+    google.charts.setOnLoadCallback(fncGrafico2);
+
+    // Carga de trabajo elementos
+
+    function fncGrafico() {
+
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', '@Model.Model.Titulo');
+        data.addColumn('number', 'Carga');
+        @{
+            string txt = "";
+            if (Model.Model.det!=null)
+            {
+                for (Int32 t = 0; t < Model.Model.det.Length; t++)
+                {
+                    if (t > 0) { txt += ","; }
+                    txt += "['" + Model.Model.det[t].Elem + "', " + Model.Model.det[t].HorasT + "]";
+                }
+            }
+}
+        @Html.Raw("data.addRows([" + txt + "]);")
+
+        var options = {
+            //title: '@Model.Model.Titulo',
+            width: 600,
+            height: 350,
+            'chartArea': { 'width': '100%', 'height': '80%' },
+            fontName: 'Roboto'
+            //sliceVisibilityThreshold: .03
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('Grafico'));
+        chart.draw(data, options);
+    }
+
+    // Carga de trabajo operarios
+
+    function fncGrafico2() {
+
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', '@Model.Model.Titulo2');
+        data.addColumn('number', 'Carga');
+        @{
+            txt = "";
+            if (Model.Model.det2!=null)
+            {
+                for (Int32 t = 0; t < Model.Model.det2.Length; t++)
+                {
+                    if (t > 0) { txt += ","; }
+                    txt += "['" + Model.Model.det2[t].Ope + "', " + Model.Model.det2[t].HorasT + "]";
+                }
+            }
+}
+        @Html.Raw("data.addRows([" + txt + "]);")
+
+        var options = {
+            //title: '@Model.Model.Titulo2',
+            width: 600,
+            height: 350,
+            'chartArea': { 'width': '100%', 'height': '80%' },
+            fontName: 'Roboto'
+            //sliceVisibilityThreshold: .03
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('Grafico2'));
+        chart.draw(data, options);
+    }
+
+    </script>
+
+}
+
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-md-12">
+
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+
+                @if (Model.Model.Err.eserror)
+                {
+                    ViewData["err"] = Model.Model.Err.mensaje;
+                    @Html.Partial("AccesoDenegado");
+                }
+                else
+                {
+
+                    @*<div class="card mb-3">
+                <div class="card-header card-header-options">
+                    <span>Buscar</span>
+                    @Html.Partial("PanelActions")
+                </div>
+                <div class="card-block p-0">
+                    <div class="d-flex justify-content-center align-items-center">
+                        <div class="col-1 pb-2 pt-2 box-border-right-light">
+                            <img src="https://image.flaticon.com/icons/svg/138/138360.svg" style="width: 100%">
+                        </div>
+                        <div class="col-11">
+                            <form action="@ViewData["Form"]" method="post" class="pr-0 pl-0">
+                                <div class="input-group card-search-box">
+                                    <input type="text" class="form-control" placeholder="Nº presupueso, empresa, dirección, población, NIF, breve, nº cliente y nº cc" name="buscar" value="@ViewData["buscar"]">
+                                    <span class="input-group-append">
+                                        <button class="btn btn-primary" type="submit">Buscar</button>
+                                    </span>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>*@
+
+                    <div class="card card-table mt-2 mb-5">
+                        <div class="card-header card-header-options">
+                            <span>@Model.Model.Titulo</span>
+                        </div>
+                        <div class="card-block m-2">
+                            <div class="row">
+                                <div class="col-5 pr-0">
+
+                                    <div class="card card-table mb-3">
+                                        <div class="card-header card-header-options">
+                                            <span>Elementos localizados</span>
+                                        </div>
+                                        <div class="card-block">
+
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="">Elemento</th>
+                                                        <th class="w-15 text-center">Nº</th>
+                                                        <th class="w-15 text-center">Total (h)</th>
+                                                        <th class="w-15 text-center">Días</th>
+                                                        <th class="w-15 text-center">Horas</th>
+                                                        <th class="w-15 text-center">Minuntos</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @if (Model.Model.det != null)
+                                                    {
+                                                        @for (Int32 t = 0; t < Model.Model.det.Length; t++)
+                                                        {
+                                                            <tr>
+                                                                <td class=""><p class="mb-0 fs-0-8"><a href="#" class="grafica-ordenes" id="elem_@Model.Model.det[t].ID_Elem">@Model.Model.det[t].Elem</a></p></td>
+                                                                <td class="text-center"><p class="mb-0 fs-0-8">@Model.Model.det[t].Num</p></td>
+                                                                <td class="text-center"><p class="mb-0 fs-0-8">@Model.Model.det[t].HorasT</p></td>
+                                                                <td class="text-center"><p class="mb-0 fs-0-8">@Model.Model.det[t].Dias</p></td>
+                                                                <td class="text-center"><p class="mb-0 fs-0-8">@Model.Model.det[t].Horas</p></td>
+                                                                <td class="text-center"><p class="mb-0 fs-0-8">@Model.Model.det[t].Minutos</p></td>
+                                                            </tr>
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        <tr>
+                                                            <td colspan="6"><p class="mb-0 fw-5 p-3 text-danger"><i class="fa fa-times" style="font-size: 14px;"></i> No hay resultados</p></td>
+                                                        </tr>
+                                                    }
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        @Html.Raw(Model.Model.Paginador)
+                                    </div>
+
+                                </div>
+                                <div class="col-7 card-table-chart">
+                                    <div class="googlechart">
+                                        <div id="Grafico"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row" id="vertablacargacliente" style="display:none;">
+                                <div class="col-8 pr-0">
+
+                                    <div class="card card-table mb-3">
+                                        <div class="card-header card-header-options">
+                                            <span id="tipoelem">Tipo elemento</span>
+                                        </div>
+                                        <div class="card-block">
+
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="w-15 text-center">Nº Orden</th>
+                                                        <th class="">Cliente</th>
+                                                        <th class="">Trabajo</th>
+                                                        <th class="w-15 text-center">Prioridad</th>
+                                                        <th class="w-15 text-center">Horas</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="tabla-carga-cliente"></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                    </div>
+
+                                </div>
+                                <div class="col-7 card-table-chart">
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+
+                    <div class="card card-table mt-2 mb-5">
+                        <div class="card-header card-header-options">
+                            <span>@Model.Model.Titulo2</span>
+                        </div>
+                        <div class="card-block m-2">
+                            <div class="row">
+                                <div class="col-5 pr-0">
+
+                                    <div class="card card-table mb-3">
+                                        <div class="card-header card-header-options">
+                                            <span>Operarios localizados</span>
+                                        </div>
+                                        <div class="card-block">
+
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="">Operario</th>
+                                                        <th class="w-15 text-center">Nº</th>
+                                                        <th class="w-15 text-center">Total (h)</th>
+                                                        <th class="w-15 text-center">Días</th>
+                                                        <th class="w-15 text-center">Horas</th>
+                                                        <th class="w-15 text-center">Minuntos</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @if (Model.Model.det2 != null)
+                                                    {
+                                                        @for (Int32 t = 0; t < Model.Model.det2.Length; t++)
+                                                        {
+                                                            <tr>
+                                                                <td class=""><p class="mb-0 fs-0-8"><a href="#" class="grafica-ordenes-ope" id="ope_@Model.Model.det2[t].ID_Ope">@Model.Model.det2[t].Ope</a></p></td>
+                                                                <td class="text-center"><p class="mb-0 fs-0-8">@Model.Model.det2[t].Num</p></td>
+                                                                <td class="text-center"><p class="mb-0 fs-0-8">@Model.Model.det2[t].HorasT</p></td>
+                                                                <td class="text-center"><p class="mb-0 fs-0-8">@Model.Model.det2[t].Dias</p></td>
+                                                                <td class="text-center"><p class="mb-0 fs-0-8">@Model.Model.det2[t].Horas</p></td>
+                                                                <td class="text-center"><p class="mb-0 fs-0-8">@Model.Model.det2[t].Minutos</p></td>
+                                                            </tr>
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        <tr>
+                                                            <td colspan="6"><p class="mb-0 fw-5 p-3 text-danger"><i class="fa fa-times" style="font-size: 14px;"></i> No hay resultados</p></td>
+                                                        </tr>
+                                                    }
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        @Html.Raw(Model.Model.Paginador2)
+                                    </div>
+
+                                </div>
+                                <div class="col-7 card-table-chart">
+                                    <div class="googlechart">
+                                        <div id="Grafico2"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row" id="vertablacargaope" style="display:none;">
+                                <div class="col-8 pr-0">
+
+                                    <div class="card card-table mb-3">
+                                        <div class="card-header card-header-options">
+                                            <span id="nomope"></span>
+                                        </div>
+                                        <div class="card-block">
+
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="w-15 text-center">Nº Orden</th>
+                                                        <th class="">Cliente</th>
+                                                        <th class="">Trabajo</th>
+                                                        <th class="w-15 text-center">Horas</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="tabla-carga-ope"></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                    </div>
+
+                                </div>
+                                <div class="col-7 card-table-chart">
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                }
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,14 @@
+﻿@* Acceso denegado para usuario que no tiene permisos *@
+
+<div class="card mb-3">
+    <div class="card-header card-header-options">
+        <span>@ViewData["Title"]</span>
+        @Html.Partial("PanelActions")
+    </div>
+    <div class="card-block">
+        <div class="input-group card-search-box">
+            <p class="fw-5 mb-0 text-danger">@ViewData["err"]</p>
+        </div>
+
+    </div>
+</div>

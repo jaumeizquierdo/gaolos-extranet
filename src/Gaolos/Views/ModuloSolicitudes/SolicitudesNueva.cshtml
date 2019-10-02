@@ -1,0 +1,297 @@
+﻿@model ModuloSolicitudesLibrary.ModuloSolicitudesNuevaSolicitudIniViewModel
+@{
+    Layout = "~/Views/Shared/Modulo-Solicitudes/_Solicitudes.cshtml";
+    ViewData["Title"] = "Solicitudes - Nueva";
+    ViewData["BuscarTags"] = "Nueva solicitud";
+    ViewData["Message"] = "Solicitudes - Gaolos App v2017";
+}
+
+<div class="main-content m-0" id="widget-area">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                
+    @if (Model.Model.Err.eserror)
+    {
+        ViewData["err"] = Model.Model.Err.mensaje;
+        @Html.Partial("AccesoDenegado");
+    }
+    else
+    {
+        bool flagCurso = false;
+
+        if (Model.Model.ID_Modulo != null)
+        {
+            for (Int32 t = 0; t < Model.Model.ID_Modulo.Length; t++)
+            {
+                switch (Model.Model.ID_Modulo[t])
+                {
+                    case 13: // Cursos - Ocupación
+                        flagCurso = true;
+
+                        break;
+                }
+
+            }
+
+        }
+
+
+        <div class="card mb-3">
+                        <div class="card-header card-header-options">
+                            <span>@ViewData["BuscarTags"]</span>
+                            @Html.Partial("PanelActions")
+                        </div>
+                        <div class="card-block p-0">
+
+                            <div class="d-flex justify-content-center align-items-center">
+                                <div class="col-1 box-border-right-light pb-2 pt-2">
+                                    <img src="~/flaticons/pie-chart-1.svg" style="width: 100%;">
+                                </div>
+                                <div class="col-11 pt-2 pb-2">
+                                    <div class="row">
+                                        <div class="col-3">
+                                            <div class="form-group">
+                                                <label>Teléfono</label>
+                                                <div class="input-group input-group-sm">
+                                                    <input type="text" class="form-control form-control-sm" id="buscarTel" placeholder="Teléfono">
+                                                    <span class="input-group-append">
+                                                        <button type="button" class="btn btn-primary btn-sm form-buscar"><i class="fa fa-search"></i></button>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="form-group">
+                                                <label>Mail</label>
+                                                <div class="input-group input-group-sm">
+                                                    <input type="text" class="form-control form-control-sm" id="buscarMail" placeholder="Mail">
+                                                    <span class="input-group-append">
+                                                        <button type="button" class="btn btn-primary btn-sm form-buscar"><i class="fa fa-search"></i></button>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="form-group">
+                                                <label>Nombre</label>
+                                                <div class="input-group input-group-sm">
+                                                    <input type="text" class="form-control form-control-sm" id="buscarNom" placeholder="Nombre">
+                                                    <span class="input-group-append">
+                                                        <button type="button" class="btn btn-primary btn-sm form-buscar"><i class="fa fa-search"></i></button>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="form-group">
+                                                <label>DNI/NIF</label>
+                                                <div class="input-group input-group-sm">
+                                                    <input type="text" class="form-control form-control-sm" id="buscarDNI" placeholder="DNI/NIF">
+                                                    <span class="input-group-append">
+                                                        <button type="button" class="btn btn-primary btn-sm form-buscar"><i class="fa fa-search"></i></button>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            @*
+    <div class="d-flex justify-content-center box-border-top p-2 mdc-bg-blue-grey-50">
+        <button type="submit" class="btn btn-sm btn-primary">Buscar</button>
+    </div>
+                            *@
+                        </div>
+                    </div>
+
+                    @* Listado de tags *@
+
+                    <div class="row">
+                        <div class="col-8">
+
+                            @* Solicitudes abiertas *@
+
+                            <div class="card card-table" id="card-solicitudes" style="display:none;">
+                                <div class="card-header card-header-options">
+                                    <span>Solicitudes abiertas</span>
+                                </div>
+                                <div class="card-block">
+                                    <table class="table">
+                                        <tbody id="solicitudes"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div id="solicitudes-paginador" class="mb-3" style="display:none;"></div>
+
+                            @* Clientes *@
+
+                            <div class="card card-table" id="card-clientes" style="display:none;">
+                                <div class="card-header card-header-options">
+                                    <span>Clientes (Que ya han comprado)</span>
+                                </div>
+                                <div class="card-block">
+                                    <table class="table">
+                                        <tbody id="clientes"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div id="clientes-paginador" class="mb-3" style="display:none;"></div>
+
+                            @* Contactos *@
+
+                            <div class="card card-table" id="card-contactos" style="display:none;">
+                                <div class="card-header card-header-options">
+                                    <span>Contactos (Que aún no han comprado)</span>
+                                </div>
+                                <div class="card-block">
+                                    <table class="table">
+                                        <tbody id="contactos"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div id="contactos-paginador" class="mb-3" style="display:none;"></div>
+
+                            @* Ocupacion contacto *@
+
+                            <div class="card card-table" id="card-ocupacion" style="display:none;">
+                                <div class="card-header card-header-options">
+                                    <span>Ocupación</span>
+                                </div>
+                                <div class="card-block">
+                                    <table class="table">
+                                        <tbody id="ocupacion"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div id="ocupacioncontactos-paginador" class="mb-3" style="display:none;"></div>
+
+
+                            @* No está registrado como empresa ni contacto *@
+
+                            <div class="card mb-3">
+                                <div class="card-header card-header-options">
+                                    <span>No está registrado como empresa ni contacto</span>
+                                </div>
+                                <div class="card-block">
+                                    <div class="row" id="solicitud-noregistrado">
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label for="">Empresa / Nombre</label>
+                                                <input type="text" class="form-control" id="Emp" placeholder="Empresa o nombre persona física">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="">Mail</label>
+                                                <input type="text" class="form-control" id="Mail" placeholder="Mail">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="">Teléfono</label>
+                                                <input type="text" class="form-control" id="Tel" placeholder="Teléfono">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="">Dirección</label>
+                                                <input type="text" class="form-control" id="Dir" placeholder="Dirección">
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label for="">País</label>
+                                                <input type="text" class="form-control" id="Pai" placeholder="País" value="ESPAÑA">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="">Provincia</label>
+                                                <input type="text" class="form-control" id="Pro" placeholder="Provincia">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="">Código postal</label>
+                                                <input type="text" class="form-control" id="CP" placeholder="Código postal">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="">Población</label>
+                                                <input type="text" class="form-control" id="Pob" placeholder="Población">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+
+                            <div class="card mb-3">
+                                <div class="card-header card-header-options">
+                                    <span>Nueva solicitud</span>
+                                    <div class="card-actions">
+                                        <ul>
+                                            <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="card-block" role="tablist" aria-multiselectable="true">
+
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <p class="fw-5 mb-0">Empresa o contacto</p>
+                                                <p id="lempcon">---</p>
+                                                <input id="empcon" type="hidden" value="" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="">Solicitud</label>
+                                                <textarea class="form-control" rows="10" placeholder="Solicita ..." id="Expo"></textarea>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="">Asignar (Opcional)</label>
+                                                <input type="text" class="form-control" value="@Model.Model.Nom" placeholder="Buscar usuario" id="findcarac1" name="findcarac1" >
+                                                <input id="vfindcarac1" name="vfindcarac1" type="hidden" value="@Model.Model.ID_Us" /><input id="tfindcarac1" name="tfindcarac1" type="hidden" value="@Model.Model.Nom" />
+                                            </div>
+                                        </div>
+                                    </div>
+@if (flagCurso)
+{
+
+
+                                    <hr class="mt-2 mb-3" />
+
+                                    <div class="form-group">
+                                        <label for="">Inscribir en el curso</label>
+                                        <input type="text" class="form-control" value="" placeholder="Buscar por nº curso, fecha inicio, ubicación y curso" id="findcurso" name="findcurso">
+                                        <input id="vfindcurso" name="vfindcurso" type="hidden" value="" /><input id="tfindcurso" name="tfindcurso" type="hidden" value="" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="custom-control custom-checkbox mb-0">
+                                            <input type="checkbox" class="custom-control-input" id="EnvCom" />
+                                            <span class="custom-control-label">Enviar comunicación</span>
+                                            
+                                        </label>
+                                    </div>
+}
+
+                                    <div class="row mt-2">
+                                        <div class="col-12 text-center">
+                                            <div class="justify-content-center">
+                                                <button type="button" class="btn btn-primary nueva-solicitud btn-sm">Nueva solicitud</button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                
+    }
+                
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,81 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "~/Views/Shared/_Login.cshtml";
+    ViewData["Title"] = "Extranet";
+}
+
+<div class="wrapper">
+    <div class="form-login">
+        <form id="frml" name="frml" action="/app" method="post" class="form-signin">
+            <img src="~/images/logo-gaolos-2017.svg" alt="@ViewData["txtLogoTitle"]" style="width: 300px;" />
+            <h2 class="form-signin-heading">@ViewData["txtFraseBienvenida"]</h2>
+            <h3 class="form-signin-heading">@ViewData["txtIniciaSesionTexto"]</h3>
+            @if (ViewData["usernamecookie"].ToString() == "")
+            {
+                <div class="input-group input-group-sm mb-0">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text user-prepend"><i class="fa fa-user"></i></span>
+                    </div>
+
+                    <input type="text" class="form-control" name="username" id="username" placeholder="@ViewData["placeholderUsuario"]" required="" autofocus="" value="@ViewData["usernamecookie"]" />
+                </div>
+
+                <div class="input-group input-group-sm mb-0">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text login-prepend"><i class="fa fa-key"></i></span>
+                    </div>
+                    <input type="password" class="form-control" name="password" id="password" placeholder="@ViewData["placeholderPasword"]" required="" />
+                </div>
+
+            }
+            else
+            {
+                <div class="input-group input-group-sm mb-0">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text user-prepend"><i class="fa fa-user"></i></span>
+                    </div>
+                    <input type="text" class="form-control" name="username" id="username" placeholder="@ViewData["placeholderUsuario"]" required="" value="@ViewData["usernamecookie"]" />
+                </div>
+
+                <div class="input-group input-group-sm mb-0">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text login-prepend"><i class="fa fa-key"></i></span>
+                    </div>
+                    <input type="password" class="form-control" name="password" id="password" placeholder="@ViewData["placeholderPasword"]" required="" autofocus="" />
+                </div>
+
+
+            }
+
+            <div class="meta-login">
+                <label class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="rememberMe" name="rememberMe">
+
+                    <span class="custom-control-label fw-5">Recordar usuario</span>
+                    @if (ViewData["remembermecookie"].ToString() == "")
+                    {
+                        <input type="hidden" id="sesMe" name="sesMe">
+                    }
+                    else
+                    {
+                        <input type="hidden" id="sesMe" name="sesMe" checked>
+                    }
+                </label>
+                <a href="/">@ViewData["urlOlvidastePassword"]</a>
+            </div>
+            <button class="btn btn-lg btn-submit" type="submit">@ViewData["btnIniciarSesion"]</button>
+        </form>
+    </div>
+
+</div>
+
+@*<ul class="cb-slideshow">
+    <li><span>Image 01</span></li>
+    <li><span>Image 02</span></li>
+    <li><span>Image 03</span></li>
+    <li><span>Image 04</span></li>
+    <li><span>Image 05</span></li>
+    <li><span>Image 06</span></li>
+</ul>*@

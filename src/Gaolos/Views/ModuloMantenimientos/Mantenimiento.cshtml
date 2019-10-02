@@ -1,0 +1,676 @@
+﻿@model ModuloMantenimientosLibrary.ModuloMantenimientosMantenimientoDetallesViewModel
+
+@{
+    Layout = "~/Views/Shared/Modulo-Mantenimientos/_Modulo-Mantenimiento.cshtml";
+    ViewData["Title"] = "Mantenimiento";
+    ViewData["Message"] = "Modulo de Mantenimientos - Gaolos App v2017";
+}
+
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+                @if (Model.Model.Err.eserror)
+                {
+                    ViewData["err"] = Model.Model.Err.mensaje;
+                    @Html.Partial("AccesoDenegado");
+                }
+                else
+                {
+
+                    @* cabecera mantenimiento *@
+
+                    @Html.Partial("Mantenimiento-Cabecera")
+
+                    @* tabs *@
+
+                    @Html.Partial("Mantenimiento-Tabs")
+
+                    <div class="row">
+
+                        <div class="col-md-12 col-lg-6 col-sm-12">
+
+                            @* Datos clientes *@
+
+                            <div class="card mb-3">
+                                <div class="card-header card-header-options">
+                                    <span>Datos clientes</span>
+                                </div>
+                                <div class="card-block p-0">
+
+                                    <div class="d-flex p-2">
+                                        <div class="box-labels w-50 mr-2">
+                                            <div class="d-flex align-items-center align-self-stretch">
+                                                <label class="m-0 box-label-label align-self-stretch">Cliente</label>
+                                                <p class="mb-0 px-2"><a target="_blank" href="/modulo-clientes/clientes/cliente/situacion/mantenimientos?ID_Cli2=@Model.Model.ID_Cli2Fac" data-toggle="tooltip" data-placement="top" title="" data-original-title="Ir a la ficha de client, en mantenimientos" class="fw-5">@Model.Model.Emp</a></p>
+                                            </div>
+                                        </div>
+                                        <div class="box-labels w-50">
+                                            <div class="d-flex align-items-center align-self-stretch">
+                                                <label class="m-0 box-label-label align-self-stretch">Referencia cliente</label>
+                                                <p class="mb-0 px-2">@Model.Model.RefCli</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex box-border-top-light p-2">
+
+                                        <div class="d-flex flex-column w-100">
+
+                                            <div class="d-flex mb-1">
+
+                                                <div class="d-flex w-50 p-0 mr-2">
+                                                    <div class="input-group input-group-sm mb-0">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text">Renovación</span>
+                                                        </div>
+                                                        <input type="text" class="form-control" id="Fe_Prox_Ant" value="@Model.Model.PeriFac" placeholder="" disabled>
+                                                    </div>
+                                                </div>
+
+                                                <div class="d-flex w-50 p-0">
+                                                    <div class="input-group input-group-sm">
+                                                        <div class="input-group-prepend">
+                                                            <label class="input-group-text" style="min-width: 130px !important;">Mes inicio</label>
+                                                        </div>
+                                                        <input type="text" class="form-control" value="@Model.Model.Mes" placeholder="" disabled>
+                                                        <div class="input-group-append">
+                                                            <input type="hidden" value="" id="" />
+                                                            <button type="button" class="btn btn-sm btn-primary mod-mes">Cambiar</button>
+                                                        </div>
+                                                    </div>
+
+                                                    @*<div class="input-group input-group-sm">
+                                    <div class="input-group-prepend">
+                                        <label class="input-group-text">Modalidad</label>
+                                    </div>
+                                    <select class="custom-select" id="PeriVis">
+                                        @if (Model.Model.Peri != null)
+                                        {
+                                            @for (Int32 t = 0; t < Model.Model.Peri.Length; t++)
+                                            {
+                                                @if (Model.Model.Peri[t].id == Model.Model.PeriVis)
+                                                {
+                                                    <option selected value="@Model.Model.Peri[t].id">@Model.Model.Peri[t].det</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@Model.Model.Peri[t].id">@Model.Model.Peri[t].det</option>
+                                                }
+                                            }
+                                        }
+                                    </select>
+                                    <div class="input-group-append">
+                                        <button type="button" class="btn btn-sm btn-primary cambiar-perioricidad">Guardar</button>
+                                    </div>
+                                </div>*@
+                                                </div>
+
+                                            </div>
+
+                                            <div class="d-flex">
+
+                                                <div class="d-flex mr-2 w-50 p-0">
+                                                    <div class="input-group input-group-sm mb-0">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text">Fecha inicio</span>
+                                                        </div>
+                                                        <input type="text" class="form-control" placeholder="@Model.Model.Fe_In" id="Fe_Fi" value="@Model.Model.Fe_In" disabled>
+                                                    </div>
+                                                </div>
+
+                                                <div class="d-flex w-50 p-0">
+                                                    <div class="input-group input-group-sm mb-0">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text" style="min-width: 130px !important;">Fecha fin</span>
+                                                        </div>
+                                                        <input type="text" class="form-control" placeholder="Fecha fin" id="Fe_Fi" value="@Model.Model.Fe_Fi">
+                                                        <div class="input-group-append">
+                                                            <button type="button" class="btn btn-sm btn-primary" style="min-width: 66px;">Guardar</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            @* Previsión de visitas *@
+
+                            <div class="card card-table mb-3">
+                                <div class="card-header card-header-options">
+                                    <span>Previsión de visitas</span>
+
+                                    @if (Model.Model.ID_Soli2 != "")
+                                    {
+                                        <a href="/tareas-pendientes/tarea-pendiente?ID_Soli2=@Model.Model.ID_Soli2" class="btn btn-primary btn-sm btn-sm-2x" target="_blank">Seguimiento cambios</a>
+                                    }
+                                </div>
+                                <div class="card-block p-0">
+
+                                    <div class="d-flex p-0">
+                                        <div class="w-50 p-2">
+
+                                            <div class="input-group input-group-sm mb-1">
+                                                <div class="input-group-prepend">
+                                                    <label class="input-group-text">Modalidad</label>
+                                                </div>
+                                                <select class="custom-select" id="PeriVis">
+                                                    @if (Model.Model.Peri != null)
+                                                    {
+                                                        @for (Int32 t = 0; t < Model.Model.Peri.Length; t++)
+                                                        {
+                                                            @if (Model.Model.Peri[t].id == Model.Model.PeriVis)
+                                                            {
+                                                                <option selected value="@Model.Model.Peri[t].id">@Model.Model.Peri[t].det</option>
+                                                            }
+                                                            else
+                                                            {
+                                                                <option value="@Model.Model.Peri[t].id">@Model.Model.Peri[t].det</option>
+                                                            }
+                                                        }
+                                                    }
+                                                </select>
+                                                <div class="input-group-append">
+                                                    <button type="button" class="btn btn-sm btn-primary cambiar-perioricidad">Cambiar</button>
+                                                </div>
+                                            </div>
+
+                                            @*<div class="input-group input-group-sm">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text">Mes inicio contrato</label>
+                            </div>
+                            <select class="custom-select" id="Mes">
+                                @if (Model.Model.Meses != null)
+                                {
+                                    for (Int32 t = 0; t < Model.Model.Meses.Length; t++)
+                                    {
+                                        if (Model.Model.Meses[t].id == Model.Model.Mes)
+                                        {
+                                            <option selected value="@Model.Model.Meses[t].id">@Model.Model.Meses[t].det</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@Model.Model.Meses[t].id">@Model.Model.Meses[t].det</option>
+                                        }
+                                    }
+                                }
+                            </select>
+                            <div class="input-group-append">
+                                <input type="hidden" value="" id="" />
+                                <button type="button" class="btn btn-sm btn-primary mod-mes">Guardar</button>
+                            </div>
+                        </div>*@
+
+
+                                            <div class="input-group input-group-sm mb-1">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">Próxima visita</span>
+                                                </div>
+                                                <input type="text" class="form-control" id="Fe_Prox_txt" value="@Model.Model.Fe_Prox" placeholder="" disabled>
+                                            </div>
+
+                                            <div class="input-group input-group-sm mb-0">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">Última visita</span>
+                                                </div>
+                                                <input type="text" class="form-control" id="Fe_Prox_Ant" value="@Model.Model.Fe_Prox_Ant" placeholder="" disabled>
+                                            </div>
+
+                                        </div>
+                                        <div class="w-50 pt-2 pb-2 pr-2 pl-1">
+                                            <table class="table box-border-bottom box-border-left box-border-right">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="w-30 text-center">Fecha</th>
+                                                        <th class="text-center">Concepto</th>
+                                                        <th class="w-10">Visitas</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="vervis">
+                                                    @if (Model.Model.Vis != null)
+                                                    {
+                                                        for (Int32 t = 0; t < Model.Model.Vis.Length; t++)
+                                                        {
+                                                            string clss = "";
+                                                            if (Model.Model.Vis[t].datoI == 1)
+                                                            {
+                                                                clss = "tr-success";
+                                                            }
+                                                            else if (Model.Model.Vis[t].datoI > 1)
+                                                            {
+                                                                clss = "tr-block";
+                                                            }
+
+                                                            <tr class="@Html.Raw(clss)">
+                                                                <td class="text-center">@Model.Model.Vis[t].datoS1</td>
+                                                                <td class="text-center">
+                                                                    @Model.Model.Vis[t].datoS2
+                                                                </td>
+                                                                <td class="text-center">
+                                                                    @if (Model.Model.Vis[t].datoI > 0)
+                                                                    {
+                                                                        @Model.Model.Vis[t].datoI
+                                                                    }
+                                                                </td>
+                                                            </tr>
+                                                        }
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            @* Modal Cambios Mes de Inicio *@
+
+                            <div id="modalCambiarMesInicio" tabindex="-1" role="dialog" aria-labelledby="" class="modal fade" aria-hidden="true">
+                                <div class="modal-dialog modal-lg" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="fs-1 mb-0" id="modalModificarDetalleTitulo">Cambiar mes de inicio</h4>
+                                            <a href="#" data-dismiss="modal" aria-label="Cerrar"><i class="fa fa-times"></i></a>
+                                        </div>
+                                        <div class="modal-body p-0">
+
+                                            <div class="d-flex pt-2 px-2 pb-1">
+                                                <div class="box-labels w-100">
+                                                    <div class="d-flex align-items-center align-self-stretch">
+                                                        <label class="m-0 box-label-label align-self-stretch">Mes actual</label>
+                                                        <p class="mb-0 pl-2" id="MesSelAct"></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="d-flex px-2">
+                                                <div class="input-group input-group-sm mb-0">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">Nuevo mes</span>
+                                                    </div>
+                                                    <select class="custom-select" id="MesSel"></select>
+                                                </div>
+                                            </div>
+
+                                            <div class="d-flex px-2 pt-1 mb-2">
+                                                <div class="input-group input-group-sm mb-0">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">Motivo</span>
+                                                    </div>
+                                                    <textarea class="form-control" placeholder="Motivo" id="MesSelMotivo"></textarea>
+                                                </div>
+                                            </div>
+
+                                            <div class="d-flex justify-content-center box-guardar">
+                                                <a href="#" target="_blank" class="btn btn-sm btn-primary cambiar-mes">Cambiar</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            @*
+        <div class="card mb-3">
+            <div class="card-header card-header-options">
+                <span>Facturación</span>
+                <div class="card-actions">
+                    <ul>
+                        <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="card-block p-2">
+                <div class="d-flex mb-2">
+
+                    <div class="d-flex align-items-center mr-2">
+                        @if (Model.Model.AutoFac)
+                        {
+                            <input type="checkbox" id="AutoFac" checked>
+                        }
+                        else
+                        {
+                            <input type="checkbox" id="AutoFac">
+                        }
+                        <span class="fw-5 ml-2">Autofacturar</span>
+                    </div>
+
+                    <div class="input-group input-group-sm mb-0 p-0 mr-2 col-2">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text input-group-text-auto">A x días</span>
+                        </div>
+                        <input type="text" class="form-control form-control-sm" placeholder="A x días" id="AxDias" value="@Model.Model.AxDias">
+                    </div>
+
+                    <div class="input-group input-group-sm mb-0 p-0 mr-2 col-2">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text input-group-text-auto">Día 1</span>
+                        </div>
+                        <input type="text" class="form-control form-control-sm" placeholder="Día 1" id="Dia1" value="@Model.Model.Dia1">
+                    </div>
+
+                    <div class="input-group input-group-sm mb-0 p-0 mr-2 col-2">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text input-group-text-auto">Día 2</span>
+                        </div>
+                        <input type="text" class="form-control form-control-sm" placeholder="Día 2" id="Dia2" value="@Model.Model.Dia2">
+                    </div>
+
+                    <div class="input-group input-group-sm mb-0 p-0">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text input-group-text-auto">Forma de pago</span>
+                        </div>
+                        <select class="custom-select" id="ID_For">
+                            @for (Int32 t = 0; t < Model.Model.Formas.Length; t++)
+                            {
+                                if (Model.Model.Formas[t].id == Model.Model.ID_For)
+                                {
+                                    <option value="@Model.Model.Formas[t].id" selected>@Model.Model.Formas[t].det</option>
+                                }
+                                else
+                                {
+                                    <option value="@Model.Model.Formas[t].id">@Model.Model.Formas[t].det</option>
+                                }
+
+                            }
+                        </select>
+                    </div>
+                </div>
+
+                <div class="d-flex">
+                    <div class="input-group input-group-sm mb-0 p-0 mr-2">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text input-group-text-auto">Cuenta cliente</span>
+                        </div>
+                        <select class="custom-select col-12" id="ID_Cue">
+                            @for (Int32 t = 0; t < Model.Model.Cues.Length; t++)
+                            {
+                                if (Model.Model.Cues[t].id == Model.Model.ID_Cue)
+                                {
+                                    <option value="@Model.Model.Cues[t].id" selected>@Model.Model.Cues[t].det</option>
+                                }
+                                else
+                                {
+                                    <option value="@Model.Model.Cues[t].id">@Model.Model.Cues[t].det</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div class="input-group input-group-sm mb-0 p-0">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text input-group-text-auto">Cuenta negocio</span>
+                        </div>
+                        <select class="custom-select col-12" id="ID_CueNeg">
+                            @for (Int32 t = 0; t < Model.Model.CueNegs.Length; t++)
+                            {
+                                if (Model.Model.CueNegs[t].id == Model.Model.ID_CueNeg)
+                                {
+                                    <option value="@Model.Model.CueNegs[t].id" selected>@Model.Model.CueNegs[t].det</option>
+                                }
+                                else
+                                {
+                                    <option value="@Model.Model.CueNegs[t].id">@Model.Model.CueNegs[t].det</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+            <div class="d-flex justify-content-center box-border-top p-2 mdc-bg-blue-grey-50">
+                <button type="submit" class="btn btn-sm btn-primary">Guardar</button>
+            </div>
+        </div>
+
+                            *@
+
+                            @* Tags *@
+
+                            <div class="card mb-3">
+                                <div class="card-header card-header-options">
+                                    <span>Tags</span>
+                                </div>
+                                <div class="card-block p-2">
+
+                                    <div class="form-group text-center px-3">
+
+                                        <div class="input-group input-group-sm ui-widget">
+                                            <input type="text" class="form-control ui-autocomplete-input" value="" placeholder="Buscar tag" id="buscartagcli" name="buscartagcli" autocomplete="off">
+                                            <input id="vbuscartagcli" name="vbuscartagcli" type="hidden" value="0"><input id="tbuscartagcli" name="tbuscartagcli" type="hidden" value="">
+                                            <span class="input-group-append">
+                                                <button class="btn btn-primary clis-cli-add-tag" type="button">Añadir</button>
+                                            </span>
+                                        </div>
+                                        <div class="mt-3 mb-0" id="vertags">
+                                            <span class="badge badge-pill badge-default p-2 mt-1" id="elem-del-cli-tag_8">
+                                                <i class="fa fa-tag ml-1 mr-1"></i> <a href="#" class="fw-5">Llaves administrador</a> <a href="#" class="clis-cli-del-tag" id="del-cli-tag_8"><i class="fa fa-times"></i></a>
+                                            </span>
+                                            <span class="badge badge-pill badge-default p-2 mt-1" id="elem-del-cli-tag_9">
+                                                <i class="fa fa-tag ml-1 mr-1"></i> <a href="#" class="fw-5">No extras sin presupuesto</a> <a href="#" class="clis-cli-del-tag" id="del-cli-tag_9"><i class="fa fa-times"></i></a>
+                                            </span>
+
+
+                                        </div>
+
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            @* Observación *@
+
+                            <div class="card">
+                                <div class="card-header card-header-options">
+                                    <span>Observación</span>
+                                </div>
+                                <div class="card-block p-2" role="tablist" aria-multiselectable="true">
+                                    <div class="form-group mb-2">
+                                        <label for="">Observaciones públicas (Las puede ver el cliente)</label>
+                                        <textarea class="form-control" rows="10" placeholder="Observaciones públicas" id="ObsPub">@Model.Model.ObsPub</textarea>
+                                    </div>
+                                    <div class="form-group mb-0">
+                                        <label for="">Observaciones privadas (Las ve solo el técnico)</label>
+                                        <textarea class="form-control" rows="10" placeholder="Observaciones privadas" id="ObsPriv">@Model.Model.ObsPriv</textarea>
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-center box-border-top p-2 mdc-bg-blue-grey-50">
+                                    <button type="button" class="btn btn-sm btn-primary cambiar-observaciones-man">Guardar</button>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                        <div class="col-md-12 col-lg-6 col-sm-12">
+
+                            @* Ubicación *@
+
+                            <div class="card mb-3">
+                                <div class="card-header card-header-options">
+                                    <span>Ubicación</span>
+                                </div>
+                                <div class="card-block p-2">
+
+                                    <div class="box-labels mb-2">
+                                        <div class="d-flex align-items-center align-self-stretch box-labels-divider">
+                                            <label class="m-0 box-label-label align-self-stretch" style="width: 130px;">Empresa <a href="#" class="ml-2 actualizar-empresa" data-toggle="tooltip" data-placement="top" title="" data-original-title="Actualizar nombre de empresa"><i class="fa fa-refresh"></i></a> <a href="/modulo-clientes/clientes/cliente?ID_Cli2=@Model.Model.ID_Cli2Fac" target="_blank" class="ml-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="Ir a la ficha de cliente"><i class="fa fa-user-circle-o"></i></a></label>
+                                            <p class="mb-0 px-2">@Model.Model.Emp</p>
+                                        </div>
+
+                                        <div class="d-flex align-items-center align-self-stretch">
+                                            <label class="m-0 box-label-label align-self-stretch" style="width: 130px;">Dirección <a href="#" class="ml-2 actualizar-direccion-ver" data-toggle="tooltip" data-placement="top" title="" data-original-title="Actualizar dirección"><i class="fa fa-refresh"></i></a></label>
+                                            <div class="d-flex flex-column">
+                                                <p class="mb-0 px-2">@Model.Model.Dir - @Model.Model.Pob  - @Model.Model.CP - @Model.Model.Pro</p>
+                                                <div class="input-group input-group-sm px-2 mb-1 mt-1" style="display: none;" id="ver-dir-act">
+                                                    <select class="custom-select custom-select-sm" id="ID_Dir"></select>
+                                                    <div class="input-group-append">
+                                                        <button type="button" class="btn btn-primary btn-sm actualizar-empresa-direccion">Actualizar</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex mb-1">
+                                        <div class="box-labels mr-2 w-50">
+                                            <div class="d-flex align-items-center align-self-stretch">
+                                                <label class="m-0 box-label-label align-self-stretch">Latitud</label>
+                                                <p class="mb-0 px-2">@Model.Model.Lat</p>
+                                            </div>
+                                        </div>
+                                        <div class="box-labels w-50">
+                                            <div class="d-flex align-items-center align-self-stretch">
+                                                <label class="m-0 box-label-label align-self-stretch">Longitud</label>
+                                                <p class="mb-0 px-2">@Model.Model.Lon</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex mb-1">
+                                        <div class="input-group input-group-sm mb-0 p-0 mr-2">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Horario</span>
+                                            </div>
+                                            <input type="text" class="form-control form-control-sm" placeholder="Horario" value="@Model.Model.Horario" id="Horario">
+                                        </div>
+                                        <div class="input-group input-group-sm mb-0 p-0">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Observaciones</span>
+                                            </div>
+                                            <input type="text" class="form-control form-control-sm" placeholder="Observaciones ubicación" value="@Model.Model.UbiObs" id="UbiObs">
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex mb-1">
+                                        <div class="input-group input-group-sm mb-0 p-0 mr-2">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Contacto</span>
+                                            </div>
+                                            <input type="text" class="form-control form-control-sm" placeholder="Contacto" id="UbiCont" value="@Model.Model.UbiCont">
+                                        </div>
+                                        <div class="input-group input-group-sm mb-0 p-0">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Teléfono</span>
+                                            </div>
+                                            <input type="text" class="form-control form-control-sm" placeholder="Teléfono" id="UbiTel" value="@Model.Model.UbiTel">
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="d-flex justify-content-center box-border-top p-2 mdc-bg-blue-grey-50">
+                                    <button type="submit" class="btn btn-sm btn-primary">Guardar</button>
+                                </div>
+                            </div>
+
+                            @* Google Maps *@
+
+                            <div class="card mb-3">
+                                <div class="card-header card-header-options">
+                                    <span>Ubicación en el mapa</span>
+                                </div>
+                                <div class="card-block p-2">
+                                    <div id="rutas-map" class="map-inner"></div>
+                                    <script>
+
+                                        var geocoder;
+                                        var map;
+                                        var address = '@Model.Model.Cab.Dir, @Model.Model.Cab.Pob, @Model.Model.Cab.CP, @Model.Model.Cab.Pro';
+                                        var lat = '@Model.Model.Lat';
+                                        var lng = '@Model.Model.Lon';
+
+                                        function initMap() {
+                                            geocoder = new google.maps.Geocoder();
+                                            var latlng = new google.maps.LatLng(lat, lng);
+                                            var myOptions = {
+                                                zoom: 18,
+                                                center: latlng,
+                                                mapTypeControl: true,
+                                                mapTypeControlOptions: {
+                                                    style: google.maps.MapTypeControlStyle.DROPDOWN_MENU
+                                                },
+                                                navigationControl: true,
+                                                mapTypeId: google.maps.MapTypeId.ROADMAP
+                                            };
+                                            map = new google.maps.Map(document.getElementById("rutas-map"), myOptions);
+                                            if (geocoder) {
+                                                geocoder.geocode({
+                                                    'address': address
+                                                }, function (results, status) {
+                                                    if (status === google.maps.GeocoderStatus.OK) {
+                                                        if (status !== google.maps.GeocoderStatus.ZERO_RESULTS) {
+                                                            map.setCenter(results[0].geometry.location);
+
+                                                            var infowindow = new google.maps.InfoWindow({
+                                                                content: '<b>' + '@Model.Model.Cab.Emp' + '</b><br><b>' + address + '</b>',
+                                                                size: new google.maps.Size(150, 50)
+                                                            });
+
+                                                            var marker = new google.maps.Marker({
+                                                                position: results[0].geometry.location,
+                                                                map: map,
+                                                                title: address
+                                                            });
+                                                            google.maps.event.addListener(marker, 'click', function () {
+                                                                infowindow.open(map, marker);
+                                                            });
+
+                                                        } else {
+                                                            alert("No se han encontrado resultados. Por favor, actualiza las coordenadas de latitud y longitud.");
+                                                        }
+                                                    } else {
+                                                        alert("Geocode no se ha podido inicializar por la siguiente razón: " + status);
+                                                    }
+                                                });
+                                            }
+                                        }
+                                        //google.maps.event.addDomListener(window, 'load', initialize);
+
+
+                                        
+                                    </script>
+                                    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDp_XTA4o-Cd-BBZIgqGc4EDno6sbgsIaI&callback=initMap"></script>
+                                </div>
+                            </div>
+
+                            <div class="card card-table mb-3">
+                                <div class="card-header card-header-options">
+                                    <span>Eliminar mantenimiento</span>
+                                </div>
+                                <div class="card-block p-0">
+                                    <div class="d-flex flex-column p-2">
+                                        <div class="form-group mb-0">
+                                            <textarea class="form-control" rows="3" placeholder="Motivo" id="Motivo"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-center box-guardar">
+                                        <a href="#" target="_blank" class="btn btn-sm btn-danger baja-mantenimiento">Eliminar</a>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                }
+            </div>
+        </div>
+    </div>
+</div>

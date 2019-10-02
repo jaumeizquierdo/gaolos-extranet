@@ -1,0 +1,41 @@
+/* Botones */
+/* Mixins */
+/* Skin v4.6 - White / Dark / Blue */
+.svg-dashboard-modulo {
+  width: 64px; }
+
+.svg-dashboard-apartado {
+  width: 64px; }
+
+.svg-linear path, .svg-linear rect, .svg-linear circle, .svg-linear ellipse, .svg-linear line, .svg-linear polyline, .svg-linear polygon, .svg-linear path {
+  fill: #2196f3; }
+
+.svg-color-1 {
+  fill: #bbdefb; }
+
+.svg-color-2 {
+  fill: #e3f2fd; }
+
+.svg-color-3 {
+  fill: #FFFFFF; }
+
+.svg-color-4 {
+  fill: #2196f3; }
+
+.svg-color-5 {
+  fill: #90caf9; }
+
+.svg-color-6 {
+  fill: #D4E1F4; }
+
+.svg-color-7 {
+  fill: #cbe7fb; }
+
+.svg-color-8 {
+  fill: #42a5f5; }
+
+.svg-color-9 {
+  fill: #64b5f6; }
+
+.svg-color-10 {
+  fill: #bbdefb; }

@@ -1,0 +1,44 @@
+﻿/* Scrollbar */
+
+@import "variables.scss";
+@import "materialdesign.scss";
+
+
+::-webkit-scrollbar {
+    /*width: 7px;
+    height: 0px;*/
+    background-color: $md-blue-grey-400;
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+    /*height: 4px;
+    border: 0;
+    background-clip: padding-box;
+    border-radius: 0;
+    background-color: #37474f;
+    box-shadow: inset -1px -1px 0px rgba(0, 0, 0, 0.05), inset 1px 1px 0px rgba(0, 0, 0, 0.05);*/
+    background-color: $md-blue-grey-700;
+    -webkit-border-radius: 8px;
+    border-radius: 8px;
+    //border: 2px solid #262f3d;
+    //border: 1px solid $md-blue-grey-800;
+}
+
+::-webkit-scrollbar-button {
+    width: 0;
+    height: 0;
+    display: none;
+}
+
+::-webkit-scrollbar-corner {
+    background-color: transparent;
+}
+
+
+// Scrolls
+
+.lnk_volver {
+    @include fade-link;
+}

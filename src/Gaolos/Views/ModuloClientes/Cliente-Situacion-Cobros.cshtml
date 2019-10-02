@@ -1,0 +1,129 @@
+﻿@model ModuloClientesLibrary.ModuloClientesClienteClientesSituacionCobrosViewModel
+@{
+    Layout = "~/Views/Shared/Modulo-Clientes/_Modulo-Clientes.cshtml";
+    ViewData["Title"] = "Situación: Cobros";
+    ViewData["Message"] = "Modulo de Clientes - Gaolos App v2017";
+}
+
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+                @if(Model.Model.Err.eserror)
+{
+    ViewData["err"] = Model.Model.Err.mensaje;
+                @Html.Partial("AccesoDenegado");
+}
+else
+{
+
+                @* cabecera cliente *@
+
+                @Html.Partial("Cliente-Cabecera")
+
+                @* tabs *@
+
+                @Html.Partial("Cliente-Tabs")
+
+                @* Listado de direcciones *@
+
+                <div class="card">
+                    <div class="card-block">
+
+                        @* tabs *@
+
+                        @Html.Partial("Cliente-Situacion-Tabs")
+
+                        <div class="row">
+
+                            <div class="col-12">
+                                <div class="card card-table mb-0">
+                                    <div class="card-header card-header-options">
+                                        <span>Cobros</span>
+                                        <a href="#" class="btn btn-sm btn-primary" style="display:none;">Exportar</a>
+                                    </div>
+                                    <div class="card-block">
+
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-center w-5">Vencimiento</th>
+                                                    <th class="text-center">Fecha</th>
+                                                    <th class="text-center">Factura</th>
+                                                    <th class="text-right">Importe</th>
+                                                    <th>Forma</th>
+                                                    <th class="text-center">Cobrado</th>
+                                                    <th class="text-center">Incobrable</th>
+                                                    <th class="text-center">En espera</th>
+                                                    <th class="">Cuenta</th>
+                                                    <th class="">Concepto</th>
+                                                    <th class="text-center">Remesa</th>
+                                                    <th class="text-center">Presentación</th>
+                                                    <th class="">Presentado</th>
+                                                    <th class="text-center">Tipo</th>
+                                                    <th class="text-center">Devuelto</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @if (Model.Model.det != null)
+                                                {
+                                                    @for (Int32 t = 0; t < Model.Model.det.Length; t++)
+                                                    {
+                                                        string clss = "";
+                                                        if (Model.Model.det[t].Alarma) { clss = "class='tr-block'"; }
+
+                                                        <tr @Html.Raw(clss)>
+                                                            <td class="text-center w-5">@Model.Model.det[t].Fe_Ve</td>
+                                                            <td class="text-center">@Model.Model.det[t].Fe_Fa</td>
+                                                            <td class="text-center fw-5"><a href="/modulo-facturacion/informacion-factura/descargar?ID_Fac=@Model.Model.det[t].ID_Fac&Tipo=html" target="_blank" class="fw-5">@Model.Model.det[t].Fac</a></td>
+                                                            <td class="text-right fw-5">@Model.Model.det[t].Imp</td>
+                                                            <td>@Model.Model.det[t].Forma</td>
+                                                            <td class="text-center">@Model.Model.det[t].Fe_Cob</td>
+                                                            <td class="text-center">
+                                                                @if (Model.Model.det[t].Inco)
+                                                                {
+                                                                    <i class="fa fa-exclamation-triangle text-danger"></i>
+                                                                }
+                                                            </td>
+                                                            <td class="text-center">@Model.Model.det[t].Fe_EnEspera</td>
+                                                            <td>@Model.Model.det[t].Cuenta</td>
+                                                            <td>@Model.Model.det[t].Concepto</td>
+                                                            <td class="text-center">@Model.Model.det[t].NumReme</td>
+                                                            <td class="text-center">@Model.Model.det[t].PresReme</td>
+                                                            <td>@Model.Model.det[t].CueReme</td>
+                                                            <td class="text-center">@Model.Model.det[t].TipoReme</td>
+                                                            <td class="text-center">@Model.Model.det[t].Fe_Dev</td>
+                                                        </tr>
+
+                                                    }
+
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    @Html.Raw(Model.Model.Paginador)
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+}
+            </div>
+        </div>
+    </div>
+</div>

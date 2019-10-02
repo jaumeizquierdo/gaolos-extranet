@@ -1,0 +1,173 @@
+﻿@model MenuGaolosLibrary.MenuGaolosViewModel
+@if (Model != null)
+{
+
+    <button type="button" id="" class="btn btn-submit toggle-menu"><i class="fa fa-angle-left"></i></button>
+
+    <div class="menu">
+
+        <div class="d-flex flex-column py-3 px-2 menu-item-container" data-toggle="tooltip" data-placement="right" title="" data-original-title="Inicio">
+            <a asp-area="" asp-controller="Inicio" asp-action="Inicio" class="d-flex">
+                <i class="material-icons logo-ico" style="display: none;">cloud_queue</i>
+                <img src="~/images/logo-gaolos-texto-blanco-2017.svg" alt="Gaolos Global Project" class="logo ml-xl-2 mr-xl-2 mr-sm-0 ml-sm-0" />
+            </a>
+        </div>
+
+        <div class="">
+            @await Component.InvokeAsync(nameof(MenuEmpresasLibrary.MenuEmpresasComponent))
+
+            @if (Model.Menu != null)
+            {
+                if (Model.Menu._menusg != null)
+                {
+                    <div class="mb-3">
+                        <div class="menu">
+                            <ul id="accordion-a" role="tablist" aria-multiselectable="true">
+                                @foreach (var m in Model.Menu._menusg)
+                                {
+                                    <li>
+                                        @{
+                                            var collapse = "collapse-" + m.id.ToString();
+                                            var classIn = "";
+                                            var classArrow = "fa-angle-right";
+                                            if (m.col == true)
+                                            {
+                                                classIn = " show";
+                                                classArrow = "fa-angle-down";
+                                            }
+                                        }
+                                        <div class="d-flex justify-content-between menu-item-container" data-toggle="tooltip" data-placement="right" title="" data-original-title="@m.titulo">
+                                            <a href="@m.url"><i class="material-icons ico md-18 mr-2">@m.ico</i> <span class="modulo-titulo">@m.titulo</span></a>
+                                            <a role="button" data-parent="#accordion" data-toggle="collapse" href="#@collapse" aria-expanded="true" aria-controls="@collapse" class="colapsar-menu"> <i class="fa fa-angle-right @classArrow"></i></a>
+                                        </div>
+
+                                        <div class="contentCollapse">
+                                            <ul id="@collapse" class="panel-collapse collapse @classIn" role="tabpanel" aria-labelledby="@collapse">
+                                                @foreach (var s in m._menudetalle)
+                                                {
+                                                    @if (s.ocultar == false)
+                                                    {
+                                                        <li>
+                                                            <a href="@s.action">
+                                                                @*<i class="fa fa-angle-right"></i>*@ @s.subTitulo
+
+                                                                @{
+                                                                    string idclass = "idC_" + m.id.ToString() + "_" + s.id.ToString();
+                                                                }
+                                                                <span class="counter-class" id="@idclass" style="display:none"></span>
+
+
+                                                                @*@{
+                                                                if (@s.contador != "")
+                                                                {
+                                                                    <span>@s.contador</span>
+                                                                }
+                                                            }*@
+                                                            </a>
+                                                        </li>
+                                                    }
+                                                }
+
+                                            </ul>
+                                        </div>
+
+                                    </li>
+
+
+                                }
+                            </ul>
+
+                        </div>
+                    </div>
+
+                }
+            }
+        </div>
+
+        @if (Model.Menu != null)
+        {
+            @if (Model.Menu.ID_MenuSel > 0)
+            {
+                <div class="m-2">
+                    <div class="my-2 d-flex justify-content-between align-items-center btn btn-sm btn-secondary btn-filter" title="@Model.Menu.MenuSelExpo">
+                        <div>
+                            <p class="mb-0"><i class="fas fa-exchange mr-1"></i> <span>Filtro:</span> <span>@Model.Menu.MenuSel</span></p>
+                        </div>
+                        <a href="#" class="filtro" id="filtro0" style="color: #fff;"><i class="fa fa-times"></i></a>
+                    </div>
+                </div>
+
+            }
+
+            <div class="menu-divider"></div>
+            <ul id="accordion" role="tablist" aria-multiselectable="true">
+                @foreach (var m in Model.Menu._menus)
+                {
+                <li>
+                    @{
+                        var collapse = "collapse-" + m.id.ToString();
+                        var classIn = "";
+                        var classArrow = "fa-angle-right";
+                        if (m.col == true)
+                        {
+                            classIn = " show";
+                            classArrow = "fa-angle-down";
+                        }
+                    }
+
+                    <div class="d-flex justify-content-between menu-item-container" data-toggle="tooltip" data-placement="right" title="" data-original-title="@m.titulo">
+                        <a href="@m.url" class="item-menu"><i class="material-icons ico md-18 mr-2 ico-menu">@m.ico</i> <span class="modulo-titulo">@m.titulo</span></a>
+                        <a role="button" data-parent="#accordion" data-toggle="collapse" href="#@collapse" aria-expanded="true" aria-controls="@collapse" class="colapsar-menu"> <i class="fa fa-angle-right @classArrow"></i></a>
+                    </div>
+
+                    <div class="contentCollapse">
+                        <ul id="@collapse" class="panel-collapse collapse @classIn" role="tabpanel" aria-labelledby="@collapse">
+                            @foreach (var s in m._menudetalle)
+                            {
+                                @if (s.ocultar == false)
+                                {
+                                    <li>
+                                        <a href="@s.action">
+                                            @*<i class="fa fa-angle-right"></i>*@ @s.subTitulo
+
+                                            @{
+                                                string idclass = "idC_" + m.id.ToString() + "_" + s.id.ToString();
+                                            }
+                                            <span class="counter-class" id="@idclass" style="display:none"></span>
+
+
+                                            @*@{
+                                    if (@s.contador != "")
+                                    {
+                                        <span>@s.contador</span>
+                                    }
+                                }*@
+                                        </a>
+                                    </li>
+                                }
+                            }
+
+                        </ul>
+                    </div>
+
+                </li>
+
+
+                }
+            </ul>
+        }
+
+    </div>
+
+    @*<div class="collapse-menu">
+        <a href="#">
+            <i class="material-icons">keyboard_arrow_left</i>
+        </a>
+    </div>*@
+
+}
+
+<div class="copyright p-3">
+    <p class="mb-1 fw-5 fs-0-75">Gaolos @@@DateTime.Now.Year</p>
+    <div id="weather" class="fs-0-8"></div>
+</div>

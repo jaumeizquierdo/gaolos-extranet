@@ -1,0 +1,209 @@
+﻿@model ModuloAlbaranesLibrary.ModuloAlbaranesAlbaranesListadoViewModel
+@{
+    Layout = "~/Views/Shared/Modulo-Albaranes/_Modulo-Albaranes-Albaranes.cshtml";
+    ViewData["Title"] = "Albaranes";
+}
+
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+@if(Model.Model.Err.eserror)
+{
+    ViewData["err"] = Model.Model.Err.mensaje;
+    @Html.Partial("AccesoDenegado");
+}
+else
+{
+
+                @* Listado de direcciones *@
+
+                <div class="card mb-3">
+                    <div class="card-header card-header-options">
+                        <span>Buscar albaranes</span>
+                        <div class="d-flex">
+                            <div class="d-flex mr-2" style="border-right: 1px solid #B0BEC5;">
+                                <a href="/modulo-albaranes/nuevo-albaran" class="btn btn-sm btn-primary mr-2">Nuevo albarán</a>
+                            </div>
+                            <div class="d-flex">
+                                <a href="/modulo-albaranes/historial" class="btn btn-sm btn-primary mr-1">Historial</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-block p-0">
+                        <div class="d-flex justify-content-center align-items-center">
+                            <div class="col-1 pb-2 pt-2 box-border-right-light">
+                                <img src="https://image.flaticon.com/icons/svg/138/138360.svg" style="width: 100%">
+                            </div>
+                            <div class="col-11">
+                                <form action="@ViewData["Form"]" method="post" class="pr-0 pl-0">
+                                    @*<div class="input-group card-search-box">
+                                        <input type="text" class="form-control" placeholder="Nº de albarán, empresa, dirección, población, NIF, breve, nº cliente, nº cc, nº contacto" name="buscar" value="@ViewData["buscar"]">
+                                        <span class="input-group-append">
+                                            <button class="btn btn-primary" type="submit">Buscar</button>
+                                        </span>
+                                    </div>*@
+
+                                    <div class="d-flex justify-content-center align-items-center mb-2 w-100">
+
+                                        <div class="input-group input-group-sm mb-0 mr-2">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text input-group-text-auto mw-80">Buscar</span>
+                                            </div>
+                                            <input type="text" class="form-control" id="buscarCliente" name="buscarCliente" placeholder="Buscar por cliente, NIF, CC y nº" value="@ViewData["tbuscarCliente"]">
+                                            <input type="hidden" id="vbuscarCliente" name="vbuscarCliente" value="@ViewData["vbuscarCliente"]" />
+                                            <input type="hidden" id="tbuscarCliente" name="tbuscarCliente" value="@ViewData["tbuscarCliente"]" />
+                                            <span class="input-group-append">
+                                                <button type="submit" class="btn btn-primary btn-sm form-buscar"><i class="fa fa-search"></i></button>
+                                            </span>
+                                        </div>
+
+                                        <div class="input-group input-group-sm mb-0 mr-2">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text input-group-text-auto mw-85">Dirección</span>
+                                            </div>
+                                            <input type="text" class="form-control" name="buscar" placeholder="Buscar por dirección" value="@ViewData["buscar"]">
+                                            <span class="input-group-append">
+                                                <button type="submit" class="btn btn-primary btn-sm form-buscar"><i class="fa fa-search"></i></button>
+                                            </span>
+                                        </div>
+
+                                        <div class="input-group input-group-sm mb-0 mr-2">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text input-group-text-auto mw-85">Población</span>
+                                            </div>
+                                            <input type="text" class="form-control" name="buscarPob" placeholder="Buscar por población" value="@ViewData["buscarPob"]">
+                                            <span class="input-group-append">
+                                                <button type="submit" class="btn btn-primary btn-sm form-buscar"><i class="fa fa-search"></i></button>
+                                            </span>
+                                        </div>
+
+                                        <div class="input-group input-group-sm mb-0 mr-2">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text input-group-text-auto mw-115">Nº Albarán</span>
+                                            </div>
+                                            <input type="text" class="form-control" name="ID_Al2" placeholder="Buscar por nº de albarán" value="@ViewData["ID_Al2"]">
+                                            <span class="input-group-append">
+                                                <button type="submit" class="btn btn-primary btn-sm form-buscar"><i class="fa fa-search"></i></button>
+                                            </span>
+                                        </div>
+
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card card-table mb-3">
+                            <div class="card-header card-header-options">
+                                <span>Albaranes</span>
+                                <div class="d-flex align-items-center">
+                                    @if (ViewData["vbuscarCliente"].ToString() == "0")
+                                    {
+                                        <button type="button" class="btn btn-sm btn-primary mr-2 albaranes-facturar-cliente" id="facturar-cli" disabled>Facturar todos los albaranes del cliente</button>
+                                    }
+                                    else
+                                    {
+                                        <button type="button" class="btn btn-sm btn-primary mr-2 albaranes-facturar-cliente" id="facturar-cli">Facturar todos los albaranes del cliente</button>
+                                    }
+                                    <span>[Nº Albaranes seleccionados: <span id="num_sel">0</span> - Total: <span id="total_sel">0,00 €</span>]</span>
+                                </div>
+                                
+                            </div>
+                            <div class="card-block">
+
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th class="w-5 text-center">Nº</th>
+                                            <th class="w-10 text-center">Fecha</th>
+                                            <th>Cliente</th>
+                                            <th>Breve</th>
+                                            <th class="w-2 text-center"><i class="fa fa-eur" style="font-size: 14px;" data-toggle="tooltip" data-placement="top" title="" data-original-title="Imprimir albarán"></i></th>
+                                            <th class="w-2 text-center"><i class="fa fa-ban" style="font-size: 14px;" data-toggle="tooltip" data-placement="top" title="" data-original-title="Imprimir albarán sin valorar"></i></th>
+                                            <th class="w-10 text-right">Total</th>
+                                            <th class="w-2 text-center">Sel</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (Model.Model.det != null)
+                                        {
+                                            @for (Int32 t = 0; t < Model.Model.det.Length; t++)
+                                            {
+                                                @if (Model.Model.det[t].Sep != "")
+                                                {
+                                                    <tr class="tr-sel">
+                                                        <td colspan="8"><p class="mb-0 fw-5 p-3">@Model.Model.det[t].Sep</p></td>
+                                                    </tr>
+                                                }
+                                                <tr>
+                                                    <td class="text-center"><a href="/modulo-albaranes/albaranes/albaran?ID_Al2=@Model.Model.det[t].ID_Al2" class="fw-5">@Model.Model.det[t].ID_Al2</a></td>
+                                                    <td class="text-center"><p class="mb-0 fw-5">@Model.Model.det[t].Fe_Al</p></td>
+                                                    <td>
+                                                        <p class="mb-0 fw-5">
+                                                            @Model.Model.det[t].Emp <a href="/modulo-clientes/clientes/cliente/situacion/albaranes?ID_Cli2=@Model.Model.det[t].ID_Cli2" class="fw-5" target="_blank" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="Ir a la ficha del cliente">(@Model.Model.det[t].ID_Cli2)</a>
+                                                        </p>
+                                                        @if (Model.Model.det[t].Emp != Model.Model.det[t].Dir)
+                                                        {
+                                                            <p class="mb-0 fw-5"><small>@Model.Model.det[t].Dir - @Model.Model.det[t].Pob</small></p>
+                                                        }
+                                                        else
+                                                        {
+                                                            <p class="mb-0 fw-5"><small>@Model.Model.det[t].Pob</small></p>
+                                                        }
+                                                    </td>
+                                                    <td><p class="fs-0-8">@Model.Model.det[t].Obs</p></td>
+
+                                                    <td class="text-center"><a target="_blank" href="/modulo-albaranes/albaranes/albaran/imprimir?ID_Al=@Model.Model.det[t].ID_Al" class="fw-5" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="Imprimir Albarán"><i class="fa fa-print" style="font-size: 14px;"></i></a></td>
+                                                    <td class="text-center"><a target="_blank" href="/modulo-albaranes/albaranes/albaran/imprimir?ID_Al=@Model.Model.det[t].ID_Al&valor=no" class="fw-5" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="Imprimir Albarán"><i class="fa fa-print" style="font-size: 14px;"></i></a></td>
+                                                    <td class="text-right"><p class="mb-0 fw-5">@Model.Model.det[t].Total</p></td>
+                                                    <td class="text-center">
+                                                        <div class="d-flex align-items-center justify-content-center">
+                                                            <input type="checkbox" class="seleccionar-albaranes" id="@Html.Raw("sel_" + Model.Model.det[t].ID_Cli2 + "_" + Model.Model.det[t].ID_Al2)" name="sel_alb" />
+                                                            <input type="hidden" id="@Html.Raw("val_" + Model.Model.det[t].ID_Cli2 + "_" + Model.Model.det[t].ID_Al2)" value="@Model.Model.det[t].Total.ToString().Replace("€","").Trim()" />
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <tr>
+                                                <td colspan="5"><p class="mb-0 fw-5 p-3 text-danger"><i class="fa fa-times"></i> No hay resultados</p></td>
+                                            </tr>
+                                        }
+
+                                    </tbody>
+                                </table>
+
+                                <div class="d-flex justify-content-center box-border-top p-2 mdc-bg-blue-grey-50">
+                                    <button type="button" class="btn btn-sm btn-primary albaranes-facturar" id="facturar-sel" disabled>Facturar</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            @Html.Raw(Model.Model.Paginador)
+                        </div>
+                    </div>
+                </div>
+
+}
+            </div>
+        </div>
+    </div>
+</div>

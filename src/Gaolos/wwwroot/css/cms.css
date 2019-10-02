@@ -1,0 +1,52 @@
+/* Dropdown menus */
+/* Mixins */
+/* Skin v4.6 - White / Dark / Blue */
+.is-container {
+  margin: 3em auto;
+  box-sizing: border-box; }
+
+.card-cms {
+  border-radius: 3px; }
+  .card-cms .card-cms-options {
+    background: #0091ea;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px; }
+    .card-cms .card-cms-options a {
+      color: #37474f; }
+      .card-cms .card-cms-options a:hover {
+        color: #fff; }
+  .card-cms .card-cms-content {
+    background: #f5f5f5;
+    padding: 1rem 2rem;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px; }
+    .card-cms .card-cms-content .card-cms-row {
+      margin-bottom: 1rem; }
+      .card-cms .card-cms-content .card-cms-row .card-cms-row-options {
+        background: #00bfa5;
+        padding: 1rem;
+        border-top-left-radius: 4px;
+        border-bottom-left-radius: 4px; }
+        .card-cms .card-cms-content .card-cms-row .card-cms-row-options a {
+          color: #37474f; }
+          .card-cms .card-cms-content .card-cms-row .card-cms-row-options a:hover {
+            color: #fff; }
+      .card-cms .card-cms-content .card-cms-row .card-cms-row-content {
+        background: #fff;
+        padding: 1rem;
+        border-top-right-radius: 4px;
+        border-bottom-right-radius: 4px; }
+
+.cms-layout .layout-col {
+  border: 2px solid #fff;
+  border-radius: 4px;
+  padding: 2rem 0; }
+
+.cms-layout .layout-row {
+  padding: 0.5rem; }
+
+.cms-layout a .layout-col {
+  background: #81d4fa; }
+
+.cms-layout a:hover .layout-col {
+  background: #2196f3; }

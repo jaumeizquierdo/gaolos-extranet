@@ -1,0 +1,91 @@
+/* Permisos */
+/* Mixins */
+/* Skin v4.6 - White / Dark / Blue */
+.permisos .custom-control {
+  margin-right: 0;
+  min-height: 1rem; }
+
+.permisos .td-check {
+  width: 3em; }
+
+.permisos-iconos li i {
+  display: inline-flex;
+  min-height: 1rem;
+  padding-left: 1.5rem;
+  margin-right: 1rem; }
+
+.permisos-table thead tr th {
+  background: #455a64;
+  border: none;
+  padding: 0.5rem 0.9rem;
+  border-bottom: 1px solid #37474f !important;
+  color: #fff; }
+  .permisos-table thead tr th i {
+    color: #fff; }
+
+.permisos-table tr th, .permisos-table tr td {
+  background: #cfd8dc;
+  border-bottom: 1px solid #b0bec5 !important;
+  text-transform: uppercase;
+  font-size: 0.9em; }
+
+.permisos-table tr.submodulo th, .permisos-table tr.submodulo td,
+.permisos-table .modules th,
+.permisos-table .modules td {
+  background: #fff;
+  border-bottom: 1px solid #cfd8dc !important;
+  border-right: 1px solid #cfd8dc !important;
+  font-size: 0.9em;
+  text-transform: capitalize; }
+  .permisos-table tr.submodulo th:last-child, .permisos-table tr.submodulo td:last-child,
+  .permisos-table .modules th:last-child,
+  .permisos-table .modules td:last-child {
+    border-right: none !important; }
+  .permisos-table tr.submodulo th:first-child, .permisos-table tr.submodulo td:first-child,
+  .permisos-table .modules th:first-child,
+  .permisos-table .modules td:first-child {
+    padding-left: 1.2rem !important; }
+
+.permisos-table tr.submodulo th {
+  padding-left: 1.5rem;
+  text-transform: uppercase; }
+
+.permisos-table tr.submodulo:hover td {
+  background: #eceff1 !important; }
+
+.permisos-table tfoot th {
+  background: #fff; }
+
+#preview-firma {
+  background: #fff;
+  border: 1px solid #eeeeee;
+  padding: 0.5rem 1rem;
+  border-radius: 4px; }
+
+.table-modulo-permisos {
+  border-radius: 2px; }
+  .table-modulo-permisos tr th {
+    background: #546e7a !important;
+    color: #fff;
+    border-bottom: none !important;
+    border-top: none !important; }
+  .table-modulo-permisos tr td {
+    border-bottom: 1px solid #cfd8dc !important;
+    border-left: 1px solid #cfd8dc;
+    font-size: 0.9em; }
+    .table-modulo-permisos tr td:first-child {
+      background: #eceff1; }
+  .table-modulo-permisos tr td.red {
+    background: #ffcdd2;
+    border-bottom: 1px solid #ef9a9a !important;
+    border-left: 1px solid #ef9a9a !important; }
+  .table-modulo-permisos tr td.teal {
+    background: #bbdefb;
+    border-bottom: 1px solid #90caf9 !important;
+    border-left: 1px solid #90caf9 !important; }
+  .table-modulo-permisos tr:last-child td {
+    border-bottom: none !important; }
+  .table-modulo-permisos tr:last-child td.red {
+    border-bottom: none !important; }
+  .table-modulo-permisos tr:last-child td.teal {
+    border-bottom: none !important; }

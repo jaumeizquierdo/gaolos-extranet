@@ -1,0 +1,202 @@
+﻿@model ModuloCorrespondenciaLibrary.ModuloCorrespondenciaCorrespondenciaListadoViewModel
+@{
+    Layout = "~/Views/Shared/Modulo-Correspondencia/_Modulo-Correspondencia.cshtml";
+    ViewData["Title"] = "Correspondencia";
+}
+
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+                @if(Model.Model.Err.eserror)
+    {
+        ViewData["err"] = Model.Model.Err.mensaje;
+                @Html.Partial("AccesoDenegado");
+    }
+    else
+    {
+
+                @* Buscar usuarios *@
+
+                <div class="card mb-3">
+                    <div class="card-header card-header-options">
+                        <span>Buscar</span>
+
+                        <div class="card-actions">
+                            <ul>
+                                <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-block p-0">
+
+
+                        <div class="d-flex justify-content-center align-items-center">
+                            <div class="col-1 pb-2 pt-2">
+                                <img src="~/flaticons/business/038-user-1.svg" style="width: 100%;">
+                            </div>
+                            <div class="col-11 pt-2 pb-2 box-border-left-light">
+                                <form method="post" action="@ViewData["form"]" class="">
+                                    <div class="d-flex justify-content-center align-items-center mb-2 w-100">
+
+                                        @*<div class="input-group input-group-sm mb-0 mr-2">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text input-group-text-auto mw-80">Buscar</span>
+                                            </div>
+                                            <input type="text" class="form-control" name="buscar" placeholder="Buscar por cliente, NIF, CC y nº" value="@ViewData["buscar"]">
+                                            <span class="input-group-append">
+                                                <button type="submit" class="btn btn-primary btn-sm form-buscar"><i class="fa fa-search"></i></button>
+                                            </span>
+                                        </div>*@
+
+                                        @*<div class="input-group input-group-sm mb-0 mr-2">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text input-group-text-auto mw-85">Dirección</span>
+                                            </div>
+                                            <input type="text" class="form-control" name="Dir" placeholder="Buscar por dirección" value="@ViewData["Dir"]">
+                                            <span class="input-group-append">
+                                                <button type="submit" class="btn btn-primary btn-sm form-buscar"><i class="fa fa-search"></i></button>
+                                            </span>
+                                        </div>
+
+                                        <div class="input-group input-group-sm mb-0 mr-2">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text input-group-text-auto mw-85">Población</span>
+                                            </div>
+                                            <input type="text" class="form-control" name="Pob" placeholder="Buscar por población" value="@ViewData["Pob"]">
+                                            <span class="input-group-append">
+                                                <button type="submit" class="btn btn-primary btn-sm form-buscar"><i class="fa fa-search"></i></button>
+                                            </span>
+                                        </div>
+
+                                        <div class="input-group input-group-sm mb-0 mr-2">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text input-group-text-auto mw-115">Provincia</span>
+                                            </div>
+                                            <input type="text" class="form-control" name="Pro" placeholder="Buscar por provincia" value="@ViewData["Pro"]">
+                                            <span class="input-group-append">
+                                                <button type="submit" class="btn btn-primary btn-sm form-buscar"><i class="fa fa-search"></i></button>
+                                            </span>
+                                        </div>*@
+
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+
+                        @*
+
+                        *@
+
+                    </div>
+                </div>
+
+                @* Listado de usuarios *@
+
+                <div class="card card-table mb-3">
+                    <div class="card-header card-header-options">
+                        <span>@ViewData["Title"]</span>
+                    </div>
+                    <div class="card-block">
+
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th class="text-center w-8">Factura</th>
+                                    <th class="text-center w-5">Fecha</th>
+                                    <th class="w-20">Cliente</th>
+                                    <th class="w-20">Relacionado</th>
+                                    <th class="w-20">Motivo</th>
+                                    <th class="">Documentos a imprimir</th>
+                                    <th class="text-center w-5">Enviada</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model.Model.det != null)
+{
+                                @for (Int32 t = 0; t < Model.Model.det.Length; t++)
+                                {
+                                    string classWarn = "";
+                                    if (Model.Model.det[t].Fe_Fa=="") { classWarn = "bg-warning"; }
+
+                                <tr class="@Html.Raw(classWarn)">
+                                    <td class="text-center">
+                                        <a href="/modulo-facturacion/informacion-factura/descargar?ID_Fac=@Model.Model.det[t].ID_Fac&Tipo=html" class="fw-5" target="_blank" data-toggle="tooltip" data-placement="top" title="" data-original-title="Imprimir factura">@Model.Model.det[t].Fac</a>
+                                        @if (Model.Model.det[t].ID_Dir != "")
+                                        {
+                                            <a href="/modulo-clientes/clientes/cliente/imprimir-direccion?ID_Dir=@Model.Model.det[t].ID_Dir&Tipo=html" class="fw-5" target="_blank" data-toggle="tooltip" data-placement="top" title="" data-original-title="Imprimir dirección envío documentación"><i class="fa fa-print"></i></a>
+
+                                        }
+                                    </td>
+                                    <td class="text-center">
+                                        <p class="fw-5 mb-0">@Model.Model.det[t].Fe_Fa</p>
+                                    </td>
+                                    <td>
+                                        <p class="fw-5 mb-0">@Model.Model.det[t].Emp (<a href="/modulo-clientes/clientes/cliente?ID_Cli2=@Model.Model.det[t].ID_Cli2" class="fw-5" target="_blank" data-toggle="tooltip" data-placement="top" title="" data-original-title="Ir a la ficha del cliente">@Model.Model.det[t].ID_Cli2<a />)</p>
+                                    </td>
+                                    <td>
+                                        @if (Model.Model.det[t].ID_Cli2Rel != "")
+                                        {
+                                            <p class="fw-5 mb-0">@Model.Model.det[t].EmpRel (<a href="/modulo-clientes/clientes/cliente?ID_Cli2=@Model.Model.det[t].ID_Cli2Rel" class="fw-5" target="_blank" data-toggle="tooltip" data-placement="top" title="" data-original-title="Ir a la ficha del cliente relacionado">@Model.Model.det[t].ID_Cli2Rel<a />)</p>
+                                        }
+
+                                    </td>
+                                    <td>
+                                        <p class="fw-5 mb-0">@Model.Model.det[t].Motivo</p>
+                                    </td>
+                                    <td class="">
+                                        @if (Model.Model.det[t].ops != null)
+                                        {
+                                            string txt = "";
+                                            for (Int32 b = 0; b < Model.Model.det[t].ops.Length; b++)
+                                            {
+                                                if (txt != "") { txt += " | "; }
+                                                txt += "<span>" + Model.Model.det[t].ops[b].datoS1;
+                                                if (Model.Model.det[t].ops[b].datoS2 != "")
+                                                {
+                                                    txt += " (" + Model.Model.det[t].ops[b].datoS2 + ")";
+                                                }
+                                                txt += " " + Model.Model.det[t].ops[b].datoS3;
+                                                txt += "</span> ";
+                                            }
+
+                                            @Html.Raw(txt)
+                                        }
+                                    </td>
+                                    <td><button id="env_@Model.Model.det[t].ID_Corr" class="btn btn-sm btn-primary Corr_Enviada">Enviada</button></td>
+                                </tr>
+}
+
+}
+else
+{
+                                <tr>
+                                    <td colspan="6"><p class="mb-0 fw-5 py-2 px-1 text-danger"><i class="fa fa-times"></i> No hay resultados</p></td>
+                                </tr>
+
+}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    @Html.Raw(Model.Model.Paginador)
+                </div>
+}
+            </div>
+        </div>
+    </div>
+</div>

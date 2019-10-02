@@ -1,0 +1,64 @@
+﻿@*
+    @model Gaolos.Models.contenedormenusUsuario
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+<div class="top-menu">
+    <!-- cargar lista de negocio -->
+    <ul>
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Gaolos - Previfoc (5) <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+                <li><a href="#">Negocio 1</a></li>
+                <li><a href="#">Negocio 2</a></li>
+                <li><a href="#">Negocio 3</a></li>
+                <li><a href="#">Negocio 4</a></li>
+                <li><a href="#">Negocio 5</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="#">@ViewData["buscarMasBtn"]</a></li>
+            </ul>
+        </li>
+    </ul>
+    
+    <ul class="top-menu-right">
+        <!-- Soporte Técnico -->
+        <li><a asp-area="" asp-controller="Home" asp-action="Contact"><i class="fa fa-gears"></i> @ViewData["soporteTxt"] Soporte (x)</a></li>
+        <!-- Filtros de Menu -->
+        @if (Model != null)
+        {
+        <li>
+            <ul>
+                <li class="dropdown">
+                    <span style="color: #fff;">@ViewData["accesoRapidoTxt"] Acceso Rápido</span> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@ViewData["sinFiltroTxt"] <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        @foreach (var s in Model._menus)
+                        {
+                            <li><a asp-area="#id_menu=@s.id" asp-controller="Home" asp-action="Contact">@s.titulo</a></li>
+                        }
+                        <li><a asp-area="#id_menu=0" asp-controller="Home" asp-action="Contact">@ViewData["sinFiltroTxt"]</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        }
+        <!-- Menu Usuario -->
+        <li>
+            <ul>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user"></i> Jaume Izquierdo <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">@ViewData["miPerfilCambiarIdiomaTxt"]</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">@ViewData["añadirAccesoTxt"]</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">@ViewData["administrarUsuariosTxt"]</a></li>
+                        <li><a href="#">@ViewData["administrarModulosTxt"]</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">@ViewData["entrarModoGlobalTxt"]</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li><a asp-area="" asp-controller="Home" asp-action="Contact"><i class="fa fa-power-off"></i> @ViewData["cerrarSesionBtn"]</a></li>
+    </ul>
+</div>

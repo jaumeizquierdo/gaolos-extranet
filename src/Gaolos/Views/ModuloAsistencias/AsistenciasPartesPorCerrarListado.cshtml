@@ -1,0 +1,227 @@
+﻿@model ModuloAsistenciasLibrary.ModuloAsisnteicasPartesListadoViewModel
+
+@{
+    Layout = "~/Views/Shared/Modulo-Asistencias/_Modulo-Asistencias.cshtml";
+    ViewData["Title"] = "Listado de partes de asistencias por cerrar";
+    ViewData["Message"] = "Modulo de Asistencias - Gaolos App v2018";
+}
+
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+                @if (Model.Model.Err.eserror)
+    {
+        ViewData["err"] = Model.Model.Err.mensaje;
+                @Html.Partial("AccesoDenegado");
+}
+else
+{
+
+                @* Buscar usuarios *@
+
+                <div class="card mb-3">
+                    <div class="card-header card-header-options">
+                        <span>Buscar asistencias</span>
+
+                        <div class="card-actions">
+                            <ul>
+                                <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-block p-0">
+
+                        <form action="@ViewData["Form"]" method="post">
+                            <div class="d-flex justify-content-center align-items-center">
+                                <div class="col-1 text-center box-border-right-light py-2">
+                                    <img src="https://image.flaticon.com/icons/svg/321/321863.svg" style="width: 100%;">
+                                </div>
+                                <div class="col-11">
+
+                                    <div class="row p-0">
+                                        <div class="col-12 p-0">
+                                            <div class="d-flex mb-0 px-3">
+
+                                                <div class="input-group card-search-box">
+                                                    <input type="text" class="form-control" placeholder="Buscar asistencias" name="buscar" value="@ViewData["buscar"]">
+                                                    <span class="input-group-append">
+                                                        <button class="btn btn-primary btn-sm" type="submit">BUSCAR</button>
+                                                    </span>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+
+                @* Listado *@
+
+                <div class="row">
+
+                    <div class="col-8">
+                        @* Listado *@
+                        <div class="card card-table mb-3">
+                            <div class="card-header card-header-options">
+                                <span>@ViewData["Title"]</span>
+                            </div>
+                            <div class="card-block">
+
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center w-5">Nº</th>
+                                            <th class="text-center">Fecha</th>
+                                            <th class="text-center">Técnico</th>
+                                            <th class="text-center">Partes</th>
+                                            <th class="text-left">Cliente</th>
+                                            <th class="text-center w-5">Asis.</th>
+                                            <th class="text-left">Información</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="content">
+                                        @if (Model.Model.det != null)
+                    {
+                                        @for (Int32 t = 0; t < Model.Model.det.Length; t++)
+        {
+                                        <tr>
+                                            <td class="text-center">
+                                                <a href="#" data-toggle="tooltip" data-placement="top" title="" data-original-title="Ver detalles del parte" class="fw-5">@Model.Model.det[t].ID_Parte2</a>
+                                            </td>
+                                            <td class="text-center">
+                                                <p class="mb-0">@Model.Model.det[t].Fe_Al</p>
+                                            </td>
+                                            <td class="text-center">
+                                                <p class="mb-0">@Model.Model.det[t].UsuAlta</p>
+                                            </td>
+                                            <td class="text-center">
+                                                <p class="mb-0">@Model.Model.det[t].NumParte / @Model.Model.det[t].NumPartes</p>
+                                            </td>
+                                            <td>
+                                                <p class="mb-0">@Model.Model.det[t].Emp <a href="/modulo-clientes/clientes/cliente?ID_Cli2=@Model.Model.det[t].ID_Cli2" class="fw-5" target="_blank" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="Ir al cliente">(@Model.Model.det[t].ID_Cli2)</a></p>
+                                            </td>
+                                            <td class="text-center">
+                                                <p class="mb-0"><a href="/modulo-asistencias/asistencias-por-asignar/imprimir?ID_Asis2=@Model.Model.det[t].ID_Asis2" class="fw-5" target="_blank" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="Ir a la asistencia">@Model.Model.det[t].ID_Asis2</a></p>
+                                            </td>
+                                            <td>
+                                                <div class="d-flex flex-column box-grey-bg py-1">
+                                                    <span class="mb-0"><span class="fw-5">Resolución:</span> @Model.Model.det[t].Reso</span>
+                                                    @if (Model.Model.det[t].MalUso)
+                                                    {
+                                                        <span class="mb-0"><strong>Mal uso</strong></span>
+                                                    }
+                                                    @if (Model.Model.det[t].ID_Soli2 > 0)
+                                                    {
+                                                        <span class="mb-0"><span class="fw-5">Solicitud vinculada:</span> <a href="/tareas-pendientes/tarea-pendiente?ID_Soli2=@Model.Model.det[t].ID_Soli2" class="fw-5 "target="_blank">@Model.Model.det[t].ID_Soli2</a></span>
+                                                    }
+                                                    @if (Model.Model.det[t].ObsNoFin != "")
+                                                    {
+                                                        <span class="mb-0"><span class="fw-5">Asistencia no finalizada:</span> @Model.Model.det[t].ObsNoFin</span>
+                                                    }
+                                                    <span class="mb-0"><span class="fw-5">Contacto:</span> @Model.Model.det[t].Cont</span>
+                                                    <span class="mb-0"><span class="fw-5">Tel. contacto:</span> @Model.Model.det[t].ContTel</span>
+                                                    @if (Model.Model.det[t].ContMail != "")
+                                                    {
+                                                        <span class="mb-0"><span class="fw-5">Mail contacto:</span> @Model.Model.det[t].ContMail</span>
+                                                    }
+                                                    <span class="mb-0">
+                                                        <span class="fw-5">Firma del técnico:</span>
+                                                            @if (Model.Model.det[t].HayFirmaTec)
+                                                            {
+                                                                <i class="fa fa-check text-success"></i>
+                                                            }
+                                                            else
+                                                            {
+                                                                <i class="fa fa-times text-danger"></i>
+                                                            }
+                                                        </span>
+                                                    <span class="mb-0">
+                                                        <span class="fw-5">Firma del cliente:</span>
+                                                            @if (Model.Model.det[t].HayFirmaCli)
+                                                            {
+                                                                <i class="fa fa-check text-success"></i>
+                                                            }
+                                                            else
+                                                            {
+                                                                <i class="fa fa-times text-danger"></i>
+                                                            }
+                                                        </span>
+                                                    <span class="mb-0">
+                                                        <span class="fw-5">Se cerro la Asistencia:</span>
+                                                            @if (Model.Model.det[t].Cerrado)
+                                                            {
+                                                                <i class="fa fa-check text-success"></i>
+                                                            }
+                                                            else
+                                                            {
+                                                                <i class="fa fa-times text-danger"></i>
+                                                            }
+                                                        </span>
+                                                </div>
+                                            </td>
+                                        </tr>
+}
+    }
+    else
+    {
+                                        <tr><td colspan="7"><p class='fw-5 text-danger mb-0'><i class='fa fa-exclamation-circle mr-1'></i> No hay resultados</p></td></tr>
+}
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            @Html.Raw(Model.Model.Paginador)
+                        </div>
+
+                    </div>
+
+                    <div class="col-4">
+
+                        @* Sin datos *@
+                        <div class="card card-table mb-3" id="sindatos">
+                            <div class="card-header card-header-options">
+                                <span>Información</span>
+                                <div class="card-actions">
+                                    <ul>
+                                        <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="card-block" role="tablist" aria-multiselectable="true">
+                                <div class="text-center mt-4 mb-4 p-5 bloque-sin-informacion">
+                                    <img src="~/flaticons/chat.svg" style="width: 25%;">
+                                    <p class="pt-4 fw-5">Sin acción</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+}
+
+            </div>
+        </div>
+    </div>
+</div>

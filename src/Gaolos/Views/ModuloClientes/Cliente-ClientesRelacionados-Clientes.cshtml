@@ -1,0 +1,257 @@
+﻿@model ModuloClientesLibrary.ModuloClientesClienteClientesRelacionadosClientesViewModel
+@{
+    Layout = "~/Views/Shared/Modulo-Clientes/_Modulo-Clientes-Cliente.cshtml";
+    ViewData["Title"] = "Cliente";
+}
+
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section mb-0">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 mt-3">
+
+                @if (Model.Model.Err.eserror)
+    {
+        ViewData["err"] = Model.Model.Err.mensaje;
+            @Html.Partial("AccesoDenegado");
+}
+else
+{
+
+            @* cabecera cliente *@
+
+            @Html.Partial("Cliente-Cabecera")
+
+            @* tabs *@
+
+            @Html.Partial("Cliente-Tabs")
+
+            <div class="card">
+                <div class="card-block">
+
+                    @* tabs *@
+
+                    @Html.Partial("Cliente-ClientesRelacionados-Tabs")
+
+                    <div class="row">
+
+                        <div class="col-8">
+                            <div class="card card-table mb-0">
+                                <div class="card-header card-header-options">
+                                    <span>Listado de clientes relacionados</span>
+                                </div>
+                                <div class="card-block">
+
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th class="w-5 text-center"><i class="fa fa-info-circle icon-lock mr-1" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="Ver la información de la relación con cliente"></i></th>
+                                                <th class="">Cliente</th>
+                                                <th class="text-center w-10">Alta</th>
+                                                <th class="">Dirección</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (Model.Model.det != null)
+                                            {
+                                                for (Int32 t = 0; t < Model.Model.det.Length; t++)
+                                                {
+                                            <tr>
+                                                <td class="text-center">
+                                                    <a href="#" class="ver-clis-rel-cli-tags" id="sel-rel_@Model.Model.det[t].ID_Rel"><i class="fa fa-info-circle icon-lock mr-1" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="Ver la información de la relación con cliente"></i></a>
+                                                </td>
+                                                <td class="">
+                                                    <p class="fw-5 mb-0">@Model.Model.det[t].Emp <a href="/modulo-clientes/clientes/cliente?ID_Cli2=@Model.Model.det[t].ID_Cli2" target="_blank" class="fw-5" data-toggle="tooltip" data-placement="top" title="" data-original-title="Ir a la ficha del cliente">(@Model.Model.det[t].ID_Cli2)</a></p>
+                                                    <p class="fw-5 mb-0 fs-0-75">
+                                                        @Model.Model.det[t].NIF
+                                                        @if (Model.Model.det[t].Tipo != "")
+                                                        {
+                                                            @Html.Raw(" - " + Model.Model.det[t].Tipo)
+
+                                                        }
+                                                    </p>
+                                                </td>
+                                                <td class="text-center">
+                                                    <p class="fw-5 mb-0"><small data-toggle="tooltip" data-placement="top" title="" data-original-title="@Model.Model.det[t].Usu">@Model.Model.det[t].Fe_Al</small></p>
+                                                </td>
+                                                <td>
+                                                    <p class="fw-5 mb-0">@Model.Model.det[t].Dir</p>
+                                                    <p class="fw-5 mb-0"><small>@Model.Model.det[t].Pob</small></p>
+                                                </td>
+                                            </tr>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <tr><td colspan="6"><p class='fw-5 text-danger mb-0'><i class='fa fa-exclamation-circle mr-1'></i> No hay resultados</p></td></tr>
+
+                                            }
+
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                @Html.Raw(Model.Model.Paginador)
+                            </div>
+
+                        </div>
+
+
+                        <div class="col-4">
+                            @* Sin datos *@
+                            <div class="card-info-wrapper w-100 mb-3" id="sindatos">
+                                <div class="card-info">
+                                    <div class="d-flex justify-content-center align-items-center">
+                                        <img src="https://image.flaticon.com/icons/svg/609/609998.svg" style="width: 20%;">
+                                        <p class="mb-2 ml-3">En esta pantalla podrá ver el listado de sus clientes relacionados e ir a la ficha correspondiente.</p>
+                                        <input id="ID_Rel" type="hidden" value="">
+                                    </div>
+                                </div>
+                                <svg class="card-info-triangle">
+                                    <polygon points="0,0 200,0 0,200" fill="currentColor"></polygon>
+                                </svg>
+                            </div>
+
+
+                            <div class="card card-table mb-3" id="datosrel" style="display:none;">
+                                <div class="card-header card-header-options">
+                                    <span id="tit-rel-cli"></span>
+                                    <a href="#" class="btn btn-sm btn-sm-2x btn-danger cli-relacion-del">Eliminar relación</a>
+                                </div>
+                                <div class="card-block">
+                                    <div class="d-flex">
+                                        <div class="d-flex flex-column px-3 py-2">
+                                            <div class="form-group mr-3 mb-2">
+                                                <label class="custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0">
+                                                    <input type="checkbox" class="custom-control-input" id="EnvFac">
+
+                                                    <span class="custom-control-label">Enviar factura</span>
+                                                </label>
+                                            </div>
+                                            <div class="form-group mr-3 mb-2">
+                                                <label class="custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0">
+                                                    <input type="checkbox" class="custom-control-input" id="ForPag">
+
+                                                    <span class="custom-control-label">Forma de pago: Heredada</span>
+                                                </label>
+                                            </div>
+                                            <div class="form-group mr-3 mb-2">
+                                                <label class="custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0">
+                                                    <input type="checkbox" class="custom-control-input" id="CobEnEspera">
+
+                                                    <span class="custom-control-label">Cobro a negociar</span>
+                                                </label>
+                                            </div>
+                                            <div class="form-group mr-3 mb-2">
+                                                <label class="custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0">
+                                                    <input type="checkbox" class="custom-control-input" id="Precios">
+
+                                                    <span class="custom-control-label">Heredar precios</span>
+                                                </label>
+                                            </div>
+                                            <div class="form-group mr-3 mb-2">
+                                                <label class="custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0">
+                                                    <input type="checkbox" class="custom-control-input" id="Facturar">
+
+                                                    <span class="custom-control-label">Facturar a empresa relacionada</span>
+                                                </label>
+                                            </div>
+                                            <div class="form-group mr-3 mb-2">
+                                                <label class="custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0">
+                                                    <input type="checkbox" class="custom-control-input" id="Tags">
+
+                                                    <span class="custom-control-label">Tags</span>
+                                                </label>
+                                            </div>
+                                            <div class="form-group mb-2">
+                                                <button type="button" class="btn btn-primary btn-sm cli-relacion-guardar">Guardar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                            <div class="modal fade" id="eliminarrelclirel" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header py-2 px-3">
+                                            <h5 class="modal-title fs-0-9 fw-5" id="fotoModalLabel">Eliminar relación</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body text-center">
+                                            <div class="d-flex">
+                                                <div class="input-group input-group-sm mb-0">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">Motivo</span>
+                                                    </div>
+                                                    <textarea class="form-control" rows="4" aria-label="With textarea" placeholder="Observaciones" id="MotivoEli"></textarea>
+                                                </div>
+                                            </div>
+
+                                            <div class="mt-3">
+                                                <a href="#" class="btn btn-sm btn-danger cli-relacion-del-confirmar">Eliminar</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+
+
+
+                            <div class="card mb-3" id="verclisrelclitags" style="display:none;">
+                                <div class="card-header card-header-options">
+                                    <span>Tags</span>
+                                </div>
+                                <div class="card-block p-2">
+
+                                    <div class="form-group text-center px-3">
+
+                                        <div class="input-group input-group-sm ui-widget">
+                                            <input type="text" class="form-control ui-autocomplete-input" value="" placeholder="Buscar tag" id="buscartag" name="buscartag" autocomplete="off">
+                                            <input id="vbuscartag" name="vbuscartag" type="hidden" value=""><input id="tbuscartag" name="tbuscartag" type="hidden" value="">
+                                            <span class="input-group-append">
+                                                <button class="btn btn-primary clis-rel-cli-add-tag" type="button">Añadir</button>
+                                            </span>
+                                        </div>
+                                        <div class="mt-3 mb-0" id="vertags">
+
+                                            <span class="badge badge-pill badge-default p-2 mt-1"><i class="fa fa-tag ml-1 mr-1"></i> <a href="#" class="fw-5"> Operador Maquinaria</a> <a href="#" class="tag-del"><i class="fa fa-times"></i></a></span>
+                                        </div>
+
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+
+
+}
+            </div>
+        </div>
+    </div>
+</div>

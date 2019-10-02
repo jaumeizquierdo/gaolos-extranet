@@ -1,0 +1,38 @@
+﻿@* Cabecera *@
+
+<div class="card mb-3">
+    <div class="card-header card-header-options">
+        <span>Mantenimiento</span>
+
+        <div class="card-actions">
+            <ul>
+                <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="card-block p-0">
+
+            <div class="d-flex justify-content-center align-items-center">
+                <div class="col-lg-1 pb-2 pt-2 hidden-md hidden-md-down">
+                    <img src="https://image.flaticon.com/icons/svg/321/321863.svg" style="width: 100%;">
+                    <input type="hidden" id="ID_Man2" value="@Model.Model.Cab.ID_Man2" />
+                </div>
+                <div class="col-lg-11 col-sm-12 pt-2 pb-2">
+                    <h5 class="fw-5 title-section">@Model.Model.Cab.Emp</h5>
+                <div class="d-flex">
+                    <div class="box-grey-bg">
+                        <p class="mb-0"><small class="fw-5"><span class="mr-1">Nº mantenimiento:</span> <span class="text-danger">@Model.Model.Cab.ID_Man2</span></small></p>
+                        <p class="mb-0"><small class="fw-5"><span class="mr-1">Alta:</span> <span class="text-danger">@Model.Model.Cab.Fe_Al - @Model.Model.Cab.Usu</span></small></p>
+                        <p class="mb-0"><small class="fw-5"><span class="mr-1">Dirección:</span> <span class="text-danger">@Model.Model.Cab.Emp - @Model.Model.Cab.Dir - @Model.Model.Cab.Pob - @Model.Model.Cab.CP - @Model.Model.Cab.Pro</span></small></p>
+                        <p class="mb-0"><small class="fw-5"><span class="mr-1">Nº cliente:</span> <a href="/modulo-clientes/clientes/cliente?ID_Cli2=@Model.Model.Cab.ID_Cli2" target="_blank" data-toggle="tooltip" data-placement="top" title="" data-original-title="Ir a la ficha de cliente">@Model.Model.Cab.ID_Cli2</a></small></p>
+                        @if (Model.Model.Cab.ImportCli != "")
+                        {
+                            <p class="mb-0"><small class="fw-5"><span class="mr-1">Importación:</span> <span class="text-danger">@Model.Model.Cab.ImportCli</span></small></p>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+
+</div>
+</div>

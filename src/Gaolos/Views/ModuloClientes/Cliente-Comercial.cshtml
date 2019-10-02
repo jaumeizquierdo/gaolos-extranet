@@ -1,0 +1,444 @@
+﻿@model ModuloClientesLibrary.ModuloClientesClienteComercialViewModel
+@{
+    Layout = "~/Views/Shared/Modulo-Clientes/_Modulo-Clientes-Cliente.cshtml";
+    ViewData["Title"] = "Comercial";
+}
+
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+@if(Model.Model.Err.eserror)
+{
+    ViewData["err"] = Model.Model.Err.mensaje;
+    @Html.Partial("AccesoDenegado");
+}
+else
+{
+
+                @* cabecera cliente *@
+
+                @Html.Partial("Cliente-Cabecera")
+
+                @* tabs *@
+
+                @Html.Partial("Cliente-Tabs")
+
+                @* Listado de direcciones *@
+
+                <div class="row">
+                    <div class="col-8">
+
+                        @* Comercial *@
+
+                        <div class="card mb-3">
+                            <div class="card-header card-header-options">
+                                <span>Comercial</span>
+                            </div>
+                            <div class="card-block p-0">
+
+                                <div class="d-flex flex-column p-2">
+
+                                    <div class="input-group input-group-sm mb-1">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Cliente</span>
+                                        </div>
+                                        <input type="text" class="form-control" id="Emp" aria-describedby="basic-addon3" value="@Model.Model.Emp" maxlength="100">
+                                    </div>
+
+                                    <div class="input-group input-group-sm mb-1">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Fiscal</span>
+                                        </div>
+                                        <input type="text" class="form-control" aria-describedby="basic-addon3" value="@Model.Model.EmpFis" disabled>
+                                    </div>
+
+                                    <div class="d-flex align-items-center mb-1">
+
+                                        @*Agente*@
+                                        <div class="input-group input-group-sm mb-0">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Agente</span>
+                                            </div>
+                                            <input type="text" class="form-control" id="Agente" name="Agente" aria-describedby="" placeholder="Agente" value="@Model.Model.Agente">
+                                            <input type="hidden" id="vAgente" name="vAgente" value="@Model.Model.ID_Agente" />
+                                            <input type="hidden" id="tAgente" name="tAgente" value="@Model.Model.Agente" />
+                                        </div>
+
+                                        @*Tipo de cliente*@
+                                        <div class="input-group input-group-sm mb-0 ml-2 mr-2">
+                                            <div class="input-group-prepend">
+                                                <label class="input-group-text" for="ID_TipCli2">Tipo de cliente</label>
+                                            </div>
+
+                                            @{
+                                                string TipCli_Disabled = "disabled";
+                                                if (Model.Model.TipClis != null)
+                                                {
+                                                    if (Model.Model.TipClis.Length > 1)
+                                                    {
+                                                        TipCli_Disabled = "";
+                                                    }
+
+                                                }
+                                            }
+
+                                            <select class="custom-select" id="ID_TipCli2" @Html.Raw(TipCli_Disabled)>
+                                                @for (Int32 t = 0; t < Model.Model.TipClis.Length; t++)
+                                                {
+                                                    if (Model.Model.TipClis[t].id == Model.Model.ID_TipCli)
+                                                    {
+                                                        <option value="@Model.Model.TipClis[t].id" selected>@Model.Model.TipClis[t].det</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@Model.Model.TipClis[t].id">@Model.Model.TipClis[t].det</option>
+                                                    }
+                                                }
+                                            </select>
+                                        </div>
+
+                                        @*Fecha nacimiento*@
+                                        <div class="input-group input-group-sm mb-0 mr-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="basic-addon3">Fecha nacimiento</span>
+                                            </div>
+                                            <input type="text" class="form-control" id="Fe_Na" aria-describedby="basic-addon3" placeholder="Fecha de nacimiento" value="@Model.Model.Fe_Na" maxlength="10">
+                                        </div>
+
+                                        @*Mailing*@
+
+                                        <div class="d-flex align-items-center">
+                                            @{
+                                                string strMailing = "";
+                                                if (Model.Model.Mailing)
+                                                {
+                                                    strMailing = " checked";
+                                                }
+                                            }
+                                            <input type="checkbox" class="mr-2" id="Mailing" @Html.Raw(strMailing)>
+                                            <span class="fw-5">Mailing</span>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="d-flex mb-1">
+                                        <div class="input-group input-group-sm mb-0 mr-2">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Tarifa</span>
+                                            </div>
+                                            @{
+                                                string Tari_Disabled = "disabled";
+                                                if (Model.Model.Tarifas != null)
+                                                {
+                                                    if (Model.Model.Tarifas.Length > 1)
+                                                    {
+                                                        Tari_Disabled = "";
+                                                    }
+
+                                                }
+                                            }
+
+                                            <select class="custom-select" id="ID_Tari2" @Html.Raw(Tari_Disabled)>
+                                                @if (Model.Model.Tarifas != null)
+                                                {
+                                                    for (Int32 t = 0; t < Model.Model.Tarifas.Length; t++)
+                                                    {
+                                                        if (Model.Model.Tarifas[t].id == Model.Model.ID_Tari2)
+                                                        {
+                                                            <option value="@Model.Model.Tarifas[t].id" selected>@Model.Model.Tarifas[t].det</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="@Model.Model.Tarifas[t].id">@Model.Model.Tarifas[t].det</option>
+                                                        }
+                                                    }
+                                                }
+                                            </select>
+                                        </div>
+                                        <div class="input-group input-group-sm mb-0 mr-2">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Descuento</span>
+                                            </div>
+                                            <input type="text" class="form-control" id="Dto" value="@Model.Model.Dto" placeholder="Descuento" maxlength="5">
+                                        </div>
+                                        <div class="input-group input-group-sm mb-0">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Comisión</span>
+                                            </div>
+                                            <input type="text" class="form-control" id="ComiPor" value="@Model.Model.Comi" placeholder="Comisión" maxlength="5">
+                                        </div>
+                                    </div>
+
+
+                                    <div class="input-group input-group-sm mb-1">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Actividad</span>
+                                        </div>
+                                        <textarea class="form-control" rows="6" aria-label="With textarea" placeholder="Actividad" id="Act">@Model.Model.Act</textarea>
+                                    </div>
+                                    @*
+                    @if (Model.Model.Vin != "")
+                    {
+                        <div class="d-flex align-items-center mb-1">
+                            <label class="col-1 text-left p-0 m-0">Origen</label>
+                            <a href="/modulos-clientes/clientes/cliente?ID_Cli2=@Model.Model.ID_Cli2Vin" target="_blank">@Model.Model.Vin</a>
+                        </div>
+                    }
+                                    *@
+                                    <div class="input-group input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Observaciones</span>
+                                        </div>
+                                        <textarea class="form-control" rows="6" aria-label="With textarea" placeholder="Observaciones" id="Obs">@Model.Model.Obs</textarea>
+                                    </div>
+
+                                </div>
+
+                                <div class="d-flex justify-content-center box-border-top p-2 mdc-bg-blue-grey-50">
+                                    <a href="#" class="btn btn-sm btn-primary cliente-comercial-guardar">Guardar</a>
+                                </div>
+
+                            </div>
+                        </div>
+                        @if (Model.Model.HayModuloPedido)
+                        {
+                            @* Segundo bloque *@
+                            <div class="card mb-3">
+
+                                <div class="card-header card-header-options mb-1">
+                                    <span>Gestión de pedidos</span>
+                                </div>
+
+                                <div class="p-2">
+                                    <div class="d-flex">
+                                        <div class="input-group input-group-sm mb-0 mr-3 col-6 p-0">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Portes gratuitos</span>
+                                            </div>
+                                            @{
+                                                string TipoEnv_Disabled = "disabled";
+                                                if (Model.Model.TiposEnv != null)
+                                                {
+                                                    if (Model.Model.TiposEnv.Length > 1)
+                                                    {
+                                                        TipoEnv_Disabled = "";
+                                                    }
+
+                                                }
+                                            }
+
+                                            <select class="custom-select" id="ID_TipoEnv" @Html.Raw(TipoEnv_Disabled)>
+                                                @if (Model.Model.TiposEnv != null)
+                                                {
+                                                    for (Int32 t = 0; t < Model.Model.TiposEnv.Length; t++)
+                                                    {
+                                                        if (Model.Model.TiposEnv[t].id == Model.Model.ID_TipEnvGratis)
+                                                        {
+                                                            <option value="@Model.Model.TiposEnv[t].id" selected>@Model.Model.TiposEnv[t].det</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="@Model.Model.TiposEnv[t].id">@Model.Model.TiposEnv[t].det</option>
+                                                        }
+                                                    }
+                                                }
+                                            </select>
+                                        </div>
+                                        <div class="form-group mb-0 mt-1">
+
+                                            <div class="d-flex align-items-center">
+
+                                                @if (Model.Model.FacPedCli)
+                                                {
+                                                    <input type="checkbox" class="mr-2" id="FacPedCli" checked>
+                                                }
+                                                else
+                                                {
+                                                    <input type="checkbox" class="mr-2" id="FacPedCli">
+                                                }
+                                                <span class="fw-5">Facturar pedidos</span>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card-header card-header-options mt-2 mb-2">
+                                    <span>Portes</span>
+                                </div>
+
+                                <div class="d-flex px-2 mb-2">
+                                    @{
+                                        string check = "";
+                                    }
+
+                                    <div class="d-flex align-items-center mr-3">
+                                        @{
+                                            if (Model.Model.ID_Portes == 2)
+                                            {
+                                                check = "checked";
+                                            }
+                                            else
+                                            {
+                                                check = "";
+                                            }
+                                        }
+                                        <input id="susm" name="ID_Portes" type="radio" class="mr-2" value="2" @Html.Raw(check)>
+                                        <span class="fw-5">Sus medios</span>
+                                    </div>
+
+                                    <div class="d-flex align-items-center mr-3">
+                                        @{
+                                            if (Model.Model.ID_Portes == 0)
+                                            {
+                                                check = "checked";
+                                            }
+                                            else
+                                            {
+                                                check = "";
+                                            }
+                                        }
+                                        <input id="pag" name="ID_Portes" type="radio" class="mr-2" value="0" @Html.Raw(check)>
+                                        <span class="fw-5">Pagados</span>
+                                    </div>
+
+                                    <div class="d-flex align-items-center mr-3">
+                                        @{
+                                            if (Model.Model.ID_Portes == 1)
+                                            {
+                                                check = "checked";
+                                            }
+                                            else
+                                            {
+                                                check = "";
+                                            }
+                                        }
+                                        <input id="deb" name="ID_Portes" type="radio" class="mr-2" value="1" @Html.Raw(check)>
+                                        <span class="fw-5">Debidos</span>
+                                    </div>
+
+                                </div>
+
+                                <div class="d-flex px-2">
+                                    <div class="input-group input-group-sm mb-2">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Observaciones</span>
+                                        </div>
+                                        <textarea class="form-control" id="ObsPortes" placeholder="Observaciones" rows="2">@Model.Model.ObsPortes</textarea>
+                                    </div>
+                                </div>
+
+                                <div class="d-flex justify-content-center box-border-top p-2 mdc-bg-blue-grey-50">
+                                    <button type="button" class="btn btn-sm btn-primary">Guardar</button>
+                                </div>
+
+                            </div>
+                        }
+                    </div>
+
+                    <div class="col-4">
+
+                        @* Tags *@
+                        @if (Model.Model.HayModuloTags)
+                        {
+                            <div class="card mb-3">
+                                <div class="card-header card-header-options">
+                                    <span>Etiquetas</span>
+                                </div>
+                                <div class="card-block p-0">
+                                    <div class="d-flex flex-column col-12 p-0">
+                                        <div class="col-12 py-2">
+                                            <div class="form-group text-center mb-0">
+                                                <div class="input-group input-group-sm ui-widget">
+                                                    @*
+                                    <div class="input-group-prepend" style="width: 80px;">
+                                        <label class="input-group-text"><i class="fa fa-search" aria-hidden="true"></i></label>
+                                    </div>
+                                                    *@
+                                                    <input type="text" class="form-control ui-autocomplete-input" value="" placeholder="Buscar etiquetas" id="" name="" autocomplete="off">
+                                                    <input id="" name="" type="hidden" value="0"><input id="" name="" type="hidden" value="">
+                                                    <span class="input-group-append">
+                                                        <button class="btn btn-primary vfindcarac" id="" type="button">Añadir</button>
+                                                    </span>
+                                                </div>
+                                                <div class="mt-2 mb-0">
+                                                    <span class="badge badge-pill badge-default p-2 mt-1"><a href="#" class="fw-5"> No llamar</a> <a href="#" class="tag-del"><i class="fa fa-times"></i></a></span>
+                                                    <span class="badge badge-pill badge-default p-2 mt-1"><a href="#" class="fw-5"> Etiqueta</a> <a href="#" class="tag-del"><i class="fa fa-times"></i></a></span>
+                                                    <span class="badge badge-pill badge-default p-2 mt-1"><a href="#" class="fw-5"> Otra</a> <a href="#" class="tag-del"><i class="fa fa-times"></i></a></span>
+                                                    <span class="badge badge-pill badge-default p-2 mt-1"><a href="#" class="fw-5"> Tag</a> <a href="#" class="tag-del"><i class="fa fa-times"></i></a></span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        @if (Model.Model.HayProgramasLocales)
+                        {
+                            @* Programas locales *@
+                            <div class="card mb-3">
+                                <div class="card-header card-header-options">
+                                    <span>Programas locales</span>
+                                </div>
+                                <div class="card-block p-0">
+                                    <div class="p-2">
+                                        <div class="d-flex mb-1">
+
+                                            <div class="input-group input-group-sm mb-0 mr-2">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">Nº copias albaranes</span>
+                                                </div>
+                                                <input type="text" class="form-control" id="CopiasAlb" value="@Model.Model.CopiasAlb" placeholder="Nº copias albaranes" maxlength="2">
+                                            </div>
+                                            <div class="input-group input-group-sm mb-0">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">Nº copias facturas</span>
+                                                </div>
+                                                <input type="text" class="form-control" id="CopiasFac" value="@Model.Model.CopiasFac" placeholder="Nº copias facturas" maxlength="2">
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex align-items-center mt-2">
+                                            @{
+                                                if (Model.Model.AlbNoVal)
+                                                {
+                                                    <input type="checkbox" class="mr-2" id="AlbNoVal" checked>
+                                                }
+                                                else
+                                                {
+                                                    <input type="checkbox" class="mr-2" id="AlbNoVal">
+                                                }
+                                            }
+                                            <span class="fw-5">Albaranes no valorados</span>
+                                        </div>
+
+                                    </div>
+                                    <div class="d-flex justify-content-center box-border-top p-2 mdc-bg-blue-grey-50">
+                                        <button type="submit" class="btn btn-sm btn-primary cliente-comercial-programa-guardar">Guardar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+                    </div>
+
+            </div>
+}
+</div>
+        </div>
+    </div>
+</div>
+

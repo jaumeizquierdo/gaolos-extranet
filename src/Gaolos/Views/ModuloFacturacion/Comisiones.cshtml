@@ -1,0 +1,183 @@
+﻿@model ModuloFacturacionLibrary.ModuloFacturacionFacturacionComisionesListadoViewModel
+
+@{
+    Layout = "~/Views/Shared/Modulo-Facturacion/_Facturacion-Comisiones.cshtml";
+    ViewData["Title"] = "Listado de comisiones";
+    ViewData["TitleBuscar"] = "Buscador de comisiones";
+}
+
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+                @if(Model.Model.Err.eserror)
+    {
+        ViewData["err"] = Model.Model.Err.mensaje;
+                @Html.Partial("AccesoDenegado");
+    }
+    else
+    {
+
+
+                @* Buscador de facturas *@
+
+                <div class="card mb-3">
+                    <div class="card-header card-header-options">
+                        <span>@ViewData["TitleBuscar"]</span>
+
+                        <div class="card-actions">
+                            <ul>
+                                <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-block p-0">
+                        <form method="post" action="@ViewData["form"]" class="sel-dates">
+                            <div class="d-flex justify-content-center align-items-center">
+
+                                <div class="col-1 pb-2 pt-2">
+                                    <img src="~/flaticons/pie-chart-1.svg" style="width: 100%">
+                                </div>
+
+                                <div class="col-11 pt-2 pb-2 box-border-left-light">
+
+                                    <div class="row">
+                                        <div class="col-8">
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control" placeholder="Cliente" name="buscarcli" id="buscarcli" value="@ViewData["buscarcli"]">
+                                                    <input type="hidden" name="vbuscarcli" id="vbuscarcli" value="@ViewData["vbuscarcli"]" />
+                                                    <input type="hidden" name="tbuscarcli" id="tbuscarcli" value="@ViewData["buscarcli"]" />
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control" placeholder="Usuario" name="buscarusu" id="buscarusu" value="@ViewData["buscarusu"]">
+                                                    <input type="hidden" name="vbuscarusu" id="vbuscarusu" value="@ViewData["vbuscarusu"]" />
+                                                    <input type="hidden" name="tbuscarusu" id="tbuscarusu" value="@ViewData["buscarusu"]" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <input type="text" name="Fe_In" id="Fe_In" value="@ViewData["Fe_In"]" class="form-control" placeholder="De fecha:" />
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <input type="text" name="Fe_Fi" id="Fe_Fi" value="@ViewData["Fe_Fi"]" class="form-control" placeholder="a fecha:" />
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-center box-border-top p-2 mdc-bg-blue-grey-50">
+                                <button type="submit" class="btn btn-sm btn-primary">Buscar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                @* Listado de facturas *@
+
+                <div class="row">
+                    @* Listado *@
+                    <div class="col-8">
+                        <div class="card card-table mb-0">
+                            <div class="card-header card-header-options">
+                                <span>@ViewData["Title"]</span>
+                                <a href="#" class="btn btn-sm btn-primary fac-com-exp">Exportar en CSV</a>
+                                @*<div class="input-group-append">
+                                    <a href="#" class="btn btn-primary btn-sm mr-2 fac-com-exp">Exportar en CSV</a>
+                                </div>*@
+
+                                <span>Total : <label>@Model.Model.Total</label></span>
+                            </div>
+                            <div class="card-block">
+
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center w-10">Nº de factura</th>
+                                            <th class="text-center">Cobro</th>
+                                            <th>Cliente</th>
+                                            <th class="text-right w-10">Base</th>
+                                            <th class="text-center w-10">%</th>
+                                            <th class="text-right w-10">Importe</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (Model.Model.det != null)
+                                    {
+                                        for (Int32 t = 0; t < Model.Model.det.Length; t++)
+                                        {
+                                        <tr>
+                                            <td class="text-center"><p class="fw-5 mb-0">@Model.Model.det[t].Fac</p></td>
+                                            <td class="text-center"><p class="fw-5 mb-0">@Model.Model.det[t].Fe_Cob</p></td>
+                                            <td><p class="fw-5 mb-0">@Model.Model.det[t].Emp</p></td>
+                                            <td class="text-right"><p class="fw-5 mb-0">@Model.Model.det[t].Base</p></td>
+                                            <td class="text-center"><p class="fw-5 mb-0">@Model.Model.det[t].Por</p></td>
+                                            <td class="text-right"><p class="fw-5 mb-0">@Model.Model.det[t].Importe</p></td>
+                                        </tr>
+                                                        }
+                                                    } else
+                                                    {
+                                        <tr><td colspan="6"><p class='fw-5 text-danger mb-0'><i class='fa fa-exclamation-circle mr-1'></i> @Model.Model.Err.mensaje</p></td></tr>
+
+                                                    }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            @Html.Raw(Model.Model.Paginador)
+                        </div>
+
+                    </div>
+
+                    <div class="col-4" id="sindatos">
+                        @* Sin datos *@
+                        <div class="card card-table mb-3">
+                            <div class="card-header card-header-options">
+                                <span>Información</span>
+                                <div class="card-actions">
+                                    <ul>
+                                        <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="card-block" role="tablist" aria-multiselectable="true">
+                                <div class="text-center mt-4 mb-4 p-5 bloque-sin-informacion">
+                                    <img src="~/flaticons/chat.svg" style="width: 25%;">
+                                    <p class="pt-4">Si clica encima del nº de factura, en este espacio le aparecerán los datos de la factura</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+    }
+
+            </div>
+        </div>
+    </div>
+</div>
+

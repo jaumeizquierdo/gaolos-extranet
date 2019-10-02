@@ -1,0 +1,47 @@
+﻿/* Footer */
+
+@import "variables.scss";
+@import "materialdesign.scss";
+
+.footer {
+    @include flex;
+    justify-content: center;
+    padding: $footer-padding;
+    .footer-legend {
+        display: flex;
+        font-size: 0.9em;
+        //font-weight: 500;
+        justify-content: center;
+    }
+    .footer-language {
+        display: flex;
+    }
+    .btn-submit {
+
+    }
+    .dropdown-menu {
+        min-width: 10rem;
+        li {
+            button {
+                font-weight: 500;
+                font-family: 'Roboto', sans-serif;
+            }
+        }
+    }
+}
+
+footer {
+    //position: fixed;
+    bottom: 0;
+    width: 100%;
+    background: $footer-bg;
+    z-index: 9999;
+    a {
+        flex: 1;
+    }
+}
+
+.btn-footer {
+    font-size: 0.9em;
+    padding: 0.3em 0.5em;
+}

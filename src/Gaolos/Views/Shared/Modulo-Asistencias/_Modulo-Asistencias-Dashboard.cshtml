@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Gaolos</title>
+
+    @Html.Partial("Estilos")
+    @Html.Partial("Scripts")
+
+    @* Gaolos Init Scripts *@
+    <script src="~/js/ModuloAsistencias/ModuloAsistencias-CargaDeTrabajo-ini.js" asp-append-version="true"></script>
+
+</head>
+<body>
+
+    <div class="layout__body modulo-asistencias-dashboard">
+
+        <aside class="layout__nav layout__columns d-none d-xl-block" id="MenuGaolosComponent">
+            @await Component.InvokeAsync(nameof(MenuGaolosLibrary.MenuGaolosComponent))
+        </aside>
+
+        <main class="layout__content">
+            <header id="MenuUsuarioComponent">
+                @await Component.InvokeAsync(nameof(MenuUsuarioLibrary.MenuUsuarioComponent))
+            </header>
+            @RenderBody()
+        </main>
+
+        <aside class="layout__aside layout__columns" id="MenuNotificacionesComponent">
+            @await Component.InvokeAsync(nameof(MenuNotificacionesLibrary.MenuNotificacionesComponent))
+        </aside>
+
+    </div>
+
+    @* GAOLOS CORE *@
+    @Html.Partial("ScriptsCoreGaolos")
+
+    @* Gaolos Section Scripts *@
+    <script src="~/js/ModuloAsistencias/ModuloAsistencias-PorAsignar.js" asp-append-version="true"></script>
+    <script src="~/js/ModuloAsistencias/ModuloAsistencias-NuevaAsistencia.js" asp-append-version="true"></script>
+    <script src="~/js/ModuloAsistencias/ModuloAsistencias-EnCurso.js" asp-append-version="true"></script>
+    <script src="~/js/ModuloAsistencias/ModuloAsistencias-CargaDeTrabajo.js" asp-append-version="true"></script>
+    <script src="~/js/ModuloAsistencias/ModuloAsistencias-Configuracion-Zonas.js" asp-append-version="true"></script>
+    <script src="~/js/ModuloAsistencias/ModuloAsistencias-Rechazadas.js" asp-append-version="true"></script>
+    <script src="~/js/ModuloAsistencias/ModuloAsistencias-Produccion.js" asp-append-version="true"></script>
+    <script src="~/js/ModuloAsistencias/ModuloAsistencias-Comisionar.js" asp-append-version="true"></script>
+    <script src="~/js/ModuloAsistencias/ModuloAsistencias-Comisiones.js" asp-append-version="true"></script>
+    <script src="~/js/ModuloAsistencias/ModuloAsistencias-Revisar.js" asp-append-version="true"></script>
+
+    <script>
+        RefreshCounters();
+    </script>
+
+</body>
+</html>

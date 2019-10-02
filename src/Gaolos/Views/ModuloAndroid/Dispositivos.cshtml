@@ -1,0 +1,212 @@
+﻿@model ModuloAndroidModelLibrary.ModuloAndroidDispositivosListadoViewModel
+
+@{
+    Layout = "~/Views/Shared/Modulo-Android/_Modulo-Android.cshtml";
+    ViewData["Title"] = "Dispositivos Android";
+    ViewData["TitleBuscar"] = "Buscar ";
+    ViewData["Message"] = "Facturación - Gaolos App v2017";
+}
+
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                
+    @if(Model.Model.Err.eserror)
+    {
+        ViewData["err"] = Model.Model.Err.mensaje;
+        @Html.Partial("AccesoDenegado");
+    }
+    else
+    {
+                 
+                
+                @* Buscador *@
+
+                <div class="card mb-3">
+                    <div class="card-header card-header-options">
+                        <span>Buscador de dispositivos</span>
+
+                        <div class="card-actions">
+                            <ul>
+                                <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-block p-0">
+                        <form method="post" action="@ViewData["form"]" class="sel-dates">
+                            <div class="d-flex justify-content-center align-items-center">
+
+                                <div class="col-1 pb-2 pt-2 box-border-right-light">
+                                    <img src="https://image.flaticon.com/icons/svg/226/226770.svg" style="width: 100%">
+                                </div>
+
+                                <div class="col-11 pt-2 pb-2">
+                                    <label>Buscar dispositivo</label>
+                                    <div class="input-group card-search-box mb-3">
+                                        <input type="text" class="form-control" placeholder="Buscar" name="buscar" value="@ViewData["buscar"]">
+                                        <span class="input-group-append">
+                                            <button class="btn btn-primary" type="submit">Buscar</button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                @* Listado *@
+
+                <div class="row">
+                    @* Listado *@
+                    <div class="col-12 mb-3">
+                        <div class="card card-table mb-0">
+                            <div class="card-header card-header-options">
+                                <span>@ViewData["Title"]</span>
+                                <a href="#" class="btn btn-sm btn-primary" style="display:none;">Exportar</a>
+                            </div>
+                            <div class="card-block">
+
+                                <table class="table table-striped table-small">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center w-5">Token</th>
+                                            <th class="text-center w-10">Fecha de alta</th>
+                                            <th class="">Usuario</th>
+                                            <th class="">Tipo</th>
+                                            <th class="text-center">Autorizado</th>
+                                            <th class="text-center">Bloquear</th>
+                                            <th class="text-center">Nº acciones</th>
+                                            <th class="text-center">Último acceso</th>
+                                            <th class="text-center">Observaciones</th>
+                                            <th class="text-center w-5">Eliminar</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (Model.Model.det != null)
+                                        {
+                                            @for (Int32 t = 0; t < Model.Model.det.Length; t++)
+                                            {
+                                                string clss = "";
+                                                if (Model.Model.det[t].SinUso)
+                                                {
+                                                    clss = " class='tr-block'";
+
+                                                }
+
+                                        <tr @Html.Raw(clss)>
+                                            <td class="text-center">
+                                                @if (Model.Model.det[t].SinUso)
+                                                {
+                                                    <i class="fa fa-exclamation-triangle mr-1 text-danger" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="Sin acceso desde hace más de 60 días"></i>
+                                                }
+
+                                                @Model.Model.det[t].ID_Token
+
+                                            </td>
+                                            <td class="text-center"><p class="mb-0 text-.">@Model.Model.det[t].Fe_Al</p></td>
+                                            <td><p class="mb-0 fw-5">@Model.Model.det[t].Usu</p></td>
+                                            <td><p class="mb-0">@Model.Model.det[t].Tipo</p></td>
+                                            @{
+                                                string alig = "";
+                                                if (Model.Model.det[t].Fe_Auto == "")
+                                                {
+                                                    alig = " class='text-center'";
+                                                }
+                                            }
+
+                                            <td @Html.Raw(alig)>
+                                                @if (Model.Model.det[t].Fe_Auto == "")
+                                                {
+                                                    <a href="#" class="btn btn-success btn-sm dispositivo-autorizar" id="auto_@Model.Model.det[t].ID_Token">Autorizar</a>
+                                                }
+                                                else
+                                                {
+                                                    <div>
+                                                        <i class="fa fa-check text-success mr-1"></i>
+                                                        @Model.Model.det[t].Usu_Auto - @Model.Model.det[t].Fe_Auto
+                                                    </div>
+                                                }
+                                            </td>
+                                            <td class="text-center">
+                                                @if (Model.Model.det[t].Fe_Blo == "")
+                                                {
+                                                    <a href="#" class="dispositivo-bloquear" id="blo_@Model.Model.det[t].ID_Token"><i class="fa fa-ban text-danger"></i></a>
+                                                }
+                                                else
+                                                {
+                                                    <div>
+                                                        <i class="fa fa-check text-danger mr-1"></i> @Model.Model.det[t].Usu_Blo - @Model.Model.det[t].Fe_Blo
+                                                    </div>
+                                                }
+                                            </td>
+                                            <td class="text-center"><p class="mb-0">@Model.Model.det[t].Num_Acc</p></td>
+                                            @{
+                                                alig = "";
+                                                if (Model.Model.det[t].UsuUlAcc == "")
+                                                {
+                                                    alig = " class='text-center'";
+                                                }
+                                            }
+                                            <td @Html.Raw(alig)>
+                                                <p class="mb-0">
+                                                    @if (Model.Model.det[t].UsuUlAcc == "")
+                                                    {
+                                                        <i class="fa fa-exclamation-triangle mr-1 text-danger" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="No se ha accedido nunca a este dispositivo"></i> @Html.Raw(Model.Model.det[t].Fe_Ul_Acc)
+                                                    }
+                                                    else
+                                                    {
+                                                        @Html.Raw(Model.Model.det[t].UsuUlAcc + " - " + Model.Model.det[t].Fe_Ul_Acc)
+                                                    }
+                                                </p>
+                                            </td>
+                                            <td class="text-right">
+
+                                                <div class="input-group input-group-sm">
+                                                    <input type="text" class="form-control form-control-sm" placeholder="Observaciones" id="obs_@Model.Model.det[t].ID_Token" value="@Model.Model.det[t].Obs" maxlength="100">
+                                                    <span class="input-group-append">
+                                                        <button type="button" class="btn btn-primary btn-sm dispositivo-obs" id="btn_@Model.Model.det[t].ID_Token">Guardar</button>
+                                                    </span>
+                                                </div>
+
+                                            </td>
+                                            <td class="text-center">
+                                                <a href="#" class="" id=""><i class="fa fa-times text-danger"></i></a>
+                                            </td>
+                                        </tr>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <tr><td colspan="8" class="text-danger fw-5"><i class="fa fa-times"></i> No hay resultados</td></tr>
+                                        }
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            @Html.Raw(Model.Model.Paginador)
+                        </div>
+                        
+                    </div>
+                </div>
+    }
+                
+            </div>
+        </div>
+    </div>
+</div>
+

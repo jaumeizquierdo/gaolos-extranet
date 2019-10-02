@@ -1,0 +1,201 @@
+﻿@{
+    ViewData["Title"] = "Bienvenido a Gaolos";
+    ViewData["UltimosClientes"] = "Últimos clientes añadidos";
+    ViewData["UltimasFacturas"] = "Últimas facturas añadidas";
+    ViewData["GraficaHome1"] = "Consumos Gaolos";
+    ViewData["GraficaHome2"] = "Evolución Facturación";
+    ViewData["GraficaHome3"] = "Gráfica Home 3";
+    ViewData["CargaViewComponents"] = "Carga View Components";
+
+    ViewData["StickyNoticeTitle"] = "Notificación Gaolos";
+    ViewData["StickyNoticeContent"] = "Nueva factura añadida en el sistema!";
+
+    Layout = "_Layout";
+}
+
+@*
+    <div class="card mb-3">
+        <div class="card-header card-header-options">
+            <span>@ViewData["Title"]</span>
+            @Html.Partial("PanelActions")
+        </div>
+        <div class="card-block">
+
+            <div class="input-group card-search-box mb-3">
+                <input type="text" class="form-control" placeholder="Buscar por...">
+                <span class="input-group-append">
+                    <button class="btn btn-secondary" type="button">Buscar</button>
+                </span>
+            </div>
+
+        </div>
+    </div>
+*@
+
+<div class="main-content" id="widget-area">
+
+    @*<h2>@ViewData["Title"]</h2>*@
+
+    @* Widgets Dashboard *@
+
+    <div class="card mb-3">
+        <div class="card-header card-header-options">
+            <span>@ViewData["CargaViewComponents"]</span>
+            @Html.Partial("PanelActions")
+        </div>
+        <div class="card-block">
+
+            <div class="vc-list-buttons">
+                <button type="button" onclick="actualizar()" class="btn btn-submit">Refrescar</button>
+                <button type="button" id="cargar-menu" class="btn btn-submit">Carga VC Menu Lateral</button>
+                <button type="button" id="cargar-footer" class="btn btn-submit">Carga VC Footer</button>
+                <button type="button" id="cargar-usuario" class="btn btn-submit">Carga VC Menú Usuario</button>
+                <button type="button" id="cargar-notificaciones" class="btn btn-submit">Carga VC Notificaciones</button>
+                <button type="button" id="cargar-footer-autorefresh" class="btn btn-submit">Carga VC Footer autorefresh</button>
+
+                <button class="btn btn-submit dropdown-toggle" onclick="PNotify.desktop.permission(); (new PNotify({
+                                title: '@ViewData["StickyNoticeTitle"]',
+                                text: '@ViewData["StickyNoticeContent"]',
+                                hide: false,
+                                type: 'success',
+                                styling: 'fontawesome',
+                                width: '200px',
+                                opacity: .5,
+                                spacing1: 20,
+                                desktop: {
+                                    desktop: true
+                                }
+                            })).get().click(function(e){
+                                if ($('.ui-pnotify-closer, .ui-pnotify-sticker, .ui-pnotify-closer *, .ui-pnotify-sticker *').is(e.target))
+                                    return;
+                                alert('Hey! Has clicado una notificación de escritorio');
+                            });" data-toggle="dropdown" aria-expanded="false">
+                    Nueva notificación de Gaolos
+                </button>
+
+            </div>
+            <div id="viewcomponent-wrapper"></div>
+            <div id="viewcomponent-wrapper-refresh"></div>
+
+        </div>
+    </div>
+
+
+    <div class="container-fluid">
+        <div class="row widgets">
+            <div class="col-md-6 col-xs-12">
+                <div class="panel">
+                    <div class="panel-header">
+                        <h3>@ViewData["UltimasFacturas"]</h3>
+                        @Html.Partial("PanelActions")
+                    </div>
+                    <div class="panel-body">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Cliente</th>
+                                    <th>Población</th>
+                                    <th>Teléfono</th>
+                                    <th>NIF</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @for (int i = 0; i < 5; i++)
+                                {
+                                    <tr>
+                                        <th scope="row">3</th>
+                                        <td><a href="#">Gaolos Global Project</a></td>
+                                        <td>Barcelona</td>
+                                        <td>902 024 665</td>
+                                        <td>902 024 665</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-xs-12">
+                <div class="panel">
+                    <div class="panel-header">
+                        <h3>@ViewData["UltimosClientes"]</h3>
+                        <a href="#" class="handle"><i class="fa fa-bars"></i></a>
+                    </div>
+                    <div class="panel-body">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Cliente</th>
+                                    <th>Población</th>
+                                    <th>Teléfono</th>
+                                    <th>NIF</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @for (int i = 0; i < 5; i++)
+                                {
+                                    <tr>
+                                        <th scope="row">3</th>
+                                        <td><a href="#">Gaolos Global Project</a></td>
+                                        <td>Barcelona</td>
+                                        <td>902 024 665</td>
+                                        <td>902 024 665</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row widgets">
+            <div class="col-md-6 col-xs-12">
+                <div class="panel">
+                    <div class="panel-header">
+                        <h3>@ViewData["GraficaHome1"]</h3>
+                        @Html.Partial("PanelActions")
+                    </div>
+                    <div class="panel-body">
+                        <canvas id="graficaEjemplo1" width="400" height="200"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-xs-12">
+                <div class="panel">
+                    <div class="panel-header">
+                        <h3>@ViewData["GraficaHome2"]</h3>
+                        @Html.Partial("PanelActions")
+                    </div>
+                    <div class="panel-body">
+                        <canvas id="graficaEjemplo2" width="400" height="200"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @*<form id="" name="" action="" method="post" class="form-buscador">
+            <input type="text" class="form-control" name="username" id="username" placeholder="Buscar por cliente / razón / nif o código de cliente" required="" autofocus="" value="">
+        </form>*@
+
+    <ul class="pagination">
+        <li>
+            <a href="#" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        <li><a href="#">1</a></li>
+        <li class="active"><a href="#">2</a></li>
+        <li><a href="#">3</a></li>
+        <li><a href="#">4</a></li>
+        <li><a href="#">5</a></li>
+        <li>
+            <a href="#" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+    </ul>
+
+</div>

@@ -1,0 +1,194 @@
+﻿@model CursosLibrary.ModuloCursosCursoDetallesEditar_CierreViewModel
+@{
+    Layout = "~/Views/Shared/Modulo-Cursos/_Cursos-curso.cshtml";
+    ViewData["Title"] = "Cierre";
+    ViewData["Message"] = "Modulo de cursos - Gaolos App v2017";
+}
+
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section mb-0">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+                @if(Model.Model.Err.eserror)
+{
+    ViewData["err"] = Model.Model.Err.mensaje;
+                @Html.Partial("AccesoDenegado");
+}
+else
+{
+                @* tabs *@
+
+                @Html.Partial("Curso-Tabs")
+
+                @* cabecera *@
+
+                @Html.Partial("Curso-Cabecera")
+
+                <div class="row mb-3">
+                    <div class="col-12">
+
+                        <div class="row">
+                            <div class="col-6">
+
+                                @if (!Model.Model.Anu && !Model.Model.Cerr)
+                                {
+
+                                    <div class="card mt-3 card-table">
+                                        <div class="card-header card-header-options">
+                                            <span>Cerrar curso</span>
+                                        </div>
+                                        <div class="card-block">
+                                            <div class="d-flex p-3">
+
+                                            </div>
+                                            <div class="d-flex justify-content-center box-border-top p-2 mdc-bg-blue-grey-50">
+                                                @if (!Model.Model.Anu && !Model.Model.Cerr)
+                                                {
+                                                    <button type="button" class="btn btn-sm btn-primary control-cierre-guardar">Cerrar</button>
+                                                }
+                                                else
+                                                {
+                                                    if (!Model.Model.Anu)
+                                                    {
+                                                        <button type="button" class="btn btn-sm btn-primary" disabled>Curso cerrado</button>
+                                                    }
+                                                    else
+                                                    {
+                                                        <button type="button" class="btn btn-sm btn-primary" disabled>Curso anulado</button>
+                                                    }
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="card mt-3 card-table">
+                                        <div class="card-header card-header-options">
+                                            <span>Re-abrir curso</span>
+                                        </div>
+                                        <div class="card-block">
+                                            <div class="d-flex p-3 justify-content-center">
+                                                @if (!Model.Model.Anu)
+                                                {
+                                                <button type="button" class="btn btn-sm btn-primary reabrir-curso-cerrado">Deshacer cierre</button>
+                                                }
+                                                else
+                                                {
+                                                <button type="button" class="btn btn-sm btn-primary reabrir-curso-anulado">Deshacer anulación</button>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                }
+
+                            </div>
+
+                            <div class="col-6">
+
+                                @if (!Model.Model.Anu && !Model.Model.Cerr)
+                                {
+
+                                    <div class="card mt-3 card-table">
+                                        <div class="card-header card-header-options">
+                                            <span>Anular curso</span>
+                                        </div>
+                                        <div class="card-block">
+                                            @if (!Model.Model.Anu && !Model.Model.Cerr)
+                                            {
+                                                @if (Model.Model.numInteresados > 0)
+                                                {
+
+                                                    <div class="col-12 pt-2 px-2">
+
+                                                        <div class="d-flex mb-2">
+
+                                                            <div class="box-labels mr-2">
+                                                                <div class="d-flex align-items-center justify-content-center align-self-stretch">
+                                                                    <label class="m-0 box-label-label align-self-stretch">Interesados</label>
+                                                                    <p class="text-danger fw-5 mb-0 px-2">@Model.Model.numInteresados</p>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="input-group input-group-sm mb-0 mr-2">
+                                                                <div class="input-group-prepend">
+                                                                    <span class="input-group-text">Interesados enviar al curso</span>
+                                                                </div>
+                                                                <input type="text" class="form-control form-control-sm ui-autocomplete-input" value="" placeholder="Buscar por nº curso, fecha inicio, ubicación y curso" id="findcurso" name="findcurso" autocomplete="off" data-toggle="tooltip" data-placement="top" title="" data-original-title="Buscar por nº curso, fecha inicio, ubicación y curso">
+                                                                <input id="vfindcurso" name="vfindcurso" type="hidden" value=""><input id="tfindcurso" name="tfindcurso" type="hidden" value="">
+                                                            </div>
+
+                                                            <div class="input-group input-group-sm mb-0">
+                                                                <div class="input-group-prepend">
+                                                                    <span class="input-group-text">Fecha replanififación</span>
+                                                                </div>
+                                                                <input type="text" class="form-control form-control-sm" placeholder="Fecha replanififación" id="Fe_Repla" value="05/07/18">
+                                                            </div>
+
+                                                        </div>
+
+                                                    </div>
+
+                                                }
+
+                                                    <div class="d-flex px-2 pb-2">
+
+                                                        <div class="input-group input-group-sm mb-0">
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text">Exposición</span>
+                                                            </div>
+                                                            <textarea cols="3" rows="3" class="form-control form-control-sm" placeholder="Exposición para la anulación del curso" id="ExpoAnu"></textarea>
+                                                        </div>
+                                                        
+                                                    </div>
+
+                                                <div class="d-flex justify-content-center box-border-top mdc-bg-blue-grey-50 justify-content-end pt-2 pb-2">
+                                                    <button type="button" class="btn btn-sm btn-primary curso-anular">Anular</button>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                if (!Model.Model.Anu)
+                                                {
+                                                    <div class="d-flex justify-content-center box-border-top mdc-bg-blue-grey-50 justify-content-end pt-2 pb-2">
+                                                        <button type="button" class="btn btn-sm btn-primary" disabled>Cerrado</button>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="d-flex p-3">
+                                                        <textarea cols="3" rows="3" class="form-control form-control-sm" disabled>@Model.Model.MotAnu</textarea>
+                                                    </div>
+                                                    <div class="d-flex justify-content-center box-border-top mdc-bg-blue-grey-50 justify-content-end pt-2 pb-2">
+                                                        <button type="button" class="btn btn-sm btn-primary" disabled>Anulado</button>
+                                                    </div>
+                                                }
+
+                                            }
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+                        }
+            </div>
+        </div>
+    </div>
+</div>

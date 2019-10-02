@@ -1,0 +1,22 @@
+﻿@model IdiomasLibrary.IdiomasViewModel
+@if (Model != null)
+{
+
+<div class="footer-language">
+    <form id="frm" name="frm" action="#" method="post" class="form-signin">
+        <ul class="dropup" role="menu" aria-labelledby="labelname">
+            <li class="dropdown">
+                <a href="#/" class="dropdown-toggle btn btn-submit btn-content btn-footer" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                    <i class="fa fa-globe" aria-hidden="true"></i> @ViewData["labelIdiomas"] <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    @foreach (var m in Model.Idiomas)
+                    {
+                        <li><button name="ID_Idi" value="@m.id">@m.Mensaje</button></li>
+                    }
+                </ul>
+            </li>
+        </ul>
+    </form>
+</div>
+}

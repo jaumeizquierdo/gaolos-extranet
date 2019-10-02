@@ -1,0 +1,157 @@
+﻿@model ModuloContactosLibrary.ModuloContactosContactosListadoViewModel
+@{
+    Layout = "~/Views/Shared/Modulo-Contactos/_Modulo-Contactos-Contacto.cshtml";
+    ViewData["Title"] = "Contactos";
+    ViewData["Message"] = "Modulo de Contactos - Gaolos App v2017";
+}
+
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+                @if (Model.Model.Err.eserror)
+                {
+                    ViewData["err"] = Model.Model.Err.mensaje;
+                    @Html.Partial("AccesoDenegado");
+                }
+                else
+                {
+
+                    @* Buscar usuarios *@
+
+                    <div class="card mb-3">
+                        <div class="card-header card-header-options">
+                            <span>Buscar contacto</span>
+
+                            <div class="card-actions">
+                                <ul>
+                                    <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card-block p-0">
+
+
+                            <div class="d-flex justify-content-center align-items-center">
+                                <div class="col-1 pb-2 pt-2">
+                                    <img src="~/flaticons/business/038-user-1.svg" style="width: 100%;">
+                                </div>
+                                <div class="col-11 pt-2 pb-2 box-border-left-light">
+                                    <form method="post" action="@ViewData["form"]" class="">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <label>Buscar por empresas, NIF, CC, nº cliente, dirección, población</label>
+                                                <div class="input-group card-search-box mb-3">
+                                                    <input type="text" class="form-control" placeholder="Empresas, NIF, CC, nº Cliente, dirección, población" name="buscar" value="@ViewData["buscar"]">
+                                                    <span class="input-group-append">
+                                                        <button class="btn btn-primary" type="submit">Buscar</button>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-3">
+                                                <div class="form-group">
+                                                    <label>Buscar por mail</label>
+                                                    <div class="input-group input-group-sm">
+                                                        <input type="text" class="form-control form-control-sm" name="Mail" placeholder="Buscar por mail" value="@ViewData["Mail"]">
+                                                        <span class="input-group-append">
+                                                            <button type="submit" class="btn btn-primary btn-sm form-buscar"><i class="fa fa-search"></i></button>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-3">
+                                                <div class="form-group">
+                                                    <label>Buscar por teléfono</label>
+                                                    <div class="input-group input-group-sm">
+                                                        <input type="text" class="form-control form-control-sm" name="Tel" placeholder="Buscar por teléfono" value="@ViewData["Tel"]">
+                                                        <span class="input-group-append">
+                                                            <button type="submit" class="btn btn-primary btn-sm form-buscar"><i class="fa fa-search"></i></button>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                            @*
+
+                            *@
+
+                        </div>
+                    </div>
+
+                    @* Listado de usuarios *@
+
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card card-table mb-3">
+                                <div class="card-header card-header-options">
+                                    <span>@ViewData["Title"]</span>
+                                    <button type="button" class="btn btn-primary btn-sm nueva-dir btn-sm-2x">Nuevo contacto</button>
+                                </div>
+                                <div class="card-block">
+
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-center w-5">Nº</th>
+                                                <th>Contacto</th>
+                                                <th>Dirección</th>
+                                                <th class="text-center w-10">Teléfono</th>
+                                                <th class="text-center w-10">NIF</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (Model.Model.det != null)
+                                            {
+                                                @for (Int32 t = 0; t < Model.Model.det.Length; t++)
+                                                {
+                                                    <tr>
+                                                        <td class="text-center">@Model.Model.det[t].ID_Cont2</td>
+                                                        <td><a href="@ViewData["Form"]/contacto?ID_Cont2=@Model.Model.det[t].ID_Cont2" class="fw-5">@Model.Model.det[t].Emp</a></td>
+                                                        <td>
+                                                            <p class="fw-5 mb-0">@Model.Model.det[t].Dir</p>
+                                                            <small class="fw-5 mb-0">@Model.Model.det[t].Pob</small>
+                                                        </td>
+                                                        <td class="text-center">@Model.Model.det[t].Tel</td>
+                                                        <td class="text-center">@Model.Model.det[t].NIF</td>
+                                                    </tr>
+                                                }
+
+                                            }
+                                            else
+                                            {
+                                                <tr>
+                                                    <td colspan="5"><p class="mb-0 fw-5 p-3 text-danger"><i class="fa fa-times"></i> No hay resultados</p></td>
+                                                </tr>
+
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                @Html.Raw(Model.Model.Paginador)
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

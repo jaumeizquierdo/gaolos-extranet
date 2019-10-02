@@ -1,0 +1,23 @@
+﻿@* tabs *@
+
+@* btn-tab-active *@
+
+@{
+    string Clss = "mr-1 ml-2 btn btn-tab";
+    string ClssSel = "mr-1 ml-2 btn btn-tab btn-tab-active";
+    string ClssApli = "";
+}
+
+<div class="d-flex pt-3 pb-0 pl-0 mb-3 box-tab">
+    @if (ViewData["Form"].ToString() == "/modulo-contactos/contactos/contacto") { ClssApli = ClssSel; } else { ClssApli = Clss; }
+    <a href="/modulo-contactos/contactos/contacto?ID_Cont2=@Model.Model.Cab.ID_Cont2" class="@Html.Raw(ClssApli)">Contacto</a>
+    @if (ViewData["Form"].ToString().IndexOf("/modulo-contactos/contactos/contacto/cliente-relacionado-con") != -1) { ClssApli = ClssSel; } else { ClssApli = Clss; }
+    <a href="/modulo-contactos/contactos/contacto/contacto-relacionado-con?ID_Cont2=@Model.Model.Cab.ID_Cont2" class="@Html.Raw(ClssApli)">Relacionado con</a>
+    @if (ViewData["Form"].ToString().IndexOf("/modulo-contactos/contactos/contacto/situacion") != -1) { ClssApli = ClssSel; } else { ClssApli = Clss; }
+    <a href="/modulo-contactos/contactos/contacto/situacion?ID_Cont2=@Model.Model.Cab.ID_Cont2" class="@Html.Raw(ClssApli)">Situación</a>
+    @if (ViewData["Form"].ToString() == "/modulo-contactos/contactos/contacto/acceso-web") { ClssApli = ClssSel; } else { ClssApli = Clss; }
+    <a href="/modulo-contactos/contactos/contacto/acceso-web?ID_Cont2=@Model.Model.Cab.ID_Cont2" class="@Html.Raw(ClssApli)">Acceso Web</a>
+    @if (ViewData["Form"].ToString() == "/modulo-contactos/contactos/contacto/bloqueo") { ClssApli = ClssSel; } else { ClssApli = Clss; }
+    <a href="/modulo-contactos/contactos/contacto/bloqueo?ID_Cont2=@Model.Model.Cab.ID_Cont2" class="@Html.Raw(ClssApli)">Bloqueo</a>
+
+</div>

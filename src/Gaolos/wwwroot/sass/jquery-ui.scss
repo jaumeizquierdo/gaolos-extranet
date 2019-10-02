@@ -1,0 +1,24 @@
+﻿@import "variables.scss";
+@import "materialdesign.scss";
+
+/* UI Autocomplete */
+
+.ui-menu {
+    max-width: 30rem;
+    border: 1px solid $md-blue-grey-100;
+    z-index: 99999;
+    background: #fff;
+    margin-top: -1px;
+
+    .ui-menu-item-wrapper {
+        padding: 0.2rem 0.5rem;
+        font-size: 0.9em;
+        border-bottom: 1px solid $md-blue-grey-100;
+
+        &:hover {
+            cursor: pointer;
+            background: $md-blue-grey-500;
+            color: #fff;
+        }
+    }
+}

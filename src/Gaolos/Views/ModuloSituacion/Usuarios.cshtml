@@ -1,0 +1,428 @@
+﻿@model SituacionLibrary.SituacionUsuariosViewModel
+@{
+    Layout = "~/Views/Shared/Modulo-Situacion/_Situacion.cshtml";
+    ViewData["Title"] = "Situación Usuarios";
+}
+
+@if (!Model._Model.Err.eserror)
+{
+
+    <script type="text/javascript">
+
+    google.charts.load('current', { 'packages': ['corechart'], 'language': 'es' });
+    google.charts.setOnLoadCallback(TareasNuevas);
+    google.charts.setOnLoadCallback(TareasReplanificadas);
+    google.charts.setOnLoadCallback(TareasCerradas);
+    google.charts.setOnLoadCallback(PresupuestosEnviados);
+
+    // tareas nuevas
+
+    function TareasNuevas() {
+
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', '@Model._Model.TareasNuevas.Titulo');
+        data.addColumn('number', 'Usuarios');
+        @{
+            string txt = "";
+            if (Model._Model.TareasNuevas.dat!=null)
+            {
+                for (Int32 t = 0; t < Model._Model.TareasNuevas.dat.Length; t++)
+                {
+                    if (t > 0) { txt += ","; }
+                    txt += "['" + Model._Model.TareasNuevas.dat[t].datoS1 + "', " + Model._Model.TareasNuevas.dat[t].datoI.ToString() + "]";
+                }
+            }
+}
+        @Html.Raw("data.addRows([" + txt + "]);")
+
+        var options = {
+            //title: '@Model._Model.TareasNuevas.Titulo',
+            width: 600,
+            height: 350,
+            'chartArea': { 'width': '100%', 'height': '80%' },
+            fontName: 'Roboto'
+            //sliceVisibilityThreshold: .03
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('TareasNuevas'));
+        chart.draw(data, options);
+    }
+
+    // tareas replanificadas
+
+    function TareasReplanificadas() {
+
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', '@Model._Model.TareasRe.Titulo');
+        data.addColumn('number', 'Usuarios');
+        @{
+            txt = "";
+            if (Model._Model.TareasRe.dat!=null)
+            {
+                for (Int32 t = 0; t < Model._Model.TareasRe.dat.Length; t++)
+                {
+                    if (t > 0) { txt += ","; }
+                    txt += "['" + Model._Model.TareasRe.dat[t].datoS1 + "', " + Model._Model.TareasRe.dat[t].datoI.ToString() + "]";
+                }
+            }
+    }
+        @Html.Raw("data.addRows([" + txt + "]);")
+
+        var options = {
+            //title: '@Model._Model.TareasRe.Titulo',
+            width: 600,
+            height: 350,
+            'chartArea': { 'width': '100%', 'height': '80%' },
+            fontName: 'Roboto'
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('TareasReplanificadas'));
+        chart.draw(data, options);
+    }
+
+    // tareas cerradas
+
+    function TareasCerradas() {
+
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', '@Model._Model.TareasCerradas.Titulo');
+        data.addColumn('number', 'Usuarios');
+        @{
+            txt = "";
+            if (Model._Model.TareasCerradas.dat!=null)
+            {
+                for (Int32 t = 0; t < Model._Model.TareasCerradas.dat.Length; t++)
+                {
+                    if (t > 0) { txt += ","; }
+                    txt += "['" + Model._Model.TareasCerradas.dat[t].datoS1 + "', " + Model._Model.TareasCerradas.dat[t].datoI.ToString() + "]";
+                }
+            }
+    }
+        @Html.Raw("data.addRows([" + txt + "]);")
+
+        var options = {
+            //title: '@Model._Model.TareasCerradas.Titulo',
+            width: 600,
+            height: 350,
+            'chartArea': { 'width': '100%', 'height': '80%' },
+            fontName: 'Roboto'
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('TareasCerradas'));
+        chart.draw(data, options);
+    }
+
+    // presupuestos enviados
+
+    function PresupuestosEnviados() {
+
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Presupuestos enviados');
+        data.addColumn('number', 'Usuarios');
+        data.addColumn('number', 'Total');
+        @{
+            txt = "";
+            if (Model._Model.PresupEnv.dat!=null)
+            {
+                for (Int32 t = 0; t < Model._Model.PresupEnv.dat.Length; t++)
+                {
+                    if (t > 0) { txt += ","; }
+                    txt += "['" + Model._Model.PresupEnv.dat[t].datoS1 + "', " + Model._Model.PresupEnv.dat[t].datoI.ToString() + ", " + Model._Model.PresupEnv.dat[t].datoS2 + "]";
+                }
+            }
+        }
+        @Html.Raw("data.addRows([" + txt + "]);")
+
+        var options = {
+            //title: '@Model._Model.PresupEnv.Titulo',
+            width: 600,
+            height: 350,
+            'chartArea': { 'width': '100%', 'height': '80%' },
+            fontName: 'Roboto'
+            //sliceVisibilityThreshold: .03
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('PresupuestosEnviados'));
+        chart.draw(data, options);
+    }
+
+    // presupuestos enviados
+
+    function PresupuestosEnviados2(arr,tit) {
+
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Mes');
+        data.addColumn('number', 'Presupuestos');
+        data.addRows(arr);
+
+        var options = {
+            title: tit,
+            width: 600,
+            height: 350,
+            //curveType: 'function',
+            'chartArea': { 'width': '100%', 'height': '80%' },
+            fontName: 'Roboto'
+            //sliceVisibilityThreshold: .03
+        };
+
+        var chart = new google.visualization.AreaChart(document.getElementById('PresupuestosEnviados2'));
+        chart.draw(data, options);
+    }
+
+
+    </script>
+
+    }
+
+<div class="main-content m-0">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+
+        <div class="row">
+
+            <div class="col-12">
+
+                @if (Model._Model.Err.eserror)
+                {
+                    ViewData["err"] = Model._Model.Err.mensaje;
+                    @Html.Partial("AccesoDenegado");
+
+                }
+                else
+                {
+
+                    @* Buscar usuarios *@
+
+                    <div class="card mb-3">
+                        <div class="card-header card-header-options">
+                            <span>Situación usuarios</span>
+
+                            <div class="card-actions">
+                                <ul>
+                                    <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card-block">
+
+                            <div class="row">
+                                <div class="col-2 text-center">
+                                    <img src="~/flaticons/business/101-presentation.svg" style="width: 50%">
+                                </div>
+                                <div class="col-9">
+                                    <h5 class="fw-5">Seleccione fecha de inicio y final</h5>
+                                    <form method="post" action="@ViewData["Form"]" class="sel-dates d-inline-flex mt-2">
+                                        <div class="input-group seldate date mr-2">
+                                            <input type="text" class="form-control" placeholder="Fecha Inicio" value="@Model._Model.Fe_In" name="Fe_In" data-toggle="tooltip" data-placement="top" title="" data-original-title="Fecha de inicio" />
+                                        </div>
+                                        <div class="input-group seldate date">
+                                            <input type="text" class="form-control" placeholder="Fecha Fin" value="@Model._Model.Fe_Fi" name="Fe_Fi" data-toggle="tooltip" data-placement="top" title="" data-original-title="Fecha final" />
+                                        </div>
+                                        <button type="submit" class="btn btn-primary ml-2">Buscar</button>
+                                    </form>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    @* Presupuestos enviados *@
+
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card card-table mt-2 mb-5">
+                                <div class="card-header card-header-options">
+                                    <span>@Model._Model.PresupEnv.Titulo <span id="fechares"></span> </span>
+                                    @* @Html.Partial("PanelActions") *@
+                                </div>
+                                <div class="card-block">
+                                    <div class="row">
+                                        <div class="col-5 pr-0">
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="w-50">Usuario</th>
+                                                        <th class="w-25 text-center">Presupuestos</th>
+                                                        <th class="w-25 text-right">Total</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @if (Model._Model.PresupEnv.dat != null)
+                                                    {
+                                                        for (Int32 t = 0; t < Model._Model.PresupEnv.dat.Length; t++)
+                                                        {
+                                                            <tr>
+                                                                <td scope="row">
+                                                                    <p class="mb-0"><a id="grafanual_@Model._Model.PresupEnv.dat[t].datoS4" href="#" class="fw-5 graf-anual">@Model._Model.PresupEnv.dat[t].datoS1</a></p>
+                                                                </td>
+                                                                <td class="text-center fw-5">@Model._Model.PresupEnv.dat[t].datoI</td>
+                                                                <td class="text-right fw-5">@Model._Model.PresupEnv.dat[t].datoS3</td>
+                                                            </tr>
+                                                        }
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="col-7 card-table-chart">
+                                            <div class="googlechart">
+                                                <div id="PresupuestosEnviados"></div>
+                                                <div id="PresupuestosEnviados2"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    @* Tareas nuevas *@
+
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card card-table mb-5 mt-2">
+                                <div class="card-header card-header-options">
+                                    <span>@Model._Model.TareasNuevas.Titulo<span id="fechares"></span></span>
+                                    @* @Html.Partial("PanelActions") *@
+                                </div>
+                                <div class="card-block">
+                                    <div class="row">
+                                        <div class="col-5 pr-0">
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="w-50">Usuario</th>
+                                                        <th class="w-50 text-center">Tareas</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @if (Model._Model.TareasNuevas.dat != null)
+                                                    {
+                                                        for (Int32 t = 0; t < Model._Model.TareasNuevas.dat.Length; t++)
+                                                        {
+                                                            <tr>
+                                                                <td scope="row">
+                                                                    <p class="mb-0 fw-5">@Model._Model.TareasNuevas.dat[t].datoS1</p>
+                                                                </td>
+                                                                <td class="text-center fw-5">@Model._Model.TareasNuevas.dat[t].datoI</td>
+                                                            </tr>
+                                                        }
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="col-7 card-table-chart">
+                                            <div class="googlechart">
+                                                <div id="TareasNuevas"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    @* Tareas replanificadas *@
+
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card card-table mb-5 mt-2">
+                                <div class="card-header card-header-options">
+                                    <span>@Model._Model.TareasRe.Titulo <span id="fechares"></span></span>
+                                    @* @Html.Partial("PanelActions") *@
+                                </div>
+                                <div class="card-block">
+                                    <div class="row">
+                                        <div class="col-5 pr-0">
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="w-50">Usuario</th>
+                                                        <th class="w-50 text-center">Tareas</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @if (Model._Model.TareasRe.dat != null)
+                                                    {
+                                                        for (Int32 t = 0; t < Model._Model.TareasRe.dat.Length; t++)
+                                                        {
+                                                            <tr>
+                                                                <td scope="row">
+                                                                    <p class="mb-0 fw-5">@Model._Model.TareasRe.dat[t].datoS1</p>
+                                                                </td>
+                                                                <td class="text-center fw-5">@Model._Model.TareasRe.dat[t].datoI</td>
+                                                            </tr>
+                                                        }
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="col-7 card-table-chart">
+                                            <div class="googlechart">
+                                                <div id="TareasReplanificadas"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    @* Tareas cerradas *@
+
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card card-table mb-5 mt-2">
+                                <div class="card-header card-header-options">
+                                    <span>@Model._Model.TareasCerradas.Titulo <span id="fechares"></span></span>
+                                    @* @Html.Partial("PanelActions") *@
+                                </div>
+                                <div class="card-block">
+                                    <div class="row">
+                                        <div class="col-5 pr-0">
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="w-50">Usuario</th>
+                                                        <th class="w-50 text-center">Tareas</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @if (Model._Model.TareasCerradas.dat != null)
+                                                    {
+                                                        for (Int32 t = 0; t < Model._Model.TareasCerradas.dat.Length; t++)
+                                                        {
+                                                            <tr>
+                                                                <td scope="row">
+                                                                    <p class="mb-0 fw-5">@Model._Model.TareasCerradas.dat[t].datoS1</p>
+                                                                </td>
+                                                                <td class="text-center fw-5">@Model._Model.TareasCerradas.dat[t].datoI</td>
+                                                            </tr>
+                                                        }
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="col-7 card-table-chart">
+                                            <div class="googlechart">
+                                                <div id="TareasCerradas"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                }
+            </div>
+        </div>
+    </div>
+</div>

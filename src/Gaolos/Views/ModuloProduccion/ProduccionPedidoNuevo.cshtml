@@ -1,0 +1,149 @@
+﻿@{
+    Layout = "~/Views/Shared/Modulo-Produccion/_ProduccionPedidos.cshtml";
+    ViewData["Title"] = "Nuevo pedido de producción";
+}
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                @if (Model.Model.Err.eserror)
+                {
+                    ViewData["err"] = Model.Model.Err.mensaje;
+                    @Html.Partial("AccesoDenegado");
+                }
+                else
+                {
+
+                    <div class="card mb-3">
+                        <div class="card-header card-header-options">
+                            <span>Pedido</span>
+                        </div>
+                        <div class="card-block p-0">
+                            <div class="d-flex box-border-top-light p-2">
+
+                                <div class="d-flex flex-column w-100">
+
+                                    <div class="d-flex mb-1">
+                                        <div class="input-group input-group-sm mb-2">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" style="min-width: 130px !important;">Cliente</span>
+                                            </div>
+                                            <input type="text" class="form-control" id="cliente" placeholder="Buscar por nombre">
+                                            <input id="vcliente" name="vcliente" type="hidden" value="" /><input id="tcliente" name="tcliente" type="hidden" value="" />
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex mb-2">
+
+                                        <div class="d-flex w-50 p-0 mr-2">
+                                            <div class="input-group input-group-sm mb-0">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">Exposición</span>
+                                                </div>
+                                                <textarea class="form-control" id="Expo" rows="3" placeholder="Exposición"></textarea>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex w-50 p-0">
+                                            <div class="input-group input-group-sm mb-0">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">Observaciones</span>
+                                                </div>
+                                                <textarea class="form-control" id="Obs" rows="3" placeholder="Observaciones"></textarea>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="d-flex mb-2">
+                                        <div class="d-flex w-50 p-0 mr-2">
+                                            <div class="input-group input-group-sm mb-0">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">Ref. Cliente</span>
+                                                </div>
+                                                <input type="text" class="form-control" id="RefCli" placeholder="Ref. Cliente">
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex w-50 p-0">
+                                            <div class="input-group input-group-sm mb-0">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">Fecha fin prevista</span>
+                                                </div>
+                                                <input type="text" class="form-control" placeholder="Selecciona Fecha" id="Fecha">
+                                                <span class="input-group-append">
+                                                    <button class="btn btn-secondary" type="button"><i class="fa fa-calendar"></i></button>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <hr class="mb-2 mt-2" style="width: 100%;">
+
+                                    <div class="d-flex mb-2">
+
+                                        <div class="d-flex mr-2 w-100 p-0">
+                                            <div class="input-group input-group-sm mb-0">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">Nuevo presupuesto</span>
+                                                </div>
+                                                <div class="d-flex align-items-center ml-2 mr-3">
+                                                    <input type="checkbox" class="mr-2 produccion-pedido-op-presupuesto" id="nuevoPres" value="">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div style="display:none;" id="verPres">
+                                        <div class="d-flex mb-1">
+                                            <div class="d-flex mr-2 w-100 p-0">
+                                                <div class="input-group input-group-sm mb-0">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">Dirección</span>
+                                                    </div>
+                                                    <div class="d-flex align-items-center ml-2 mr-3">
+                                                        <div class="d-flex flex-column px-2 pb-0 py-1" id="Dirs"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex mb-1">
+
+                                            <div class="input-group input-group-sm mb-0">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">Breve</span>
+                                                </div>
+                                                <textarea class="form-control" aria-label="With textarea" placeholder="Breve" id="Breve" maxlength="200"></textarea>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <div class="d-flex justify-content-center box-border-top p-2 mdc-bg-blue-grey-50">
+                                <button type="button" class="btn btn-primary btn-sm prod-ped-nuevo-ped-prod">Generar</button>
+                            </div>
+                        </div>
+                    </div>
+
+                }
+            </div>
+        </div>
+
+    </div>
+
+</div>

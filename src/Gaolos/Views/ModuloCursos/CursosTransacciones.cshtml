@@ -1,0 +1,181 @@
+﻿@model CursosLibrary.ModuloCursosTransaccionesListadoViewModel
+
+@{
+    Layout = "~/Views/Shared/Modulo-Cursos/_Cursos.cshtml";
+    ViewData["Title"] = "Listado de transacciones";
+}
+
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+                @if(Model.Model.Err.eserror)
+    {
+        ViewData["err"] = Model.Model.Err.mensaje;
+                @Html.Partial("AccesoDenegado");
+    }
+    else
+    {
+
+                @* Buscar transacciones *@
+
+                <div class="card mb-3">
+                    <div class="card-header card-header-options">
+                        <span>Buscar entre fechas</span>
+
+                        <div class="card-actions">
+                            <ul>
+                                <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-block p-0">
+
+                        <form action="@ViewData["Form"]" method="post">
+                            <div class="d-flex justify-content-center align-items-center">
+                                <div class="col-1  pb-2 pt-2">
+                                    <img src="~/flaticons/business/038-user-1.svg" style="width: 100%;">
+                                </div>
+                                <div class="col-11 box-border-left-light">
+
+                                    <div class="row p-0">
+                                        <div class="col-12 box-border-right p-0">
+                                            <div class="d-flex p-3 w-50">
+                                                <div class="form-group mb-0 mr-2 col-6 p-0">
+                                                    <label>Fecha inicio</label>
+                                                    <input type="text" class="form-control" placeholder="Fecha inicio" name="Fe_In" value="@ViewData["Fe_In"]">
+                                                </div>
+                                                <div class="form-group mb-0 mr-2 col-6 p-0">
+                                                    <label>Fecha fin</label>
+                                                    <input type="text" class="form-control" placeholder="Fecha fin" name="Fe_Fi" value="@ViewData["Fe_Fi"]">
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="d-flex justify-content-center mt-2 box-border-top mdc-bg-blue-grey-50 pt-2 pb-2">
+                                                <button type="submit" class="btn btn-sm btn-primary">Buscar</button>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </form>
+
+                    </div>
+                </div>
+
+
+
+                <div class="row">
+
+                    <div class="col-12">
+                        @* Listado de transacciones *@
+                        <div class="card card-table mb-3">
+                            <div class="card-header card-header-options">
+                                <span>@ViewData["Title"]</span>
+                            </div>
+                            <div class="card-block">
+
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center">Fecha</th>
+                                            <th class="text-center">Nº Orden</th>
+                                            <th class="">Web</th>
+                                            <th class="">Usuario</th>
+                                            <th class="text-center">Teléfono</th>
+                                            <th class="text-center">Mail</th>
+                                            <th class="text-right">Importe</th>
+                                            <th class="text-center">Resultado</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @{ 
+                                            Models.strCursosTransaccionesListadoDetalles[] det = (Models.strCursosTransaccionesListadoDetalles[]) ViewData["det"];
+                                        }
+                                        @if (det != null)
+                    {
+                                        @for (Int32 t = 0; t < det.Length; t++)
+{
+                                        <tr>
+                                            <td class="text-center">
+                                                <p class="fw-5 mb-0">@det[t].Fe_Al</p>
+                                            </td>
+                                            <td class="text-center">
+                                                <p class="fw-5 mb-0">@det[t].ID_TransElec2</p>
+                                            </td>
+                                            <td>
+                                                <p class="fw-5 mb-0">@det[t].Dom</p>
+                                            </td>
+                                            <td>
+                                                <p class="fw-5 mb-0">@det[t].Emp</p>
+                                            </td>
+                                            <td class="text-center">
+                                                <p class="fw-5 mb-0">@det[t].Tel</p>
+                                            </td>
+                                            <td class="text-center">
+                                                <p class="fw-5 mb-0"><a href="mailto:@det[t].Mail" class="fw-5">@det[t].Mail</a></p>
+                                            </td>
+                                            <td class="text-right">
+                                                <p class="fw-5 mb-0">@det[t].Total</p>
+                                            </td>
+                                            <td class="text-center">
+                                                @if (det[t].NoFin)
+    {
+                                            <p class="fw-5 mb-0" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="No finalizada"><i class="fa fa-hourglass-half" aria-hidden="true"></i></p>
+
+}
+else
+{
+if (det[t].Res)
+{
+                                            <p class="fw-5 mb-0 text-success">Aceptado</p>
+}
+else
+{
+                                            <p class="fw-5 mb-0 text-danger">Denegada</p>
+}
+
+}
+                                            </td>
+
+                                        </tr>
+}
+
+}
+else
+{
+                                        <tr><td colspan="8"><p class='fw-5 text-danger mb-0'><i class='fa fa-exclamation-circle mr-1'></i> No hay resultados</p></td></tr>
+
+}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            @Html.Raw(Model.Model.Paginador)
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+}
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,14 @@
+@media (min-width: 1200px) {
+  #show-menu-desktop {
+    display: none !important; } }
+
+@media (max-width: 1024px) {
+  .layout__nav {
+    position: absolute !important;
+    z-index: 99999 !important; } }
+
+@media (min-width: 300px) and (max-width: 414px) {
+  .layout__body {
+    display: block !important; }
+  #show-menu-desktop {
+    display: block; } }

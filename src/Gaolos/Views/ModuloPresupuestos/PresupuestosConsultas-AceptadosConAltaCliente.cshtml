@@ -1,0 +1,203 @@
+﻿@model ModuloPresupuestosLibrary.ModuloPresupuestosPresupuestosAceptadosConAltaDeClienteListadoViewModel
+@{
+    Layout = "~/Views/Shared/Modulo-Presupuestos/_Modulo-Presupuestos-Consultas-AceptadosPorUsuario.cshtml";
+    ViewData["Title"] = "Presupuestos aceptados con alta de cliente";
+}
+@if (!Model.Model.Err.eserror)
+{
+
+<script type="text/javascript">
+
+    google.charts.load('current', { 'packages': ['corechart'], 'language': 'es' });
+    google.charts.setOnLoadCallback(fncGrafico);
+
+    // Carga de trabajo
+
+        function fncGrafico() {
+
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', '@Model.Model.Titulo');
+        data.addColumn('number', '€');
+        @{
+            string txt = "";
+            if (Model.Model.Altas!=null)
+            {
+                for (Int32 t = 0; t < Model.Model.Altas.Length; t++)
+                {
+                    if (t > 0) { txt += ","; }
+                    txt += "['" + Model.Model.Altas[t].datoS1 + "', " + Model.Model.Altas[t].datoS3 + "]";
+                }
+            }
+}
+        @Html.Raw("data.addRows([" + txt + "]);")
+
+        var options = {
+            //title: '@Model.Model.Titulo',
+            width: 600,
+            height: 350,
+            'chartArea': { 'width': '100%', 'height': '80%' },
+            fontName: 'Roboto'
+            //sliceVisibilityThreshold: .03
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('Grafico'));
+        chart.draw(data, options);
+    }
+
+</script>
+
+}
+
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-md-12">
+
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+
+                @if (Model.Model.Err.eserror)
+                {
+                    ViewData["err"] = Model.Model.Err.mensaje;
+                @Html.Partial("AccesoDenegado");
+                }
+                else
+                {
+
+                @*<div class="card mb-3">
+                        <div class="card-header card-header-options">
+                            <span>Buscar</span>
+                            @Html.Partial("PanelActions")
+                        </div>
+                        <div class="card-block p-0">
+                            <div class="d-flex justify-content-center align-items-center">
+                                <div class="col-1 pb-2 pt-2 box-border-right-light">
+                                    <img src="https://image.flaticon.com/icons/svg/138/138360.svg" style="width: 100%">
+                                </div>
+                                <div class="col-11">
+                                    <form action="@ViewData["Form"]" method="post" class="pr-0 pl-0">
+                                        <div class="input-group card-search-box">
+                                            <input type="text" class="form-control" placeholder="Nº presupueso, empresa, dirección, población, NIF, breve, nº cliente y nº cc" name="buscar" value="@ViewData["buscar"]">
+                                            <span class="input-group-append">
+                                                <button class="btn btn-primary" type="submit">Buscar</button>
+                                            </span>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>*@
+
+                <div class="card mb-3">
+                    <div class="card-header card-header-options">
+                        <span>Buscar</span>
+
+                        <div class="card-actions">
+                            <ul>
+                                <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-block">
+
+                        <div class="row">
+                            <div class="col-2 text-center">
+                                <img src="/flaticons/business/101-presentation.svg" style="width: 50%">
+                            </div>
+                            <div class="col-9">
+                                <h5 class="fw-5">Seleccione fecha de inicio y final</h5>
+                                <form method="post" action="@ViewData["Form"]" class="sel-dates d-inline-flex mt-2">
+                                    <div class="input-group seldate date mr-2">
+                                        <input type="text" class="form-control" placeholder="Fecha Inicio" value="@Model.Model.Fe_In" name="Fe_In" data-toggle="tooltip" data-placement="top" title="" data-original-title="Fecha de inicio">
+                                    </div>
+                                    <div class="input-group seldate date">
+                                        <input type="text" class="form-control" placeholder="Fecha Fin" value="@Model.Model.Fe_Fi" name="Fe_Fi" data-toggle="tooltip" data-placement="top" title="" data-original-title="Fecha final">
+                                    </div>
+                                    <button type="submit" class="btn btn-primary ml-2">Buscar</button>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="card card-table mt-2 mb-5">
+                    <div class="card-header card-header-options">
+                        <span>@Model.Model.Titulo</span>
+                    </div>
+                    <div class="card-block m-2">
+                        <div class="row">
+                            <div class="col-5 pr-0">
+
+                                <div class="card card-table mb-3">
+                                    <div class="card-header card-header-options">
+                                        <span>Usuarios</span>
+                                    </div>
+                                    <div class="card-block">
+
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th class="">Nombre</th>
+                                                    <th class="w-15 text-center">Nº</th>
+                                                    <th class="w-15 text-center">€</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @if (Model.Model.Altas != null)
+                                                    {
+                                                @for (Int32 t = 0; t < Model.Model.Altas.Length; t++)
+                                                        {
+                                                <tr>
+                                                    <td class=""><p class="mb-0 fs-0-8">@Model.Model.Altas[t].datoS1</p></td>
+                                                    <td class="text-center"><p class="mb-0 fs-0-8">@Model.Model.Altas[t].datoI</p></td>
+                                                    <td class="text-right"><p class="mb-0 fs-0-8">@Model.Model.Altas[t].datoS2</p></td>
+                                                </tr>
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                <tr>
+                                                    <td colspan="3"><p class="mb-0 fw-5 p-3 text-danger"><i class="fa fa-times" style="font-size: 14px;"></i> No hay resultados</p></td>
+                                                </tr>
+                                                    }
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                @*<div class="mb-3">
+                                    @Html.Raw(Model.Model.Paginador)
+                                </div>*@
+
+                            </div>
+                            <div class="col-7 card-table-chart">
+                                <div class="googlechart">
+                                    <div id="Grafico"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                }
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,203 @@
+﻿@model ModuloArticulosLibrary.ModuloArticulosArticulo_ProveedoresViewModel
+@{
+    Layout = "~/Views/Shared/Modulo-Articulos/_Modulo-Articulos-Articulo.cshtml";
+    ViewData["Title"] = "Listado de artículos";
+}
+
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+                @if (Model.Model.Err.eserror)
+                {
+                    ViewData["err"] = Model.Model.Err.mensaje;
+                @Html.Partial("AccesoDenegado");
+                }
+                else
+                {
+
+                @* Artículos Cabecera *@
+
+                @Html.Partial("Articulo-Cabecera")
+
+                @* Artículos Tabs *@
+
+                @Html.Partial("Articulo-Tabs")
+
+                @* Listado de usuarios *@
+
+                <div class="row">
+                    <div class="col-8">
+
+                        <div class="card card-table mb-3">
+                            <div class="card-header card-header-options">
+                                <span>Listado de proveedores (@Model.Model.numProv)</span>
+                            </div>
+                            <div class="card-block p-0">
+
+                                <table class="table table-striped w-100">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center w-15">Fecha valor</th>
+                                            <th class="">Proveedor</th>
+                                            <th class="">Código</th>
+                                            <th class="text-center w-10">PVR</th>
+                                            <th class="text-right w-10">Stock</th>
+                                            <th class="text-right w-10">Coste</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (Model.Model.det != null)
+                                        {
+                                            for (Int32 t = 0; t < Model.Model.det.Length; t++)
+                                            {
+                                        <tr>
+                                            <td class="text-center">@Model.Model.det[t].Fe_Val</td>
+                                            <td><a href="#" id="det_@Model.Model.det[t].ID_SusA" class="fw-5 ver-detprov-art">@Model.Model.det[t].Prov</a> <a href="#" class="fw-5">(@Model.Model.det[t].ID_Prov2)</a></td>
+                                            <td>@Model.Model.det[t].CodProv</td>
+                                            <td class="text-center">@Model.Model.det[t].StockProv</td>
+                                            <td class="text-right">@Model.Model.det[t].PVRProv</td>
+                                            <td class="text-right">@Model.Model.det[t].CosteProv</td>
+                                        </tr>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <tr>
+                                                <td colspan="6"><p class="mb-0 fw-5 py-2 px-1 text-danger"><i class="fa fa-times"></i> No hay resultados</p></td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-4">
+                        <div class="card-info-wrapper w-100" id="sindatos" style="">
+                            <div class="card-info">
+                                <div class="d-flex justify-content-center align-items-center">
+
+                                    <div class="d-flex flex-column">
+                                        <p class="pb-2"><img src="https://image.flaticon.com/icons/svg/609/609998.svg" style="width: 20%;"></p>
+                                        <p class="pb-2">En esta pantalla podrá modificar o añadir información vinculada a los proveedores</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <svg class="card-info-triangle">
+                                <polygon points="0,0 200,0 0,200" fill="currentColor"></polygon>
+                            </svg>
+                        </div>
+
+                        <div class="card card-table mb-3 animated fadeIn" id="verDetProvArt" style="display:none;">
+                            <div class="card-header card-header-options">
+                                <span id="dir-titulo">Modificar</span>
+                            </div>
+                            <div class="card-block p-0">
+                                <div class="d-flex flex-column p-2">
+
+                                    <div class="box-labels mb-1">
+                                        <div class="d-flex align-items-center align-self-stretch box-labels-divider">
+                                            <label class="m-0 box-label-label align-self-stretch">Proveedor</label>
+                                            <p class="mb-0 px-2" id="mProv"></p>
+                                        </div>
+                                    </div>
+
+                                    <div class="box-labels mb-1">
+                                        <div class="d-flex align-items-center align-self-stretch box-labels-divider">
+                                            <label class="m-0 box-label-label align-self-stretch">Valor</label>
+                                            <p class="mb-0 px-2" id="mValor"></p>
+                                        </div>
+                                    </div>
+
+                                    <div class="input-group input-group-sm mb-1">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Codigo</span>
+                                        </div>
+                                        <input type="text" class="form-control" id="mCodigo" aria-describedby="" value="" placeholder="Codigo">
+                                    </div>
+
+                                    <div class="input-group input-group-sm mb-1">
+                                        <div class="input-group-prepend">
+                                            <label class="input-group-text">Artículo</label>
+                                        </div>
+                                        <input type="text" class="form-control" id="mArtProv" aria-describedby="" value="" placeholder="Nombre artículo proveedor">
+                                    </div>
+
+                                    <div class="box-labels mb-1">
+                                        <div class="d-flex align-items-center align-self-stretch box-labels-divider">
+                                            <label class="m-0 box-label-label align-self-stretch">Última compra</label>
+                                            <p class="mb-0 px-2" id="mFe_Comp"></p>
+                                        </div>
+                                    </div>
+
+                                    <div class="box-labels mb-1">
+                                        <div class="d-flex align-items-center align-self-stretch box-labels-divider">
+                                            <label class="m-0 box-label-label align-self-stretch">Último coste</label>
+                                            <p class="mb-0 px-2" id="mCosteComp"></p>
+                                        </div>
+                                    </div>
+
+                                    <div class="input-group input-group-sm mb-1">
+                                        <div class="input-group-prepend">
+                                            <label class="input-group-text">Coste</label>
+                                        </div>
+                                        <input type="text" class="form-control" id="mCoste" aria-describedby="" value="" placeholder="Coste">
+                                    </div>
+
+                                    <div class="input-group input-group-sm mb-1">
+                                        <div class="input-group-prepend">
+                                            <label class="input-group-text">PVR</label>
+                                        </div>
+                                        <input type="text" class="form-control" id="mPVR" aria-describedby="" value="" placeholder="Precio de venta recomendado por el proveedor">
+                                    </div>
+
+                                    <div class="input-group input-group-sm mb-1">
+                                        <div class="input-group-prepend">
+                                            <label class="input-group-text" for="">Stock</label>
+                                        </div>
+                                        <input type="text" class="form-control" id="mStock" aria-describedby="" value="" placeholder="Stock del proveedor">
+                                    </div>
+
+                                    <div class="d-flex mb-1">
+                                        <div class="input-group input-group-sm mb-0 p-0">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text text-left">Observaciones</span>
+                                            </div>
+                                            <textarea class="form-control form-control-sm" rows="4" placeholder="Observaciones" value="" id="mObs"></textarea>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="d-flex justify-content-center box-border-top p-2 mdc-bg-blue-grey-50">
+                                    <input type="hidden" id="ID_SusA" value="0" />
+                                    <button type="button" class="btn btn-sm btn-primary guardar-categoria-art-xxx">Guardar</button>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    @* @Html.Raw(Model.Model.Paginador) *@
+                </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

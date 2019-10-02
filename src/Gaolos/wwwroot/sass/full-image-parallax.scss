@@ -1,0 +1,18 @@
+﻿/* Full Image Parallax */
+
+@import "variables.scss";
+@import "materialdesign.scss";
+
+.full-image-parallax {
+    background: $full-image-parallax-gradient, $full-image-parallax-bg;
+    @include parallax;
+    padding: $full-image-parallax-padding;
+    margin: $full-image-parallax-margin;
+    text-align: $full-image-parallax-align;
+    h2 {
+        font-size: $full-image-parallax-h2-size;
+        color: $full-image-parallax-h2-color;
+        margin: $full-image-parallax-h2-margin;
+        padding: $full-image-parallax-h2-padding;
+    }
+}

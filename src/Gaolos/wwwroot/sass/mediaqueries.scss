@@ -1,0 +1,52 @@
+﻿// Extra small devices (portrait phones, less than 576px)
+// No media query since this is the default in Bootstrap
+
+// Small devices (landscape phones, 576px and up)
+@media (min-width: 576px) {
+    
+}
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) {
+    
+}
+
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px) {
+    
+}
+
+// Extra large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) {
+
+    #show-menu-desktop {
+        display: none !important;
+    }
+
+}
+
+
+// Tablets
+@media (max-width: 1024px) {
+    .layout__nav {
+        position: absolute !important;
+        z-index: 99999 !important;
+    }
+}
+
+// MOVILES:
+
+@media (min-width: 300px) and (max-width: 414px) {
+
+    // Modificamos el display flex de layout body para adaptar el contenido correctamente en moviles
+    
+    .layout__body {
+        display: block !important;
+    }
+
+    // Hacemos toggle al menu principal
+
+    #show-menu-desktop {
+        display: block;
+    }
+}

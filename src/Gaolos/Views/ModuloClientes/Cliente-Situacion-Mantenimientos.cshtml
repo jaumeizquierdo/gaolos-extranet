@@ -1,0 +1,161 @@
+﻿@model ModuloClientesLibrary.ModuloClientesClienteClientesSituacionMantenimientosViewModel
+@{
+    Layout = "~/Views/Shared/Modulo-Clientes/_Modulo-Clientes.cshtml";
+    ViewData["Title"] = "Situación";
+    ViewData["Message"] = "Modulo de Clientes - Gaolos App v2017";
+}
+
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+@if(Model.Model.Err.eserror)
+{
+    ViewData["err"] = Model.Model.Err.mensaje;
+    @Html.Partial("AccesoDenegado");
+}
+else
+{
+
+                @* cabecera cliente *@
+
+                @Html.Partial("Cliente-Cabecera")
+
+                @* tabs *@
+
+                @Html.Partial("Cliente-Tabs")
+
+                @* Listado de direcciones *@
+
+                <div class="card">
+                    <div class="card-block">
+
+                        @* tabs *@
+
+                        @Html.Partial("Cliente-Situacion-Tabs")
+
+                        <div class="row">
+
+                            <div class="col-8">
+                                @* Listado de mantenimientos *@
+                                <div class="card card-table mb-3">
+                                    <div class="card-header card-header-options">
+                                        <span>Mantenimientos</span>
+                                    </div>
+                                    <div class="card-block">
+
+                                        @{
+                                            Models.strMantenimientosMantenimientosListadoDetalles[] det = Model.Model.lis.det;
+                                        }
+
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-center w-7">Nº</th>
+                                                    <th class="text-center w-10">Fecha</th>
+                                                    <th class="text-left">Dirección</th>
+                                                    <th class="text-center w-10">Ref.Cli.</th>
+                                                    <th class="text-center w-10">Perioricidad</th>
+                                                    <th class="text-center w-10">Próxima</th>
+                                                    <th class="text-center w-10">Finalizado</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @if (det != null)
+                                                {
+                                                    @for (Int32 t = 0; t < det.Length; t++)
+                                                    {
+                                                        string clss = "";
+                                                        if (det[t].Baja) { clss = "text-danger";  }
+
+                                                <tr class="@Html.Raw(clss)" >
+                                                    <td class="text-center">
+                                                        @if (!det[t].Baja)
+                                                        {
+                                                            <p class="fw-5 mb-0"><a href="/modulo-mantenimientos/mantenimientos/mantenimiento?ID_Man2=@det[t].ID_Man2" target="_blank" data-toggle="tooltip" data-placement="top" title="" data-original-title="Ir al mantenimiento" class="fw-5">@det[t].ID_Man2</a></p>
+                                                        }
+                                                        else
+                                                        {
+                                                            <p class="fw-5 mb-0">@det[t].ID_Man2</p>
+                                                        }
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <p class="fw-5 mb-0">@det[t].Fe_Al</p>
+                                                    </td>
+                                                    <td>
+                                                        <p class="mb-0 fs-0-8"><span class="fw-5">@det[t].Dir</span> - <span class="fs-0-7">@det[t].Pob - @det[t].CP  - @det[t].Pro</span></p>
+                                                        @if (det[t].Baja)
+                                                        {
+                                                            <p class="mb-0 fs-0-8"><span class="fs-0-7">@det[t].Fe_Ba - @det[t].UsuBaj  - @det[t].ExpoBaj</span></p>
+                                                        }
+
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <p class="fw-5 mb-0">@det[t].RefCli</p>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <p class="fw-5 mb-0">@det[t].PeriVis</p>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <p class="fw-5 mb-0">@det[t].Fe_Prox</p>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <p class="fw-5 mb-0">@det[t].Fe_Fin</p>
+                                                    </td>
+                                                </tr>
+                                                    }
+
+                                                }
+                                                else
+                                                {
+                                                    <tr><td colspan="7"><p class='fw-5 text-danger mb-0'><i class='fa fa-exclamation-circle mr-1'></i> No hay resultados</p></td></tr>
+
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    @Html.Raw(Model.Model.lis.Paginador)
+                                </div>
+
+                            </div>
+
+
+                            <div class="col-4">
+                                @* Sin datos *@
+                                <div class="card-info-wrapper w-100" id="sindatos" style="display: none;">
+                                    <div class="card-info">
+                                        <div class="d-flex justify-content-center align-items-center">
+                                            <img src="https://image.flaticon.com/icons/svg/609/609998.svg" style="width: 20%;">
+                                            <p class="mb-2 ml-3">Si clica encima del nº de factura, en este espacio le aparecerán los datos de la factura</p>
+                                        </div>
+                                    </div>
+                                    <svg class="card-info-triangle">
+                                        <polygon points="0,0 200,0 0,200" fill="currentColor"></polygon>
+                                    </svg>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+}
+</div>
+        </div>
+    </div>
+</div>
+

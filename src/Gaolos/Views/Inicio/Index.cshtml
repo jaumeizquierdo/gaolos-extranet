@@ -1,0 +1,231 @@
+﻿@model MyGaolosLibrary.MyGaolosInicioExtranetViewModel
+
+@{
+    ViewData["Title"] = "Bienvenido a Gaolos";
+    ViewData["StickyNoticeTitle"] = "Notificación Gaolos";
+    ViewData["StickyNoticeContent"] = "Nueva factura añadida en el sistema!";
+
+    @*Layout = "_Layout";*@
+    Layout = "~/Views/Shared/_Inicio.cshtml";
+}
+
+<div class="main-content m-0" id="widget-area">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"] @ViewData["sesNeg"] @ViewData["sesUsuario"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+            
+        </div>
+    </div>
+
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-md-6 col-sm-12">
+
+                @* Información inicial*@
+
+                @* Sesiones abiertas *@
+                <div class="card mb-3">
+                    <div class="card-header card-header-options">
+                        <span>Mi perfil</span>
+                        <div class="card-actions">
+                            <ul>
+                                <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-block">
+                        <div class="row">
+                            <div class="d-none d-sm-block col-md-3 text-center">
+                                <img src="~/flaticons/business/038-user-1.svg" style="width: 60%" />
+                            </div>
+                            <div class="col-sm-12 col-md-8">
+                                <h5 class="d-none d-sm-block">Mi perfil</h5>
+                                <p>Dentro de <strong>Mi Perfi</strong>l puede realizar las siguientes acciones:</p>
+                                <ul class="mb-3">
+                                    <li><i class="fa fa-angle-right text-danger mr-2"></i> Modificar su <strong>clave</strong> de acceso</li>
+                                    <li><i class="fa fa-angle-right text-danger mr-2"></i> Cambiar el <strong>orden</strong> del menú de los Módulos (menú de la izquierda)</li>
+                                    <li><i class="fa fa-angle-right text-danger mr-2"></i> Cambiar su <strong>nombre</strong> del perfil</li>
+                                    <li><i class="fa fa-angle-right text-danger mr-2"></i> Listado de todos los <strong>negocios</strong> a los que tiene acceso</li>
+                                </ul>
+                                <a href="/mi-perfil" class="btn btn-primary btn-sm mt-2">Ir a mi perfil</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                @* Ir a contratación *@
+
+                <div class="card mb-3">
+                    <div class="card-header card-header-options">
+                        <span>Contratar nuevos módulos</span>
+                        @Html.Partial("PanelActions")
+                    </div>
+                    <div class="card-block">
+
+                        <div class="row">
+                            <div class="d-none d-sm-block col-md-3 text-center">
+                                <img src="~/flaticons/settings-1.svg" style="width: 60%" />
+                            </div>
+                            <div class="col-sm-12 col-md-8">
+                                <h5 class="d-none d-sm-block">Contratar nuevos módulos</h5>
+                                <p>Todavía no dispone de ningún <strong>usuario</strong> definido en su empresa. Haga click en el siguiente botón para crear <strong>nuevos usuarios</strong>.</p>
+                                <button type="button" class="guardar-permisos btn btn-primary btn-sm mt-1">Contratar módulos</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                @* Ir a definir usuarios *@
+
+                <div class="card mb-4">
+                    <div class="card-header card-header-options">
+                        <span>Definir nuevos usuarios</span>
+                        @Html.Partial("PanelActions")
+                    </div>
+                    <div class="card-block">
+
+                        <div class="row">
+                            <div class="d-none d-sm-block col-md-3 text-center">
+                                <img src="~/flaticons/group.svg" style="width: 60%" />
+                            </div>
+                            <div class="col-sm-12 col-md-8">
+                                <h5 class="d-none d-sm-block">Definir nuevos usuarios</h5>
+                                <p>Todavía no dispone de ningún <strong>usuario</strong> definido en su empresa. Haga click en el siguiente botón para crear <strong>nuevos usuarios</strong>.</p>
+                                <button type="button" class="guardar-permisos btn btn-primary btn-sm mt-1">Crear nuevos usuarios</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-md-6 col-sm-12">
+
+                @* Sesiones abiertas *@
+                <div class="card card-table mb-3">
+                    <div class="card-header card-header-options">
+                        <span>Sesiones abiertas</span>
+                        <div class="card-actions">
+                            <ul>
+                                <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-block table-responsive-sm table-responsive-lg">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Negocio</th>
+                                    <th class="text-center">Peticiones</th>
+                                    <th class="text-center">Inicio</th>
+                                    <th class="text-center">Último</th>
+                                    <th class="text-center">Caduca en</th>
+                                    <th class="text-center" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="Cerrar sesion"><i class="fa fa-times"></i></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model.Model.Ses != null)
+                                {
+                                    for (Int32 t = 0; t < Model.Model.Ses.Length; t++)
+                                    {
+                                        <tr>
+                                            <td>
+                                            @if (t == 0)
+                                            {
+                                                <i class="fa fa-globe text-info" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="Sesión activa"></i>
+                                            }
+                                            @if (Model.Model.Ses[t].Test)
+                                            {
+                                                <i class="fa fa-cogs text-danger mr-1" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="Test"></i>
+                                            } <small class="fw-5">@Model.Model.Ses[t].Neg</small></td>
+                                            <td class="text-center"><small class="fw-5">@Model.Model.Ses[t].NumAcc</small></td>
+                                            <td class="text-center"><small class="fw-5">@Model.Model.Ses[t].Fe_Al</small></td>
+                                            <td class="text-center"><small class="fw-5">@Model.Model.Ses[t].Fe_Ul</small></td>
+                                            <td class="text-center"><small id="@Html.Raw("timer"+t.ToString())" class="timer fw-5 text-danger"></small></td>
+                                            <td class="text-center"><a href="#" class="text-danger" id="eli_@Model.Model.Ses[t].ID_Reg" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="Cerrar sesion"><i class="fa fa-times"></i></a></td>
+                                        </tr>
+                                    }
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td colspan="6"><span class="text-danger">No hay sesiones</span></td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+
+                @* Últimos accesos *@
+                <div class="card card-table mb-4">
+                    <div class="card-header card-header-options">
+                        <span>Últimos accesos</span>
+                        <div class="card-actions">
+                            <ul>
+                                <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-block table-responsive-sm table-responsive-lg">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Fecha</th>
+                                    <th>Negocio</th>
+                                    <th class="text-right">IP</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model.Model.Acc != null)
+                                {
+                                    for (Int32 t = 0; t < Model.Model.Acc.Length; t++)
+                                    {
+                                        <tr>
+                                            <td>@if (Model.Model.Acc[t].ID_App == 1)
+                                            { <i class="fa fa-globe text-info mr-1" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="Hoy"></i> }
+                                            @if (Model.Model.Acc[t].Test)
+                                            { <i class="fa fa-cogs text-danger mr-1" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="Test"></i> }
+                                                <small class="fw-5">@Model.Model.Acc[t].Fe_Al</small></td>
+                                            <td><small class="fw-5">@Model.Model.Acc[t].Neg</small></td>
+                                            <td class="text-right"><small class="fw-5">@Model.Model.Acc[t].NumAcc</small></td>
+                                        </tr>
+                                    }
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td colspan="3"><span class="text-danger">No hay accesos</span></td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+<script>
+@{
+    if (Model.Model.Ses != null)
+    {
+        for (Int32 t = 0; t < Model.Model.Ses.Length; t++)
+        {
+            @Html.Raw("var d = new Date('" + Model.Model.Ses[t].Fe_Cad + "');")
+            @Html.Raw("$('#timer" + t.ToString() + "').tinyTimer({ to: d, format: '%h h. %m min. %s seg.' });")
+        }
+    }
+}
+</script>

@@ -1,0 +1,642 @@
+﻿@model ModuloClientesLibrary.ModuloClientesClienteFiscalViewModel
+@{
+    Layout = "~/Views/Shared/Modulo-Clientes/_Modulo-Clientes-Cliente.cshtml";
+    ViewData["Title"] = "Fiscal";
+    ViewData["Message"] = "Modulo de Clientes - Gaolos App v2017";
+}
+
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+                @if (Model.Model.Err.eserror)
+                {
+                    ViewData["err"] = Model.Model.Err.mensaje;
+                    @Html.Partial("AccesoDenegado");
+                }
+                else
+                {
+
+                    @* cabecera cliente *@
+
+                    @Html.Partial("Cliente-Cabecera")
+
+                    @* tabs *@
+
+                    @Html.Partial("Cliente-Tabs")
+
+                    <div class="row">
+
+                        <div class="col-9">
+                            @* Fiscal *@
+                            <div class="card mb-3">
+                                <div class="card-header card-header-options">
+                                    <span>Fiscal</span>
+                                </div>
+                                <div class="card-block p-0">
+
+                                    <div class="d-flex px-2 mt-2 mb-1">
+                                        <div class="input-group input-group-sm">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Cliente</span>
+                                            </div>
+                                            <input type="text" class="form-control" aria-describedby="basic-addon3" value="@Model.Model.Emp" placeholder="Cliente" maxlength="100" id="Emp">
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex px-2 mb-2">
+
+                                        <div class="input-group input-group-sm w-75 mb-0 mr-2">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Razón</span>
+                                            </div>
+                                            <input type="text" class="form-control" id="Razon" placeholder="Razón" value="@Model.Model.EmpFis" maxlength="100">
+                                        </div>
+                                        <div class="input-group input-group-sm w-25 mb-0">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text input-group-text-auto">NIF</span>
+                                            </div>
+                                            <input type="text" class="form-control" id="NIF" placeholder="NIF" value="@Model.Model.NIF" maxlength="15">
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex justify-content-center box-border-top box-border-bottom p-2 mdc-bg-blue-grey-50">
+                                        <button type="button" class="btn btn-sm btn-primary cliente-razon-guardar">Guardar</button>
+                                    </div>
+
+                                    <div class="d-flex mb-2 mt-2 px-2">
+                                        <div class="input-group input-group-sm mb-0 mr-2">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Cuenta contable</span>
+                                            </div>
+                                            <input type="text" class="form-control" id="CCCli" aria-describedby="" placeholder="Contabilidad" value="@Model.Model.CCCli" maxlength="20">
+                                            <div class="input-group-append">
+                                                <button type="button" class="btn btn-primary btn-sm cliente-cccli-guardar">Guardar</button>
+                                            </div>
+                                        </div>
+                                        <div class="input-group input-group-sm mb-0 mr-2">
+                                            <div class="input-group-prepend">
+                                                <label class="input-group-text input-group-text-auto" for="">Tipo IVA</label>
+                                            </div>
+                                            <select class="custom-select" id="ID_TipoIVA">
+                                                @if (Model.Model.TiposIVAs != null)
+                                                {
+                                                    for (Int32 t = 0; t < Model.Model.TiposIVAs.Length; t++)
+                                                    {
+                                                        if (Model.Model.TiposIVAs[t].id == Model.Model.ID_TipoIVA)
+                                                        {
+                                                            <option value="@Model.Model.TiposIVAs[t].id" selected>@Model.Model.TiposIVAs[t].det</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="@Model.Model.TiposIVAs[t].id">@Model.Model.TiposIVAs[t].det</option>
+                                                        }
+                                                    }
+                                                }
+                                            </select>
+                                            <div class="input-group-append">
+                                                <button type="button" class="btn btn-primary btn-sm cliente-tipoiva-guardar">Guardar</button>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex align-items-center ml-2 mr-3">
+                                            <input type="checkbox" class="mr-2 cliente-req-guardar" id="REQ" @if (Model.Model.REQ) { @Html.Raw("checked") }>
+                                            <span class="fw-5">REQ</span>
+                                        </div>
+                                        <div class="input-group input-group-sm mb-0">
+                                            <div class="input-group-prepend">
+                                                <label class="input-group-text input-group-text-auto">Moneda</label>
+                                            </div>
+                                            <select class="custom-select" id="ID_Mon">
+                                                @if (Model.Model.Monedas != null)
+                                                {
+                                                    for (Int32 t = 0; t < Model.Model.Monedas.Length; t++)
+                                                    {
+                                                        if (Model.Model.Monedas[t].id == Model.Model.ID_Mon)
+                                                        {
+                                                            <option value="@Model.Model.Monedas[t].id" selected>@Model.Model.Monedas[t].det</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="@Model.Model.Monedas[t].id">@Model.Model.Monedas[t].det</option>
+                                                        }
+                                                    }
+                                                }
+                                            </select>
+                                            <div class="input-group-append">
+                                                <button type="button" class="btn btn-primary btn-sm cliente-moneda-guardar">Guardar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            @* Comercial *@
+                            <div class="card">
+                                <div class="card-header card-header-options">
+                                    <span>Facturación</span>
+                                </div>
+                                <div class="card-block p-0">
+
+                                    @* Primer bloque *@
+
+                                    <div class="row p-2">
+
+                                        <div class="col-12 d-flex">
+
+                                            <div class="input-group input-group-sm mb-0 mr-2">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">Fracciones a x días</span>
+                                                </div>
+                                                <input type="text" class="form-control" id="AxDias" placeholder="Fracciones a x días" value="@Model.Model.AxDias" maxlength="4">
+                                            </div>
+
+                                            <div class="input-group input-group-sm mb-0 mr-2">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text" id="">Fracciones</span>
+                                                </div>
+                                                <input type="text" class="form-control" id="Frac" placeholder="Fracciones" value="@Model.Model.NumFra" maxlength="3">
+                                            </div>
+
+                                            <div class="input-group input-group-sm mb-0">
+                                                <div class="input-group-prepend">
+                                                    <label class="input-group-text input-group-text-auto" for="">Enviar en nombre de</label>
+                                                </div>
+                                                <input type="text" class="form-control" id="EnviarEn" name="EnviarEn" placeholder="Enviar en nombre de ..." value="@Model.Model.Us_MailEnNom">
+                                                <input type="hidden" id="vEnviarEn" name="vEnviarEn" value="@Model.Model.ID_Us_MailEnNom" />
+                                                <input type="hidden" id="tEnviarEn" name="tEnviarEn" value="@Model.Model.Us_MailEnNom" />
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row px-2 mb-2">
+
+                                        <div class="col-12 d-flex">
+
+                                            <div class="input-group input-group-sm mb-0 mr-2">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">Gestor</span>
+                                                </div>
+                                                <input type="text" class="form-control" id="usuGest" placeholder="Gestor" value="@Model.Model.Us_Gest">
+                                                <input type="hidden" id="vusuGest" name="vusuGest" value="@Model.Model.ID_Us_Gest" />
+                                                <input type="hidden" id="tusuGest" name="tusuGest" value="@Model.Model.Us_Gest" />
+
+                                            </div>
+
+                                            <div class="input-group input-group-sm mb-0 mr-2">
+
+                                                <div class="d-flex align-items-center mr-3">
+                                                    <input type="checkbox" class="mr-2" id="PostPago" @if (Model.Model.PostPago) { @Html.Raw("checked") }>
+                                                    <span class="fw-5">Permitir post-pago</span>
+                                                </div>
+
+                                                <div class="d-flex align-items-center mr-3">
+                                                    <input type="checkbox" class="mr-2" id="FacDif" @if (Model.Model.FacDif) { @Html.Raw("checked") }>
+                                                    <span class="fw-5">Facturar en diferido</span>
+                                                </div>
+
+                                            </div>
+
+
+                                            <div class="input-group input-group-sm mb-0">
+
+                                                <div class="d-flex align-items-center">
+                                                    <input type="checkbox" class="mr-2" id="FacEMail" @if (Model.Model.FacEMail) { @Html.Raw("checked") }>
+                                                    <span class="fw-5">Factura via mail</span>
+                                                </div>
+
+
+                                            </div>
+
+                                            @*<div class="d-flex align-items-center mr-3">
+            <input type="checkbox" class="mr-2" id="PostPago" @if (Model.Model.PostPago) { @Html.Raw("checked") }>
+            <span class="fw-5">Permitir post-pago</span>
+        </div>
+
+        <div class="d-flex align-items-center mr-3">
+            <input type="checkbox" class="mr-2" id="FacDif" @if (Model.Model.FacDif) { @Html.Raw("checked") }>
+            <span class="fw-5">Facturar en diferido</span>
+        </div>
+
+        <div class="d-flex align-items-center">
+            <input type="checkbox" class="mr-2" id="FacEMail" @if (Model.Model.FacEMail) { @Html.Raw("checked") }>
+            <span class="fw-5">Factura via mail</span>
+        </div>*@
+
+                                        </div>
+
+
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="input-group input-group-sm mb-0 p-2">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">Observaciones</span>
+                                                </div>
+                                                <textarea class="form-control" rows="4" placeholder="Observaciones administrativas" id="ObsAdm">@Model.Model.ObsAdm</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex justify-content-center box-border-top p-2 mdc-bg-blue-grey-50">
+                                        <button type="button" class="btn btn-sm btn-primary cliente-facturacion-guardar">Guardar</button>
+                                    </div>
+
+
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-3">
+
+                            <div class="card mb-3">
+                                <div class="card-header card-header-options">
+                                    <span>Proveedor</span>
+                                </div>
+                                <div class="card-block p-2 d-flex justify-content-center">
+                                    <button type="submit" class="btn btn-sm btn-primary" disabled>Es proveedor</button>
+                                </div>
+                            </div>
+
+                            @* Riesgo *@
+                            <div class="card mb-3">
+                                <div class="card-header card-header-options">
+                                    <span>Riesgo</span>
+                                </div>
+                                <div class="card-block p-0">
+
+                                    <div class="d-flex flex-column p-2 pb-0">
+
+                                        <div class="d-flex mb-2">
+                                            <div class="input-group input-group-sm mb-0 p-0 mr-2">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text input-group-text-auto">Riesgo máximo</span>
+                                                </div>
+                                                <input type="text" class="form-control" id="RieMax" placeholder="Riesgo máximo" value="@Model.Model.RieMax">
+                                            </div>
+                                            <div class="input-group input-group-sm mb-0 p-0">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text input-group-text-auto">Nº póliza</span>
+                                                </div>
+                                                <input type="text" class="form-control" id="Poliza" placeholder="Nº póliza" value="@Model.Model.Poliza" maxlength="30">
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex align-items-center">
+                                            <input type="checkbox" class="mr-2" id="Asegurado" @if (Model.Model.Asegurado) { @Html.Raw("checked") }>
+                                            <span class="fw-5">Asegurado</span>
+                                        </div>
+
+                                    </div>
+
+                                    <hr class="m-0" />
+
+                                    <div class="p-2">
+
+                                        <div class="box-labels mb-2">
+                                            @if (Model.Model.RieMaxStr != "")
+                                            {
+                                            <div class="d-flex align-items-center align-self-stretch box-labels-divider">
+                                                <label class="m-0 box-label-label align-self-stretch" style="width: 130px;">Riesgo máximo</label>
+                                                <p class="mb-0 px-2">@Model.Model.RieMaxStr</p>
+                                            </div>
+                                            }
+                                            <div class="d-flex align-items-center align-self-stretch box-labels-divider">
+                                                <label class="m-0 box-label-label align-self-stretch" style="width: 130px;">Riesgo actual</label>
+                                                <p class="mb-0 px-2">@Model.Model.RieAct</p>
+                                            </div>
+                                            @if (Model.Model.RieMaxStr != "")
+                                            {
+                                            <div class="d-flex align-items-center align-self-stretch">
+                                                <label class="m-0 box-label-label align-self-stretch" style="width: 130px;">Riesgo disponible</label>
+                                                <p class="mb-0 px-2">@Model.Model.RieDis</p>
+                                            </div>
+                                            }
+                                        </div>
+
+                                        @if (Model.Model.Riesgo != null)
+                                        {
+                                            <div class="box-labels mb-0">
+                                                <table class="table table-striped">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Tipo</th>
+                                                            <th class="text-center">Número</th>
+                                                            <th class="text-right">Importe</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @for (Int32 t = 0; t < Model.Model.Riesgo.Length; t++)
+                                                        {
+                                                            <tr>
+                                                                <td>@Model.Model.Riesgo[t].datoS1</td>
+                                                                <td class="text-center">@Model.Model.Riesgo[t].datoS2</td>
+                                                                <td class="text-right">@Model.Model.Riesgo[t].datoS3</td>
+                                                            </tr>
+                                                        }
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        }
+                                    </div>
+
+                                </div>
+                                <div class="d-flex justify-content-center box-border-top p-2 mdc-bg-blue-grey-50">
+                                    <button type="button" class="btn btn-sm btn-primary cliente-riesgo-guardar">Guardar</button>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    @* Formas de pago *@
+
+                    <hr class="mb-3" />
+
+                    <h5 class="fw-5 title-section mb-3">Formas de pago</h5>
+
+                    <div class="row">
+                        <div class="col-9">
+                            <div class="card card-table">
+                                <div class="card-header card-header-options">
+                                    <span>Formas de pago</span>
+                                </div>
+
+                                <div class="card-block">
+                                    <div class="flex-column">
+
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th class="w-15">Tipo</th>
+                                                    <th class="text-center w-5">Permitido</th>
+                                                    <th>Destino</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @if (Model.Model.Formas != null)
+                                                {
+                                                    for (Int32 t = 0; t < Model.Model.Formas.Length; t++)
+                                                    {
+
+                                                        <tr>
+                                                            <td>
+                                                                <div class="d-flex align-items-center p-0">
+                                                                    <input type="radio" class="mr-2" name="ID_For" id="ID-For_@Model.Model.Formas[t].datoI" @if (Model.Model.ID_For == Model.Model.Formas[t].datoI) { @Html.Raw("checked") }>
+                                                                    <span class="fw-5">@Model.Model.Formas[t].datoS1</span>
+                                                                </div>
+                                                            </td>
+                                                            <td class="text-center">
+                                                                <div class="d-flex align-items-center justify-content-center p-0">
+                                                                    <input type="checkbox" id="Per_@Model.Model.Formas[t].datoI" @if (Model.Model.Formas[t].datoS2 == "1") { @Html.Raw("checked") }>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="input-group input-group-sm mb-0 p-0">
+                                                                    @if (Model.Model.Formas[t].datoB)
+                                                                    {
+                                                                    <select class="custom-select custom-select-sm" id="ID-Cue-Neg_@Model.Model.Formas[t].datoI">
+                                                                        @if (Model.Model.CueNegs != null)
+                                                                        {
+                                                                            for (Int32 b = 0; b < Model.Model.CueNegs.Length; b++)
+                                                                            {
+                                                                                if (Model.Model.CueNegs[b].id.ToString() == Model.Model.Formas[t].datoS3)
+                                                                                {
+                                                                                    <option value="@Model.Model.CueNegs[b].id" selected>@Model.Model.CueNegs[b].det</option>
+                                                                                }
+                                                                                else
+                                                                                {
+                                                                                    <option value="@Model.Model.CueNegs[b].id">@Model.Model.CueNegs[b].det</option>
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    </select>
+                                                                    }
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <div><p class='fw-5 text-danger mb-0'><i class='fa fa-exclamation-circle mr-1'></i> No hay resultados</p></div>
+                                                }
+                                                </tbody>
+                                            </table>
+                                            </div>
+                                    <div class="d-flex justify-content-center box-border-top p-2 mdc-bg-blue-grey-50">
+                                        <button type="button" class="btn btn-sm btn-primary cliente-formas-guardar">Guardar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="card card-table">
+                                <div class="card-header card-header-options">
+                                    <span>Días de pago</span>
+                                    <div class="input-group input-group-sm col-7 mr-0 pr-0">
+                                        <input type="text" class="form-control form-control-sm" id="Dia" placeholder="Nuevo día de pago">
+                                        <div class="input-group-append">
+                                            <button type="button" class="btn btn-primary btn-sm cliente-dia-nuevo">Nuevo</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card-block">
+
+                                    <table class="table table-striped">
+                                        <tbody>
+                                            @if (Model.Model.Dias != null)
+                                            {
+                                                for (Int32 t = 0; t < Model.Model.Dias.Length; t++)
+                                                {
+                                                    <tr>
+                                                        <td>
+                                                            Día @Model.Model.Dias[t].det
+                                                        </td>
+                                                        <td class="text-center w-5"><a href="#" id="dia-eli_@Model.Model.Dias[t].det" class="text-danger cliente-dia-eliminar"><i class="fa fa-times"></i></a></td>
+                                                    </tr>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <tr><td colspan="2"><p class='fw-5 text-danger mb-0'><i class='fa fa-exclamation-circle mr-1'></i> No hay resultados</p></td></tr>
+                                            }
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr class="mb-3" />
+
+                    <h5 class="fw-5 title-section mb-3">Cuentas bancarias</h5>
+
+                    <div class="row">
+                        <div class="col-9">
+                            <div class="card card-table mb-3">
+                                <div class="card-header card-header-options">
+                                    <span>Listado cuentas bancarias</span>
+                                    <div class="input-group input-group-sm col-4 mr-0 pr-0">
+                                        <input type="text" class="form-control form-control-sm" id="CueNew" placeholder="Nueva cuenta bancaria" maxlength="40">
+                                        <div class="input-group-append">
+                                            <button type="button" class="btn btn-primary btn-sm cliente-cuenta-nueva">Nueva</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card-block">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th class="w-25">Cuenta</th>
+                                                <th class="w-20">Banco</th>
+                                                <th class="w-15">Observaciones</th>
+                                                <th class="text-center w-5"><i class="fa fa-times"></i></th>
+                                                <th class="w-5 text-center">Pred.</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (Model.Model.Cues != null)
+                                            {
+                                                @for (Int32 t = 0; t < Model.Model.Cues.Length; t++)
+                                                {
+                                            <tr>
+                                                <td><a href="#" id="selcue_@Model.Model.Cues[t].datoI" class="fw-5 sel-cue">@Model.Model.Cues[t].datoS1</a></td>
+                                                <td>@Model.Model.Cues[t].datoS2</td>
+                                                <td>
+                                                    <p><small>@Model.Model.Cues[t].datoS3</small></p>
+                                                    @if (Model.Model.Cues[t].datoS4 != "")
+                                                    {
+                                                        <p><small>Dirección: @Model.Model.Cues[t].datoS4</small></p>
+                                                    }
+                                                </td>
+                                                <td class="text-center w-5"><a href="#" id="cue_@Model.Model.Cues[t].datoI" class="text-danger cliente-cuenta-eliminar"><i class="fa fa-times"></i></a></td>
+                                                <td class="text-center">
+                                                    <input type="radio" class="cliente-cuenta-pred" id="pred_@Model.Model.Cues[t].datoI" name="CuePred" @if (Model.Model.Cues[t].datoB) { @Html.Raw("checked") }>
+                                                </td>
+                                            </tr>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <tr><td colspan="5"><p class='fw-5 text-danger mb-0'><i class='fa fa-exclamation-circle mr-1'></i> No hay resultados</p></td></tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3">
+
+                            <div class="card mb-3" id="sindatos">
+                                <div class="card-info">
+                                    <div class="d-flex justify-content-center align-items-center">
+                                        <img src="https://image.flaticon.com/icons/svg/609/609998.svg" style="width: 20%;">
+                                        <p class="mb-2 ml-3">Selecciona la cuenta bancaria para modificarla</p>
+                                    </div>
+                                </div>
+                                <svg class="card-info-triangle">
+                                    <polygon points="0,0 200,0 0,200" fill="currentColor"></polygon>
+                                </svg>
+                            </div>
+
+                            <div class="card mb-3" id="vercue" style="display:none;">
+                                <div class="card-header card-header-options">
+                                    <span>Modificar cuenta</span>
+                                </div>
+                                <div class="card-block p-0">
+
+                                    <div class="d-flex flex-column p-2 pb-0">
+
+                                        <div class="input-group input-group-sm mb-1">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" style="width: 120px;">Nº cuenta</span>
+                                            </div>
+                                            <input type="text" class="form-control" id="Cue" placeholder="Nº cuenta" value="" maxlength="40">
+                                            <input type="hidden" id="ID_Cue" value="0">
+                                        </div>
+
+                                        @*<div class="input-group input-group-sm mb-1">
+                                            <div class="input-group-prepend">
+                                                <label class="input-group-text" for="">País</label>
+                                            </div>
+                                            <select class="custom-select" id="">
+                                                <option value="0" selected="">País</option>
+                                            </select>
+                                        </div>*@
+
+                                        <div class="d-flex flex-column mb-1">
+                                            <div class="box-labels">
+                                                <div class="d-flex align-items-center align-self-stretch">
+                                                    <label class="m-0 box-label-label align-self-stretch" style="width: 119px;">Banco</label>
+                                                    <p class="mb-0 px-2" id="Banco">Banco</p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="input-group input-group-sm mb-1">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" style="width: 120px;">Dirección banco</span>
+                                            </div>
+                                            <input type="text" class="form-control" id="DirBan" placeholder="Dirección banco" value="" maxlength="100">
+                                        </div>
+
+                                        <div class="input-group input-group-sm mb-0">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" style="width: 120px;">Observaciones</span>
+                                            </div>
+                                            <input type="text" class="form-control" id="ObsBan" placeholder="Observaciones" value="" maxlength="100">
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                                <div class="d-flex justify-content-center box-border-top p-2 mdc-bg-blue-grey-50">
+                                    <button type="button" class="btn btn-sm btn-primary cliente-cuenta-guardar">Guardar</button>
+                                </div>
+                            </div>
+
+                            <div class="card mb-3" id="verrec" style="display:none;">
+                                <div class="card-header card-header-options">
+                                    <span>Recibos pendientes</span>
+                                </div>
+                                <div class="card-block p-0">
+
+                                    <div class="d-flex flex-column p-2 pb-0" id="reccont">
+
+                                        <p class="fw-5 mb-0 text-center">Hay <span class="text-danger">5</span> recibos pendientes</p>
+
+                                        <div class="d-flex justify-content-center mb-2 mt-2"><button type="submit" class="btn btn-sm btn-primary">Pasar recibos pendientes por esta cuenta</button></div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+

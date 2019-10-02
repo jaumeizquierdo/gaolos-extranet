@@ -1,0 +1,225 @@
+﻿@import "materialdesign.scss";
+@import "mixins.scss";
+
+/* Skin v4.6 - White / Dark / Blue */
+
+// Estilos Globales
+
+$color-plugin: #47C8B1;
+
+$body-bg: #fff /*#f9f9f9*/;
+$body-size: 0.9rem;
+
+$url-base: $color-plugin;
+$url-base-hover: $md-blue-grey-800;
+
+$border-main-hover: #5cb3fd;
+
+$border-radius-global: 2px;
+$border-radius-boton: 4px;
+$border-radius-menu: 4px;
+
+$main-color: $color-plugin;
+
+// Menú Superior
+
+$menu-superior-bg: $md-blue-500;
+$menu-superior-url-color: #fff;
+$menu-superior-url-hover: $md-blue-grey-800;
+$menu-superior-padding: 0.5em;
+
+// Menú Lateral
+
+$menu-lateral-bg: $md-blue-grey-900;
+$menu-lateral-url: $md-blue-grey-100;
+$menu-lateral-url-hover: $md-blue-grey-800;
+$menu-lateral-url-seleccionado: $md-blue-500;
+$menu-lateral-url-divider: $md-blue-grey-800;
+$menu-lateral-url-padding: 0.5em 1em;
+
+// Footer
+
+$footer-bg: $md-grey-900;
+$footer-url: #fff;
+$footer-color: #fff;
+$footer-padding: 0.5em;
+
+// Main Content
+
+//$main-content-bg: #fff;
+$main-content-padding: 0;
+$main-content-margin: 1em;
+
+// Panel
+
+$panel-border-color: $md-grey-200;
+$panel-border-width: 1px solid;
+$panel-padding: 0;
+$panel-margin: 1em 0;
+$panel-url: $md-blue-500;
+$panel-url-hover: $md-pink-500;
+$panel-paginado-bg: $md-blue-500;
+$panel-h2-family: 'Roboto', sans-serif;
+$panel-h2-size: 3em;
+$panel-h2-color: $md-blue-grey-200;
+$panel-h2-weight: 600;
+$panel-h2-margin: 0 0 0.5em 0;
+$panel-h2-padding: 0;
+$panel-h3-family: 'Roboto', sans-serif;
+$panel-h3-size: 1.5em;
+$panel-h3-color: $md-blue-grey-200;
+$panel-h3-weight: 500;
+$panel-h3-margin: 0 0 0.5em 0;
+$panel-h3-padding: 0;
+
+    // Panel Header
+
+    $panel-header-margin: 0;
+    $panel-header-padding: 1em;
+    $panel-header-icon-size: 1.5em;
+    $panel-header-icon: $md-blue-grey-200;
+    $panel-header-icon-hover: $md-pink-500;
+    $panel-header-h3-margin: 0;
+    $panel-header-border-size: 2px solid;
+    $panel-header-border-color: $md-grey-200;
+    $panel-header-background: $md-grey-100;
+
+    // Panel Actions
+
+    $panel-actions-margin: 0;
+    $panel-actions-padding: 0;
+    $panel-actions-li-margin: 0 0.5em;
+
+    // Panel Inner
+
+    $panel-inner-margin: 1em;
+    $panel-inner-padding: 1em;
+
+// Notificaciones
+
+$notificaciones-bg: $md-blue-grey-100;
+$notificaciones-padding: 0;
+$notificaciones-margin: 0;
+$notificaciones-url: $md-blue-500;
+
+$ui-pnotify-title-size: 1em;
+$ui-pnotify-text-size: 0.9em;
+
+// Widget
+
+$widget-border-color: $md-grey-200;
+$widget-border-size: 1px solid;
+$widget-padding: 0;
+$widget-margin: 0 0 3em 0;
+$widget-box-shadow: 0 2px 0;
+$widget-box-shadow-color: $md-grey-200;
+
+// Botones
+
+$boton-bg: $md-blue-500;
+$boton-url: #fff;
+$boton-box-weight: 0 2px;
+$boton-box-shadow: $md-blue-700;
+$boton-bg-hover: $md-blue-grey-500;
+$boton-url-hover: #fff;
+$boton-box-shadow-hover: $md-blue-grey-700;
+$boton-padding: 1em 2em;
+$boton-weight: 600;
+$boton-margin: 0;
+$boton-size: 1.2em;
+$boton-family: 'Roboto', sans-serif;
+
+$btn-primary-bg: $main-color;
+$btn-primary-border: $main-color;
+
+// Sticky Botton
+
+$sticky-btn-bg: $main-color;
+$sticky-btn-border: $main-color;
+$sticky-btn-color: $main-color;
+
+// Dropdown
+
+$dropdown-menu-border: none;
+$dropdown-menu-bg: $md-blue-grey-800;
+$dropdown-menu-margin: 0;
+$dropdown-menu-padding: 0;
+$dropdown-menu-max-height: 30em;
+$dropdown-menu-overflow: scroll;
+    $dropdown-menu-li-margin: 0;
+    $dropdown-menu-li-padding: 0;
+    $dropdown-menu-li-a-size: 0.85em;
+    $dropdown-menu-li-a-padding: 0.5em 1em;
+    $dropdown-menu-li-a-weight: 400;
+    $dropdown-menu-li-a-bg: none;
+    $dropdown-menu-li-a-border-width: 1px solid;
+    $dropdown-menu-li-a-border-color: $md-blue-grey-700;
+    $dropdown-menu-li-a-margin: 0;
+    $dropdown-menu-li-a-padding: 0.2em 0.8em;
+    $dropdown-menu-li-a-color: $md-grey-200;
+    $dropdown-menu-li-a-display: block;
+    $dropdown-menu-li-a-width: 100%;
+    $dropdown-menu-li-a-align: left;
+    $dropdown-menu-li-a-hover-color: #fff;
+    $dropdown-menu-li-a-hover-bg: $md-blue-grey-700;
+    $dropdown-menu-li-divider-bg: $md-blue-grey-700;
+
+// Filtros
+
+$filtro-bg: $md-orange-600;
+$filtro-url: #fff;
+$filtro-box-weight: 0 2px;
+$filtro-box-shadow: $md-orange-900;
+$filtro-bg-hover: $md-blue-grey-600;
+$filtro-url-hover: #fff;
+$filtro-box-shadow-hover: $md-blue-grey-800;
+$filtro-margin: 2em auto 0 auto;
+$filtro-padding: 0.5em 0.7em;
+$filtro-width: 90%;
+$filtro-size: 0.9em;
+$filtro-weight: 600;
+
+// Tablas
+
+$table-margin: 0;
+$table-padding: 0;
+
+// Full Image Parallax
+
+$full-image-parallax-bg: url(../images/gaolos-login-bg.jpg);
+$full-image-parallax-gradient: linear-gradient(rgba(0,0,0,.1),rgba(0,0,0,.1));
+$full-image-parallax-padding: 5rem 0;
+$full-image-parallax-margin: 0;
+$full-image-parallax-h2-size: 4em;
+$full-image-parallax-h2-color: #fff;
+$full-image-parallax-h2-margin: 0;
+$full-image-parallax-h2-padding: 0;
+$full-image-parallax-align: center;
+
+// Tabs
+
+$tab-pane-padding: 2rem 0;
+
+// Bootbox
+
+$bootbox-body-p-margin: 1em 1em;
+
+// Titles
+
+$title-color: $main-color;
+$section-title-bg: $main-color;
+
+// Carousel
+
+$carousel-border-bottom: $main-color;
+
+// Stripes
+
+$stripes-color-1: $md-teal-a400;
+$stripes-color-2: $md-teal-400;
+$stripes-color-3: $md-teal-300;
+$stripes-color-4: $md-teal-600;
+
+// Backgrounds
+
+$parallax-blog-bg: linear-gradient(rgba(0,0,0,.2),rgba(0,0,0,.2)), url('https://public.gaolos.com/cdn/public/previfoc/img/5801b-previfoc-extintores.jpg') no-repeat;

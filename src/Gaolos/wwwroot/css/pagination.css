@@ -1,0 +1,34 @@
+/* Pagination */
+/* Mixins */
+/* Skin v4.6 - White / Dark / Blue */
+.pagination-wrapper {
+  margin-top: 0.5rem; }
+
+.pagination > .active > a {
+  background: #2196F3;
+  border-color: #2196F3; }
+
+.pagination > li > a {
+  color: #2196F3; }
+
+.paginadortotal {
+  border-radius: 0.25rem;
+  border: 1px solid #cfd8dc;
+  background: #fff;
+  padding: 0.2rem 0.5rem;
+  margin-bottom: 0; }
+
+.page-link {
+  font-weight: 500;
+  padding: 0.3rem 0.6rem;
+  border: 1px solid #cfd8dc; }
+  .page-link:hover {
+    color: #546e7a; }
+
+.page-item.active .page-link {
+  background: #90a4ae;
+  border-color: #90a4ae; }
+
+/* Pagination Small */
+.pagination, .paginadortotal {
+  box-shadow: 0px 1px 2px #e0e0e0; }

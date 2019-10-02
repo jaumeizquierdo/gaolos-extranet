@@ -1,0 +1,138 @@
+﻿@*@model MiEmpresaLibrary.MiEmpresaUsuariosViewModel*@
+@{
+    Layout = "~/Views/Shared/Modulo-Medios-De-Pago/_MediosDePago.cshtml";
+    ViewData["Title"] = "Transacciones";
+    ViewData["Message"] = "Modulo de Medios de Pago - Gaolos App v2017";
+}
+
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+@*@if(Model.Datos.Err.EsError)
+{
+    ViewData["err"] = Model.Datos.Err.Mensaje;
+    @Html.Partial("AccesoDenegado");
+}
+else
+{*@
+
+                @* Buscar usuarios *@
+
+                <div class="card mb-3">
+                    <div class="card-header card-header-options">
+                        <span>Buscar usuarios</span>
+
+                        <div class="card-actions">
+                            <ul>
+                                <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-block">
+
+                        <div class="row">
+                            <div class="col-2 text-center">
+                                <img src="~/flaticons/business/038-user-1.svg" style="width: 50%">
+                            </div>
+                            <div class="col-9">
+                                <form action="/mi-empresa/usuarios" method="post" class="mt-4">
+                                    <div class="input-group card-search-box mb-3">
+                                        <input type="text" class="form-control" placeholder="Buscar por..." name="buscar" value="@ViewData["buscar"]">
+                                        <span class="input-group-append">
+                                            <button class="btn btn-primary" type="submit">Buscar</button>
+                                        </span>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                @* Listado de usuarios *@
+
+                <div class="card card-table mb-3">
+                    <div class="card-header card-header-options">
+                        <span>@ViewData["Title"]</span>
+                    </div>
+                    <div class="card-block">
+
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>NIC</th>
+                                    <th>Departamento</th>
+                                    <th>Web</th>
+                                    <th>App</th>
+                                    <th>Agente</th>
+                                    <th>Técnico</th>
+                                    <th>Alta</th>
+                                    <th>Tel. / Mail</th>
+                                    <th>Último acceso</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+
+                @*@Html.Raw(Model.Datos.Paginador)*@               
+
+                @* Nuevo usuario *@
+
+                <div class="card mt-4 mb-4">
+
+                    <div class="card-header card-header-options">
+                        <span>Nuevo usuario</span>
+                        <div class="card-actions">
+                            <ul>
+                                <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="card-block">
+
+                        <div class="row justify-content-md-center">
+
+                            <div class="col-10">
+                                <div class="form-group row">
+                                    <label for="zonasSelect" class="col-sm-2 col-form-label">Nombre</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="Nom" />
+                                    </div>
+                                </div>
+                                <div class="form-group mb-0 row">
+                                    <label for="tiposSelect" class="col-sm-2 col-form-label">NIC</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="NIC" />
+                                    </div>
+                                </div>
+                                <div class="form-group mt-3 text-center">
+                                    <button type="button" class="btn btn-primary btn-sm usuario-nuevo">Crear usuario</button>
+                                </div>
+                            </div>
+
+
+
+                        </div>
+                    </div>
+                </div>
+
+@*}*@
+            </div>
+        </div>
+    </div>
+</div>

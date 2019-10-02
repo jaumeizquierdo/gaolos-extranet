@@ -1,0 +1,40 @@
+﻿@*btn-tab-active*@
+<div class="d-flex pt-3 pb-0 pl-0 mb-3 box-tab">
+    @{
+        string Clss = "mr-1 ml-1 btn btn-tab";
+        string ClssSel = "mr-1 ml-1 btn btn-tab btn-tab-active";
+        string ClssApli = "";
+    }
+
+    @if (ViewData["Form"].ToString() == "/modulo-cursos/cursos/curso-general") { ClssApli = ClssSel; } else { ClssApli = Clss; }
+    <a href="/modulo-cursos/cursos/curso-general?ID_Curso2=@Model.Model.ID_Curso2" class="@Html.Raw(ClssApli)">General</a>
+    @if (ViewData["Form"].ToString() == "/modulo-cursos/cursos/curso-asignaturas") { ClssApli = ClssSel; } else { ClssApli = Clss; }
+    <a href="/modulo-cursos/cursos/curso-asignaturas?ID_Curso2=@Model.Model.ID_Curso2" class="@Html.Raw(ClssApli)">Asignaturas</a>
+    @if (ViewData["Form"].ToString() == "/modulo-cursos/cursos/curso-calendario") { ClssApli = ClssSel; } else { ClssApli = Clss; }
+    <a href="/modulo-cursos/cursos/curso-calendario?ID_Curso2=@Model.Model.ID_Curso2" class="@Html.Raw(ClssApli)">Calendario</a>
+    @if (ViewData["Form"].ToString() == "/modulo-cursos/cursos/curso-comunicacion") { ClssApli = ClssSel; } else { ClssApli = Clss; }
+    <a href="/modulo-cursos/cursos/curso-comunicacion?ID_Curso2=@Model.Model.ID_Curso2" class="@Html.Raw(ClssApli)">Comunicación</a>
+    @if (ViewData["Form"].ToString() == "/modulo-cursos/cursos/curso-alumnos") { ClssApli = ClssSel; } else { ClssApli = Clss; }
+    <a href="/modulo-cursos/cursos/curso-alumnos?ID_Curso2=@Model.Model.ID_Curso2" class="@Html.Raw(ClssApli)">Alumnos</a>
+    @if (ViewData["Form"].ToString() == "/modulo-cursos/cursos/curso-grupos") { ClssApli = ClssSel; } else { ClssApli = Clss; }
+    <a href="/modulo-cursos/cursos/curso-grupos?ID_Curso2=@Model.Model.ID_Curso2" class="@Html.Raw(ClssApli)">Grupo</a>
+
+    @if (ViewData["Form"].ToString() == "/modulo-cursos/cursos/curso-asistencia") { ClssApli = ClssSel; } else { ClssApli = Clss; }
+    <a href="/modulo-cursos/cursos/curso-asistencia?ID_Curso2=@Model.Model.ID_Curso2" class="@Html.Raw(ClssApli)">Asistencia</a>
+
+    @if (ViewData["Form"].ToString() == "/modulo-cursos/cursos/curso-evaluacion") { ClssApli = ClssSel; } else { ClssApli = Clss; }
+    <a href="/modulo-cursos/cursos/curso-evaluacion?ID_Curso2=@Model.Model.ID_Curso2" class="@Html.Raw(ClssApli)">Evaluación</a>
+
+    @if (ViewData["Form"].ToString() == "/modulo-cursos/cursos/curso-documentacion") { ClssApli = ClssSel; } else { ClssApli = Clss; }
+    <a href="/modulo-cursos/cursos/curso-documentacion?ID_Curso2=@Model.Model.ID_Curso2" class="@Html.Raw(ClssApli)">Documentación</a>
+
+    @if (ViewData["Form"].ToString() == "/modulo-cursos/cursos/curso-formadores") { ClssApli = ClssSel; } else { ClssApli = Clss; }
+    <a href="/modulo-cursos/cursos/curso-formadores?ID_Curso2=@Model.Model.ID_Curso2" class="@Html.Raw(ClssApli)">Formadores</a>
+
+    @if (ViewData["Form"].ToString() == "/modulo-cursos/cursos/curso-cierre") { ClssApli = ClssSel; } else { ClssApli = Clss; }
+    <a href="/modulo-cursos/cursos/curso-cierre?ID_Curso2=@Model.Model.ID_Curso2" class="@Html.Raw(ClssApli)">Cierre</a>
+
+    @if (ViewData["Form"].ToString() == "/modulo-cursos/cursos/curso-evaluacion") { ClssApli = ClssSel; } else { ClssApli = Clss; }
+    <a target="_blank" href="http://extranet.gaolos.net/curInscripciones.aspx?STab=7&ID=@Model.Model.ID_Curso2" class="@Html.Raw(ClssApli)">Eva. (old)</a>
+
+</div>

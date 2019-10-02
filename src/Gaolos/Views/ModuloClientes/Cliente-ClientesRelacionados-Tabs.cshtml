@@ -1,0 +1,34 @@
+﻿@* tabs *@
+
+@* btn-tab-active *@
+
+@{
+    string Clss = "mr-1 ml-1 btn btn-tab";
+    string ClssSel = "mr-1 ml-1 btn btn-tab btn-tab-active";
+    string ClssApli = "";
+}
+
+<div class="d-flex pb-0 pl-0 mb-3 box-tab">
+    @if (ViewData["Form"].ToString() == "/modulo-clientes/clientes/cliente/clientes-relacionados") { ClssApli = ClssSel; } else { ClssApli = Clss; }
+    <a href="/modulo-clientes/clientes/cliente/clientes-relacionados?ID_Cli2=@Model.Model.Cab.ID_Cli2" class="@Html.Raw(ClssApli)">Resumen</a>
+
+    @if (ViewData["Form"].ToString() == "/modulo-clientes/clientes/cliente/clientes-relacionados/contactos") { ClssApli = ClssSel; } else { ClssApli = Clss; }
+    <a href="/modulo-clientes/clientes/cliente/clientes-relacionados/contactos?ID_Cli2=@Model.Model.Cab.ID_Cli2" class="@Html.Raw(ClssApli)">Contactos</a>
+
+    @if (ViewData["Form"].ToString() == "/modulo-clientes/clientes/cliente/clientes-relacionados/clientes") { ClssApli = ClssSel; } else { ClssApli = Clss; }
+    <a href="/modulo-clientes/clientes/cliente/clientes-relacionados/clientes?ID_Cli2=@Model.Model.Cab.ID_Cli2" class="@Html.Raw(ClssApli)">Clientes</a>
+    @if (ViewData["Form"].ToString() == "/modulo-clientes/clientes/cliente/clientes-relacionados/cobros-pendientes") { ClssApli = ClssSel; } else { ClssApli = Clss; }
+    <a href="/modulo-clientes/clientes/cliente/clientes-relacionados/cobros-pendientes?ID_Cli2=@Model.Model.Cab.ID_Cli2" class="@Html.Raw(ClssApli)">Cobros pendientes</a>
+    @if (ViewData["Form"].ToString() == "/modulo-clientes/clientes/cliente/clientes-relacionados/solicitudes") { ClssApli = ClssSel; } else { ClssApli = Clss; }
+    <a href="/modulo-clientes/clientes/cliente/clientes-relacionados/solicitudes?ID_Cli2=@Model.Model.Cab.ID_Cli2" class="@Html.Raw(ClssApli)">Solicitudes</a>
+
+    @*@if (ViewData["Form"].ToString() == "/modulo-clientes/clientes/cliente/clientes-relacionados/presupuestos-contactos") { ClssApli = ClssSel; } else { ClssApli = Clss; }
+    <a href="/modulo-clientes/clientes/cliente/clientes-relacionados/presupuestos-contactos?ID_Cli2=@Model.Model.Cab.ID_Cli2" class="@Html.Raw(ClssApli)">Presupuestos Contactos</a>*@
+
+    @if (ViewData["Form"].ToString() == "/modulo-clientes/clientes/cliente/clientes-relacionados/presupuestos") { ClssApli = ClssSel; } else { ClssApli = Clss; }
+    <a href="/modulo-clientes/clientes/cliente/clientes-relacionados/presupuestos?ID_Cli2=@Model.Model.Cab.ID_Cli2" class="@Html.Raw(ClssApli)">Presupuestos</a>
+    @if (ViewData["Form"].ToString() == "/modulo-clientes/clientes/cliente/clientes-relacionados/asistencias") { ClssApli = ClssSel; } else { ClssApli = Clss; }
+    <a href="/modulo-clientes/clientes/cliente/clientes-relacionados/asistencias?ID_Cli2=@Model.Model.Cab.ID_Cli2" class="@Html.Raw(ClssApli)">Asistencias</a>
+    @if (ViewData["Form"].ToString() == "/modulo-clientes/clientes/cliente/clientes-relacionados/herencia") { ClssApli = ClssSel; } else { ClssApli = Clss; }
+    <a href="/modulo-clientes/clientes/cliente/clientes-relacionados/herencia?ID_Cli2=@Model.Model.Cab.ID_Cli2" class="@Html.Raw(ClssApli)">Herencia</a>
+</div>

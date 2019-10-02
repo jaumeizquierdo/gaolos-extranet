@@ -1,0 +1,218 @@
+﻿@model BlogsLibrary.BlogsListadoViewModel
+
+@{
+    Layout = "~/Views/Shared/Modulo-Blogs/_Blogs.cshtml";
+    ViewData["Title"] = "Blogs - Listado de blogs";
+    ViewData["Title-Bloque-1"] = "Blogs";
+    ViewData["Message"] = "CMS - Gaolos App v2017";
+}
+
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                @if (Model.Model.Err.eserror)
+                {
+                    ViewData["err"] = Model.Model.Err.mensaje;
+                    @Html.Partial("AccesoDenegado");
+                }
+                else
+                {
+
+                    @* Buscador de dominios *@
+
+                <div class="card mb-3">
+                    <div class="card-header card-header-options">
+                        <span>Buscar dominios</span>
+
+                        <div class="card-actions">
+                            <ul>
+                                <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="card-block p-0">
+                        <form action="@ViewData["Form"]" method="post">
+                            <div class="d-flex justify-content-center align-items-center">
+                                <div class="col-1 text-center box-border-right-light py-2">
+                                    <img src="~/flaticons/business/052-contract.svg" style="width: 100%;">
+                                </div>
+                                <div class="col-11">
+
+                                    <div class="row p-0">
+                                        <div class="col-12 p-0">
+                                            <div class="d-flex mb-0 px-3">
+
+                                                <div class="input-group card-search-box">
+                                                    <input type="text" class="form-control" placeholder="Buscar por..." name="buscar" value="@ViewData["buscar"]">
+                                                    <input type="hidden" name="ID_Idi" value="1">
+                                                    <span class="input-group-append">
+                                                        <button class="btn btn-primary btn-sm" type="submit">BUSCAR</button>
+                                                    </span>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="col-8">
+                        <div class="card card-table">
+                            <div class="card-header card-header-options">
+                                <span>@ViewData["Title-Bloque-1"]</span>
+                                <a href="#" class="btn btn-sm btn-primary nuevo-blog"><i class="fa fa-cogs mr-1" style="font-size: 14px !important;"></i> Nuevo</a>
+                            </div>
+                            <div class="card-block">
+
+                                <table class="table table-striped table-select border-top-none">
+                                    <thead>
+                                        <tr>
+                                            <th>Alta</th>
+                                            <th>Url</th>
+                                            <th class="text-center">Ver blog</th>
+                                            <th class="text-center">Editar estilos</th>
+                                            <th>Dominio</th>
+                                            <th>Titulo</th>
+                                            <th>Prefijo</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (Model != null)
+                                        {
+                                            for (Int32 t = 0; t < Model.Model.num; t++)
+                                            {
+                                                <tr>
+                                                    <td><strong>@Model.Model.det[t].Fe_Al</strong></td>
+                                                    <td><a href="/blogs/entradas?ID_Blog=@Model.Model.det[t].ID_Blog&ID_Idi=@ViewData["ID_Idi"]"><strong>@Model.Model.det[t].Url/<span class="text-blue">@Model.Model.det[t].Prefijo</span></strong></a></td>
+                                                    <td class="text-center"><a href="https://@Model.Model.det[t].Url/@Model.Model.det[t].Prefijo" class="btn btn-primary btn-sm btn-sm-2x" target="_blank">ver blog</a></td>
+                                                    <td class="text-center"><a href="/blogs/listado/blog-estilo?ID_Blog=@Model.Model.det[t].ID_Blog&ID_Idi=@ViewData["ID_Idi"]" class="btn btn-primary btn-sm btn-sm-2x">editar estilos</a></td>
+                                                    <td><p class="fw-5 mb-0">@Model.Model.det[t].Dominio</p></td>
+                                                    <td>@Model.Model.det[t].Titulo</td>
+                                                    <td>@Model.Model.det[t].Prefijo</td>
+                                                </tr>
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+
+
+
+                            </div>
+
+                        </div>
+                        @Html.Raw(Model.Model.Paginador)
+                    </div>
+                    <div class="col-4">
+
+                        <div class="card-info-wrapper w-100" id="sindatos" style="display: none;">
+                            <div class="card-info">
+                                <div class="d-flex justify-content-center align-items-center">
+                                    <img src="https://image.flaticon.com/icons/svg/609/609998.svg" style="width: 20%;" class="animated fadeIn">
+                                    <div class="d-flex flex-column">
+                                        <p class="mb-2 ml-3 animated fadeIn">En esta pantalla podrá modificar o ampliar su presupuesto</p>
+                                        <p class="mb-2 ml-3 mt-2 fs-0-8 animated fadeIn">Las opciones disponibles son:<br><span class="fw-5 text-danger">Editar presupuesto:</span> edición de los parámetros básicos de su presupuesto.<br><span class="fw-5 text-danger">Añadir rápido:</span> añadir un servicio libre no contemplado previamente.<br><span class="fw-5 text-danger">Añadir servicio:</span> añadir un servicio previamente categorizado.</p>
+                                        <p class="mb-2 ml-3 mt-2 fs-0-8 animated fadeIn">Además podrá <span class="fw-5">modificar las características</span> de un servicio presupuestado (código, cantidad, precio, descuento, etc).</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <svg class="card-info-triangle">
+                                <polygon points="0,0 200,0 0,200" fill="currentColor"></polygon>
+                            </svg>
+                        </div>
+                        
+                        <div class="card card-table mb-3" id="nuevoBlog" style="display: none;">
+                            <div class="card-header card-header-options">
+                                <span id="tel-titulo">Nuevo blog</span>
+                            </div>
+                            <div class="card-block p-0">
+                                <div class="d-flex flex-column p-2">
+
+                                    <div class="input-group input-group-sm mb-1">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text mw-100">Web</span>
+                                        </div>
+                                        <select class="custom-select" id="ID_Tv">
+                                        </select>
+                                    </div>
+
+                                    <div class="input-group input-group-sm mb-1">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text mw-100">Título</span>
+                                        </div>
+                                        <input type="text" class="form-control" id="Titulo" placeholder="Título">
+                                    </div>
+
+                                    <div class="input-group input-group-sm mb-1">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text mw-100">Prefijo URL</span>
+                                        </div>
+                                        <input type="text" class="form-control" id="Url" placeholder="Prefijo URL">
+                                    </div>
+
+                                    <div class="input-group input-group-sm mb-1">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text mw-100">Nodo</span>
+                                        </div>
+                                        <input type="text" class="form-control" id="Nodo" name="Nodo" placeholder="Nodo" value="">
+                                        <input type="hidden" id="vNodo" name="vNodo" value="">
+                                        <input type="hidden" id="tNodo" name="tNodo" value="">
+                                    </div>
+
+                                    <div class="input-group input-group-sm mb-1">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text mw-100">Imagen lista</span>
+                                        </div>
+                                        <select class="custom-select" id="ID_AjuLis">
+                                        </select>
+                                    </div>
+
+
+                                    <div class="input-group input-group-sm mb-1">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text mw-100">Imagen detalle</span>
+                                        </div>
+                                        <select class="custom-select" id="ID_AjuDet">
+                                        </select>
+                                    </div>
+
+                                    <div class="input-group input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text mw-100">Idioma</span>
+                                        </div>
+                                        <select class="custom-select" id="ID_Idi">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-center box-border-top p-2 mdc-bg-blue-grey-50">
+                                    <a href="#" class="btn btn-sm btn-primary nuevo-blog-generar">Generar</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                
+
+                
+                }
+            </div>
+        </div>
+    </div>
+</div>

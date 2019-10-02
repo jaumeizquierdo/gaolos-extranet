@@ -1,0 +1,67 @@
+﻿/* Botones */
+
+@import "variables.scss";
+@import "materialdesign.scss";
+
+.svg-dashboard-modulo {
+    width: 64px;
+}
+
+.svg-dashboard-apartado {
+    width: 64px;
+}
+
+.svg-linear {
+    path, rect, circle, ellipse, line, polyline, polygon, path {
+        fill: $md-blue-500;
+    }
+}
+
+.svg-color-1 {
+    //fill: #A4C2F7;
+    fill: $md-blue-100;
+}
+
+.svg-color-2 {
+    //fill: #E3E7F2;
+    fill: $md-blue-50;
+}
+
+.svg-color-3 {
+    fill: #FFFFFF;
+}
+
+.svg-color-4 {
+    //fill: #428DFF;
+    fill: $md-blue-500;
+}
+
+.svg-color-5 {
+    //fill: #7FACFA;
+    fill: $md-blue-200;
+}
+
+.svg-color-6 {
+    fill: #D4E1F4;
+    //fill: darken($md-blue-100, 5%);
+}
+
+.svg-color-7 {
+    //fill: #D4E1F4;
+    fill: darken($md-blue-50, 5%);
+}
+
+.svg-color-8 {
+    //fill: ##7FABFA;
+    fill: $md-blue-400;
+}
+
+.svg-color-9 {
+    //fill: ##7FABFA;
+    fill: $md-blue-300;
+}
+
+.svg-color-10 {
+    //fill: ##7FABFA;
+    fill: $md-blue-100;
+}

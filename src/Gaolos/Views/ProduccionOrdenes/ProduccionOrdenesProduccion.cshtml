@@ -1,0 +1,70 @@
+﻿@{
+    ViewData["TitleNuevoPedido"] = "Nuevo pedido de producción";
+    Layout = "~/Views/Shared/Produccion-Pedidos/_ProduccionPedidos.cshtml";
+}
+<div class="main-content" id="widget-area">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+
+                <div class="card mb-3">
+                    <div class="card-header card-header-options">
+                        <span>@ViewData["TitleNuevoPedido"]</span>
+                        @Html.Partial("PanelActions")
+                    </div>
+                    <div class="card-block">
+
+                        <form class="mb-3">
+                            <div class="form-group">
+                                <label for="cliente">Cliente / Contacto</label>
+                                <input type="text" class="form-control" id="cliente" placeholder="Cliente / Contacto">
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="exposicion">Exposición</label>
+                                        <textarea class="form-control" id="exposicion" rows="3" placeholder="Exposición"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="observaciones">Observaciones</label>
+                                        <textarea class="form-control" id="observaciones" rows="3" placeholder="Observaciones"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="refcliente">Ref. Cliente</label>
+                                        <input type="text" class="form-control" id="refcliente" placeholder="Ref. Cliente">
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group mb-4" id="fechafin">
+                                        <label for="refcliente">Fecha fin prevista</label>
+                                        <div class="input-group input-group date">
+                                            <input type="text" class="form-control" placeholder="Selecciona Fecha" id="Fecha">
+                                            <span class="input-group-append">
+                                                <button class="btn btn-secondary" type="button"><i class="fa fa-calendar"></i></button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group text-center">
+                                <button type="submit" class="btn btn-primary btn-sm">Generar nuevo pedido</button>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>

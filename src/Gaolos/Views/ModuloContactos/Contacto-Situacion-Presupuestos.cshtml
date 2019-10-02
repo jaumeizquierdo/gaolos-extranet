@@ -1,0 +1,150 @@
+﻿@model ModuloClientesLibrary.ModuloClientesClienteClientesSituacionPresupuestosViewModel
+@{
+    Layout = "~/Views/Shared/Modulo-Contactos/_Modulo-Contactos-Contacto.cshtml";
+    ViewData["Title"] = "Situación";
+    ViewData["Message"] = "Modulo de Contactos - Gaolos App v2017";
+}
+
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+                @if(Model.Model.Err.eserror)
+{
+    ViewData["err"] = Model.Model.Err.mensaje;
+                @Html.Partial("AccesoDenegado");
+}
+else
+{
+
+                @* cabecera cliente *@
+
+                @Html.Partial("Contacto-Cabecera")
+
+                @* tabs *@
+
+                @Html.Partial("Contacto-Tabs")
+
+                @* Listado de direcciones *@
+
+                <div class="card">
+                    <div class="card-block">
+
+                        @* tabs *@
+
+                        @Html.Partial("Contacto-Situacion-Tabs")
+
+                        <div class="row">
+
+                            <div class="col-8">
+                                <div class="card card-table mb-3">
+                                    <div class="card-header card-header-options">
+                                        <span>Presupuestos localizados</span>
+                                    </div>
+                                    <div class="card-block">
+
+                                        @{
+                                            Models.strPresupuestosPresupuestosListadoDetalles[] det = Model.Model.lis.det;
+                                        }
+
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th class="w-10 text-center">Nº</th>
+                                                    <th class="w-15 text-center">Fecha</th>
+                                                    <th>Agente</th>
+                                                    <th class="w-20 text-center">Estado</th>
+                                                    <th class="w-10 text-center">Total</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @if (det != null)
+                                                {
+                                                @for (Int32 t = 0; t < det.Length; t++)
+                                                    {
+                                                <tr>
+                                                    <td class="text-center"><a href="#" class="fw-5">@det[t].ID_Pres2</a></td>
+                                                    <td class="text-center"><p class="mb-0 fw-5">@det[t].Fe_Al</p></td>
+                                                    <td>@det[t].Agente</td>
+                                                    <td class="text-center">
+                                                        @if (det[t].Procesado == "")
+                                                                {
+                                                        <p class="mb-0 fw-5"><i class="fa fa-hourglass-half"></i> Pendiente</p>
+                                                                }
+                                                                else
+                                                                {
+                                                                    if (det[t].Aceptado)
+                                                                    {
+                                                        <p class="mb-0 fw-5"><i class="fa fa-check text-success"></i> @det[t].Procesado</p>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                        <p class="mb-0 fw-5"><i class="fa fa-times text-danger"></i> @det[t].Procesado</p>
+                                                                    }
+
+                                                                }
+                                                    </td>
+                                                    <td class="text-right"><p class="mb-0 fw-5">@det[t].Total</p></td>
+                                                </tr>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                <tr>
+                                                    <td colspan="5"><p class="mb-0 fw-5 p-3 text-danger"><i class="fa fa-times"></i> No hay resultados</p></td>
+                                                </tr>
+                                                }
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    @Html.Raw(Model.Model.lis.Paginador)
+                                </div>
+                            </div>
+
+
+                            <div class="col-4" id="sindatos">
+                                @* Sin datos *@
+                                <div class="card card-table mb-3">
+                                    <div class="card-header card-header-options">
+                                        <span>Información</span>
+                                        <div class="card-actions">
+                                            <ul>
+                                                <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="card-block" role="tablist" aria-multiselectable="true">
+                                        <div class="text-center mt-4 mb-4 p-3 bloque-sin-informacion">
+                                            <img src="~/flaticons/chat.svg" style="width: 25%;">
+                                            <p class="pt-3 fw-5 fs-0-85">Si clica encima del nº de factura, en este espacio le aparecerán los datos de la factura</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+}
+            </div>
+        </div>
+    </div>
+</div>
+

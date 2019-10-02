@@ -1,0 +1,25 @@
+﻿/* Google Maps */
+
+@import "variables.scss";
+@import "materialdesign.scss";
+
+#rutas-map {
+    width: 100%;
+    height: 40em;
+}
+
+.gm-style .gm-style-iw {
+    font-weight: 500 !important;
+}
+
+.map-inner {
+    border: 2px solid $md-grey-300;
+    border-radius: 3px;
+}
+
+#clientes-general-map {
+    width: 100%;
+    height: 15em;
+    border: 1px solid $md-blue-grey-100 !important;
+    border-radius: 1px;
+}

@@ -1,0 +1,302 @@
+﻿@model ModuloClientesLibrary.ModuloClientesConsultasResumenEmpresasRelacionadasListadoViewModel
+@{
+    Layout = "~/Views/Shared/Modulo-Clientes/_Modulo-Clientes-Consultas.cshtml";
+    ViewData["Title"] = "Resumen Empresas Relacionadas";
+}
+
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+                @if(Model.Model.Err.eserror)
+    {
+        ViewData["err"] = Model.Model.Err.mensaje;
+                @Html.Partial("AccesoDenegado");
+    }
+    else
+    {
+
+
+
+                @* Buscar usuarios *@
+
+            <div class="card mb-3">
+                <div class="card-header card-header-options">
+                    <span>Buscar cliente</span>
+
+                    <div class="card-actions">
+                        <ul>
+                            <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card-block p-0">
+
+
+                    <div class="d-flex justify-content-center align-items-center">
+                        <div class="col-1 pb-2 pt-2">
+                            <img src="~/flaticons/business/038-user-1.svg" style="width: 100%;">
+                        </div>
+                        <div class="col-11 pt-2 pb-2 box-border-left-light">
+                            <form method="post" action="@ViewData["form"]" class="">
+                                <div class="d-flex justify-content-center align-items-center mb-2 w-100">
+
+                                    <div class="input-group input-group-sm mb-0 mr-2">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text input-group-text-auto mw-80">Empresa relacionada</span>
+                                        </div>
+                                        <input type="text" class="form-control" id="emprelvin" name="emprelvin" value="@ViewData["EmpRel"]" placeholder="Cliente relacionado">
+                                        <input type="hidden" id="vemprelvin" name="vemprelvin" value="@ViewData["ID_Cli2Rel"]"><input type="hidden" id="temprelvin" name="temprelvin" value="@ViewData["EmpRel"]">
+                                        <span class="input-group-append">
+                                            <button type="submit" class="btn btn-primary btn-sm form-buscar"><i class="fa fa-search"></i></button>
+                                        </span>
+                                    </div>
+
+                                    <div class="input-group input-group-sm mb-0 mr-2">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text input-group-text-auto mw-85">Agente</span>
+                                        </div>
+                                        <input type="text" class="form-control" id="Agente" name="Agente" value="@ViewData["Agente"]" placeholder="Agente">
+                                        <input type="hidden" id="vAgente" name="vAgente" value="@ViewData["ID_Us_Agente"]"><input type="hidden" id="tAgente" name="tAgente" value="@ViewData["Agente"]">
+                                        <span class="input-group-append">
+                                            <button type="submit" class="btn btn-primary btn-sm form-buscar"><i class="fa fa-search"></i></button>
+                                        </span>
+                                    </div>
+
+                                    <div class="input-group input-group-sm mb-0 mr-2">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text input-group-text-auto mw-85">Fecha inicio 1</span>
+                                        </div>
+                                        <input type="text" class="form-control" name="Fe_In1" placeholder="Fecha inicio 1" value="@ViewData["Fe_In1"]">
+                                        <span class="input-group-append">
+                                            <button type="submit" class="btn btn-primary btn-sm form-buscar"><i class="fa fa-search"></i></button>
+                                        </span>
+                                    </div>
+
+                                    <div class="input-group input-group-sm mb-0 mr-2">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text input-group-text-auto mw-85">Fecha fin 1</span>
+                                        </div>
+                                        <input type="text" class="form-control" name="Fe_Fi1" placeholder="Fecha fin 1" value="@ViewData["Fe_Fi1"]">
+                                        <span class="input-group-append">
+                                            <button type="submit" class="btn btn-primary btn-sm form-buscar"><i class="fa fa-search"></i></button>
+                                        </span>
+                                    </div>
+
+                                </div>
+
+                                <div class="d-flex justify-content-center align-items-center mb-2 w-100">
+
+                                    <div class="input-group input-group-sm mb-0 mr-2">
+                                    </div>
+
+                                    <div class="input-group input-group-sm mb-0 mr-2">
+                                    </div>
+
+                                    <div class="input-group input-group-sm mb-0 mr-2">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text input-group-text-auto mw-80">Fecha inicio 2</span>
+                                        </div>
+                                        <input type="text" class="form-control" name="Fe_In2" placeholder="Fecha inicio 2" value="@ViewData["Fe_In2"]">
+                                        <span class="input-group-append">
+                                            <button type="submit" class="btn btn-primary btn-sm form-buscar"><i class="fa fa-search"></i></button>
+                                        </span>
+                                    </div>
+
+                                    <div class="input-group input-group-sm mb-0 mr-2">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text input-group-text-auto mw-85">Fecha fin 2</span>
+                                        </div>
+                                        <input type="text" class="form-control" name="Fe_Fi2" placeholder="Fecha fin 2" value="@ViewData["Fe_Fi2"]">
+                                        <span class="input-group-append">
+                                            <button type="submit" class="btn btn-primary btn-sm form-buscar"><i class="fa fa-search"></i></button>
+                                        </span>
+                                    </div>
+
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+
+                @* Listado de usuarios *@
+
+                <div class="card card-table mb-3">
+                    <div class="card-header card-header-options">
+                        <span>@ViewData["Title"]</span>
+                        <div class="d-flex align-items-center">
+                            <a href="/modulo-clientes/consultas/resumen-empresas-relacionadas/exportar?Fe_In1=@ViewData["Fe_In1"]&Fe_Fi1=@ViewData["Fe_Fi1"]&Fe_In2=@ViewData["Fe_In2"]&Fe_Fi2=@ViewData["Fe_Fi2"]&vAgente=@ViewData["ID_Us_Agente"]&vemprelvin=@ViewData["ID_Cli2Rel"]" class="btn btn-sm btn-primary">Exportar</a>
+                        </div>                    </div>
+                    <div class="card-block">
+
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th class="text-center w-5">Nº</th>
+                                    <th>Empresa</th>
+                                    <th>Tipo</th>
+                                    <th>Agente</th>
+                                    <th>Población</th>
+                                    <th class="text-center w-5">Nº Cli.</th>
+                                    <th class="text-center w-5">Precios</th>
+
+                                    <th class="text-center w-5">Nº Cob.</th>
+                                    <th class="text-center w-5">Cob.Pend.</th>
+                                    <th class="text-center w-5">Tiempo</th>
+
+                                    <th class="text-center w-5">Nº Pres.</th>
+                                    <th class="text-center w-5">Base Pres.</th>
+                                    <th class="text-center w-5">Val.Med.Pres.</th>
+
+                                    <th class="text-center w-5">Nº Pres.Abi.</th>
+                                    <th class="text-center w-5">Base Pres.Abi.</th>
+                                    <th class="text-center w-5">Val.Med.Pres.Abi.</th>
+
+                                    <th class="text-center w-5">Base Pres.Acep.</th>
+                                    <th class="text-center w-5">WR</th>
+                                    <th class="text-center w-5">Base facturación</th>
+
+                                    <th class="text-center w-5">Nº Pres.2</th>
+                                    <th class="text-center w-5">Base Pres.2</th>
+                                    <th class="text-center w-5">Val.Med.Pres.2</th>
+
+                                    <th class="text-center w-5">Nº Pres.Abi.2</th>
+                                    <th class="text-center w-5">Base Pres.Abi.2</th>
+                                    <th class="text-center w-5">Val.Med.Pres.Abi.2</th>
+
+                                    <th class="text-center w-5">Base Pres.Acep.2</th>
+                                    <th class="text-center w-5">WR2</th>
+                                    <th class="text-center w-5">Base facturación2</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model.Model.det != null)
+{
+                                @for (Int32 t = 0; t < Model.Model.det.Length; t++)
+{
+                                <tr>
+                                    <td class="text-center"><a href="/modulo-clientes/clientes/cliente?ID_Cli2=@Model.Model.det[t].ID_Cli2" class="fw-5" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="Ir a la ficha del cliente">@Model.Model.det[t].ID_Cli2</a></td>
+                                    <td>
+                                        <p class="fs-0-7 mb-0">@Model.Model.det[t].Emp</p>
+                                    </td>
+                                    <td>
+                                        @*<p class="fw-5 mb-0"></p>*@
+                                        <p class="fs-0-7 mb-0">@Model.Model.det[t].TipCli</p>
+                                    </td>
+                                    <td>
+                                        <p class="fs-0-7 mb-0">@Model.Model.det[t].Agente</p>
+                                    </td>
+                                    <td>
+                                        <p class="fs-0-7 mb-0">@Model.Model.det[t].Pob</p>
+                                    </td>
+                                    <td class="text-center">
+                                        <p class="fs-0-7 mb-0">@Model.Model.det[t].NumCli</p>
+                                    </td>
+                                    <td class="text-center">
+                                        <p class="fs-0-7 mb-0">@Model.Model.det[t].NumPrecios</p>
+                                    </td>
+
+                                    <td class="text-center">
+                                        <p class="fs-0-7 mb-0">@Model.Model.det[t].NumCobPend</p>
+                                    </td>
+                                    <td class="text-center">
+                                        <p class="fs-0-7 mb-0">@Model.Model.det[t].CobPend</p>
+                                    </td>
+                                    <td class="text-center">
+                                        <p class="fs-0-7 mb-0">@Model.Model.det[t].TieCobPend</p>
+                                    </td>
+
+                                    <td class="text-center">
+                                        <p class="fs-0-7 mb-0">@Model.Model.det[t].NumPres</p>
+                                    </td>
+                                    <td class="text-right">
+                                        <p class="fs-0-7 mb-0">@Model.Model.det[t].BasePres</p>
+                                    </td>
+                                    <td class="text-center">
+                                        <p class="fs-0-7 mb-0">@Model.Model.det[t].ValMedBasePres</p>
+                                    </td>
+                                    <td class="text-center">
+                                        <p class="fs-0-7 mb-0">@Model.Model.det[t].NumPresAbi</p>
+                                    </td>
+                                    <td class="text-right">
+                                        <p class="fs-0-7 mb-0">@Model.Model.det[t].BasePresAbi</p>
+                                    </td>
+                                    <td class="text-center">
+                                        <p class="fs-0-7 mb-0">@Model.Model.det[t].ValMedBasePresAbi</p>
+                                    </td>
+                                    <td class="text-right">
+                                        <p class="fs-0-7 mb-0">@Model.Model.det[t].BasePresAcep</p>
+                                    </td>
+                                    <td class="text-center">
+                                        <p class="fs-0-7 mb-0">@Model.Model.det[t].WR</p>
+                                    </td>
+                                    <td class="text-right">
+                                        <p class="fs-0-7 mb-0">@Model.Model.det[t].BaseFac</p>
+                                    </td>
+
+                                    <td class="text-center">
+                                        <p class="fs-0-7 mb-0">@Model.Model.det[t].NumPres2</p>
+                                    </td>
+                                    <td class="text-right">
+                                        <p class="fs-0-7 mb-0">@Model.Model.det[t].BasePres2</p>
+                                    </td>
+                                    <td class="text-center">
+                                        <p class="fs-0-7 mb-0">@Model.Model.det[t].ValMedBasePres2</p>
+                                    </td>
+                                    <td class="text-center">
+                                        <p class="fs-0-7 mb-0">@Model.Model.det[t].NumPresAbi2</p>
+                                    </td>
+                                    <td class="text-right">
+                                        <p class="fs-0-7 mb-0">@Model.Model.det[t].BasePresAbi2</p>
+                                    </td>
+                                    <td class="text-center">
+                                        <p class="fs-0-7 mb-0">@Model.Model.det[t].ValMedBasePresAbi2</p>
+                                    </td>
+                                    <td class="text-right">
+                                        <p class="fs-0-7 mb-0">@Model.Model.det[t].BasePresAcep2</p>
+                                    </td>
+                                    <td class="text-center">
+                                        <p class="fs-0-7 mb-0">@Model.Model.det[t].WR2</p>
+                                    </td>
+                                    <td class="text-right">
+                                        <p class="fs-0-7 mb-0">@Model.Model.det[t].BaseFac2</p>
+                                    </td>
+                                </tr>
+}
+
+}
+else
+{
+                                <tr>
+                                    <td colspan="12"><p class="mb-0 fw-5 py-2 px-1 text-danger"><i class="fa fa-times"></i> No hay resultados</p></td>
+                                </tr>
+
+}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    @Html.Raw(Model.Model.Paginador)
+                </div>
+}
+            </div>
+        </div>
+    </div>
+</div>

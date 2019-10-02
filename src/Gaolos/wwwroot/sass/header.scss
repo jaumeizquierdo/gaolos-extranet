@@ -1,0 +1,71 @@
+﻿/* Header */
+
+@import "variables.scss";
+@import "materialdesign.scss";
+
+header {
+    margin: 0;
+    background: $menu-superior-bg;
+    color: #fff;
+    h1 {
+        padding: 1em;
+    }
+}
+
+.header-section {
+    border-bottom: 1px solid $md-blue-grey-700;
+    border-top: 1px solid $md-blue-grey-700;
+    margin-bottom: 1rem;
+    height: 5.5rem;
+    background-color: $md-blue-grey-600;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4' viewBox='0 0 4 4'%3E%3Cpath fill='%23718a96' fill-opacity='0.4' d='M1 3h1v1H1V3zm2-2h1v1H3V1z'%3E%3C/path%3E%3C/svg%3E");
+    a, i {
+        color: #fff;
+    }
+
+    a:hover {
+        color: $md-blue-grey-200;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+        color: #fff;
+        margin-top: 1rem;
+        //margin: 0;
+        font-weight: 500;
+        text-shadow: 0 0 1px $md-blue-grey-900;
+    }
+    img {
+        margin: 0 1em;
+    }
+}
+
+.header-section-icon {
+    border-bottom: 1px solid $md-blue-grey-700;
+    border-top: 1px solid $md-blue-grey-700;
+    margin-bottom: 1rem;
+    height: 5.5rem;
+    background-color: $md-blue-grey-600;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4' viewBox='0 0 4 4'%3E%3Cpath fill='%23718a96' fill-opacity='0.4' d='M1 3h1v1H1V3zm2-2h1v1H3V1z'%3E%3C/path%3E%3C/svg%3E");
+
+    a, i {
+        color: #fff;
+    }
+
+    a:hover {
+        color: $md-blue-grey-200;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+        color: #fff;
+        margin-top: 1rem;
+        //margin: 0;
+        font-weight: 500;
+        text-shadow: 0 0 1px $md-blue-grey-900;
+    }
+
+    img {
+        margin: 0 1em;
+    }
+}

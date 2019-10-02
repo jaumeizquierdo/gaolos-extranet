@@ -1,0 +1,41 @@
+﻿<div class="card mb-3">
+    <div class="card-header card-header-options">
+        <span>Información curso</span>
+        <div class="card-actions">
+            <ul>
+                <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="card-block p-0">
+        <div class="d-flex justify-content-center align-items-center">
+            <div class="col-1 pb-2 pt-2 box-border-right-light">
+                <img src="https://image.flaticon.com/icons/svg/432/432714.svg" style="width: 100%;">
+            </div>
+            <div class="col-11 pt-2 pb-2">
+                <h5 class="fw-5 title-section">@Model.Model.Cab.Curso</h5>
+                <div class="d-flex">
+                    <div class="box-grey-bg mr-3">
+                        <p class="mb-0"><small class="fw-5"><span class="mr-1">Nº:</span> <span class="text-danger">@Model.Model.ID_Curso2</span></small></p>
+                        <p class="mb-0"><small class="fw-5"><span class="mr-1">Alta:</span> <span class="text-danger">@Model.Model.Cab.Usu - @Model.Model.Cab.Fe_Al</span></small></p>
+                        <p class="mb-0"><small class="fw-5"><span class="mr-1">Tipo:</span> <span class="text-danger">@Model.Model.Cab.Tipo</span></small></p>
+                        <p class="mb-0"><small class="fw-5"><span class="mr-1">Inicio:</span> <span class="text-danger">@Model.Model.Cab.Fe_In</span></small><input type="hidden" id="ID_Curso2" value="@Model.Model.ID_Curso2" /></p>
+                    </div>
+                    <div class="box-grey-bg">
+                        <p class="mb-0"><small class="fw-5"><span class="mr-1">Ubicación:</span> <span class="text-danger">@Model.Model.Cab.Ubi</span></small></p>
+                        <p class="mb-0"><small class="fw-5"><span class="mr-1">Plazas asignadas:</span> <span class="text-danger">@Model.Model.Cab.NumPla</span></small></p>
+                        <p class="mb-0"><small class="fw-5"><span class="mr-1">Interesados:</span> <span class="text-danger">@Model.Model.Cab.NumIns</span></small></p>
+                        @if (Model.Model.Cab.Anulado)
+        {
+                <p class="mb-0"><small class="fw-5"><span class="mr-1">Curso anulado</span></small></p>
+}
+else if (Model.Model.Cab.Cerrado)
+{
+                <p class="mb-0"><small class="fw-5"><span class="mr-1">Curso cerrado</span></small></p>
+}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

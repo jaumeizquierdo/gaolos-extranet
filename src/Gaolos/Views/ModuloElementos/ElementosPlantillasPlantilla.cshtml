@@ -1,0 +1,158 @@
+﻿@model ModuloElementosLibrary.ElementosPlantillasListadoViewModel
+@{
+    Layout = "~/Views/Shared/Modulo-Elementos/_Modulo-Elementos.cshtml";
+    ViewData["Title"] = "Plantillas elementos";
+    ViewData["PlantillaTitle"] = "Plantillas";
+    ViewData["PlantillasCaracteristicas"] = "Características";
+    ViewData["PlantillasMantenimiento"] = "Mantenimiento";
+}
+
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+
+                @if (Model.Model.Err.eserror)
+                {
+                    ViewData["err"] = Model.Model.Err.mensaje;
+                    @Html.Partial("AccesoDenegado");
+                }
+                else
+                {
+
+                    <div class="row">
+                        <div class="col-12">
+
+                            @* Resultado Búsqueda *@
+
+
+                            <div class="card mb-3">
+                                <div class="card-block card-info-header p-0">
+                                    <div class="d-flex justify-content-center align-items-center">
+                                        <div class="col-1 pb-2 pt-2 box-border-right-light">
+                                            <img src="https://image.flaticon.com/icons/svg/432/432714.svg" style="width: 100%;">
+                                        </div>
+                                        <div class="col-11 pt-2 pb-2">
+                                            <h5 class="fw-5 title-section">Cabecera</h5>
+                                            <div class="d-flex">
+                                                <div class="box-grey-bg mr-3">
+                                                    <p class="mb-0"><small class="fw-5"><span class="mr-1">Plantilla:</span> <span class="text-danger">4835</span></small></p>
+                                                    <p class="mb-0"><small class="fw-5"><span class="mr-1">Obs.:</span> <span class="text-danger">Observaciones elemento</span></small></p>
+                                                    <p class="mb-0"><small class="fw-5"><span class="mr-1">Categoría:</span> <span class="text-danger">Categoría</span></small></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="card card-table mb-3" id="elem-plan">
+                                <div class="card-header card-header-options">
+                                    <span>@ViewData["PlantillaTitle"]</span>
+                                    @Html.Partial("PanelActions")
+                                </div>
+                                <div class="card-block" role="tablist" aria-multiselectable="true">
+                                    <form class="mb-0">
+
+                                        <div class="p-2">
+                                            <div class="d-flex flex-column mb-1">
+                                                <div class="input-group input-group-sm mb-2">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">Plantilla</span>
+                                                    </div>
+                                                    <input type="hidden" id="elementoPlantilla-id" />
+                                                    <input type="text" class="form-control form-control-sm" id="elementoPlantilla" placeholder="Plantilla" maxlength="100">
+                                                </div>
+                                                <div class="input-group input-group-sm mb-2">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">Observaciones</span>
+                                                    </div>
+                                                    <textarea class="form-control form-control-sm" id="elementoObservaciones" rows="5" placeholder="Observaciones"></textarea>
+                                                </div>
+                                                <div class="input-group input-group-sm mb-0">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">Categoría</span>
+                                                    </div>
+                                                    <select class="custom-select mr-1 form-control-sm col-12" id="elemPlanCat"></select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex justify-content-center box-guardar">
+                                            <a href="#" target="_blank" class="btn btn-sm btn-primary elem-plan-guardar" id="">Guardar</a>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                            @*Características*@
+
+                            <div class="card card-table mb-3" id="elem-plan-carac">
+                                <div class="card-header card-header-options">
+                                    <span>Marcas</span>
+                                    @Html.Partial("PanelActions")
+                                </div>
+                                <div class="card-block" id="" role="tablist" aria-multiselectable="true">
+
+                                    <div class="d-flex flex-column p-4">
+
+                                        @for (int i = 0; i < 10; i++)
+                                        {
+                                            <div class="d-flex col-12 mb-2">
+                                                <div class="d-flex align-items-center col-3">
+                                                    <input type="checkbox" class="mr-2" id="" name="">
+                                                    <span class="fw-5">Marca</span>
+                                                </div>
+                                                <div class="d-flex align-items-center col-3">
+                                                    <input type="checkbox" class="mr-2" id="" name="">
+                                                    <span class="fw-5">Marca</span>
+                                                </div>
+                                                <div class="d-flex align-items-center col-3">
+                                                    <input type="checkbox" class="mr-2" id="" name="">
+                                                    <span class="fw-5">Marca</span>
+                                                </div>
+                                                <div class="d-flex align-items-center col-3">
+                                                    <input type="checkbox" class="mr-2" id="" name="">
+                                                    <span class="fw-5">Marca</span>
+                                                </div>
+                                            </div>
+                                        }
+
+                                    </div>
+
+                                    <div class="d-flex justify-content-center box-guardar">
+                                        <a href="#" target="_blank" class="btn btn-sm btn-primary" id="">Guardar</a>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            @* Resultado Búsqueda Paginador *@
+
+                            <nav aria-label="Búsqueda Listado" class="mb-3">
+                                @Html.Raw(Model.Model.Paginador)
+                            </nav>
+
+                        </div>
+
+                        <div class="col-4">
+
+
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

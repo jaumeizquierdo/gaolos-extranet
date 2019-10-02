@@ -1,0 +1,279 @@
+﻿@model ModuloFacturacionLibrary.ModuloFacturacionFacturacionFacturasListadoViewModel
+@{
+    Layout = "~/Views/Shared/Modulo-Facturacion/_Facturacion-Abonos.cshtml";
+    ViewData["Title"] = "Abonos";
+}
+
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+
+                @if (Model.Model.Err.eserror)
+                {
+                    ViewData["err"] = Model.Model.Err.mensaje;
+                    @Html.Partial("AccesoDenegado");
+                }
+                else
+                {
+
+                    <div class="card mb-3">
+                        <div class="card-header card-header-options">
+                            <span>Buscador de facturas</span>
+
+                            <div class="card-actions">
+                                <ul>
+                                    <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card-block p-0">
+                            <form method="post" action="@ViewData["form"]" class="sel-dates">
+                                <div class="d-flex justify-content-center align-items-center">
+
+                                    <div class="col-1 pb-2 pt-2">
+                                        <img src="~/flaticons/pie-chart-1.svg" style="width: 100%">
+                                    </div>
+
+                                    <div class="col-11 pt-2 pb-2 box-border-left-light">
+
+                                        <div class="row">
+                                            <div class="col-8">
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control" placeholder="Buscar por ID de cliente, Empresa, CCCli o NIF" name="buscar" value="@ViewData["buscar"]">
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="d-inline-flex justify-content-end">
+                                                    <div class="form-group mr-4">
+                                                        <div class="input-group">
+                                                            <input type="text" name="Fe_In" value="@ViewData["Fe_In"]" class="form-control" placeholder="De fecha:" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div class="input-group">
+                                                            <input type="text" name="Fe_Fi" value="@ViewData["Fe_Fi"]" class="form-control" placeholder="a fecha:" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-12">
+
+                                                <div class="d-flex justify-content-center">
+                                                    <div class="form-group mr-3 ml-3">
+                                                        <label>Año</label>
+                                                        <select class="custom-select form-control-sm col-12" name="Año">
+                                                            <option value="">- año -</option>
+                                                            @for (Int32 t = 0; t < Model.Model.Años.Length; t++)
+                                                            {
+                                                                if (ViewData["Año"].ToString() == Model.Model.Años[t].det)
+                                                                {
+                                                                    <option selected value="@Model.Model.Años[t].id">@Model.Model.Años[t].det</option>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <option value="@Model.Model.Años[t].id">@Model.Model.Años[t].det</option>
+                                                                }
+                                                            }
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="form-group mr-3 ml-3">
+                                                        <label>Serie</label>
+                                                        <select class="custom-select form-control-sm col-12" name="ID_Serie">
+                                                            @if (Model.Model.Series != null)
+                                                            {
+                                                                @for (Int32 t = 0; t < Model.Model.Series.Length; t++)
+                                                                {
+                                                                    if (ViewData["ID_Serie"].ToString() == Model.Model.Series[t].id.ToString())
+                                                                    {
+                                                                        <option selected value="@Model.Model.Series[t].id">@Model.Model.Series[t].det</option>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <option value="@Model.Model.Series[t].id">@Model.Model.Series[t].det</option>
+                                                                    }
+                                                                }
+                                                            }
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="form-group mr-3 ml-3">
+                                                        <label>Mes</label>
+                                                        <select class="custom-select form-control-sm col-12" name="Mes">
+                                                            <option value="">- mes -</option>
+                                                            @for (Int32 t = 0; t < Model.Model.Meses.Length; t++)
+                                                            {
+                                                                if (ViewData["Mes"].ToString() == Model.Model.Meses[t].id.ToString())
+                                                                {
+                                                                    <option selected value="@Model.Model.Meses[t].id">@Model.Model.Meses[t].det</option>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <option value="@Model.Model.Meses[t].id">@Model.Model.Meses[t].det</option>
+                                                                }
+                                                            }
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="form-group mr-3 ml-3">
+                                                        <label>Nº de factura</label>
+                                                        <div class="input-group input-group-sm">
+                                                            <input type="text" class="form-control form-control-sm" placeholder="Nº de factura" value="@ViewData["Fac"]" name="Fac" />
+                                                            <span class="input-group-addon" id="" data-toggle="tooltip" data-placement="top" title="" data-original-title="Este filtro desactiva todos los otros"><i class="fa fa-question"></i></span>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group mr-3 ml-3">
+                                                        <label>Nº de albarán</label>
+                                                        <div class="input-group input-group-sm">
+                                                            <input type="text" class="form-control form-control-sm" placeholder="Nº de albarán" value="@ViewData["ID_Al2"]" name="ID_Al2" />
+                                                            <span class="input-group-addon" id="" data-toggle="tooltip" data-placement="top" title="" data-original-title="Este filtro desactiva todos los otros"><i class="fa fa-question"></i></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-center box-border-top p-2 mdc-bg-blue-grey-50">
+                                    <button type="submit" class="btn btn-sm btn-primary">Buscar</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="card card-table mb-3">
+                                <div class="card-header card-header-options">
+                                    <span>Información abono</span>
+                                </div>
+                                <div class="card-block p-0">
+                                    <div class="d-flex flex-column p-0">
+                                        <table class="table table-striped border-top-none">
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-center w-5">Factura</th>
+                                                    <th>Cliente</th>
+                                                    <th class="text-right w-10">Total</th>
+                                                    <th class="text-center w-10">Sel</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @for (Int32 t = 0; t < 10; t++)
+                                                {
+                                                    <tr>
+                                                        <td class="text-center"><a href="#" class="fw-5" target="_blank">A232323</a></td>
+                                                        <td>Cliente <a href="#" class="fw-5">(12345)</a></td>
+                                                        <td class="text-right">1234</td>
+                                                        <td class="text-center"><a href="#" class="btn btn-sm btn-sm-2x btn-submit">Seleccionar</a></td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="d-flex justify-content-center box-guardar">
+                                        <a href="#" target="_blank" class="btn btn-sm btn-primary" id="">Guardar</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-6">
+
+                            <div class="card mb-3">
+                                <div class="card-header card-header-options">
+                                    <span>Abono total</span>
+                                </div>
+                                <div class="card-block p-0">
+                                    <div class="d-flex flex-column px-2 pt-2 mb-2">
+
+                                        <div class="d-flex mb-1">
+                                            <div class="box-labels mr-2 w-50">
+                                                <div class="d-flex align-items-center align-self-stretch">
+                                                    <label class="m-0 box-label-label align-self-stretch">Factura</label>
+                                                    <a href="#" class="fw-5 px-2">A332332</a>
+                                                </div>
+                                            </div>
+                                            <div class="box-labels w-50">
+                                                <div class="d-flex align-items-center align-self-stretch">
+                                                    <label class="m-0 box-label-label align-self-stretch">Fecha</label>
+                                                    <p class="mb-0 px-2" id="Fe_Al">25/10/2018</p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex">
+                                            <div class="box-labels w-100">
+                                                <div class="d-flex align-items-center align-self-stretch">
+                                                    <label class="m-0 box-label-label align-self-stretch">Cliente</label>
+                                                    <p class="mb-0 ml-2">Cliente <a href="#" class="fw-5">(12344)</a></p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="d-flex px-2 mb-1">
+                                        <span class="badge badge-pill badge-default p-2 pr-3 mt-1 mr-2 text-white"><i class="fa fa-tag text-white"></i> Cobrado</span>
+                                        <span class="badge badge-pill badge-default p-2 pr-3 mt-1 mr-2 text-white"><i class="fa fa-tag text-white"></i> Pendiente</span>
+                                        <span class="badge badge-pill badge-default p-2 pr-3 mt-1 mr-2 text-white"><i class="fa fa-tag text-white"></i> Parcial</span>
+                                    </div>
+
+                                    <div class="d-flex px-2 mb-2">
+                                        <span class="badge badge-pill badge-danger p-2 pr-3 mt-1 mr-2 text-white"><i class="fa fa-tag text-white"></i> Comisionado</span>
+                                    </div>
+
+                                    <hr class="mb-2 mt-2" />
+
+                                    <div class="d-flex px-2 mb-2">
+                                        <div class="input-group input-group-sm mb-0">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Serie abono</span>
+                                            </div>
+                                            <select class="custom-select" id="nuevoCliPob">
+                                                <option value="0" selected="">- Serie abono -</option>
+                                                <option value="1">Población</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex justify-content-center box-guardar">
+                                        <a href="#" target="_blank" class="btn btn-sm btn-primary" id="">Abonar</a>
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+                }
+
+            </div>
+        </div>
+
+    </div>
+
+</div>

@@ -1,0 +1,280 @@
+﻿@model ModuloFacturacionLibrary.ModuloFacturacionConfiguracionSeriesDeFacturacionViewModel
+@{
+    Layout = "~/Views/Shared/Modulo-Facturacion/_Facturacion-Configuracion.cshtml";
+    ViewData["Title"] = "Series de facturación";
+}
+
+<div class="main-content m-0" id="widget-area">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+
+                @if (Model.Model.Err.eserror)
+                {
+                    ViewData["err"] = Model.Model.Err.mensaje;
+                    @Html.Partial("AccesoDenegado");
+                }
+                else
+                {
+
+                    <div class="card mb-3">
+                        <div class="card-block card-info-header card-info-header-modulo p-0">
+                            <div class="d-flex justify-content-center align-items-center">
+                                <div class="col-1 pb-2 pt-2 d-flex justify-content-center align-items-center">
+                                    <img src="~/flaticons/pie-chart-1.svg" style="width: 64px">
+                                </div>
+                                <div class="col-11 pt-2 pb-2 box-border-left-light">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="card-info-desc d-flex flex-column py-3">
+                                            <h5 class="fw-5 title-section">Series de facturación</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="card card-table mb-3">
+                                <div class="card-header card-header-options">
+                                    <span>Listado series disponibles (Orden de las series real a la hora de facturar)</span>
+                                    <a href="#" class="btn btn-sm btn-primary nueva-serie">Nueva</a>
+                                </div>
+                                <div class="card-block p-0">
+                                    <div class="d-flex flex-column p-0">
+                                        <table class="table table-striped border-top-none">
+                                            <thead>
+                                                <tr>
+                                                    <th class="w-10 text-center">Serie</th>
+                                                    <th class="w-10 text-center">Nº</th>
+                                                    <th class="w-10 text-center">Última fecha</th>
+                                                    <th class="text-center">Observaciones</th>
+                                                    <th class="w-10 text-center">Enviable</th>
+                                                    <th class="w-10 text-center">Priridad</th>
+                                                    <th class="w-10 text-center">Visible</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @if (Model.Model.Series != null)
+                                                {
+                                                    @for (Int32 t = 0; t < Model.Model.Series.Length; t++)
+                                                    {
+                                                <tr>
+                                                    <td class="text-center"><a href="#" id="sel_@Model.Model.Series[t].datoI" class="fw-5 modificar-serie">@Model.Model.Series[t].datoS1</a></td>
+                                                    <td class="text-center">@Model.Model.Series[t].datoS2</td>
+                                                    <td class="text-center">@Model.Model.Series[t].datoS3</td>
+                                                    <td class="">@Model.Model.Series[t].datoS5</td>
+                                                    <td class="text-center">
+                                                        @if (Model.Model.Series[t].datoD == 0)
+                                                        {
+                                                            <a href="#" class="text-success" data-toggle="tooltip" data-placement="top" title="" data-original-title="Disponible para enviar por mail"><i class="fa fa-check"></i></a>
+                                                        }
+                                                        else
+                                                        {
+                                                            <a href="#" class="text-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="No disponible para enviar por mail"><i class="fa fa-ban"></i></a>
+                                                        }
+                                                    </td>
+                                                    <td class="text-center">@Model.Model.Series[t].datoS4</td>
+                                                    <td class="text-center">
+                                                        @if (Model.Model.Series[t].datoB)
+                                                        {
+                                                            <a href="#" class="text-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="Oculta"><i class="fa fa-ban"></i></a>
+                                                        }
+                                                        else
+                                                        {
+                                                            <a href="#" class="text-success" data-toggle="tooltip" data-placement="top" title="" data-original-title="Visible"><i class="fa fa-check"></i></a>
+                                                        }
+                                                    </td>
+                                                </tr>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <tr>
+                                                        <td colspan="5"><p class="mb-0 fw-5 p-3 text-danger"><i class="fa fa-times"></i> No hay resultados</p></td>
+                                                    </tr>
+                                                }
+
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    @*<div class="d-flex justify-content-center box-guardar">
+                                        <a href="#" target="_blank" class="btn btn-sm btn-primary" id="">Guardar</a>
+                                    </div>*@
+                                </div>
+                            </div>
+
+                            <div class="card card-table mb-3">
+                                <div class="card-header card-header-options">
+                                    <span>Listado de facturas eliminadas</span>
+                                </div>
+                                <div class="card-block p-0">
+                                    <div class="d-flex flex-column p-0">
+                                        <table class="table table-striped border-top-none">
+                                            <thead>
+                                                <tr>
+                                                    <th class="w-2 text-center">Serie</th>
+                                                    <th class="w-10 text-center">Fecha</th>
+                                                    <th class="w-5 text-center">Nº</th>
+                                                    <th class="w-2 text-center">Exposición</th>
+                                                    <th class="w-2 text-center">Eliminar</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @if (Model.Model.Elis != null)
+                                                {
+                                                    @for (Int32 t = 0; t < Model.Model.Elis.Length; t++)
+                                                    {
+                                                <tr>
+                                                    <td class="text-center">@Model.Model.Elis[t].datoS1</td>
+                                                    <td class="text-center">@Model.Model.Elis[t].datoS3</td>
+                                                    <td class="text-center">@Model.Model.Elis[t].datoS2</td>
+                                                    <td class="text-center">@Model.Model.Elis[t].datoS4</td>
+                                                    <td class="text-center"><a href="#"><i class="fa fa-times text-danger"></i></a></td>
+                                                </tr>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <tr>
+                                                        <td colspan="5"><p class="mb-0 fw-5 p-3 text-danger"><i class="fa fa-times"></i> No hay resultados</p></td>
+                                                    </tr>
+                                                }
+
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-4">
+
+
+                            <div class="card card-table mb-3" id="sindatos">
+                                <div class="card-header card-header-options">
+                                    <span>Información</span>
+                                    <div class="card-actions">
+                                        <ul>
+                                            <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="card-block" role="tablist" aria-multiselectable="true">
+                                    <div class="text-center mt-4 mb-4 p-5 bloque-sin-informacion">
+                                        <img src="/flaticons/chat.svg" style="width: 25%;" class="animated fadeIn">
+                                        <p class="pt-4 animated fadeIn">Si clica encima de la serie de la factura, en este espacio le aparecerán los datos de la misma</p>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="card mb-3" id="verserie" style="display:none;">
+                                <div class="card-header card-header-options">
+                                    <span id="tit-serie">Nueva serie de facturación</span>
+                                </div>
+                                <div class="card-block p-0">
+                                    <div class="p-2">
+                                        <div class="d-flex align-items-center mb-1">
+                                            <div class="input-group input-group-sm mb-0">
+                                                <div class="input-group-prepend">
+                                                    <label class="input-group-text">Serie</label>
+                                                </div>
+                                                <input type="text" class="form-control" id="Serie" aria-describedby="" value="" placeholder="Serie" />
+                                                <input type="hidden" id="ID_Serie" value="0" />
+                                            </div>
+                                        </div>
+                                        <div class="d-flex align-items-center mb-1">
+                                            <div class="input-group input-group-sm mb-0">
+                                                <div class="input-group-prepend">
+                                                    <label class="input-group-text">Nº</label>
+                                                </div>
+                                                <input type="text" class="form-control" id="Num" aria-describedby="" value="" placeholder="Nº" />
+                                            </div>
+                                        </div>
+                                        <div class="d-flex align-items-center mb-1">
+                                            <div class="input-group input-group-sm mb-0">
+                                                <div class="input-group-prepend">
+                                                    <label class="input-group-text" id="tFe_Ul">Fecha inicial</label>
+                                                </div>
+                                                <input type="text" class="form-control" id="Fe_Ul" aria-describedby="" value="" placeholder="Fecha inicial" />
+                                            </div>
+                                        </div>
+                                        <div class="d-flex align-items-center mb-1">
+                                            <div class="input-group input-group-sm mb-0">
+                                                <div class="input-group-prepend">
+                                                    <label class="input-group-text">Priridad</label>
+                                                </div>
+                                                <input type="text" class="form-control" id="Prio" aria-describedby="" value="100" placeholder="Prioridad" />
+                                            </div>
+                                        </div>
+                                        <div class="d-flex align-items-center mb-1">
+                                            <div class="input-group input-group-sm mb-0">
+                                                <div class="input-group-prepend">
+                                                    <label class="input-group-text">Observaciones</label>
+                                                </div>
+                                                <textarea class="form-control" aria-label="With textarea" placeholder="Observaciones" id="Obs" maxlength="200"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex align-items-center mb-1">
+                                            <div class="input-group input-group-sm mb-0">
+                                                <div class="input-group-prepend">
+                                                    <label class="input-group-text">Visible</label>
+                                                </div>
+                                                <input type="checkbox" id="Vis" class="m-2" /><input type="hidden" id="EsEdit" value="" />
+                                            </div>
+                                        </div>
+                                        <div class="d-flex align-items-center">
+                                            <div class="input-group input-group-sm mb-0">
+                                                <div class="input-group-prepend">
+                                                    <label class="input-group-text">No enviable</label>
+                                                </div>
+                                                <input type="checkbox" id="NoMail" class="m-2" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex justify-content-center box-border-top p-2 mdc-bg-blue-grey-50">
+                                        <a href="#" class="btn btn-sm btn-primary serie-guardar" id="btn-guardar-serie">Generar</a>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="card card-table mb-3" id="eliserie" style="display:none;">
+                                <div class="card-header card-header-options">
+                                    <span>Eliminar serie</span>
+                                </div>
+                                <div class="card-block p-0">
+                                    <div class="d-flex justify-content-center box-guardar">
+                                        <a href="#" target="_blank" class="btn btn-sm btn-danger serie-eliminar">Eliminar</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                }
+
+            </div>
+        </div>
+
+    </div>
+
+</div>

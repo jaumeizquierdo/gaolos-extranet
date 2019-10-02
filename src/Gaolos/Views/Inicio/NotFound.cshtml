@@ -1,0 +1,58 @@
+﻿
+@{
+    ViewData["Title"] = "NotFound";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Gaolos</title>
+
+    @* Estilos CSS *@
+    @Html.Partial("Estilos")
+
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <style>
+        body {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(https://public.gaolos.com/cdn/public/extranet/img/gaolos-login-bg-2.jpg) !important;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="d-flex justify-content-center align-items-center align-self-center">
+        <div class="card mb-3 col-5 mt-5 p-0" style="box-shadow: none;">
+            <div class="card-header card-header-options">
+                <span>Página no encontrada</span>
+            </div>
+            <div class="card-block">
+                <div class="row">
+                    <div class="d-none d-sm-block col-md-12 text-center">
+                        <img src="https://image.flaticon.com/icons/svg/564/564772.svg" style="width: 40%">
+                    </div>
+                    <div class="col-sm-12 col-md-8 text-left">
+                        <h5 class="d-none d-sm-block mb-3">Página no encontrada</h5>
+                        <ul class="mb-4">
+                            <li><i class="fa fa-angle-right text-danger mr-2"></i> La página que intentas visualizar <strong>no existe</strong> o se ha movido</li>
+                            <li><i class="fa fa-angle-right text-danger mr-2"></i> Por favor <strong>revisa la dirección</strong> o vuelve a la página anterior</li>
+                        </ul>
+                        <a href="/mi-perfil" class="btn btn-primary btn-sm mt-2">Volver a inicio</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    @* Core Scripts *@
+    <script src="~/lib/tether.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    @* Gaolos Scripts *@
+    <script src="~/js/core.js" asp-append-version="true"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,61 @@
+/* Panel */
+/* Mixins */
+/* Skin v4.6 - White / Dark / Blue */
+.panel {
+  border: 1px solid #eeeeee;
+  border-radius: 2px;
+  margin: 1em 0; }
+  .panel h2 {
+    font-family: "Roboto", sans-serif;
+    font-size: 3em;
+    font-weight: 600;
+    margin: 0 0 0.5em 0;
+    color: #b0bec5; }
+  .panel h3 {
+    font-family: "Roboto", sans-serif;
+    font-size: 1.5em;
+    font-weight: 500;
+    margin: 0 0 0.5em 0;
+    color: #b0bec5; }
+  .panel a {
+    color: #2196f3; }
+    .panel a:hover {
+      color: #e91e63; }
+  .panel .panel-inner {
+    margin: 1em;
+    padding: 1em; }
+  .panel .panel-body {
+    padding: 1em; }
+    .panel .panel-body .card {
+      margin-bottom: 1em; }
+    .panel .panel-body .td-check {
+      width: 3em; }
+    .panel .panel-body .custom-control {
+      margin-right: 0;
+      min-height: 1rem; }
+  .panel .panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0;
+    padding: 1em;
+    border-bottom: 2px solid #eeeeee;
+    background: #f5f5f5; }
+    .panel .panel-header h3 {
+      margin: 0; }
+    .panel .panel-header a i {
+      color: #b0bec5;
+      font-size: 1.5em; }
+    .panel .panel-header a:hover i {
+      color: #e91e63; }
+    .panel .panel-header .panel-actions {
+      margin: 0;
+      padding: 0; }
+      .panel .panel-header .panel-actions ul {
+        display: flex;
+        justify-content: space-between;
+        align-items: center; }
+        .panel .panel-header .panel-actions ul li {
+          margin: 0 0.5em; }
+  .panel .table {
+    margin: 0; }

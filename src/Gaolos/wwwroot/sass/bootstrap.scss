@@ -1,0 +1,14 @@
+﻿/* Bootstrap fixes */
+/* Estos estilos tendrán que modificarse en el core de bootstrap cuando haga el gulpfile */
+
+@import "variables.scss";
+@import "materialdesign.scss";
+
+.form-control {
+    font-size: 0.9rem;
+}
+
+.tooltip {
+    font-family: 'Roboto';
+    font-size: 0.9em;
+}

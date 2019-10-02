@@ -1,0 +1,325 @@
+﻿@model CursosLibrary.ModuloCursosCursoDetallesEditar_DocumentacionViewModel
+@{
+    Layout = "~/Views/Shared/Modulo-Cursos/_Cursos-Curso.cshtml";
+    ViewData["Title"] = "Documentación";
+    ViewData["Message"] = "Modulo de cursos - Gaolos App v2017";
+}
+
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section mb-0">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12" id="content">
+
+                @if (Model.Model.Err.eserror)
+    {
+        ViewData["err"] = Model.Model.Err.mensaje;
+            @Html.Partial("AccesoDenegado");
+}
+else
+{
+            @* tabs *@
+
+            @Html.Partial("Curso-Tabs")
+
+            @* cabecera *@
+
+            @Html.Partial("Curso-Cabecera")
+
+            <div class="row mb-3">
+                <div class="col-12">
+                    <div class="card card-table">
+                        <div class="card-header card-header-options">
+                            <span>Listado evaluados</span>
+                            <div class="card-actions">
+                                <ul>
+                                    <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card-block">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th class="">Nombre / NIF</th>
+                                        <th class="text-center">Grupo</th>
+                                        <th class="text-center">Teléfono</th>
+                                        <th class="text-center">Foto</th>
+                                        <th class="text-center w-10"><a class="sel-itar fw-5" href="#">Imprimir tarjeta</a></th>
+                                        <th class="text-center w-10"><a class="sel-imp fw-5" href="#">Imprimir diplomas</a></th>
+                                        <th class="text-center w-10"><a class="sel-env fw-5" href="#">Mail diplomas</a></th>
+                                        <th class="text-center w-10"><a class="sel-qos fw-5" href="#">QoS</a></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    @if (Model.Model.det != null)
+                        {
+                            @for (Int32 t = 0; t < Model.Model.det.Length; t++)
+                {
+                    if (!Model.Model.det[t].Blo)
+                    {
+                                    <tr>
+                                        <td class="copy-data">
+                                            <p class="mb-0 fw-5"><span>@Model.Model.det[t].Emp</span></p>
+                                            <div class="box-table-info">
+                                                <p class="mb-0"><small><span>@Model.Model.det[t].NIF</span></small></p>
+                                                <p class="mb-0"><small><span><a href="mailto:" class="fw-5">@Model.Model.det[t].Mail</a></span></small></p>
+                                            </div>
+                                        </td>
+                                        <td class="text-center">
+                                            <p class="mb-0 fw-5">@Model.Model.det[t].Grupo</p>
+                                        </td>
+                                        <td class="text-center">
+                                            <p class="mb-0">@Model.Model.det[t].Tel</p>
+                                        </td>
+                                        <td class="text-center">
+                                            <p class="mb-0">@Model.Model.det[t].Foto</p>
+                                        </td>
+                                        <td class="text-center">
+
+                                            @if (Model.Model.det[t].ITar == 0)
+                                            {
+                                                <input type="checkbox" class="" id="itar_@Model.Model.det[t].ID_Ocu2" checked>
+                                            }
+                                            else
+                                            {
+                                                <input type="checkbox" class="" id="itar_@Model.Model.det[t].ID_Ocu2">
+                                            }
+
+                                            <span class="fw-5">@Model.Model.det[t].ITar</span>
+
+                                        </td>
+                                        @*
+                                    <td class="text-center">
+                                            @if (Model.Model.det[t].Imprimir == 0 && Model.Model.det[t].QoS == 0 && Model.Model.det[t].IMail == 0 && Model.Model.det[t].Mail == "")
+                                {
+                                    <input type="checkbox" class="" id="imp_@Model.Model.det[t].ID_Ocu2" checked>
+                    }
+                    else
+                    {
+                        <input type="checkbox" class="" id="imp_@Model.Model.det[t].ID_Ocu2">
+        }
+                                            <span class="fw-5">@Model.Model.det[t].Imprimir</span>
+                                    </td>
+                                        *@
+                                        <td class="text-center">
+                                            <input type="checkbox" class="" id="imp_@Model.Model.det[t].ID_Ocu2">
+                                            <span class="fw-5">@Model.Model.det[t].Imprimir</span>
+                                        </td>
+
+                                        <td class="text-center">
+
+                                            @if (Model.Model.det[t].Imprimir == 0 && Model.Model.det[t].QoS == 0 && Model.Model.det[t].IMail == 0 && Model.Model.det[t].Mail != "")
+                                            {
+                                                <input type="checkbox" class="" id="env_@Model.Model.det[t].ID_Ocu2" checked>
+                                            }
+                                            else
+                                            {
+                                                <input type="checkbox" class="" id="env_@Model.Model.det[t].ID_Ocu2">
+                                            }
+
+                                            <span class="fw-5">@Model.Model.det[t].IMail</span>
+
+                                        </td>
+                                        <td class="text-center">
+
+                                            @if (Model.Model.det[t].Imprimir == 0 && Model.Model.det[t].QoS == 0 && Model.Model.det[t].IMail == 0 && Model.Model.det[t].Mail != "")
+                                            {
+                                                <input type="checkbox" class="" id="QoS_@Model.Model.det[t].ID_Ocu2" checked>
+                                            }
+                                            else
+                                            {
+                                                <input type="checkbox" class="" id="QoS_@Model.Model.det[t].ID_Ocu2">
+                                            }
+
+                                            <span class="fw-5">@Model.Model.det[t].QoS</span>
+
+                                        </td>
+                                    </tr>
+        }
+        else
+        {
+            <tr>
+                <td class="copy-data">
+                    <p class="mb-0"><a href="/modulo-clientes/clientes/cliente?ID_Cli2=@Model.Model.det[t].ID_Cli2" target="_blank" class="fw-5"><span>@Model.Model.det[t].Emp</span></a></p>
+                    <div class="box-table-info">
+                        <p class="mb-0"><small class="fw-5"><span>@Model.Model.det[t].NIF</span></small></p>
+                        <p class="mb-0"><small><a href="mailto:" class="fw-5"><span>@Model.Model.det[t].Mail</span></a></small></p>
+                    </div>
+                    
+                </td>
+                <td class="text-center">
+                    <p class="mb-0 fw-5">@Model.Model.det[t].Grupo</p>
+                </td>
+                <td>
+                    <p class="mb-0 fw-5">@Model.Model.det[t].Tel</p>
+                </td>
+                <td class="text-center">
+                    <p class="mb-0 fw-5">@Model.Model.det[t].Foto</p>
+                </td>
+                <td class="text-center"></td>
+                <td class="text-center"></td>
+                <td class="text-center"></td>
+                <td class="text-center"></td>
+            </tr>
+}
+
+}
+
+                if (Model.Model.det.Length > 0)
+                {
+                    <tr>
+                        <td colspan="8" class="mdc-bg-blue-grey-50 text-center">
+                            <button type="submit" class="btn btn-sm btn-primary control-documentacion-guardar">Enviar</button>
+                        </td>
+                    </tr>
+    }
+
+
+}
+else
+{
+            <tr>
+                <td colspan="8">
+                    <p class='fw-5 text-danger mb-0'><i class='fa fa-exclamation-circle mr-1'></i> No hay resultados</p>
+                </td>
+            </tr>
+}
+
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            @if (Model.Model.gru != null)
+{
+
+            <div class="row mb-3">
+                <div class="col-12">
+                    <div class="card card-table">
+                        <div class="card-header card-header-options">
+                            <span>Listado evaluados</span>
+                            <div class="card-actions">
+                                <ul>
+                                    <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card-block">
+                            <table class="table table-striped" id="content-grupo">
+                                <thead>
+                                    <tr>
+                                        <th class="">Grupo</th>
+                                        <th class="">Empresa</th>
+                                        <th class="text-center w-10"><a class="sel-itarg fw-5" href="#">Imprimir tarjeta</a></th>
+                                        <th class="text-center w-10"><a class="sel-impg fw-5" href="#">Imprimir diplomas</a></th>
+                                        <th class="text-center w-10"><a class="sel-envg fw-5" href="#">Mail diplomas</a></th>
+                                        <th class="text-center w-10"><a class="sel-qosg fw-5" href="#">QoS</a></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @for (Int32 t = 0; t < Model.Model.gru.Length; t++)
+                        {
+                            <tr>
+                                <td>
+                                    <p class="mb-0 fw-5">@Model.Model.gru[t].Grupo</p>
+                                </td>
+                                <td>
+                                    <p class="mb-0 fw-5">@Model.Model.gru[t].Emp</p>
+                                </td>
+                                <td class="text-center">
+                                    <input type="checkbox" class="" id="itarG_@Model.Model.gru[t].ID_Gru">
+                                    @Model.Model.gru[t].ITar
+                                </td>
+                                <td class="text-center">
+                                    <input type="checkbox" class="" id="impG_@Model.Model.gru[t].ID_Gru">
+                                    @Model.Model.gru[t].Imprimir
+                                </td>
+                                <td class="text-center">
+                                    <input type="checkbox" class="" id="envG_@Model.Model.gru[t].ID_Gru">
+                                    @Model.Model.gru[t].IMail
+                                </td>
+                                <td class="text-center">
+                                    <input type="checkbox" class="" id="QoSG_@Model.Model.gru[t].ID_Gru">
+                                    @Model.Model.gru[t].QoS
+                                </td>
+                            </tr>
+            }
+
+                                    @if (Model.Model.gru.Length > 0)
+                        {
+                            <tr>
+                                <td colspan="6" class="mdc-bg-blue-grey-50 text-center">
+                                    <button type="submit" class="btn btn-sm btn-primary control-documentacion-grupo-guardar">Enviar grupos</button>
+                                </td>
+                            </tr>
+            }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+}
+
+}
+            </div>
+        </div>
+    </div>
+</div>
+
+@*<script>
+    $(document).ready(function () {
+
+        var $copyElement;
+        var $html;
+
+
+        $copyElement = $("<a href='#' class='copy-info ml-2'><i class='fa fa-clipboard'></i></a>")
+
+        $(".copy-data p").on("mouseover", hoverCopy);
+
+        function hoverCopy(e) {
+
+            $(this).append($copyElement);
+            var $texto = $(this).find("span").text();
+
+            new ClipboardJS(".copy-info", {
+                text: function (trigger) {
+                    return $(trigger).parent().find('span').text();
+                }
+            });
+
+        }
+
+        //$(".copy-data p").hover(
+        //    function () {
+        //        $(this).append($copyElement);
+        //        var $texto = $(this).find("span").text();
+
+        //        new ClipboardJS(".copy-info", {
+        //            text: function (trigger) {
+        //                return $(trigger).parent().find('span').first().text().trim();
+        //            }
+        //        });
+
+        //        new ClipboardJS(".copy-info");
+        //    }
+        //);
+
+    });
+</script>*@

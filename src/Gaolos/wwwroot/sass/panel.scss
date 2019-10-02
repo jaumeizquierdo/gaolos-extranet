@@ -1,0 +1,102 @@
+﻿/* Panel */
+
+@import "variables.scss";
+@import "materialdesign.scss";
+
+.panel {
+    border: $panel-border-width $panel-border-color;
+    border-radius: $border-radius-global;
+    margin: $panel-margin;
+
+    // Estilos Básicos
+
+    h2 {
+        font-family: $panel-h2-family;
+        font-size: $panel-h2-size;
+        font-weight: $panel-h2-weight;
+        margin: $panel-h2-margin;
+        color: $panel-h2-color;
+    }
+    h3 {
+        font-family: $panel-h3-family;
+        font-size: $panel-h3-size;
+        font-weight: $panel-h3-weight;
+        margin: $panel-h3-margin;
+        color: $panel-h3-color;
+    }
+    a {
+        color: $panel-url;
+        &:hover {
+            color: $panel-url-hover;
+        }
+    }
+
+    // Content Inner
+
+    .panel-inner {
+        margin: $panel-inner-margin;
+        padding: $panel-inner-padding;
+    }
+
+    .panel-body {
+        padding: 1em;
+
+        .card {
+            margin-bottom: 1em;
+        }
+
+        .td-check {
+            width: 3em;
+        }
+
+        .custom-control {
+            margin-right: 0;
+            min-height: 1rem;
+        }
+
+    }
+
+    // Content Header
+
+    .panel-header {
+        @include flex;
+        margin: $panel-header-margin;
+        padding: $panel-header-padding;
+        border-bottom: $panel-header-border-size $panel-header-border-color;
+        background: $panel-header-background;
+        h3 {
+            margin: $panel-header-h3-margin;
+        }
+        a {
+            i {
+                color: $panel-header-icon;
+                font-size: $panel-header-icon-size;
+            }
+            &:hover {
+                i {
+                    color: $panel-header-icon-hover;
+                }
+            }
+        }
+
+        // Panel Actions
+
+        .panel-actions {
+            margin: $panel-actions-margin;
+            padding: $panel-actions-padding;
+            ul {
+                @include flex;
+                li {
+                    margin: $panel-actions-li-margin;
+                }
+            }
+        }
+    }
+
+    // Tablas
+
+    .table {
+        margin: $table-margin;
+    }
+
+} //panel

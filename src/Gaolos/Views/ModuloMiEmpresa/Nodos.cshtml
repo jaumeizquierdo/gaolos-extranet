@@ -1,0 +1,87 @@
+﻿@{string html = ViewData["Html"].ToString();}
+
+@{
+    Layout = "~/Views/Shared/Modulo-Mi-Empresa/_Nodos.cshtml";
+    ViewData["Title"] = "Sistema de Nodos - Estructura Empresarial";
+    ViewData["Message"] = "CMS - Gaolos App v2017";
+}
+
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+                @* Buscar usuarios *@
+
+                <div class="card mb-3">
+                    <div class="card-header card-header-options">
+                        <span>Buscar nodos</span>
+
+                        <div class="card-actions">
+                            <ul>
+                                <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+
+                    <div class="card-block p-0">
+
+                        <form action="@ViewData["Form"]" method="post">
+                            <div class="d-flex justify-content-center align-items-center">
+                                <div class="col-1 text-center box-border-right-light py-2">
+                                    <img src="~/flaticons/share.svg" style="width: 100%;">
+                                </div>
+                                <div class="col-11">
+
+                                    <div class="row p-0">
+                                        <div class="col-12 p-0">
+                                            <div class="d-flex mb-0 px-3">
+
+                                                <div class="input-group card-search-box">
+                                                    <input type="text" class="form-control" placeholder="Buscar nodos" name="buscar" value="@ViewData["buscar"]">
+                                                    <span class="input-group-append">
+                                                        <button class="btn btn-primary btn-sm" type="submit">BUSCAR</button>
+                                                    </span>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="card mb-3">
+                    <div class="card-header card-header-options">
+                        <span>@ViewData["Title"]</span>
+                        @Html.Partial("PanelActions")
+                    </div>
+                    <div class="card-block">
+
+                        <div class="arbol-nodos" id="idraw">
+                            <div class="tree">
+                                @Html.Raw(html)
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

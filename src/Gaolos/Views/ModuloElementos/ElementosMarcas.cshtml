@@ -1,0 +1,133 @@
+﻿@model ModuloElementosLibrary.ElementosPlantillasListadoViewModel
+@{
+    Layout = "~/Views/Shared/Modulo-Elementos/_Modulo-Elementos.cshtml";
+    ViewData["Title"] = "Marcas";
+    ViewData["PlantillaTitle"] = "Marcas";
+}
+
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+
+                @if (Model.Model.Err.eserror)
+    {
+        ViewData["err"] = Model.Model.Err.mensaje;
+                @Html.Partial("AccesoDenegado");
+    }
+    else
+    {
+
+                <div class="row">
+                    <div class="col-8">
+
+                        @* Resultado Búsqueda *@
+
+                        <div class="card card-table mb-3">
+                            <div class="card-header card-header-options">
+                                <span>Fabricantes</span>
+                                <div class="input-group input-group-sm col-5 mr-0 pr-0">
+                                    <input type="text" class="form-control form-control-sm" id="nuevaplan" placeholder="Nueva marca" maxlength="100">
+                                    <span class="input-group-append">
+                                        <button type="button" class="btn btn-primary btn-sm nueva-marca">Nuevo</button>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="card-block p-0">
+                                <div class="d-flex flex-column">
+                                    <table class="table table-small table-striped border-top-none">
+                                        <thead>
+                                            <tr>
+                                                <th>Fabricante</th>
+                                                <th class="w-15 text-center">Fecha</th>
+                                                <th class="w-10 text-center">Usuario</th>
+                                                <th class="w-5 text-center"><i class="fa fa-times" data-toggle="tooltip" data-placement="top" title="" data-original-title="Eliminar marca"></i></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (Model.Model.dat != null)
+                                            {
+                                                for (Int32 t = 0; t < Model.Model.dat.Length; t++)
+                                                {
+                                            <tr>
+                                                <td><a href="#" class="fw-5 sel-marca" id="mrc_@Model.Model.dat[t].datoI">@Model.Model.dat[t].datoS3</a></td>
+                                                <td class="text-center">@Model.Model.dat[t].datoS1</td>
+                                                <td class="text-center">@Model.Model.dat[t].datoS2</td>
+                                                <td class="text-center"><a href="#" data-toggle="tooltip" data-placement="top" title="" class="text-danger" data-original-title="Eliminar marca"><i class="fa fa-times"></i></a></td>
+                                            </tr>
+                                                }
+                                            } else
+                                            {
+                                                    <tr>
+                                                        <td colspan="4" class="p-0"><p class="mb-0 fw-5 p-2 text-danger"><i class="fa fa-times"></i> No hay resultados</p></td>
+                                                    </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        @* Resultado Búsqueda Paginador *@
+
+                        <nav aria-label="Búsqueda Listado" class="mb-3">
+                            @Html.Raw(Model.Model.Paginador)
+                        </nav>
+
+                    </div>
+
+                    <div class="col-4">
+
+                        <div class="card-info-wrapper w-100 mb-3" id="sindatos">
+                            <div class="card-info">
+                                <div class="d-flex justify-content-center align-items-center">
+                                    <img src="https://image.flaticon.com/icons/svg/609/609998.svg" style="width: 20%;">
+                                    <p class="mb-2 ml-3">Seleccione fabricante para modificar el contenido</p>
+                                </div>
+                            </div>
+                            <svg class="card-info-triangle">
+                                <polygon points="0,0 200,0 0,200" fill="currentColor"></polygon>
+                            </svg>
+                        </div>
+
+                        <div class="card card-table mb-3" id="ver-marca" style="display:none;">
+                            <div class="card-header card-header-options">
+                                <span>Modificar marca</span>
+                            </div>
+                            <div class="card-block p-0">
+                                <div class="d-flex flex-column p-2">
+                                    <div class="d-flex mb-1">
+                                        <div class="input-group input-group-sm mb-0">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Marca</span>
+                                            </div>
+                                            <input type="text" class="form-control" id="Marca" value="" placeholder="Modificar marca">
+                                            <input type="hidden" id="ID_Marca2" value="">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-center box-guardar">
+                                    <a href="#" target="_blank" class="btn btn-sm btn-primary modificar-marca">Guardar</a>
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,33 @@
+﻿/* Bootbox Modal */
+
+@import "variables.scss";
+@import "materialdesign.scss";
+
+.bootbox {
+    .modal-content {
+        box-shadow: none;
+    }
+    .bootbox-body {
+        p {
+            margin: $bootbox-body-p-margin;
+        }
+        .message-ok {
+            background: #1bcc87;
+            color: #fff;
+            padding: 1em;
+            border-radius: 3px;
+            i {
+                color: #fff;
+            }
+        }
+        .message-ko {
+            background: #f05f5c;
+            color: #fff;
+            padding: 1em;
+            border-radius: 3px;
+            i {
+                color: #fff;
+            }
+        }
+    }
+}

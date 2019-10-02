@@ -1,0 +1,1368 @@
+﻿/* Estilos Básicos */
+
+//@import "variables-previfoc.scss";
+@import "variables-previco.scss";
+@import "materialdesign.scss";
+@import "fontsize.scss";
+
+/////////////////////
+
+
+body {
+    background: $body-bg;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Roboto', sans-serif;
+    font-size: $body-size;
+    min-height: 100vh;
+}
+
+html {
+    height: 100%;
+    margin: 0;
+}
+
+.container-fluid {
+    width: 100%;
+}
+
+ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    li {
+        margin: 0;
+        padding: 0;
+    }
+}
+
+h1 {
+  margin: 0;
+  font-size: 15px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 400;
+    color: $title-color;
+    //font-family: 'Dosis', sans-serif;
+    //font-family: 'Lato', sans-serif;
+    font-family: 'Roboto', sans-serif;
+}
+
+h4 {
+    font-size: 1.25rem;
+}
+
+h5 {
+    font-size: 0.9rem;
+}
+
+a {
+    color: $url-base;
+    font-weight: 400;
+    @include fade-link;
+    &:hover {
+        color: $url-base-hover;
+        text-decoration: none;
+    }
+    &:focus {
+        outline: 0;
+        text-decoration: none;
+    }
+}
+
+p {
+    a {
+        font-weight: 500;
+        &:hover {
+            color: darken($main-color, 10%);
+        }
+    }
+    font-size: 1.1em;
+}
+
+header, footer {
+  color: $footer-color;
+}
+
+canvas {
+    vertical-align: inherit;
+}
+
+.text-blue {
+    color: $md-blue-500;
+}
+
+.container-bg {
+    background: #fff;
+}
+
+.main-color {
+    color: $main-color;
+}
+
+small {
+    font-size: 90%;
+}
+
+hr {
+    border-top: 2px solid $md-blue-grey-50;
+}
+
+/* Font Weight*/
+
+.fw-1 {
+    font-weight: 100;
+}
+
+.fw-2 {
+    font-weight: 200;
+}
+
+.fw-5,
+strong {
+    font-weight: 500;
+}
+
+.fw-8 {
+    font-weight: 800;
+}
+
+.fw-9 {
+    font-weight: 900;
+}
+
+/* Custom Width */
+
+.w-5 {
+    width: 5% !important;
+}
+
+.w-10 {
+    width: 10% !important;
+}
+
+.w-15 {
+    width: 10% !important;
+}
+
+.w-20 {
+    width: 20% !important;
+}
+
+/* Max-Width */
+
+.mw-100 {
+    max-width: 100%;
+}
+
+/* Max-Height */
+
+.mh-100 {
+    max-height: 100%;
+}
+
+/* Borders */
+
+.bc-main {
+    border-color: $main-color;
+}
+
+.bc-1 {
+    border: 1px solid;
+}
+
+.bc-2 {
+    border: 2px solid;
+}
+
+.bc-3 {
+    border: 3px solid;
+}
+
+.bc-4 {
+    border: 4px solid;
+}
+
+.bc-5 {
+    border: 5px solid;
+}
+
+/* Custom padding */
+
+.p-help {
+    padding: 0.10rem 0.4rem !important;
+}
+
+/* Loading */
+
+.loader {
+    margin: 0 0 2em;
+    height: 100px;
+    width: 20%;
+    text-align: center;
+    padding: 1em;
+    margin: 0 auto 1em;
+    display: inline-block;
+    vertical-align: top;
+}
+
+#loading {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(69,90,100,.5);
+    z-index: 9999;
+}
+
+/* Header sections */
+
+.header-section {
+    background: $md-grey-100;
+    height: 25rem;
+    //border-bottom: 10px solid $main-color;
+}
+
+/* Logo */
+
+#previfoc-logo-header {
+    display: block;
+    width: 200px;
+    height: 25px;
+    background: url(https://public.gaolos.com/cdn/public/grupread/2017/10/04/logo-previfoc-2018.svg) no-repeat;
+}
+
+#previco-logo-header {
+    display: block;
+    width: 180px;
+    height: 25px;
+    background: url(https://public.gaolos.com/cdn/public/grupread/2017/10/04/logo-previco-2018.svg) no-repeat;
+}
+
+/* Navbar */
+
+.nav-link {
+    font-weight: 500;
+}
+
+.main-menu {
+    .dropdown-item {
+        font-size: 0.9rem;
+        font-weight: 400;
+        color: $md-blue-grey-600;
+        &:hover {
+            background: $main-color;
+            color: #fff;
+        }
+    }
+    /* Logo */
+    .st0, .st1 {
+        fill: $main-color !important
+    }
+}
+
+/* Google Maps */
+
+#map-container {
+    width: 100%;
+    height: 25rem;
+    border-bottom: 10px solid $main-color;
+} 
+
+/* Streetview */
+
+.streetview {
+    width: 100%;
+    height: 20rem;
+    border: 3px solid $main-color !important;
+}
+
+/* Colors */
+
+.text-info {
+    color: $main-color !important;
+}
+
+/* Botones */
+
+.btn-primary {
+    background: #fff;
+    border: 2px solid $main-color;
+    color: $main-color;
+    font-weight: 500;
+    &:hover {
+        background: $btn-primary-bg;
+        border: 2px solid $btn-primary-border;
+    }
+    &:focus {
+        color: #fff;
+        border: 2px solid $main-color;
+    }
+}
+
+.btn-red {
+    background: $main-color;
+    color: #fff;
+    &:hover {
+        background: $md-blue-grey-600;
+        border-color: $md-blue-grey-600;
+    }
+}
+
+/* Forms */
+
+.form-control:focus {
+    border-color: $main-color;
+}
+
+.form-group {
+    label {
+        font-weight: 500;
+    }
+}
+
+.title-badge {
+    background: $main-color;
+    padding: 0.25rem 0.5rem;
+    color: #fff;
+    font-weight: 900;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+    font-size: 1.1em;
+    display: inline-flex;
+}
+
+.form-control {
+    border: 2px solid $md-blue-grey-100;
+}
+
+.custom-control-input:checked~.custom-control-indicator {
+    background-color: $main-color;
+}
+
+.custom-control-input:focus~.custom-control-indicator {
+    box-shadow: 0 0 0 1px #fff, 0 0 0 3px $main-color;;
+}
+
+button.btn-primary {
+    font-weight: 600;
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+.box-border-grey {
+    border: 4px solid $md-blue-grey-100;
+}
+
+/* Info */
+
+.section-info {
+    border-left: 5px solid $md-blue-grey-200;
+    padding-left: 1rem;
+    p {
+        font-size: 1.2em;
+    }
+}
+
+.inner-title {
+    background: $md-blue-grey-400;
+    color: #fff;
+    display: inline-flex;
+    padding: 0.4rem;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    border-radius: 4px;
+    font-weight: 500;
+}
+
+/* Listas */
+
+ul.list-section {
+    margin-left: 1.3rem;
+    li {
+        margin-bottom: 0.5rem;
+        font-size: 1.1em;
+    }
+    li:before {
+        content: "\f00c";
+        font-family: 'FontAwesome';
+        display: inline-block;
+        margin-left: -1.3rem;
+        width: 1.3rem;
+        color: $main-color;
+    }
+}
+
+ul.list-comp {
+    li {
+        line-height: 1rem;
+        margin-bottom: 0.8rem;
+    }
+}
+
+/* Enlaces especiales */
+
+a.special-link {
+    &:before {
+        content: "\f054";
+        font-family: 'FontAwesome';
+        display: inline-block;
+        margin-left: 0;
+        width: 1rem;
+        color: $main-color;
+    }
+}
+
+/* Iconos SVG */
+
+.ico-previfoc-0 {
+    fill: $main-color;
+}
+
+.ico-previfoc-1 {
+    fill: $main-color;
+}
+
+/* Col Img */
+
+.col-img {
+    img {
+        max-width: 80%;
+        border: 3px solid $md-blue-grey-100;
+    }
+}
+
+/* Menu */
+
+.dropdown-toggle::after {
+    font-family: 'FontAwesome' !important;
+    content: '\f107' !important;
+    border: none !important;
+    position: absolute;
+    margin: 0 0 0 0.3rem;
+    top: 0;
+}
+
+/* Carousel */
+
+.carousel {
+    //border-bottom: 5px solid $carousel-border-bottom;
+    .active {
+        background: none !important;
+    }
+    .btn-primary {
+        background: none;
+        border-color: #fff;
+        color: #fff;
+        &:hover {
+            background: $main-color;
+            color: $main-color;
+            border-color: $main-color;
+            color: #fff;
+        }
+    }
+    h3 {
+        font-weight: 800 !important;
+    }
+    h4 {
+        text-transform: uppercase;
+        font-size: 1.1rem !important;
+    }
+}
+
+/* Fondos */
+
+.bg-grey {
+    background: $md-grey-100;
+}
+
+/* Footer */
+
+.footer {
+    border-top: 5px solid $main-color;
+    background: $md-grey-100;
+    h5::after {
+        content: '';
+        width: 50px;
+        height: 3px;
+        background-color: $main-color;
+        margin-top: 0.5rem;
+        margin-bottom: 1rem;
+        display: block;
+    }
+}
+
+.footer-bottom {
+    background: $md-blue-grey-900;
+    a {
+        color: #fff;
+        &:hover {
+            color: $md-pink-a700;
+        }
+    }
+}
+
+.logos-certificados {
+    background: #fff;
+}
+
+.logos-items {
+    font-size: 0.9em;
+}
+
+/////////////////////////////////////////////////////////////////////////
+/// Estructura básica
+/////////////////////////////////////////////////////////////////////////
+
+/* Stripes */
+
+#header {
+    position: relative;
+    height: 40rem;
+}
+
+#stripes {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    transform: skewY(-12deg);
+    transform-origin: 0;
+    position: absolute;
+    background: linear-gradient(150deg, $stripes-color-1 15%, $stripes-color-2 70%, $stripes-color-3 94%);
+    span {
+        position: absolute;
+        height: 190px;
+    }
+}
+
+#stripes :nth-child(1) {
+    width: 33.33333%;
+    left: -16.66666%;
+    background: darken($stripes-color-1, 5%);
+}
+
+#stripes :nth-child(2) {
+    width: 33.33333%;
+    top: 0;
+    left: 16.66666%;
+    right: auto;
+    background: lighten($stripes-color-1, 5%);
+}
+
+#stripes :nth-child(3) {
+    width: 33.33333%;
+    left: 49.99999%;
+    bottom: auto;
+    background: $stripes-color-4;
+}
+
+#stripes :nth-child(4) {
+    width: 33.33333%;
+    top: 380px;
+    right: -16.66666%;
+    background: $stripes-color-3;
+}
+
+#stripes :nth-child(5) {
+    width: 33.33333%;
+    bottom: 0;
+    background: lighten($stripes-color-1, 8%);
+}
+
+/* Columnas - contenedores de cards */
+
+.dos-col {
+    .card {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+}
+
+.tres-col {
+    .card {
+        flex: 0 0 33.333333%;
+        max-width: 33.333333%;
+    }
+}
+
+.cuatro-col {
+    .card {
+        flex: 0 0 25%;
+        max-width: 25%;
+    }
+}
+
+/* Section Title */
+
+.section-title {
+    h2, h4 {
+        margin: 0;
+        padding: 0;
+    }
+    h2::after,
+    h4::after {
+        content: '';
+        width: 110px;
+        height: 5px;
+        background-color: $section-title-bg;
+        margin: auto;
+        display: block;
+        margin-top: 1rem;
+    }
+    h4::after {
+        width: 80px;
+        height: 3px;
+        background-color: $md-grey-200;
+    }
+    h2 {
+        font-weight: 800;
+    }
+}
+
+.section-title-b {
+    h2 {
+        font-size: 1.8em;
+    }
+    h2::after {
+        width: 80px;
+    }
+}
+
+/* Top Header */
+
+.top-menu {
+    background: $main-color;
+    color: #fff;
+    a {
+        color: #fff;
+    }
+    .dropdown-menu {
+        h6 {
+            a {
+                color: $md-red-a400;
+            }
+        }
+        .dropdown-item {
+            color: $md-blue-grey-600 !important;
+            font-size: 0.9rem;
+            &:hover {
+                background: $md-red-a400;
+                color: #fff !important;
+            }
+        }
+    }
+    p {
+        font-size: 1em;
+    }
+}
+
+.top-header {
+    a {
+        color: #fff;
+        &:hover {
+            color: $url-base;
+        }
+    }
+}
+
+/* Sticker header */
+
+.sticky-wrapper {
+    .btn-primary {
+        background: $sticky-btn-bg;
+        border: 2px solid $sticky-btn-border;
+        color: #fff;
+        &:hover {
+            background: #fff;
+            border: 2px solid $main-color;
+            color: $main-color;
+        }
+    }
+}
+
+.is-sticky {
+    .main-menu {
+        z-index: 1999 !important;
+        //background: $md-pink-a700;
+        background: $md-blue-grey-800;
+        padding: 0.3rem 0 !important;
+        //border-bottom: 1px solid $md-blue-grey-800;
+        a {
+            color: #fff;
+        }
+        .btn-primary {
+            border-color: $md-pink-a400;
+            background: $md-pink-a400;
+            color: #fff;
+        }
+        /* Logo */
+        .st0, .st1 {
+            fill: #fff !important
+        }
+        svg {
+            width: 140px !important;
+        }
+        .dropdown-item {
+            color: $md-blue-grey-600 !important;
+            &:hover {
+                    color: #fff !important;
+                }
+        }
+        .dropdown-header {
+            a {
+                color: $main-color !important;
+            }
+        }
+        h4, h6 {
+            a {
+                color: $main-color !important;
+            }
+        }
+    }
+    @include fade-link;
+    #previco-logo-header {
+        background: url(https://public.gaolos.com/cdn/public/grupread/2017/10/04/logo-previco-2018-white.svg) no-repeat !important;
+    }
+    #previfoc-logo-header {
+        background: url(https://public.gaolos.com/cdn/public/grupread/2017/10/04/logo-previfoc-2018-white.svg) no-repeat !important;
+    }
+}
+
+/* Previfoc Panel Contáctanos */
+
+#previfoc-panel {
+    position: fixed;
+    right: 0;
+    margin-top: 20%;
+    width: 3rem;
+    background: $main-color;
+    height: 6rem;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    padding: 0.5rem;
+    text-align: center;
+    color: #fff;
+    @include fade-link;
+    cursor: pointer;
+    i {
+        font-size: 2em;
+    }
+    &:hover {
+        background: $md-blue-grey-800;
+    }
+}
+
+#previfoc-panel-content {
+    display: block;
+    position: fixed;
+    width: 70rem;
+    right: 0;
+    left: 0;
+    margin: 10% auto;
+    background: #fff;
+    border: 2px solid $md-grey-100;
+    transition: left .7s, top 0s, padding-top 0s;
+    z-index: 99999;
+    p {
+        font-size: 1em;
+    }
+}
+
+#previfoc-panel-close {
+    border: 2px solid $main-color;
+    background: #fff;
+    padding: 0.2rem 0.5rem;
+    border-radius: 3px;
+    text-transform: uppercase;
+    font-size: 0.7rem;
+    font-weight: 500;
+    position: absolute;
+    right: 0;
+    top: -35px;
+    z-index: 99999;
+    i {
+        color: $main-color;
+    }
+    &:hover {
+        background: $main-color;
+        i {
+            color: #fff;
+        }
+        color: #fff;
+    }
+}
+
+.previfoc-panel-content-active {
+    right: 0 !important;
+}
+
+.overlay {
+    background: rgba(0,0,0,0.6);
+    height: 100%;
+    width: 100%;
+    display: none;
+    position: fixed;
+    z-index: 2999;
+}
+
+/* Cards */
+
+.card {
+    p, li {
+        font-size: 1em !important;
+    }
+    border: 1px solid $md-blue-grey-100;
+    box-shadow: 0 1px 2px $md-blue-grey-100;
+    .card-block {
+        //padding: 1rem 0.5rem;
+        padding: 1rem;
+    }
+    .card-img-top {
+        border-bottom: 3px solid $main-color;
+        max-width: 100%;
+    }
+    &:hover {
+        border: 1px solid $md-blue-grey-200;
+        //border: 1px solid $main-color;
+    }
+    .card-img {
+        max-height: 180px;
+        overflow: hidden;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+        border-bottom: 2px solid $main-color;
+    }
+}
+
+.card-no-shadow {
+    box-shadow: none;
+}
+
+.container-grey {
+    background: $md-blue-grey-50;
+    border-radius: 4px;
+    border: 1px solid rgba($md-blue-grey-100, .3);
+}
+
+/////////////////////////////////////////////////////////////////////////
+/// Home                                                              ///
+/////////////////////////////////////////////////////////////////////////
+
+/* Carousel home */
+
+.carousel-home {
+    max-height: 500px;
+    overflow: hidden;
+    img {
+        position: relative;
+        bottom: 200px;
+    }
+}
+
+.carousel-news {
+    border-bottom: none;
+}
+
+/* Tabs Home */
+
+.active {
+    background: $main-color !important;
+}
+
+.ico-previfoc {
+    fill: $main-color;
+}
+
+/* Noticias - Actualidad */
+
+.container-actualidad {
+    position: relative;
+    padding: 0;
+    margin: 0;
+    .container-stripes {
+        position: absolute !important;
+        overflow: hidden;
+        width: 100%;
+    }
+    .container-actualidad-title {
+        background: none;
+    }
+    .section-title {
+        h2 {
+            color: #fff;
+        }
+        h2::after {
+            background: #fff;
+        }
+    }
+    .card {
+        border: none;
+        @include fade-link();
+        img {
+            border-top-right-radius: 4px;
+            border-top-left-radius: 4px;
+        }
+    }
+}
+
+/* Servicios */
+
+.container-servicios {
+    .card {
+        border: 1px solid #fff;
+        @include fade-link;
+        &:hover {
+            border: 1px solid $main-color;
+        }
+    }
+}
+
+/* Table */
+
+table {
+    th, td {
+        p {
+            font-size: 1em;
+        }
+    }
+}
+
+/////////////////////////////////////////////////////////////////////////
+/// Blog                                                              ///
+/////////////////////////////////////////////////////////////////////////
+
+/* Top Stripes */
+
+.blog {
+    p {
+        text-align: justify;
+    }
+
+    ul {
+        margin-left: 1.3rem;
+        margin-bottom: 1rem;
+
+        li:before {
+            content: "\f00c";
+            font-family: 'FontAwesome';
+            display: inline-block;
+            margin-left: -1.3rem;
+            width: 1.3rem;
+            color: $main-color;
+        }
+    }
+
+    .tags {
+        a {
+            color: #fff;
+        }
+    }
+
+    .badge-default {
+        @include fade-link;
+        background: $md-blue-grey-300;
+
+        &:hover {
+            background: $md-blue-grey-600;
+        }
+    }
+
+    h3 {
+        font-size: 1.2em;
+        margin-top: 1.5rem;
+        margin-bottom: 1.1rem;
+    }
+
+    .img-entrada {
+        img {
+            max-width: 100%;
+            border-radius: 0;
+            margin-bottom: 2rem;
+            border: 3px solid $main-color;
+        }
+    }
+
+    .post {
+        p, li {
+            font-size: 1rem;
+        }
+
+        ul, ol {
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+
+            li {
+                margin-bottom: 1rem;
+            }
+        }
+
+        ol {
+            counter-reset: item;
+            list-style: none;
+
+
+            li:before {
+                counter-increment: item;
+                content: counter(item)". ";
+                color: $main-color;
+                font-weight: 500;
+                display: inline-block;
+                margin-right: 10px;
+            }
+        }
+
+        h3 {
+            font-weight: 500;
+        }
+
+        .card {
+            img {
+                max-width: 100%;
+            }
+
+            .card-block {
+                h4 {
+                    font-size: 1.4rem;
+                }
+
+                p {
+                    font-size: 0.95rem;
+                }
+            }
+        }
+    }
+}
+
+.blog-list {
+    margin-top: 3rem;
+    .blog-date {
+        //background: $main-color;
+        color: $main-color;
+    }
+    .blog-img {
+        border-radius: 0;
+        max-width: 80%;
+        //border: 2px solid $md-grey-300;
+        border: 3px solid $md-blue-grey-100;
+        @include fade-link;
+        &:hover {
+            border: 3px solid $main-color;
+        }
+    }
+    .badge-default {
+        background: $md-blue-grey-300;
+        margin-right: 0.2rem;
+        @include fade-link;
+        a {
+            color: #fff;
+        }
+        &:hover {
+            background: $md-blue-grey-600;
+        }
+    }
+}
+
+/* comentarios */
+
+.comments {
+    p {
+        font-size: 0.9rem !important;
+    }
+    ul {
+        margin: 0 !important;
+        li {
+            margin-bottom: 2rem !important;
+        }
+        li:before {
+            content: '';
+            display: none;
+        }
+        .reply {
+            margin-left: 2rem !important;
+            margin-top: 2rem !important;
+        }
+    }
+    .reply {
+        margin-left: 3rem;
+    }
+}
+
+/* paginador */
+
+.page-link {
+    color: $main-color;
+    font-weight: 500;
+}
+
+.page-item.active .page-link {
+    background: $main-color;
+    border-color: $main-color;
+}
+
+.page-link:focus, .page-link:hover {
+    color: $main-color;
+}
+
+.paginadortotal .text-primary {
+    color: $main-color !important;
+}
+
+/////////////////////////////////////////////////////////////////////////
+/// Parallax & Carousel                                               ///
+/////////////////////////////////////////////////////////////////////////
+
+.parallax {
+    background-size: cover !important;
+    background-attachment: fixed !important;
+    background-position: center;
+    height: 30rem;
+    width: 100%;
+    border-bottom: 10px solid $main-color;
+    h3 {
+        font-weight: 800;
+    }
+    h5 {
+        font-weight: 400;
+        color: #fff;
+        a {
+            color: #fff;
+        }
+    }
+}
+
+.parallax-home {
+    background-size: cover !important;
+    //background-attachment: fixed !important;
+    background-position: center;
+    width: 100%;
+}
+
+/// Parallax Previfoc
+
+.parallax-deteccion {
+    background: linear-gradient(rgba(0,0,0,.2),rgba(0,0,0,.2)), url('https://public.gaolos.com/cdn/public/previfoc/img/parallax-deteccion-b.jpg') no-repeat;
+    background-position: 0 -370px !important;
+}
+
+.parallax-residencial {
+    background: linear-gradient(rgba(0,0,0,.2),rgba(0,0,0,.2)), url('https://public.gaolos.com/cdn/public/previfoc/img/previfoc-sliders-01-residencial.jpg') no-repeat;
+    background-position: 0 0 !important;
+}
+
+.parallax-administradores {
+    background: linear-gradient(rgba(0,0,0,.2),rgba(0,0,0,.2)), url('https://public.gaolos.com/cdn/public/previfoc/img/previfoc-sliders-02-administradores.jpg') no-repeat;
+    background-position: 0 0 !important;
+}
+
+.parallax-empresas {
+    background: linear-gradient(rgba(0,0,0,.2),rgba(0,0,0,.2)), url('https://public.gaolos.com/cdn/public/previfoc/img/previfoc-sliders-03-empresas.jpg') no-repeat;
+    background-position: 0 0 !important;
+}
+
+.parallax-organismos {
+    background: linear-gradient(rgba(0,0,0,.2),rgba(0,0,0,.2)), url('https://public.gaolos.com/cdn/public/previfoc/img/previfoc-sliders-04-organismos.jpg') no-repeat;
+    background-position: 0 -340px !important;
+}
+
+.parallax-corporativa {
+    background: linear-gradient(rgba(0,0,0,.2),rgba(0,0,0,.2)), url('https://public.gaolos.com/cdn/public/grupread/2017/09/26/previfoc-slider-quienes-trabaja.jpg') no-repeat;
+    background-position: 0 -380px !important;
+}
+
+.parallax-alumbrado {
+    background: linear-gradient(rgba(0,0,0,.2),rgba(0,0,0,.2)), url('https://public.gaolos.com/cdn/public/previfoc/img/previfoc-slider-alumbrado.jpg') no-repeat;
+    background-position: 0 -340px !important;
+}
+
+.parallax-ignifugaciones {
+    background: url('https://public.gaolos.com/cdn/public/previfoc/img/previfoc-slider-ignifugaciones.jpg') no-repeat;
+    background-position: 0 -340px !important;
+}
+
+.parallax-extincion {
+    background: url('https://public.gaolos.com/cdn/public/previfoc/img/previfoc-slider-extincion.jpg') no-repeat;
+    background-position: 0 -340px !important;
+}
+
+.parallax-evacuacion {
+    background: url('https://public.gaolos.com/cdn/public/previfoc/img/previfoc-slider-evacuacion.jpg') no-repeat;
+    background-position: 0 -340px !important;
+}
+
+.parallax-extintores {
+    background: url('https://public.gaolos.com/cdn/public/previfoc/img/5801b-previfoc-extintores.jpg') no-repeat;
+    background-position: 0 -340px !important;
+}
+
+.parallax-previfoc-residencial {
+    background: url('https://public.gaolos.com/cdn/public/previco/img/previco-sliders-01-residencial.jpg') no-repeat;
+    background-position: 0 -80px !important;
+}
+
+.parallax-previfoc-administradores {
+    background: url('https://public.gaolos.com/cdn/public/previco/img/previco-sliders-02-administradores.jpg') no-repeat;
+    background-position: 0 -80px !important;
+}
+
+.parallax-previfoc-empresas {
+    background: url('https://public.gaolos.com/cdn/public/previco/img/previco-sliders-03-empresas.jpg') no-repeat;
+    background-position: 0 -80px !important;
+}
+
+.parallax-previfoc-organismos {
+    background: url('https://public.gaolos.com/cdn/public/previco/img/previco-sliders-04-organismos.jpg') no-repeat;
+    background-position: 0 -80px !important;
+}
+
+.parallax-servicios {
+    //background: url('https://public.gaolos.com/cdn/public/previfoc/img/parallax-deteccion-b.jpg') no-repeat;
+    background: url('https://public.gaolos.com/cdn/public/grupread/2017/09/20/parallax-deteccion-b-thumbnails.jpg-large.jpg') no-repeat;
+    background-position: 0 0 !important;
+}
+
+.parallax-normativa {
+    background: linear-gradient(rgba(0,0,0,.2),rgba(0,0,0,.2)), url('https://public.gaolos.com/cdn/public/grupread/2017/09/22/previfoc-normativas.jpg') no-repeat;
+    background-position: 0 -100px !important;
+}
+
+.parallax-contacto {
+    background: linear-gradient(rgba(0,0,0,.2),rgba(0,0,0,.2)), url('https://public.gaolos.com/cdn/public/grupread/2017/09/22/previfoc-slider-contacto.jpg') no-repeat;
+    background-position: 0 -100px !important;
+}
+
+.parallax-contratos-mantenimiento {
+    background: linear-gradient(rgba(0,0,0,.2),rgba(0,0,0,.2)), url('https://public.gaolos.com/cdn/public/grupread/2017/09/22/proteccion-premium-residencial-thumbnails.jpg-large.jpg') no-repeat;
+    background-position: 0 -100px !important;
+}
+
+.parallax-proteccion-estandar-residencial {
+    background: linear-gradient(rgba(0,0,0,.2),rgba(0,0,0,.2)), url('https://public.gaolos.com/cdn/public/grupread/2017/09/28/extintores-blog-49-thumbnails.jpg-large.jpg') no-repeat;
+    background-position: 0 -100px !important;
+}
+
+.parallax-proteccion-plus-residencial {
+    background: linear-gradient(rgba(0,0,0,.2),rgba(0,0,0,.2)), url('https://public.gaolos.com/cdn/public/grupread/2017/09/28/extintores-blog-46-thumbnails.jpg-large.jpg') no-repeat;
+    background-position: 0 -360px !important;
+}
+
+.parallax-proteccion-estandar-empresa {
+    background: linear-gradient(rgba(0,0,0,.2),rgba(0,0,0,.2)), url('https://public.gaolos.com/cdn/public/grupread/2017/09/28/extintores-blog-43-thumbnails.jpg-large.jpg') no-repeat;
+    background-position: 0 -100px !important;
+}
+
+.parallax-proteccion-plus-empresa {
+    background: linear-gradient(rgba(0,0,0,.2),rgba(0,0,0,.2)), url('https://public.gaolos.com/cdn/public/grupread/2017/09/27/previfoc-blog-041-thumbnails.jpg-large.jpg') no-repeat;
+    background-position: 0 -360px !important;
+}
+
+.parallax-instalacion-mantenimiento {
+    //background: linear-gradient(rgba(0,0,0,.2),rgba(0,0,0,.2)), url('https://public.gaolos.com/cdn/public/grupread/2017/09/27/previfoc-blog-041-thumbnails.jpg-large.jpg') no-repeat;
+    background: linear-gradient(rgba(0,0,0,.2),rgba(0,0,0,.2)), url('https://public.gaolos.com/cdn/public/grupread/2017/09/26/seccion-normativas.jpg') no-repeat;    
+    background-position: 0 -150px !important;
+}
+
+.parallax-contratos-mantenimiento-transparente {
+    //background: linear-gradient(rgba(0,0,0,.2),rgba(0,0,0,.2)), url('https://public.gaolos.com/cdn/public/grupread/2017/09/27/previfoc-blog-041-thumbnails.jpg-large.jpg') no-repeat;
+    background: linear-gradient(rgba(0,0,0,.5),rgba(0,0,0,.2)), url('https://public.gaolos.com/cdn/public/grupread/2017/09/29/contratomantenimiento.jpg') no-repeat;    
+    background-position: 0 -150px !important;
+}
+
+.parallax-grup-read-online {
+    //background: linear-gradient(rgba(0,0,0,.2),rgba(0,0,0,.2)), url('https://public.gaolos.com/cdn/public/grupread/2017/09/27/previfoc-blog-041-thumbnails.jpg-large.jpg') no-repeat;
+    background: linear-gradient(rgba(0,0,0,.5),rgba(0,0,0,.3)), url('https://public.gaolos.com/cdn/public/grupread/2017/09/29/grup-read-online-b-thumbnails.jpg-large.jpg') no-repeat;        
+    background-position: 0 0 !important;
+}
+
+.parallax-blog {
+    background: $parallax-blog-bg;
+    background-position: 0 -340px !important;
+    height: 25rem;
+}
+
+/// Parallax Previco
+
+.parallax-baja-tension {
+    background: linear-gradient(rgba(0,0,0,.2),rgba(0,0,0,.2)), url('https://public.gaolos.com/cdn/public/previco/img/previco-slider-baja-tension.jpg') no-repeat;
+    background-position: 0 0 !important;
+}
+
+.parallax-bombas-achique {
+    background: linear-gradient(rgba(0,0,0,.2),rgba(0,0,0,.2)), url('https://public.gaolos.com/cdn/public/previco/img/previco-slider-bombas-achique.jpg') no-repeat;
+    background-position: 0 -220px !important;
+}
+
+.parallax-telecomunicaciones {
+    background: linear-gradient(rgba(0,0,0,.2),rgba(0,0,0,.2)), url('https://public.gaolos.com/cdn/public/previco/img/previco-slider-telecomunicaciones.jpg') no-repeat;
+    background-position: 0 -250px !important;
+}
+
+.parallax-ingenieria {
+    background: linear-gradient(rgba(0,0,0,.2),rgba(0,0,0,.2)), url('https://public.gaolos.com/cdn/public/previco/img/previco-slider-ingenieria.jpg') no-repeat;
+    background-position: 0 -500px !important;
+}
+
+.parallax-eca {
+    background: linear-gradient(rgba(0,0,0,.2),rgba(0,0,0,.2)), url('https://public.gaolos.com/cdn/public/previco/img/previco-slider-gestion-documental.jpg') no-repeat;
+    background-position: 0 -500px !important;
+}
+
+.parallax-termografia {
+    background: linear-gradient(rgba(0,0,0,.2),rgba(0,0,0,.2)), url('https://public.gaolos.com/cdn/public/previco/img/previco-slider-termografia.jpg') no-repeat;
+    background-position: 0 -40px !important;
+}
+
+.parallax-puertas-parking {
+    background: linear-gradient(rgba(0,0,0,.2),rgba(0,0,0,.2)), url('https://public.gaolos.com/cdn/public/grupread/2017/10/06/puerta-parking.jpg') no-repeat;
+    background-position: 0 -100px !important;
+}
+
+.parallax-previco-residencial {
+    background: linear-gradient(rgba(0,0,0,.2),rgba(0,0,0,.2)), url('https://public.gaolos.com/cdn/public/previco/img/previco-sliders-01-residencial.jpg') no-repeat;
+    background-position: 0 -200px !important;
+}
+
+.parallax-previco-administradores {
+    background: linear-gradient(rgba(0,0,0,.2),rgba(0,0,0,.2)), url('https://public.gaolos.com/cdn/public/previco/img/previco-sliders-02-administradores.jpg') no-repeat;
+    background-position: 0 -200px !important;
+}
+
+.parallax-previco-empresas {
+    background: linear-gradient(rgba(0,0,0,.2),rgba(0,0,0,.2)), url('https://public.gaolos.com/cdn/public/previco/img/previco-sliders-03-empresas.jpg') no-repeat;
+    background-position: 0 -200px !important;
+}
+
+.parallax-previco-organismos {
+    background: linear-gradient(rgba(0,0,0,.2),rgba(0,0,0,.2)), url('https://public.gaolos.com/cdn/public/previco/img/previco-sliders-04-organismos.jpg') no-repeat;
+    background-position: 0 -200px !important;
+}
+
+.parallax-blog-previco {
+    background: url('https://public.gaolos.com/cdn/public/grupread/2017/10/09/pantallas-led-eventos-thumbnails.jpg-large.jpg') no-repeat;
+    background-position: 0 -340px !important;
+    height: 25rem;
+}
+
+.parallax-contratos-mantenimiento-transparente-previco {
+    background: linear-gradient(rgba(0,0,0,.5),rgba(0,0,0,.2)), url('https://public.gaolos.com/cdn/public/grupread/2017/10/26/previco-contratos-transparentes-thumbnails.jpg-large.jpg') no-repeat;
+    background-position: 0 -150px !important;
+}
+
+.parallax-grup-read-online-previco {
+    background: linear-gradient(rgba(0,0,0,.5),rgba(0,0,0,.3)), url('https://public.gaolos.com/cdn/public/grupread/2017/10/26/previco-plataforma-web-thumbnails.jpg-large.jpg') no-repeat;
+    background-position: 0 -210px !important;
+}
+
+.parallax-cctv-previco {
+    background: linear-gradient(rgba(0,0,0,.2),rgba(0,0,0,.2)), url('https://public.gaolos.com/cdn/public/grupread/2017/10/26/previco-cctv-thumbnails.jpg-large.jpg') no-repeat;
+    background-position: 0 0 !important;
+}
+
+.parallax-empresas-previco {
+    background: linear-gradient(rgba(0,0,0,.3),rgba(0,0,0,.3)), url('https://public.gaolos.com/cdn/public/grupread/2017/09/20/previco-slider-bombas-achique-thumbnails.jpg-large.jpg') no-repeat;
+    background-position: 0 -200px !important;
+}
+
+/// Parallax Grup Read
+
+/// Parallax Plugin Electric

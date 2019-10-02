@@ -1,0 +1,365 @@
+﻿@model ModuloAsistenciasLibrary.ModuloAsisnteicasAsistenciasProduccionViewModel
+
+@{
+    Layout = "~/Views/Shared/Modulo-Asistencias/_Modulo-Asistencias.cshtml";
+    ViewData["Title"] = "Producción";
+    ViewData["Message"] = "Modulo de Asistencias - Gaolos App v2018";
+}
+
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-md-12">
+                
+                        @if (Model.Model.Err.eserror)
+            {
+                ViewData["err"] = Model.Model.Err.mensaje;
+                    @Html.Partial("AccesoDenegado");
+        }
+        else
+        {
+                
+                @* Buscar usuarios *@
+
+                <div class="card mb-3">
+                    <div class="card-header card-header-options">
+                        <span>Buscar</span>
+
+                        <div class="card-actions">
+                            <ul>
+                                <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-block p-0">
+
+                        <form action="@ViewData["Form"]" method="post">
+                            <div class="d-flex justify-content-center align-items-center">
+
+                                <div class="col-1 pb-2 pt-2">
+                                    <img src="https://image.flaticon.com/icons/svg/321/321863.svg" style="width: 100%;">
+                                </div>
+
+                                <div class="col-11 p-0 box-border-left-light">
+
+                                    <div class="p-2">
+                                        <div class="d-flex mb-1 px-2 py-3">
+
+                                            <div class="input-group input-group-sm mb-0 mr-2">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">Operario</span>
+                                                </div>
+                                                <input type="text" class="form-control" placeholder="Operario" id="prod-ope" name="prod-ope" value="@Model.Model.UsuAsi">
+                                                <input type="hidden" id="tprod-ope" name="tprod-ope" value="@Model.Model.UsuAsi">
+                                                <input type="hidden" id="vprod-ope" name="vprod-ope" value="@ViewData["ID_Us_Asi"]">
+                                            </div>
+
+                                            <div class="input-group input-group-sm mb-0 mr-2">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">Fecha inicio</span>
+                                                </div>
+                                                <input type="text" class="form-control" placeholder="Fecha inicio" id="Fe_In" name="Fe_In" value="@ViewData["Fe_In"]">
+                                            </div>
+
+                                            <div class="input-group input-group-sm mb-0 mr-2">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">Fecha fin</span>
+                                                </div>
+                                                <input type="text" class="form-control" placeholder="Fecha fin" id="Fe_Fi" name="Fe_Fi" value="@ViewData["Fe_Fi"]">
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex justify-content-center box-border-top mdc-bg-blue-grey-50 pt-2 pb-2">
+                                        <button type="submit" class="btn btn-sm btn-primary">Buscar</button>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+                @if (!Model.Model.SiPost)
+                {
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card card-table mb-3">
+                                <div class="card-header card-header-options">
+                                    <span>Asistencias facturadas</span>
+                                </div>
+                                <div class="card-block">
+
+                                    <div class="d-flex p-3">
+                                        <i class="material-icons text-danger">error_outline</i>
+                                        <p class="mb-0 ml-2">Debe seleccionar un operario e indicar entre que intervalos de tiempo quiere mostrar los datos de producción.</p>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                }
+                else
+                {
+
+                    <div class="row">
+
+                        <div class="col-12">
+                            @* Listado *@
+                            <div class="card card-table mb-3">
+                                <div class="card-header card-header-options">
+                                    <span>@ViewData["Title"]</span>
+                                </div>
+                                <div class="card-block">
+
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-center w-10">Nº Asis</th>
+                                                <th class="text-left">Cliente</th>
+                                                <th class="text-left">Dirección</th>
+                                                <th class="text-left">Tipo</th>
+                                                <th class="text-center">Fecha inicio</th>
+                                                <th class="text-center">Fecha fin</th>
+                                                <th class="text-center">Minutos</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (Model.Model.det != null)
+                                            {
+                                                @for (Int32 t = 0; t < Model.Model.det.Length; t++)
+                                                {
+                                                    <tr>
+                                                        <td class="text-center">
+                                                            <a href="/modulo-asistencias/historial/asistencia?ID_Asis2=@Model.Model.det[t].ID_Asis2" target="_blank" data-toggle="tooltip" data-placement="top" title="" data-original-title="Ver detalles de la asistencia" class="fw-5">@Model.Model.det[t].ID_Asis2</a>
+                                                        </td>
+                                                        <td>
+                                                            <p class="mb-0">@Model.Model.det[t].Emp</p>
+                                                        </td>
+                                                        <td>
+                                                            <p class="mb-0">@Model.Model.det[t].Pob - @Model.Model.det[t].CP</p>
+                                                        </td>
+                                                        <td>
+                                                            <p class="mb-0">@Model.Model.det[t].Tipo</p>
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <p class="mb-0">@Model.Model.det[t].Fe_In</p>
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <p class="mb-0">@Model.Model.det[t].Fe_Fi</p>
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <p class="mb-0">@Model.Model.det[t].Durada</p>
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <tr><td colspan="5"><p class='fw-5 text-danger mb-0'><i class='fa fa-exclamation-circle mr-1'></i> No hay resultados</p></td></tr>
+                                            }
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="card card-table mb-3">
+                                <div class="card-header card-header-options">
+                                    <span>Resumen asistencias facturadas</span>
+                                </div>
+                                <div class="card-block">
+
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-left">Tipo</th>
+                                                <th class="text-center w-15">Nº Partes</th>
+                                                <th class="text-center w-15">Tiempo (Minutos)</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (Model.Model.Tipos != null)
+                                            {
+                                                @for (Int32 t = 0; t < Model.Model.Tipos.Length; t++)
+                                                {
+                                                    <tr>
+                                                        <td>
+                                                            <p class="mb-0">@Model.Model.Tipos[t].datoS1</p>
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <p class="mb-0">@Model.Model.Tipos[t].datoS2</p>
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <p class="mb-0">@Model.Model.Tipos[t].datoS3</p>
+                                                        </td>
+                                                    </tr>
+                                                }
+
+                                                <tr>
+                                                    <td class="text-left" style="background: #BBDEFB;"><span class="fw-5">Total</span></td>
+                                                    <td class="text-center" style="background: #BBDEFB;"><span class="fw-5">@Model.Model.TiposNumPartes</span></td>
+                                                    <td class="text-center" style="background: #BBDEFB;"><span class="fw-5">@Model.Model.TiposTiempos</span></td>
+                                                </tr>
+
+                                            }
+                                            else
+                                            {
+                                                <tr><td colspan="3"><p class='fw-5 text-danger mb-0'><i class='fa fa-exclamation-circle mr-1'></i> No hay resultados</p></td></tr>
+                                            }
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+
+                            <div class="card card-table mb-3">
+                                <div class="card-header card-header-options">
+                                    <span>Resumen asistencias realizadas</span>
+                                </div>
+                                <div class="card-block">
+
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-center w-15">Nº Partes</th>
+                                                <th class="text-center w-15">Tiempo (Minutos)</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td class="text-center" style="background: #BBDEFB;"><span class="fw-5">@Model.Model.Partes.datoI</span></td>
+                                                <td class="text-center" style="background: #BBDEFB;"><span class="fw-5">@Model.Model.Partes.datoD</span></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+
+                            @if (Model.Model.PartesExce != null)
+                            {
+
+                                <div class="card card-red card-table card-table-red mb-3">
+                                    <div class="card-header card-header-red card-header-options">
+                                        <span>Partes excesivos</span>
+                                    </div>
+                                    <div class="card-block">
+
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-center w-15">Nº Asistencia</th>
+                                                    <th class="text-center w-15">Nº de Partes</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @for (Int32 t = 0; t < Model.Model.PartesExce.Length; t++)
+                                                {
+                                                    <tr>
+                                                        <td class="text-center"><span class="fw-5">@Model.Model.PartesExce[t].datoS1</span></td>
+                                                        <td class="text-center"><span class="fw-5">@Model.Model.PartesExce[t].datoS2</span></td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+
+                                    </div>
+                                </div>
+
+                            }
+
+
+                        </div>
+                        <div class="col-6">
+                            <div class="card card-table mb-3">
+                                <div class="card-header card-header-options">
+                                    <span>Resumen asistencias facturadas agrupado por servicios</span>
+                                </div>
+                                <div class="card-block">
+
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-left">Servicio</th>
+                                                <th class="text-center w-15">Cantidad</th>
+                                                <th class="text-right w-15">Coste</th>
+                                                <th class="text-right w-15">Precio</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (Model.Model.Facs != null)
+                                            {
+                                                @for (Int32 t = 0; t < Model.Model.Facs.Length; t++)
+                                                {
+                                            <tr>
+                                                <td>
+                                                    <p class="mb-0">@Model.Model.Facs[t].datoS1</p>
+                                                </td>
+                                                <td class="text-center">
+                                                    <p class="mb-0">@Model.Model.Facs[t].datoS2</p>
+                                                </td>
+                                                <td class="text-right">
+                                                    <p class="mb-0">@Model.Model.Facs[t].datoS3</p>
+                                                </td>
+                                                <td class="text-right">
+                                                    <p class="mb-0">@Model.Model.Facs[t].datoS4</p>
+                                                </td>
+                                            </tr>
+                                                }
+
+                                                    <tr>
+                                                        <td class="text-left" style="background: #BBDEFB;"><span class="fw-5">Total</span></td>
+                                                        <td class="text-center" style="background: #BBDEFB;"><span class="fw-5">@Model.Model.FacsCan</span></td>
+                                                        <td class="text-right" style="background: #BBDEFB;"><span class="fw-5">@Model.Model.FacsCoste</span></td>
+                                                        <td class="text-right" style="background: #BBDEFB;"><span class="fw-5">@Model.Model.FacsTotal</span></td>
+                                                    </tr>
+
+                                            }
+                                            else
+                                            {
+                                                <tr><td colspan="4"><p class='fw-5 text-danger mb-0'><i class='fa fa-exclamation-circle mr-1'></i> No hay resultados</p></td></tr>
+                                            }
+                                        </tbody>
+                                    </table>
+
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                }
+
+
+                }
+
+            </div>
+
+
+
+        </div>
+    </div>
+</div>

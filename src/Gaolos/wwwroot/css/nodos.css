@@ -1,0 +1,97 @@
+@charset "UTF-8";
+/* Nodos */
+/* Mixins */
+/* Skin v4.6 - White / Dark / Blue */
+.arbol-nodos {
+  width: 50%; }
+  .arbol-nodos ul {
+    display: flex;
+    flex-direction: column; }
+    .arbol-nodos ul li {
+      padding: 0;
+      flex-grow: 1; }
+      .arbol-nodos ul li i {
+        margin: 0 0.3em;
+        color: #2196f3; }
+      .arbol-nodos ul li ul {
+        margin: 0; }
+  .arbol-nodos .nodo-acciones {
+    display: inline-flex;
+    align-items: center;
+    margin: 0 1em; }
+    .arbol-nodos .nodo-acciones a i {
+      color: #bdbdbd; }
+      .arbol-nodos .nodo-acciones a i:hover {
+        color: #212121; }
+  .arbol-nodos .nodo-nivel {
+    margin-left: 1em;
+    font-weight: 500; }
+  .arbol-nodos .nodo-fila {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: -1px;
+    padding: 0.4em 0 0.4em 1em; }
+    .arbol-nodos .nodo-fila .nodo-acciones {
+      justify-content: flex-end; }
+    .arbol-nodos .nodo-fila .nodo-title a {
+      font-weight: 500; }
+    .arbol-nodos .nodo-fila:hover {
+      background: #eeeeee; }
+
+/*
+ Tree structure using CSS:
+ http://stackoverflow.com/questions/14922247/how-to-get-a-tree-in-html-using-pure-css
+*/
+.tree, .tree ul {
+  list-style-type: none;
+  margin: 0 0 0 10px !important;
+  padding: 0;
+  position: relative;
+  overflow: hidden; }
+
+.tree li {
+  margin: 0;
+  padding: 0 12px;
+  position: relative; }
+
+.tree li::before, .tree li::after {
+  content: '';
+  position: absolute;
+  left: 0; }
+
+/* horizontal line on inner list items */
+.tree li::before {
+  border-top: 1px solid #90caf9;
+  top: 16px;
+  width: 10px;
+  height: 0; }
+
+/* vertical line on list items */
+.tree li:after {
+  border-left: 1px solid #90caf9;
+  height: 100%;
+  width: 0px;
+  top: 0; }
+
+/* lower line on list items from the first level because they don't have parents */
+.tree > li::after {
+  top: 10px; }
+
+/* hide line from the last of the first level list items */
+.tree > li:last-child::after {
+  display: none; }
+
+/* Nodos relacionados (categorías) */
+#nodos-relacionados .nodo-title {
+  display: flex;
+  align-items: center; }
+  #nodos-relacionados .nodo-title .custom-control {
+    margin-bottom: 0; }
+  #nodos-relacionados .nodo-title i {
+    margin: 0 0.5rem 0 0; }
+
+/* disabled */
+.chevron-disabled {
+  color: #cfd8dc !important;
+  padding-top: 0.1em; }

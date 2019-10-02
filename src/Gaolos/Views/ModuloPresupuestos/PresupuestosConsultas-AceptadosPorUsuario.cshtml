@@ -1,0 +1,245 @@
+﻿@model ModuloPresupuestosLibrary.ModuloPresupuestosPresupuestosCPAPUListadoViewModel
+@{
+    Layout = "~/Views/Shared/Modulo-Presupuestos/_Modulo-Presupuestos-Consultas-AceptadosPorUsuario.cshtml";
+    ViewData["Title"] = "Presupuestos aceptados por usuario";
+}
+
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+                @if (Model.Model.Err.eserror)
+                {
+                    ViewData["err"] = Model.Model.Err.mensaje;
+                    @Html.Partial("AccesoDenegado");
+                }
+                else
+                {
+
+                    @* Buscador *@
+
+                    <div class="card mb-3">
+                        <div class="card-header card-header-options">
+                            <span>Buscar</span>
+                            @Html.Partial("PanelActions")
+                        </div>
+                        <div class="card-block p-0">
+                            <div class="d-flex justify-content-center align-items-center">
+                                <div class="col-1 pb-2 pt-2 box-border-right-light">
+                                    <img src="https://image.flaticon.com/icons/svg/138/138360.svg" style="width: 100%">
+                                </div>
+                                <div class="col-11 p-0">
+
+                                    <div class="d-flex flex-column">
+                                        <form action="@ViewData["Form"]" method="post" class="pr-0 pl-0">
+
+                                            <div class="d-flex p-3 justify-content-center align-items-center w-100">
+                                                <div class="input-group input-group-sm mb-0 mr-2">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text input-group-text-auto" id="">Usuario</span>
+                                                    </div>
+                                                    <input type="text" class="form-control" id="modPresUsuAsis" name="modPresUsuAsis" aria-describedby="" placeholder="Buscar usuario" value="@Model.Model.UsuAlta">
+                                                    <input type="hidden" id="vmodPresUsuAsis" name="vmodPresUsuAsis" value="@Model.Model.ID_Us_Alta">
+                                                    <input type="hidden" id="tmodPresUsuAsis" name="tmodPresUsuAsis" value="@Model.Model.UsuAlta">
+                                                </div>
+
+                                                <div class="input-group input-group-sm mb-0 mr-2 w-50">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text input-group-text-auto" id="">Fecha inicio</span>
+                                                    </div>
+                                                    <input type="text" class="form-control" id="Fe_In" aria-describedby="" placeholder="Fecha inicio" name="Fe_In" value="@Model.Model.Fe_In">
+                                                </div>
+
+                                                <div class="input-group input-group-sm mb-0 mr-2 w-50">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text input-group-text-auto" id="">Fecha fin</span>
+                                                    </div>
+                                                    <input type="text" class="form-control" id="Fe_Fi" aria-describedby="" placeholder="Fecha fin" name="Fe_Fi" value="@Model.Model.Fe_Fi">
+                                                </div>
+
+                                            </div>
+                                            <div class="d-flex justify-content-center align-self-baseline col-12 mb-2">
+                                                <button type="submit" class="btn btn-sm btn-primary">Buscar</button>
+                                            </div>
+
+                                        </form>
+                                    </div>
+                                    
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-8">
+
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="card card-table mb-3">
+                                        <div class="card-header card-header-options">
+                                            <span>Total presupuestos realizados / aceptados</span>
+                                        </div>
+                                        <div class="card-block">
+
+                                            <table class="table border-top-none">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="w-5"></th>
+                                                        <th class="w-10 text-center">Nº</th>
+                                                        <th class="w-5 text-right">€</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="w-5 fw-5">Realizados</td>
+                                                        <td class="text-center">@Model.Model.NumRea</td>
+                                                        <td class="text-right fw-5">@Model.Model.ValRea</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="w-5 fw-5">Aceptados</td>
+                                                        <td class="text-center">@Model.Model.NumAce</td>
+                                                        <td class="text-right fw-5">@Model.Model.ValAce</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="w-5 fw-5">Facturado</td>
+                                                        <td class="text-center mdc-bg-blue-grey-50"></td>
+                                                        <td class="text-right fw-5">@Model.Model.ValFac</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="card card-table mb-3">
+                                        <div class="card-header card-header-options">
+                                            <span>Presupuestos aceptados / creados</span>
+                                        </div>
+                                        <div class="card-block">
+
+                                            <table class="table table-striped border-top-none">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="w-5 text-center">Año</th>
+                                                        <th class="w-10 text-center">Mes</th>
+                                                        <th class="w-10 text-center">Nom</th>
+                                                        <th class="w-10 text-center">Base</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @if (Model.Model.res != null)
+                                                    {
+                                                        for (Int32 t = 0; t < Model.Model.res.Length; t++)
+                                                        {
+                                                            <tr>
+                                                                <td class="text-center">@Model.Model.res[t].datoS1</td>
+                                                                <td class="text-center">@Model.Model.res[t].datoS2</td>
+                                                                <td class="text-center">@Model.Model.res[t].datoS3</td>
+                                                                <td class="text-right">@Model.Model.res[t].datoS4</td>
+                                                            </tr>
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        <tr>
+                                                            <td colspan="4"><p class="mb-0 fw-5 py-2 text-danger"><i class="fa fa-times"></i> No hay resultados</p></td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="card card-table mb-3">
+                                        <div class="card-header card-header-options">
+                                            <span>Presupuestos localizados</span>
+                                        </div>
+                                        <div class="card-block">
+
+                                            <table class="table table-small table-striped p-0 border-top-none">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="w-5 text-center">Nº</th>
+                                                        <th class="">Empresa</th>
+                                                        <th class="w-10 text-center">Tipo</th>
+                                                        <th class="w-10 text-center">Base Pres.</th>
+                                                        <th class="w-10 text-center">Nº Albarán</th>
+                                                        <th class="w-10 text-center">Factura</th>
+                                                        <th class="w-10 text-right">Base factura</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @if (Model.Model.det != null)
+                                                    {
+                                                        for (Int32 t = 0; t < Model.Model.det.Length; t++)
+                                                        {
+                                                            <tr>
+                                                                <td class="text-center"><a href="/modulo-presupuestos/presupuestos/presupuesto/imprimir?ID_Pres2=@Model.Model.det[t].ID_Pres2" class="fw-5" target="_blank">@Model.Model.det[t].ID_Pres2</a></td>
+                                                                <td>
+                                                                    <p class="mb-0"><span class="fw-5">@Model.Model.det[t].Emp <a href="/modulo-clientes/clientes/cliente?ID_Cli2=@Model.Model.det[t].ID_Cli2" class="fw-5" data-toggle="tooltip" data-placement="top" title="" data-original-title="Ir a ficha de cliente" target="_blank">(@Model.Model.det[t].ID_Cli2)</a></span></p>
+                                                                    <p class="mb-0"><span class="fs-0-7">@Model.Model.det[t].Dir - @Model.Model.det[t].Pob</span></p>
+                                                                </td>
+                                                                <td class="text-center">@Model.Model.det[t].Tipo</td>
+                                                                <td class="text-center">@Model.Model.det[t].BasePres</td>
+                                                                <td class="text-center">@Model.Model.det[t].ID_Al2</td>
+                                                                <td class="text-center"><a href="/modulo-facturacion/informacion-factura/descargar?ID_Fac=@Model.Model.det[t].ID_Fac" target="_blank" class="fw-5">@Model.Model.det[t].Fac</a></td>
+                                                                <td class="text-right">@Model.Model.det[t].BaseFac</td>
+                                                            </tr>
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        <tr>
+                                                            <td colspan="7"><p class="mb-0 fw-5 py-2 text-danger"><i class="fa fa-times"></i> No hay resultados</p></td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        @Html.Raw(Model.Model.Paginador)
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-4">
+                            <div class="card-info-wrapper w-100" id="sindatos" style="display: none;">
+                                <div class="card-info">
+                                    <div class="d-flex justify-content-center align-items-center">
+                                        <img src="https://image.flaticon.com/icons/svg/609/609998.svg" style="width: 20%;">
+                                        <p class="mb-2 ml-3">En esta pantalla podrá consultar el total de presupuestos aceptados y creados</p>
+                                    </div>
+                                </div>
+                                <svg class="card-info-triangle">
+                                    <polygon points="0,0 200,0 0,200" fill="currentColor"></polygon>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    
+
+                }
+            </div>
+        </div>
+    </div>
+</div>

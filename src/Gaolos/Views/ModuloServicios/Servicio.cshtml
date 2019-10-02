@@ -1,0 +1,449 @@
+﻿@model ModuloServiciosLibrary.ModuloServiciosServicioDetallesViewModel
+
+@{
+    Layout = "~/Views/Shared/Modulo-Servicios/_Servicio.cshtml";
+    ViewData["Title"] = "Servicio";
+    ViewData["Message"] = "Modulo de servicios - Gaolos App v2017";
+}
+
+<div class="main-content m-0" id="widget-area">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+
+                @if (Model.Model.Err.eserror)
+    {
+        ViewData["err"] = Model.Model.Err.mensaje;
+            @Html.Partial("AccesoDenegado");
+}
+else
+{
+
+            <div class="card mb-3">
+
+
+                <div class="card-header card-header-options">
+                    <span>Servicio</span>
+                    <div class="card-actions">
+                        <ul>
+                            <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card-block p-0">
+                    <div class="d-flex justify-content-center align-items-center">
+                        <div class="col-1 pb-2 pt-2">
+                            <img src="https://image.flaticon.com/icons/svg/321/321863.svg" style="width: 100%;">
+                        </div>
+                        <div class="col-11 pt-2 pb-2 box-border-left-light">
+                            <h5 class="fw-5" id="titserv">@Model.Model.Serv</h5>
+                            <p class="fw-5"></p>
+
+                            <div class="d-flex">
+                                <div class="box-grey-bg">
+                                    <p class="mb-0"><small class="fw-5"><span class="mr-1">Nº:</span> <span class="text-danger">@Model.Model.ID_Serv2</span></small></p>
+                                    <p class="mb-0"><small class="fw-5"><span class="mr-1">Alta:</span> <span class="text-danger">@Model.Model.Fe_Al - @Model.Model.Usu</span></small></p>
+                                    <p class="mb-0"><small class="fw-5"><span class="mr-1">Código:</span> <span class="text-danger">@Model.Model.Codigo</span></small></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            @* Editar ubicación *@
+
+            <div class="row mb-3">
+                <div class="col-6">
+                    <div class="card mb-3">
+                        <div class="card-header card-header-options">
+                            <span>General</span>
+                            <div class="card-actions">
+                                <ul>
+                                    <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card-block p-3">
+
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <div class="d-flex justify-content-between">
+                                            <label>Servicio</label>
+                                            @if (Model.Model.ServFe_Mod != "")
+                                            {
+                                                <span id="verServMod" class="fw-5 text-danger" aria-hidden="true" data-toggle="tooltip" data-placement="left" title="" data-original-title="Última modificación"><i class="fa fa-retweet"></i> <span id="ServMod">@Model.Model.ServFe_Mod - @Model.Model.ServUsuMod</span></span>
+                                            }
+                                            else
+                                            {
+                                                <span id="verServMod" style="display:none;" class="fw-5 text-danger" aria-hidden="true" data-toggle="tooltip" data-placement="left" title="" data-original-title="Última modificación"><i class="fa fa-retweet"></i> <span id="ServMod">@Model.Model.ServFe_Mod - @Model.Model.ServUsuMod</span></span>
+                                            }
+                                        </div>
+                                        <textarea class="form-control form-control-sm" id="Serv" rows="4" placeholder="Observaciones" maxlength="250">@Model.Model.Serv</textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label>Categoría</label>
+                                        <select class="custom-select form-control-sm col-12" id="ID_Cat2">
+                                            @if (Model.Model.Cats != null)
+    {
+                                        @for (Int32 t = 0; t < Model.Model.Cats.Length; t++)
+{
+                                        @if (Model.Model.Cats[t].id == Model.Model.ID_Cat2)
+{
+                                        <option value="@Model.Model.Cats[t].id" selected>@Model.Model.Cats[t].det</option>
+}
+else
+{
+                                        <option value="@Model.Model.Cats[t].id">@Model.Model.Cats[t].det</option>
+}
+}
+}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mb-0">
+                                <div class="col-8">
+                                    <div class="form-group mb-0">
+                                        <label for="cliente">Código</label>
+                                        <input type="text" class="form-control form-control-sm" id="Codigo" placeholder="Código" autocomplete="off" value="@Model.Model.Codigo" maxlength="25">
+                                        <input type="hidden" id="ID_Serv2" value="@Model.Model.ID_Serv2">
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="d-flex justify-content-between align-items-center text-right box-grey-bg">
+                                        <div class="d-flex box-border-right pr-3 pl-2">
+                                            <i class="material-icons fs-2-5 mdc-text-blue-grey-100">euro_symbol</i>
+                                        </div>
+                                        <div class="d-flex flex-column">
+                                            <label for="">Precio</label>
+                                            <h5 class="text-danger fw-8 fs-1-1" id="lPrecio">@Model.Model.lPrecio</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="d-flex justify-content-center mt-2 box-border-top mdc-bg-blue-grey-50 pt-2 pb-2">
+                            <button type="button" class="btn btn-sm btn-primary servicio-guardar">Guardar</button>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-6">
+                    <div class="card mb-3">
+                        <div class="card-header card-header-options">
+                            <span>Precios y coste</span>
+                            <div class="card-actions">
+                                <ul>
+                                    <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card-block p-3">
+
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <div class="d-flex justify-content-between">
+                                            <label>Precio</label>
+                                            @if (Model.Model.PrecioFe_Mod != "")
+                                            {
+                                                <span id="verPrecioMod" class="fw-5 text-danger" aria-hidden="true" data-toggle="tooltip" data-placement="left" title="" data-original-title="Última modificación"><i class="fa fa-retweet"></i> <span id="PrecioMod">@Model.Model.PrecioFe_Mod - @Model.Model.PrecioUsuMod</span></span>
+                                            }
+                                            else
+                                            {
+                                                <span id="verPrecioMod" style="display:none;" class="fw-5 text-danger" aria-hidden="true" data-toggle="tooltip" data-placement="left" title="" data-original-title="Última modificación"><i class="fa fa-retweet"></i> <span id="PrecioMod">@Model.Model.PrecioFe_Mod - @Model.Model.PrecioUsuMod</span></span>
+                                            }
+                                        </div>
+                                        <div class="input-group input-group-sm">
+                                            <input type="text" class="form-control form-control-sm" id="Precio" placeholder="Precio" value="@Model.Model.Precio">
+                                            <span class="input-group-append">
+                                                <button type="button" class="btn btn-primary btn-sm servicio-precio-guardar">Guardar</button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <div class="d-flex justify-content-between">
+                                            <label>Coste</label>
+                                            @if (Model.Model.CosteFe_Mod != "")
+                                            {
+                                                <span id="verCosteMod" class="fw-5 text-danger" aria-hidden="true" data-toggle="tooltip" data-placement="left" title="" data-original-title="Última modificación"><i class="fa fa-retweet"></i> <span id="CosteMod">@Model.Model.CosteFe_Mod - @Model.Model.CosteUsuMod</span></span>
+                                            }
+                                            else
+                                            {
+                                                <span id="verCosteMod" style="display:none;" class="fw-5 text-danger" aria-hidden="true" data-toggle="tooltip" data-placement="left" title="" data-original-title="Última modificación"><i class="fa fa-retweet"></i> <span id="CosteMod">@Model.Model.CosteFe_Mod - @Model.Model.CosteUsuMod</span></span>
+                                            }
+                                        </div>
+                                        <div class="input-group input-group-sm">
+                                            <input type="text" class="form-control form-control-sm" id="Coste" placeholder="Coste" value="@Model.Model.Coste">
+                                            <span class="input-group-append">
+                                                <button type="button" class="btn btn-primary btn-sm servicio-coste-guardar">Guardar</button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mb-2">
+                                <div class="col-6">
+
+                                    <div class="d-flex justify-content-between align-items-center text-right box-grey-bg">
+                                        <div class="d-flex box-border-right pr-3 pl-2">
+                                            <i class="material-icons fs-2-5 mdc-text-blue-grey-100">euro_symbol</i>
+                                        </div>
+                                        <div class="d-flex flex-column">
+                                            <label for="">Beneficio bruto €</label>
+                                            <h5 class="text-danger fw-8 fs-1-1" id="Benef">@Model.Model.Benef</h5>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-6">
+
+                                    <div class="d-flex justify-content-between align-items-center text-right box-grey-bg">
+                                        <div class="d-flex box-border-right pr-3 pl-2">
+                                            <span class="fw-8 fs-2 mdc-text-blue-grey-100">%</span>
+                                            @*<i class="material-icons fs-2-5 mdc-text-blue-grey-100">euro_symbol</i>*@
+                                        </div>
+                                        <div class="d-flex flex-column">
+                                            <label for="">Beneficio bruto %</label>
+                                            <h5 class="text-danger fw-8 fs-1-1" id="BenefPor">@Model.Model.BenefPor</h5>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <div class="d-flex justify-content-between">
+                                            <label>Precio mínimo</label>
+                                            @if (Model.Model.PrecioMinFe_Mod != "")
+                                            {
+                                                <span id="verPrecioMinMod" class="fw-5 text-danger" aria-hidden="true" data-toggle="tooltip" data-placement="left" title="" data-original-title="Última modificación"><i class="fa fa-retweet"></i> <span id="PrecioMinMod">@Model.Model.PrecioMinFe_Mod - @Model.Model.PrecioMinUsuMod</span></span>
+                                            }
+                                            else
+                                            {
+                                                <span id="verPrecioMinMod" style="display:none;" class="fw-5 text-danger" aria-hidden="true" data-toggle="tooltip" data-placement="left" title="" data-original-title="Última modificación"><i class="fa fa-retweet"></i> <span id="PrecioMinMod">@Model.Model.PrecioMinFe_Mod - @Model.Model.PrecioMinUsuMod</span></span>
+                                            }
+                                        </div>
+                                        <div class="input-group input-group-sm">
+                                            <input type="text" class="form-control form-control-sm" id="PrecioMin" placeholder="Precio mínimo" value="@Model.Model.PrecioMin">
+                                            <span class="input-group-append">
+                                                <button type="button" class="btn btn-primary btn-sm servicio-preciomin-guardar">Guardar</button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group mb-0">
+                                        <div class="d-flex justify-content-between">
+                                            <label for="cliente">Precio con IVA</label>
+                                            @if (Model.Model.PrecioIFe_Mod != "")
+                                            {
+                                                <span id="verPrecioIMod" class="fw-5 text-danger" aria-hidden="true" data-toggle="tooltip" data-placement="left" title="" data-original-title="Última modificación"><i class="fa fa-retweet"></i> <span id="PrecioIMod">@Model.Model.PrecioIFe_Mod - @Model.Model.PrecioIUsuMod</span></span>
+                                            }
+                                            else
+                                            {
+                                                <span id="verPrecioIMod" style="display:none;" class="fw-5 text-danger" aria-hidden="true" data-toggle="tooltip" data-placement="left" title="" data-original-title="Última modificación"><i class="fa fa-retweet"></i> <span id="PrecioIMod">@Model.Model.PrecioIFe_Mod - @Model.Model.PrecioIUsuMod</span></span>
+                                            }
+                                        </div>
+                                        <div class="input-group input-group-sm">
+                                            <input type="text" class="form-control form-control-sm" id="PrecioI" placeholder="Precio con IVA" value="@Model.Model.PrecioI">
+                                            <span class="input-group-append">
+                                                <button type="button" class="btn btn-primary btn-sm servicio-precioi-guardar">Guardar</button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-6">
+                    <div class="card mb-3">
+                        <div class="card-header card-header-options">
+                            <span>Observaciones</span>
+                            <div class="card-actions">
+                                <ul>
+                                    <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card-block">
+
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group mb-0">
+                                        <textarea class="form-control form-control-sm" id="Obs" rows="4" placeholder="Observaciones" maxlength="200">@Model.Model.Obs</textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="d-flex justify-content-center mt-2 box-border-top mdc-bg-blue-grey-50 pt-2 pb-2">
+                            <button type="button" class="btn btn-sm btn-primary">Guardar</button>
+                        </div>
+
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header card-header-options">
+                            <span>Eliminar servicio</span>
+                        </div>
+                        <div class="card-block p-0">
+                            @if (Model.Model.NoEli != "" || Model.Model.WarnEli != "")
+                            {
+                                <div class="d-flex flex-column p-2">
+                                    <div class="form-group mb-0">
+                                        @{ 
+                                            string txt = "";
+                                            if (Model.Model.NoEli!="")
+                                            {
+                                                txt = "<b>No se puede eliminar por:</b><br/>";
+                                                txt += Model.Model.NoEli;
+                                            }
+                                            if (Model.Model.WarnEli!="")
+                                            {
+                                                if (txt != "") { txt += "<hr />"; }
+                                                txt += "<b>Aviso:</b><br/>";
+                                                txt += Model.Model.WarnEli;
+                                            }
+                                        }
+                                        @Html.Raw(txt);
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-center box-guardar">
+                                    <button type="button" class="btn btn-sm btn-danger" disabled>Eliminar</button>
+                                </div>
+                                            }
+                                            else
+                                            {
+                                <div class="d-flex justify-content-center box-guardar">
+                                    <button type="button" class="btn btn-sm btn-danger servicio-eliminar">Eliminar</button>
+                                </div>
+                            }
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="col-6">
+                    <div class="card mb-3">
+                        <div class="card-header card-header-options">
+                            <span>Impuestos</span>
+                            <div class="card-actions">
+                                <ul>
+                                    <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="card-block p-3">
+
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="">Tipo IVA</label>
+                                        <div class="input-group input-group-sm">
+                                            <input type="text" class="form-control form-control-sm" id="IVA" placeholder="Tipo IVA" value="@Model.Model.IVA">
+                                            <span class="input-group-append">
+                                                <button type="button" class="btn btn-primary btn-sm servicio-iva-guardar">Guardar</button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group mb-0">
+                                        <label for="">Tipo IRPF</label>
+                                        <div class="input-group input-group-sm">
+                                            <input type="text" class="form-control form-control-sm" id="IRPF" placeholder="Tipo IRPF" value="@Model.Model.IRPF">
+                                            <span class="input-group-append">
+                                                <button type="button" class="btn btn-primary btn-sm servicio-irpf-guardar">Guardar</button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="card mb-3">
+                        <div class="card-header card-header-options">
+                            <span>Artículo relacionado</span>
+                            <div class="card-actions">
+                                <ul>
+                                    <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="card-block p-3">
+
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <div class="input-group input-group-sm">
+                                            <input type="text" class="form-control form-control-sm" id="ID_ArtRel" placeholder="Artículo relacionado" value="">
+                                            <span class="input-group-append">
+                                                <button type="button" class="btn btn-primary btn-sm">Guardar</button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+}
+            </div>
+        </div>
+
+    </div>
+
+</div>

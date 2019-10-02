@@ -1,0 +1,125 @@
+﻿@model ModuloArticulosLibrary.ModuloArticulosArticulo_ControlViewModel
+@{
+    Layout = "~/Views/Shared/Modulo-Articulos/_Modulo-Articulos.cshtml";
+    ViewData["Title"] = "Artículo";
+}
+
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+                @if (Model.Model.Err.eserror)
+                {
+                    ViewData["err"] = Model.Model.Err.mensaje;
+                @Html.Partial("AccesoDenegado");
+                }
+                else
+                {
+
+                @* Artículos Cabecera *@
+
+                @Html.Partial("Articulo-Cabecera")
+
+                @* Artículos Tabs *@
+
+                @Html.Partial("Articulo-Tabs")
+
+                @* Listado de usuarios *@
+
+                <div class="row">
+
+                    <div class="col-4">
+
+                        <div class="card mb-3">
+                            <div class="card-header card-header-options">
+                                <span>Número de série</span>
+                            </div>
+                            <div class="card-block p-0">
+
+                                <div class="d-flex flex-column p-2">
+
+                                    <div class="input-group input-group-sm mr-2">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Control de nº de série</span>
+                                        </div>
+                                        <div class="box-label-check">
+                                            <input type="checkbox" class="" id="CtrlSerie">
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="col-4">
+
+                        <div class="card mb-3">
+                            <div class="card-header card-header-options">
+                                <span>Número de lote</span>
+                            </div>
+                            <div class="card-block p-0">
+
+                                <div class="d-flex flex-column p-2">
+
+                                    <div class="input-group input-group-sm mr-2">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Control de lotes</span>
+                                        </div>
+                                        <div class="box-label-check">
+                                            <input type="checkbox" class="" id="CtrlLote">
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="col-4">
+
+                        <div class="card mb-3">
+                            <div class="card-header card-header-options">
+                                <span>Garantia</span>
+                            </div>
+                            <div class="card-block p-0">
+
+                                <div class="d-flex flex-column p-2">
+
+                                    <div class="input-group input-group-sm mr-2">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Garantia</span>
+                                        </div>
+                                        <input type="text" class="form-control" id="Garan" aria-describedby="" value="@Model.Model.Garan" placeholder="Garantia">
+                                        <div class="input-group-append">
+                                            <button type="button" class="btn btn-primary btn-sm">Guardar</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                }
+            </div>
+        </div>
+    </div>
+</div>

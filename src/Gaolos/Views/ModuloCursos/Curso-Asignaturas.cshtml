@@ -1,0 +1,234 @@
+﻿@model CursosLibrary.ModuloCursosCursoDetallesEditar_AsignaturasViewModel
+@{
+    Layout = "~/Views/Shared/Modulo-Cursos/_Cursos-curso.cshtml";
+    ViewData["Title"] = "Curso";
+    ViewData["Message"] = "Modulo de cursos - Gaolos App v2017";
+}
+
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section mb-0">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+@if(Model.Model.Err.eserror)
+{
+    ViewData["err"] = Model.Model.Err.mensaje;
+    @Html.Partial("AccesoDenegado");
+}
+else
+{
+    @* tabs *@
+
+    @Html.Partial("Curso-Tabs")
+
+    @* cabecera *@
+
+    @Html.Partial("Curso-Cabecera")
+
+                <div class="row">
+                    <div class="col-6">
+                        <div class="card card-table mb-3">
+                            <div class="card-header card-header-options">
+                                <span>Asignaturas</span>
+                                <div class="input-group input-group-sm col-4 mr-0 pr-0">
+                                    @if (!Model.Model.EliEva)
+                {
+                    <input type="text" class="form-control form-control-sm" id="findasig" name="findasig" placeholder="Buscar asignatura">
+                    <input id="vfindasig" name="vfindasig" type="hidden" value="" />
+                    <input id="tfindasig" name="tfindasig" type="hidden" value="" />
+}
+                                    <div class="input-group-append">
+                                        @if (!Model.Model.EliEva)
+                    {
+                        <button type="button" class="btn btn-primary btn-sm cursos-curso-add-asignatura">Añadir</button>
+}
+else
+{
+                    <button type="button" class="btn btn-primary btn-sm" disabled>No se puede añadir ninguna asignatura</button>
+}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-block">
+                                <table class="table table-striped table-select">
+                                    <thead>
+                                        <tr>
+                                            <th class="w-20">Fecha</th>
+                                            <th class="">Asignatura</th>
+                                            <th class="">Tipo</th>
+                                            <th class="text-center w-5"><i class="fa fa-times"></i></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (Model.Model.Asigs != null)
+                    {
+                        @for (Int32 t = 0; t < Model.Model.Asigs.Length; t++)
+    {
+                    <tr>
+                        <td><p class="mb-0 fw-5">@Model.Model.Asigs[t].datoS1</p></td>
+                        <td class="">@Model.Model.Asigs[t].datoS3</td>
+                        <td class=""><p class="mb-0">@Model.Model.Asigs[t].datoS4</p></td>
+                        <td class="text-center">
+                            @if (!Model.Model.EliEva)
+        {
+                    <a href="#" class="text-danger cursos-curso-del-asignatura" id="rel_@Model.Model.Asigs[t].datoI"><i class="fa fa-times"></i></a>
+}
+else
+{
+                    <i class="fa fa-window-close" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Control de evaluación iniciado. No se puede eliminar ninguna asignatura."></i>
+}
+
+
+                        </td>
+                    </tr>
+}
+
+}
+else
+{
+                    <tr>
+                        <td colspan="4">
+                            <p class='fw-5 text-danger mb-0'><i class='fa fa-exclamation-circle mr-1'></i> No hay resultados</p>
+                        </td>
+                    </tr>
+}
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        @if (Model.Model.AsisAbrir)
+    {
+                    <div class="card card-table">
+                        <div class="card-header card-header-options">
+                            <span>Re-abrir el control de asistencia</span>
+                        </div>
+                        <div class="card-block">
+                            <div class="d-flex justify-content-center box-border-top p-3">
+                                <button type="button" class="btn btn-sm btn-danger mr-3 cursos-curso-reabrir-asistencia">Re-abrir control de asistencia</button>
+                            </div>
+                        </div>
+                    </div>
+
+}
+
+
+                        @if (Model.Model.EliEva || Model.Model.AsisBorrar || Model.Model.EliEvayAsis)
+    {
+                    <div class="card card-table">
+                        <div class="card-header card-header-options">
+                            <span>Eliminar control de asistencia y/o evaluación</span>
+                        </div>
+                        <div class="card-block">
+                            <div class="d-flex justify-content-center box-border-top p-3">
+                                @if (Model.Model.AsisBorrar)
+    {
+                            <button type="button" class="btn btn-sm btn-danger cursos-curso-del-asistencia">Eliminar control de asistencia</button>
+}
+                                @if (Model.Model.EliEvayAsis)
+    {
+                            <button type="button" class="btn btn-sm btn-danger mr-3 cursos-curso-del-evaluacion-asistencia">Eliminar control de asistencia y evaluación</button>
+}
+                                @if (Model.Model.EliEva)
+    {
+                            <button type="button" class="btn btn-sm btn-danger cursos-curso-del-evaluacion">Eliminar solo control de evaluación</button>
+}
+                            </div>
+                        </div>
+                    </div>
+
+}
+
+                    </div>
+                    <div class="col-6">
+                        <div class="card card-table mb-3">
+                            <div class="card-header card-header-options">
+                                <span>Titulaciones del curso</span>
+                            </div>
+                            <div class="card-block">
+                                <table class="table table-striped table-select">
+                                    <thead>
+                                        <tr>
+                                            <th class="w-5">Nº</th>
+                                            <th class="">Titulación</th>
+                                            <th class="">Tipo</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (Model.Model.Tits != null)
+                    {
+                        @for (Int32 t = 0; t < Model.Model.Tits.Length; t++)
+    {
+                    <tr>
+                        <td><p class="mb-0">@Model.Model.Tits[t].datoI.ToString()</p></td>
+                        <td>@Model.Model.Tits[t].datoS1</td>
+                        <td><p class="mb-0">@Model.Model.Tits[t].datoS2</p></td>
+                    </tr>
+}
+}
+else
+{
+                    <tr>
+                        <td colspan="3">
+                            <p class='fw-5 text-danger mb-0'><i class='fa fa-exclamation-circle mr-1'></i> No hay resultados</p>
+                        </td>
+                    </tr>
+}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="card card-table">
+                            <div class="card-header card-header-options">
+                                <span>Sólo formador</span>
+                            </div>
+                            <div class="card-block">
+                                <div class="d-flex align-items-center p-2">
+
+                                    <div class="input-group input-group-sm mb-0 mr-2">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Nº asistentes</span>
+                                        </div>
+                                        <input type="text" class="form-control" placeholder="Nº de asistentes" maxlength="5" id="NumSoloForm" value="@Model.Model.NumSoloForm">
+                                    </div>
+
+                                    <div class="d-flex align-items-center col-4">
+                                        @if (Model.Model.SoloForm)
+                                        {
+                                            <input type="checkbox" class="mr-2" id="SoloForm" checked>
+                                        }
+                                        else
+                                        {
+                                            <input type="checkbox" class="mr-2" id="SoloForm">
+                                        }
+                                            <span class="fw-5">Sólo formador</span>
+                                    </div>
+
+                                </div>
+                                <div class="d-flex justify-content-center box-guardar">
+                                    <button type="button" class="btn btn-sm btn-primary cursos-curso-solo-formador">Guardar</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+}
+            </div>
+        </div>
+    </div>
+</div>

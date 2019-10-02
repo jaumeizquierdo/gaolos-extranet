@@ -1,0 +1,159 @@
+﻿@{
+
+    @*Semrush api: 269b791da4f72aa9f182567cb64757dd;*@
+
+Layout = "~/Views/Shared/_Layout.cshtml";
+ViewData["Title"] = "Website Builder";
+ViewData["Message"] = "Website Builder - Gaolos App v2017";
+ViewData["TablaTitulo"] = "Ejemplo de Tabla";
+ViewData["FullImageParallaxTitulo"] = "Ejemplo de Full Image con Parallax";
+ViewData["TabsTitulo"] = "Tabs Bootstrap";
+ViewData["PaginadorTitulo"] = "Paginador";
+ViewData["NavegacionTitulo"] = "Navegacion";
+ViewData["AlertsTitulo"] = "Alerts";
+
+}
+
+@* /WEBSITES: ARCHIVO TEMPORAL DE BLOQUES - NO BORRAR *@
+
+@*
+    <div class="card mb-3">
+        <div class="card-header card-header-options">
+            <span>@ViewData["Title"]</span>
+            @Html.Partial("PanelActions")
+        </div>
+        <div class="card-block">
+
+            <div class="input-group card-search-box mb-3">
+                <input type="text" class="form-control" placeholder="Buscar por...">
+                <span class="input-group-append">
+                    <button class="btn btn-secondary" type="button">Buscar</button>
+                </span>
+            </div>
+
+        </div>
+    </div>
+*@
+
+
+<div class="main-content" id="widget-area">
+    <div class="container-fluid">
+
+        <div class="card mb-3">
+            <div class="card-header card-header-options">
+                <span>@ViewData["Title"]</span>
+                @Html.Partial("PanelActions")
+            </div>
+            <div class="card-block">
+
+                <div class="input-group card-search-box mb-3">
+                    <input type="text" class="form-control" placeholder="Buscar por...">
+                    <span class="input-group-append">
+                        <button class="btn btn-secondary" type="button">Buscar</button>
+                    </span>
+                </div>
+
+                <div class="card card-table mb-3">
+                    <div class="card-header card-header-options">
+                        <span>Listado de páginas maquetadas</span>
+                    </div>
+                    <div class="card-block">
+
+                        <table class="table table-striped">
+
+                            <thead>
+                                <tr>
+                                    <th>Página</th>
+                                    <th>Sección</th>
+                                    <th>Descripción</th>
+                                    <th>Programada</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><a href="/"><strong>/</strong></a></td>
+                                    <td>Login</td>
+                                    <td>Página Login</td>
+                                    <td><i class="fa fa-check"></i></td>
+                                </tr>
+                                <tr>
+                                    <td><a href="/inicio"><strong>/inicio</strong></a></td>
+                                    <td>Dashboard</td>
+                                    <td>Dashboard Inicial</td>
+                                    <td><i class="fa fa-times"></i></td>
+                                </tr>
+                                <tr>
+                                    <td><a href="/mi-empresa/contratacion"><strong>/mi-empresa/contratacion</strong></a></td>
+                                    <td>Mi Empresa</td>
+                                    <td>Contratar módulos disponibles</td>
+                                    <td><i class="fa fa-times"></i></td>
+                                </tr>
+                                <tr>
+                                    <td><a href="/mi-empresa/usuario"><strong>/mi-empresa/usuario</strong></a></td>
+                                    <td>Mi Empresa</td>
+                                    <td>Edición de usuarios</td>
+                                    <td><i class="fa fa-times"></i></td>
+                                </tr>
+                                <tr>
+                                    <td><a href="/mi-empresa/usuarios"><strong>/mi-empresa/usuarios</strong></a></td>
+                                    <td>Mi Empresa</td>
+                                    <td>Listado de Usuarios</td>
+                                    <td><i class="fa fa-times"></i></td>
+                                </tr>
+                                <tr>
+                                    <td><a href="/nodos"><strong>/nodos</strong></a></td>
+                                    <td>Nodos</td>
+                                    <td>Gestión de Nodos</td>
+                                    <td><i class="fa fa-check"></i></td>
+                                </tr>
+                                <tr>
+                                    <td><a href="/permisos"><strong>/permisos</strong></a></td>
+                                    <td>Permisos</td>
+                                    <td>Gestión de Permisos de Usuario</td>
+                                    <td><i class="fa fa-times"></i></td>
+                                </tr>
+                                <tr>
+                                    <td><a href="/cms/webslistado"><strong>/cms/webslistado</strong></a></td>
+                                    <td>CMS</td>
+                                    <td>Listado de Webs</td>
+                                    <td><i class="fa fa-check"></i></td>
+                                </tr>
+                                <tr>
+                                    <td><a href="/cms/webnodoseditar?id=73"><strong>/cms/webnodoseditar?id=73</strong></a></td>
+                                    <td>CMS</td>
+                                    <td>Listado de Nodos para Edición</td>
+                                    <td><i class="fa fa-check"></i></td>
+                                </tr>
+                                <tr>
+                                    <td><a href="/cms/editarpagina"><strong>/cms/editarpagina?ID_Tv=73&ID_Nodo=63&ID_Idi=1</strong></a></td>
+                                    <td>CMS</td>
+                                    <td>Edición de Página</td>
+                                    <td><i class="fa fa-times"></i></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+
+                @* Parallax *@
+
+                <div class="card mb-3">
+                    <div class="card-header card-header-options">
+                        <span>@ViewData["Title"]</span>
+                        @Html.Partial("PanelActions")
+                    </div>
+                    <div class="card-block">
+
+                        <div class="full-image-parallax">
+                            <h2>Gaolos Website Builder</h2>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>

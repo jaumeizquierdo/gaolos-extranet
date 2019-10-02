@@ -1,0 +1,325 @@
+﻿@model ModuloPresupuestosLibrary.ModuloPresupuestosPresupuestosListadoViewModel
+@{
+    Layout = "~/Views/Shared/Modulo-Presupuestos/_Presupuestos.cshtml";
+    ViewData["Title"] = "Historial";
+}
+
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+                @if(Model.Model.Err.eserror)
+{
+    ViewData["err"] = Model.Model.Err.mensaje;
+                @Html.Partial("AccesoDenegado");
+}
+else
+{
+
+                @* Buscador *@
+
+                <div class="card mb-3">
+                    <div class="card-header card-header-options">
+                        <span>Buscar presupuesto</span>
+                        <div class="d-flex">
+                            <div class="d-flex mr-2" style="border-right: 1px solid #B0BEC5;">
+                                <a href="/modulo-presupuestos/nuevo" class="btn btn-sm btn-primary mr-2">Nuevo presupuesto</a>
+                            </div>
+                            <div class="d-flex mr-2" style="border-right: 1px solid #B0BEC5;">
+                                <a href="/modulo-presupuestos/borradores" class="btn btn-sm btn-primary mr-2">Borradores</a>
+                            </div>
+                            <div class="d-flex mr-2" style="border-right: 1px solid #B0BEC5;">
+                                <a href="/modulo-presupuestos/presupuestos" class="btn btn-sm btn-primary mr-2">Presupuestos</a>
+                            </div>
+                            <div class="d-flex">
+                                <a href="/modulo-presupuestos/presupuestos-aceptados" class="btn btn-sm btn-primary mr-1">Aceptados</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-block p-0">
+                        <div class="d-flex justify-content-center align-items-center">
+                            <div class="col-1 pb-2 pt-2 box-border-right-light">
+                                <img src="https://image.flaticon.com/icons/svg/138/138360.svg" style="width: 100%;">
+                            </div>
+                            <div class="col-11 p-0">
+
+                                <div class="d-flex flex-column">
+
+                                    <form action="@ViewData["Form"]" method="post" class="pr-0 pl-0">
+
+                                        <div class="d-flex p-3 justify-content-center align-items-center w-100">
+
+                                            <div class="input-group input-group-sm mb-0 mr-2">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text input-group-text-auto">Buscar</span>
+                                                </div>
+                                                <input type="text" class="form-control" placeholder="Nº presupueso, empresa, dirección, población, NIF, breve, nº cliente, nº cc, nº contacto" name="buscar" value="@ViewData["buscar"]">
+                                            </div>
+
+                                            <div class="input-group input-group-sm mb-0 mr-2 w-50">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text mw-140">Usuario</span>
+                                                </div>
+                                                <input type="text" class="form-control" id="busHisPresUsu" aria-describedby="" placeholder="Usuario de alta y comercial" value="@ViewData["tbusHisPresUsu"]">
+                                                <input type="hidden" id="vbusHisPresUsu" name="vbusHisPresUsu" value="@ViewData["vbusHisPresUsu"]" />
+                                                <input type="hidden" id="tbusHisPresUsu" name="tbusHisPresUsu" value="@ViewData["tbusHisPresUsu"]" />
+                                            </div>
+
+                                            @*<div class="input-group input-group-sm mb-0 mr-2 w-50">
+            <div class="input-group-prepend">
+                <span class="input-group-text input-group-text-auto">Seguimiento</span>
+            </div>
+            <select class="custom-select" name="Seg">
+                <option value="0">Todos</option>
+                @if (ViewData["Seg"].ToString() == "1")
+                {
+                    <option value="1" selected>Sin seguimiento</option>
+                }
+                else
+                {
+                    <option value="1">Sin seguimiento</option>
+                }
+                @if (ViewData["Seg"].ToString() == "2")
+                {
+                    <option value="2" selected>Con seguimiento</option>
+                }
+                else
+                {
+                    <option value="2">Con seguimiento</option>
+                }
+            </select>
+        </div>
+
+        <div class="input-group input-group-sm mb-0 mr-2 w-50">
+            <div class="input-group-prepend">
+                <span class="input-group-text input-group-text-auto">Borrador</span>
+            </div>
+            <select class="custom-select" name="Borrador">
+                <option value="0">Todos</option>
+                @if (ViewData["Borrador"].ToString() == "1")
+                {
+                    <option value="1" selected>Sin borrador</option>
+                }
+                else
+                {
+                    <option value="1">Sin borrador</option>
+                }
+                @if (ViewData["Borrador"].ToString() == "2")
+                {
+                    <option value="2" selected>Solo en borrador</option>
+                }
+                else
+                {
+                    <option value="2">Solo en borrador</option>
+                }
+            </select>
+        </div>*@
+
+                                            @*<div class="input-group input-group-sm mb-0 mr-2">
+            <div class="input-group-prepend">
+                <span class="input-group-text input-group-text-auto" id="">Buscar cliente</span>
+            </div>
+            <input type="text" class="form-control ui-autocomplete-input" id="buscarCliente" name="buscarCliente" aria-describedby="" placeholder="Buscar cliente" value="" autocomplete="off">
+            <input type="hidden" id="vbuscarCliente" name="vbuscarCliente" value="0">
+            <input type="hidden" id="tbuscarCliente" name="tbuscarCliente" value="">
+        </div>
+
+        <div class="input-group input-group-sm mb-0 mr-2">
+            <div class="input-group-prepend">
+                <span class="input-group-text input-group-text-auto" id="">Buscar usuario</span>
+            </div>
+            <input type="text" class="form-control ui-autocomplete-input" id="buscarUsuario" name="buscarUsuario" aria-describedby="" placeholder="Buscar usuario" value="" autocomplete="off">
+            <input type="hidden" id="vbuscarUsuario" name="vbuscarUsuario" value="0">
+            <input type="hidden" id="tbuscarUsuario" name="tbuscarUsuario" value="">
+        </div>
+
+        <div class="input-group input-group-sm mb-0 mr-2 w-50">
+            <div class="input-group-prepend">
+                <span class="input-group-text input-group-text-auto">Buscar año</span>
+            </div>
+            <select class="custom-select" name="Año">
+                @if (Model.Model.Años != null)
+                {
+                    for (Int32 t = 0; t < Model.Model.Años.Length; t++)
+                    {
+                        <option value="@Model.Model.Años[t].id">@Model.Model.Años[t].det</option>
+                    }
+                }
+            </select>
+        </div>
+
+        <div class="input-group input-group-sm mb-0 mr-2 w-50">
+            <div class="input-group-prepend">
+                <span class="input-group-text input-group-text-auto">Buscar mes</span>
+            </div>
+            <select class="custom-select" mane="Mes">
+                @if (Model.Model.Meses != null)
+                {
+                    for (Int32 t = 0; t < Model.Model.Meses.Length; t++)
+                    {
+                        <option value="@Model.Model.Meses[t].id">@Model.Model.Meses[t].det</option>
+                    }
+                }
+            </select>
+        </div>*@
+
+                                        </div>
+                                        <div class="d-flex justify-content-center align-self-baseline col-12 mb-2">
+                                            <button type="submit" class="btn btn-sm btn-primary">Buscar</button>
+                                        </div>
+
+                                    </form>
+
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card card-table mb-3">
+                            <div class="card-header card-header-options">
+                                <span>Presupuestos localizados</span>
+                            </div>
+                            <div class="card-block">
+
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th class="w-5 text-center">Nº</th>
+                                            <th class="w-10 text-center">Fecha</th>
+                                            <th class="w-2 text-center"><i class="fa fa-eraser" style="font-size: 14px;" data-toggle="tooltip" data-placement="top" title="" data-original-title="Indica si es un borrador"></i></th>
+                                            <th>Cliente</th>
+                                            <th class="w-10">Tipo</th>
+                                            <th>Breve</th>
+                                            <th class="w-10">Agente</th>
+                                            <th class="w-2 text-center"><i class="fa fa-file-text-o" style="font-size: 14px;"></i></th>
+                                            <th class="w-2 text-center"><i class="fa fa-print" style="font-size: 14px;" data-toggle="tooltip" data-placement="top" title="" data-original-title="Indica si hay solicitud. En rojo: abierta; en gris: cerrada."></i></th>
+                                            <th class="w-2 text-center"><i class="fa fa-send-o" style="font-size: 14px;" data-toggle="tooltip" data-placement="top" title="" data-original-title="Nº de veces enviado"></i></th>
+                                            <th class="w-10 text-right">Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (Model.Model.det != null)
+                                        {
+                                            @for (Int32 t = 0; t < Model.Model.det.Length; t++)
+                                            {
+                                                @if (Model.Model.det[t].Sep != "")
+                                                {
+                                                    <tr class="tr-sel">
+                                                        <td colspan="11"><p class="mb-0 fw-5 p-3">@Model.Model.det[t].Sep</p></td>
+                                                    </tr>
+                                                }
+                                                <tr>
+                                                    <td class="text-center">
+                                                        <a href="/modulo-presupuestos/presupuestos/presupuesto?ID_Pres2=@Model.Model.det[t].ID_Pres2" class="fw-5 ver-duplicar-presupuesto">@Model.Model.det[t].ID_Pres2</a>
+                                                    </td>
+                                                    <td class="text-center"><p class="mb-0 fw-5">@Model.Model.det[t].Fe_Al</p></td>
+                                                    <td class="text-center">
+                                                        @if (Model.Model.det[t].Borrador)
+                                                        {
+                                                            <i class="fa fa-check text-danger"></i>
+                                                        }
+                                                    </td>
+                                                    <td>
+                                                        <p class="mb-0 fw-5">
+                                                            @if (Model.Model.det[t].Baja)
+                                                            {
+                                                                @if (Model.Model.det[t].ID_Cli2 != "")
+                                                                {
+                                                                    <i class="fa fa-exclamation-triangle mr-1 text-danger" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="Cliente eliminado"></i>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <i class="fa fa-exclamation-triangle mr-1 text-danger" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="Contacto eliminado"></i>
+                                                                }
+                                                            }
+                                                            @if (Model.Model.det[t].Blo)
+                                                            {
+                                                                <a href="/modulo-clientes/clientes/cliente?ID_Cli2=@Model.Model.det[t].ID_Cli2" target="_blank" class="fw-5"><i class="fa fa-exclamation-triangle mr-1 text-danger" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="Cliente bloqueado"></i></a>
+                                                            }
+                                                            @if (Model.Model.det[t].HayCob)
+                                                            {
+                                                                <i class="fa fa-eur mr-1 text-danger" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="Cobros pendientes"></i>
+                                                            }
+                                                            @if (Model.Model.det[t].HayDev)
+                                                            {
+                                                                <i class="fa fa-money mr-1 text-danger" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="Tiene recibos devueltos"></i>
+                                                            }
+
+                                                            @if (Model.Model.det[t].ID_Cli2 != "")
+                                                            {
+                                                                @Model.Model.det[t].Emp <a href="/modulo-clientes/clientes/cliente/situacion/presupuestos?ID_Cli2=@Model.Model.det[t].ID_Cli2" class="fw-5" target="_blank" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="Ir a la ficha del cliente">(@Model.Model.det[t].ID_Cli2)</a> }
+                                                            else
+                                                            {
+                                                                <i class="fa fa-hand-o-right text-danger" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="Es un contacto"></i> @Model.Model.det[t].Emp <a href="http://extranet.gaolos.net/crmContacto.aspx?ID_Cont2=@Model.Model.det[t].ID_Cont2" class="fw-5" target="_blank" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="Ir a la ficha del contacto">(@Model.Model.det[t].ID_Cont2)</a>
+                                                            }
+                                                        </p>
+                                                        @if (Model.Model.det[t].Emp != Model.Model.det[t].Dir)
+                                                        {
+                                                            <p class="mb-0 fw-5"><small>@Model.Model.det[t].Dir - @Model.Model.det[t].Pob</small></p>
+                                                        }
+                                                        else
+                                                        {
+                                                            <p class="mb-0 fw-5"><small>@Model.Model.det[t].Pob</small></p>
+                                                        }
+                                                    </td>
+                                                    <td class=""><p class="fs-0-8">@Model.Model.det[t].Tipo</p></td>
+                                                    <td><p class="fs-0-8">@Model.Model.det[t].Breve</p></td>
+                                                    <td class="">@Model.Model.det[t].Agente</td>
+                                                    <td class="text-center">
+                                                        @if (Model.Model.det[t].ID_Soli2 != "")
+                                                        {
+                                                            @if (!Model.Model.det[t].SoliCerr)
+                                                            {
+                                                                <a href="/tareas-pendientes/tarea-pendiente?ID_Soli2=@Model.Model.det[t].ID_Soli2" target="_blank" class="text-danger"><i class="fa fa-file-text" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="Solicitud abierta. Ir a la solicitud nº @Model.Model.det[t].ID_Soli2 "></i></a>
+                                                            }
+                                                            else
+                                                            {
+                                                                <a href="/tareas-pendientes/tarea-pendiente?ID_Soli2=@Model.Model.det[t].ID_Soli2" target="_blank" class="text-muted"><i class="fa fa-file-text" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="Solicitud cerrada. Ir a la solicitud nº @Model.Model.det[t].ID_Soli2 "></i></a>
+                                                            }
+                                                        }
+                                                    </td>
+                                                    <td class="text-center"><a target="_blank" href="/modulo-presupuestos/presupuestos/presupuesto/imprimir?ID_Pres2=@Model.Model.det[t].ID_Pres2" class="fw-5" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="Imprimir presupuesto"><i class="fa fa-print" style="font-size: 14px;"></i></a></td>
+                                                    <td class="text-center">0</td>
+                                                    <td class="text-right"><p class="mb-0 fw-5">@Model.Model.det[t].Total</p></td>
+                                                </tr>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <tr>
+                                                <td colspan="11"><p class="mb-0 fw-5 p-3 text-danger"><i class="fa fa-times"></i> No hay resultados</p></td>
+                                            </tr>
+                                        }
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            @Html.Raw(Model.Model.Paginador)
+                        </div>
+                    </div>
+                </div>
+
+}
+            </div>
+        </div>
+    </div>
+</div>

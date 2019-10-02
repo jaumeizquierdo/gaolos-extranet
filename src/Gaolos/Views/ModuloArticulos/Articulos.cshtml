@@ -1,0 +1,250 @@
+﻿@model ModuloArticulosLibrary.ModuloArticulosArticulosListadoViewModel
+@{
+    Layout = "~/Views/Shared/Modulo-Articulos/_Modulo-Articulos.cshtml";
+    ViewData["Title"] = "Listado de artículos";
+}
+
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+                @if (Model.Model.Err.eserror)
+                {
+                    ViewData["err"] = Model.Model.Err.mensaje;
+                    @Html.Partial("AccesoDenegado");
+                }
+                else
+                {
+                    @* Buscar usuarios *@
+
+                    <div class="card mb-3">
+                        <div class="card-header card-header-options">
+                            <span>Buscar artículos</span>
+
+                            <div class="card-actions">
+                                <ul>
+                                    <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card-block p-0">
+
+                            <div class="d-flex justify-content-center align-items-center">
+                                <div class="col-1 pb-2 pt-2">
+                                    <img src="https://image.flaticon.com/icons/svg/306/306033.svg" style="width: 100%;">
+                                </div>
+                                <div class="col-11 p-0 box-border-left-light">
+                                    <form method="post" action="@ViewData["form"]" class="">
+                                        <div class="d-flex flex-column p-2">
+                                            <div class="d-flex justify-content-center align-items-center mb-2 w-100">
+
+                                                <div class="input-group input-group-sm mb-0 mr-2">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text input-group-text-auto mw-85">Artículo</span>
+                                                    </div>
+                                                    <input type="text" class="form-control" name="buscar" placeholder="Buscar por artículo o código" value="@ViewData["buscar"]">
+                                                    <span class="input-group-append">
+                                                        <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-search"></i></button>
+                                                    </span>
+                                                </div>
+
+                                                <div class="input-group input-group-sm mb-0 mr-2">
+                                                    <div class="input-group-prepend">
+                                                        <label class="input-group-text input-group-text-auto" for="">Categoría</label>
+                                                    </div>
+                                                    <select class="custom-select" name="ID_Cat2">
+                                                        @for (Int32 t = 0; t < Model.Model.Cat.Length; t++)
+                                                        {
+                                                            if (Convert.ToInt32(ViewData["ID_Cat2"]) == Model.Model.Cat[t].id)
+                                                            {
+                                                                <option value="@Model.Model.Cat[t].id" selected>@Model.Model.Cat[t].det</option>
+                                                            }
+                                                            else
+                                                            {
+                                                                <option value="@Model.Model.Cat[t].id">@Model.Model.Cat[t].det</option>
+                                                            }
+                                                        }
+                                                    </select>
+                                                </div>
+
+                                                <div class="input-group input-group-sm mb-0 mr-0">
+                                                    <div class="input-group-prepend">
+                                                        <label class="input-group-text input-group-text-auto" for="">Fabricantes</label>
+                                                    </div>
+                                                    <select class="custom-select" name="ID_Fam2">
+                                                        @for (Int32 t = 0; t < Model.Model.Fam.Length; t++)
+                                                        {
+                                                            if (Convert.ToInt32(ViewData["ID_Fam2"]) == Model.Model.Fam[t].id)
+                                                            {
+                                                                <option value="@Model.Model.Fam[t].id" selected>@Model.Model.Fam[t].det</option>
+                                                            }
+                                                            else
+                                                            {
+                                                                <option value="@Model.Model.Fam[t].id">@Model.Model.Fam[t].det</option>
+                                                            }
+                                                        }
+                                                    </select>
+                                                </div>
+
+                                            </div>
+
+                                            @*<hr class="mt-2 mb-2 w-100" />
+
+                <div class="d-flex">
+                    <div class="input-group input-group-sm mw-auto mr-2">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text input-group-text-auto">Solo en stock</span>
+                        </div>
+                        <div class="box-label-check">
+                            <input type="checkbox" class="" id="" name="">
+                        </div>
+                    </div>
+                    <div class="input-group input-group-sm mw-auto mr-2">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text input-group-text-auto">Sin stock</span>
+                        </div>
+                        <div class="box-label-check">
+                            <input type="checkbox" class="" id="" name="">
+                        </div>
+                    </div>
+                    <div class="input-group input-group-sm mw-auto mr-2">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text input-group-text-auto">Sin categoría</span>
+                        </div>
+                        <div class="box-label-check">
+                            <input type="checkbox" class="" id="" name="">
+                        </div>
+                    </div>
+                    <div class="input-group input-group-sm mw-auto mr-2">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text input-group-text-auto">Sin peso</span>
+                        </div>
+                        <div class="box-label-check">
+                            <input type="checkbox" class="" id="" name="">
+                        </div>
+                    </div>
+                    <div class="input-group input-group-sm mw-auto mr-2">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text input-group-text-auto">Ver en Web</span>
+                        </div>
+                        <div class="box-label-check">
+                            <input type="checkbox" class="" id="" name="">
+                        </div>
+                    </div>
+                    <div class="input-group input-group-sm mw-auto mr-2">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text input-group-text-auto">Sin imagen</span>
+                        </div>
+                        <div class="box-label-check">
+                            <input type="checkbox" class="" id="" name="">
+                        </div>
+                    </div>
+                    <div class="input-group input-group-sm mw-auto mr-2">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text input-group-text-auto">Sin Ref1.</span>
+                        </div>
+                        <div class="box-label-check">
+                            <input type="checkbox" class="" id="" name="">
+                        </div>
+                    </div>
+                    <div class="input-group input-group-sm mw-auto mr-2">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text input-group-text-auto">Sin fabricante</span>
+                        </div>
+                        <div class="box-label-check">
+                            <input type="checkbox" class="" id="" name="">
+                        </div>
+                    </div>
+                    <div class="input-group input-group-sm mw-auto mr-2">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text input-group-text-auto">Descatalogados</span>
+                        </div>
+                        <div class="box-label-check">
+                            <input type="checkbox" class="" id="" name="">
+                        </div>
+                    </div>
+                </div>*@
+
+                                        </div>
+                                        <div class="d-flex justify-content-center box-guardar col-12">
+                                            <button type="submit" class="btn btn-sm btn-primary">Buscar</button>
+                                        </div>
+                                    </form>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    @* Listado de usuarios *@
+
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card card-table mb-3">
+                                <div class="card-header card-header-options">
+                                    <span>@ViewData["Title"]</span>
+                                </div>
+                                <div class="card-block">
+
+                                    <table class="table table-striped border-top-none">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-center">Artículo</th>
+                                                <th class="text-center w-20">Categoría</th>
+                                                <th class="text-center w-20">Familia</th>
+                                                <th class="text-center w-10">Código</th>
+                                                <th class="text-center w-5">Disp.</th>
+                                                <th class="text-right w-10">Precio</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (Model.Model.det != null)
+                                            {
+                                                @for (Int32 t = 0; t < Model.Model.det.Length; t++)
+                                                {
+
+                                            <tr>
+                                                <td class="">
+                                                    <p class="fw-5 mb-0"><a href="/modulo-articulos/articulos/articulo?ID_Art2=@Model.Model.det[t].ID_Art2" data-toggle="tooltip" data-placement="top" title="" data-original-title="Ver detalles del artículo" class="fw-5">@Model.Model.det[t].Art</a></p>
+                                                </td>
+                                                <td class=""><p class="fw-5 mb-0">@Model.Model.det[t].Cat</p></td>
+                                                <td class=""><p class="fw-5 mb-0">@Model.Model.det[t].Fam</p></td>
+                                                <td class="text-center"><p class="fw-5 mb-0">@Model.Model.det[t].Codigo</p></td>
+                                                <td class="text-center"><p class="fw-5 mb-0">@Model.Model.det[t].Stock</p></td>
+                                                <td class="text-right"><p class="fw-5 mb-0">@Model.Model.det[t].Precio</p></td>
+                                            </tr>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <tr>
+                                                    <td colspan="6"><p class="mb-0 fw-5 py-2 px-1 text-danger"><i class="fa fa-times"></i> No hay resultados</p></td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                         @Html.Raw(Model.Model.Paginador) 
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

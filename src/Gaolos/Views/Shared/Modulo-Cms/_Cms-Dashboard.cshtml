@@ -1,0 +1,43 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Gaolos</title>
+
+    @Html.Partial("Estilos")
+    @Html.Partial("Scripts")
+
+    @* Gaolos Init Scripts *@
+
+</head>
+<body>
+
+    <div class="layout__body modulo-asistencias-dashboard">
+
+        <aside class="layout__nav layout__columns d-none d-xl-block" id="MenuGaolosComponent">
+            @await Component.InvokeAsync(nameof(MenuGaolosLibrary.MenuGaolosComponent))
+        </aside>
+
+        <main class="layout__content">
+            <header id="MenuUsuarioComponent">
+                @await Component.InvokeAsync(nameof(MenuUsuarioLibrary.MenuUsuarioComponent))
+            </header>
+            @RenderBody()
+        </main>
+
+        <aside class="layout__aside layout__columns" id="MenuNotificacionesComponent">
+            @await Component.InvokeAsync(nameof(MenuNotificacionesLibrary.MenuNotificacionesComponent))
+        </aside>
+
+    </div>
+
+    @* GAOLOS CORE *@
+    @Html.Partial("ScriptsCoreGaolos")
+
+    <script>
+        RefreshCounters();
+    </script>
+
+</body>
+</html>

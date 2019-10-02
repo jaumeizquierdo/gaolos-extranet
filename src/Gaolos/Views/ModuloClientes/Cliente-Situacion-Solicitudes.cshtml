@@ -1,0 +1,173 @@
+﻿@model ModuloClientesLibrary.ModuloClientesClienteClientesSituacionSolicitudesViewModel
+@{
+    Layout = "~/Views/Shared/Modulo-Clientes/_Modulo-Clientes.cshtml";
+    ViewData["Title"] = "Situación";
+    ViewData["Message"] = "Modulo de Clientes - Gaolos App v2017";
+}
+
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+@if(Model.Model.Err.eserror)
+{
+    ViewData["err"] = Model.Model.Err.mensaje;
+    @Html.Partial("AccesoDenegado");
+}
+else
+{
+
+                @* cabecera cliente *@
+
+                @Html.Partial("Cliente-Cabecera")
+
+                @* tabs *@
+
+                @Html.Partial("Cliente-Tabs")
+
+                @* Listado de direcciones *@
+
+                <div class="card">
+                    <div class="card-block">
+
+                        @* tabs *@
+
+                        @Html.Partial("Cliente-Situacion-Tabs")
+
+                        <div class="row">
+
+                            <div class="col-8">
+                                <div class="card card-table">
+                                    <div class="card-header card-header-options">
+                                        <span>Listado de solicitudes</span>
+                                    </div>
+                                    <div class="card-block">
+
+                                        @{
+                                            Models.strModuloSolicitudesListadoDetalles[] det = Model.Model.lis.det;
+                                        }
+
+                                        <table class="table table-striped table-select">
+                                            <thead>
+                                                <tr>
+                                                    <th class="w-5 text-center">Nº</th>
+                                                    <th class="w-10 text-center">Fechas</th>
+                                                    <th class="">Contacto / Exposición</th>
+                                                    <th class="w-15">Usuario</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @if (det != null)
+                                                {
+                                                    for (Int32 t = 0; t < det.Length; t++)
+                                                    {
+                                                        string clase = "tr-no-priority";
+                                                        string clase2 = "text-success";
+                                                        if (det[t].Atraso) { clase = "tr-priority"; clase2 = "text-danger"; }
+                                                        <tr class="@clase">
+                                                            <td class="text-center">
+                                                                <p class="mt-0 mb-0">@det[t].ID_Soli2</p>
+                                                            </td>
+                                                            <td class="text-center">
+                                                                <p class="fw-5 mb-0" title="Fecha planificada"><span class="@clase2">@det[t].Fe_New @det[t].Ho_New</span></p>
+                                                                @if (det[t].Expo != "")
+                                                                {
+                                                                    <p class="fw-5 mb-0" title="Fecha de la tarea"><small>@det[t].Fe_Ul @det[t].Ho_Ul</small></p>
+                                                                    <p class="fw-5 mb-0" title="Fecha de la solicitud"><small>@det[t].Fe_Al @det[t].Ho_Al</small></p>
+                                                                }
+                                                            </td>
+                                                            <td>
+                                                                <div class="priority">
+                                                                    <a href="/tareas-pendientes/tarea-pendiente?ID_Soli2=@det[t].ID_Soli2" target="_blank">
+                                                                        <p class="m-0">
+                                                                            @if (!det[t].Cerr)
+                                                                            {
+                                                                                <i class='fa fa-exclamation-triangle mr-1 text-danger' aria-hidden='true' data-toggle='tooltip' data-placement='left' title='La tarea está cerrada pero la solicitud no'></i>
+                                                                            }
+                                                                            <strong>@det[t].Emp</strong>
+                                                                        </p>
+                                                                        <p class="m-0"><small><strong>@Html.Raw(det[t].Expo_New)</strong></small></p>
+                                                                        @if (det[t].Expo != "")
+                                                                        {
+                                                                            <hr class="m-1" />
+                                                                            <p class="m-0"><small>@Html.Raw(det[t].Expo)</small></p>
+                                                                        }
+                                                                        @if (det[t].Dom != "")
+                                                                        {
+                                                                            <hr class="m-1" />
+                                                                            string txt = det[t].Dom;
+                                                                            if (det[t].Referer != "")
+                                                                            {
+                                                                                txt += " - " + det[t].Referer;
+                                                                            }
+                                                                            <p class="m-0"><small>@txt</small></p>
+                                                                        }
+                                                                    </a>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <p class="m-0 fw-5">@det[t].Usu_Tarea</p>
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <tr><td colspan="4"><p class='fw-5 text-danger mb-0'><i class='fa fa-exclamation-circle mr-1'></i> No hay resultados</p></td></tr>
+                                                }
+
+                                            </tbody>
+                                        </table>
+
+
+                                    </div>
+                                </div>
+
+                                @* Resultado Búsqueda Paginador *@
+
+                                @if (det != null)
+                                {
+                                    <nav aria-label="Búsqueda Listado" class="mb-3">
+                                        @Html.Raw(Model.Model.lis.Paginador)
+                                    </nav>
+                                }
+
+                            </div>
+
+                            <div class="col-4">
+                                @* Sin datos *@
+                                <div class="card-info-wrapper w-100" id="sindatos" style="display: none;">
+                                    <div class="card-info">
+                                        <div class="d-flex justify-content-center align-items-center">
+                                            <img src="https://image.flaticon.com/icons/svg/609/609998.svg" style="width: 20%;">
+                                            <p class="mb-2 ml-3">Si clica encima del nº de factura, en este espacio le aparecerán los datos de la factura</p>
+                                        </div>
+                                    </div>
+                                    <svg class="card-info-triangle">
+                                        <polygon points="0,0 200,0 0,200" fill="currentColor"></polygon>
+                                    </svg>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+}
+</div>
+        </div>
+    </div>
+</div>
+

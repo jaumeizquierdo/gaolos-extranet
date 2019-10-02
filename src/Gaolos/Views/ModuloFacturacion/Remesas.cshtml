@@ -1,0 +1,275 @@
+﻿@model ModuloFacturacionLibrary.ModuloFacturacionFacturacionRemesasListadoViewModel
+
+@{
+    Layout = "~/Views/Shared/Modulo-Facturacion/_Facturacion-Remesas.cshtml";
+    ViewData["Title"] = "Listado de remesas";
+}
+
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+                @if (Model.Model.Err.eserror)
+                {
+                    ViewData["err"] = Model.Model.Err.mensaje;
+                    @Html.Partial("AccesoDenegado");
+                }
+                else
+                {
+
+
+                    @* Buscar usuarios *@
+
+                    <div class="card mb-3">
+                        <div class="card-header card-header-options">
+                            <span>Buscar remesa</span>
+                        </div>
+                        <div class="card-block p-0">
+
+                            <div class="d-flex justify-content-center align-items-center">
+                                <div class="col-1 pb-2 pt-2 box-border-right-light">
+                                    <img src="~/flaticons/pie-chart-1.svg" style="width: 100%;">
+                                </div>
+                                <div class="col-11 pt-2 pb-2">
+
+                                    <form method="post" action="@ViewData["form"]" class="">
+
+                                        <div class="p-2 d-flex flex-column">
+                                            <div class="d-flex mb-0">
+
+                                                <div class="input-group mb-0 mr-2 w-25">
+                                                    <div class="input-group-prepend">
+                                                        <label class="input-group-text" for="">Fecha presentación</label>
+                                                    </div>
+                                                    <input type="text" class="form-control form-control-sm" name="Fe_Pres" placeholder="Fecha presentación" value="@ViewData["Fe_Pres"]">
+                                                    <span class="input-group-append">
+                                                        <button type="submit" class="btn btn-primary btn-sm form-buscar"><i class="fa fa-search"></i></button>
+                                                    </span>
+                                                </div>
+
+                                                <div class="input-group mb-0 mr-2 w-25">
+                                                    <div class="input-group-prepend">
+                                                        <label class="input-group-text" for="">Nº Remesa</label>
+                                                    </div>
+                                                    <input type="text" class="form-control form-control-sm" name="ID_Rem" placeholder="Nº de remesa" value="@ViewData["ID_Rem"]">
+                                                    <span class="input-group-append">
+                                                        <button type="submit" class="btn btn-primary btn-sm form-buscar"><i class="fa fa-search"></i></button>
+                                                    </span>
+                                                </div>
+
+                                                <div class="input-group mb-0 mr-2 w-25">
+                                                    <div class="input-group-prepend">
+                                                        <label class="input-group-text" for="">Buscar por tipo de cliente</label>
+                                                    </div>
+                                                    <select class="custom-select" name="Mes">
+                                                        @if (Model.Model.Meses != null)
+                                                        {
+                                                            for (Int32 t = 0; t < Model.Model.Meses.Length; t++)
+                                                            {
+                                                                if (Model.Model.Meses[t].id == Model.Model.Mes)
+                                                                {
+                                                                    <option value="@Model.Model.Meses[t].id" selected>@Model.Model.Meses[t].det</option>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <option value="@Model.Model.Meses[t].id">@Model.Model.Meses[t].det</option>
+                                                                }
+
+                                                            }
+
+                                                        }
+                                                    </select>
+                                                </div>
+
+                                                <div class="input-group mb-0 mr-2 w-25">
+                                                    <div class="input-group-prepend">
+                                                        <label class="input-group-text" for="">Buscar por tipo de cliente</label>
+                                                    </div>
+                                                    <select class="custom-select" name="Año">
+                                                        @if (Model.Model.Años != null)
+                                                        {
+                                                            for (Int32 t = 0; t < Model.Model.Años.Length; t++)
+                                                            {
+                                                                if (Model.Model.Años[t].id == Model.Model.Año)
+                                                                {
+                                                                    <option value="@Model.Model.Años[t].id" selected>@Model.Model.Años[t].det</option>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <option value="@Model.Model.Años[t].id">@Model.Model.Años[t].det</option>
+                                                                }
+
+                                                            }
+
+                                                        }
+                                                    </select>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </form>
+
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    @* Listado de usuarios *@
+
+                    <div class="row">
+
+                        <div class="col-8">
+                            <div class="card card-table mb-3">
+                                <div class="card-header card-header-options">
+                                    <span>@ViewData["Title"]</span>
+                                </div>
+                                <div class="card-block">
+
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-center w-5">Nº</th>
+                                                <th class="text-center w-10">Presentación</th>
+                                                <th class="text-center w-15">Creacion</th>
+                                                <th class="text-left">Cuenta</th>
+                                                <th class="text-center w-5">Tipo</th>
+                                                <th class="text-center w-5">Efectiva</th>
+                                                <th class="text-center w-10">Contabilizada</th>
+                                                <th class="text-center w-10">Nº recibos</th>
+                                                <th class="text-right w-10">Total</th>
+                                                <th class="text-center w-3">Anular</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (Model.Model.det != null)
+                                            {
+                                                @for (Int32 t = 0; t < Model.Model.det.Length; t++)
+                                                {
+                                                    string clss = "";
+                                                    if (Model.Model.det[t].Eli) { clss = "tr-priority"; }
+
+                                                    <tr class="@Html.Raw(clss)">
+                                                        <td class="text-center"><a href="#" id="rem_@Model.Model.det[t].ID_Rem" class="verremesa fw-5">@Model.Model.det[t].ID_Rem</a></td>
+                                                        <td class="text-center">@Model.Model.det[t].Fe_Pres</td>
+                                                        <td class="text-center">@Model.Model.det[t].Fe_Al - @Model.Model.det[t].Usu</td>
+                                                        <td class="text-left">@Model.Model.det[t].Cue</td>
+                                                        <td class="text-center">@Model.Model.det[t].Tipo</td>
+                                                        <td class="text-center">@Model.Model.det[t].Fe_Efe</td>
+                                                        <td class="text-center">
+                                                            @if (Model.Model.det[t].ExpConta && !Model.Model.det[t].Eli)
+                                                            {
+                                                                <i class="fa fa-check text-success"></i>
+                                                            }
+                                                            @if (Model.Model.det[t].Eli)
+                                                            {
+                                                                <p>Eliminada</p>
+                                                            }
+
+                                                        </td>
+                                                        <td class="text-center">@Model.Model.det[t].Num</td>
+                                                        <td class="text-right">@Model.Model.det[t].Total</td>
+                                                        <td class="text-center">
+                                                            @if (!Model.Model.det[t].Eli)
+                                                            {
+                                                                <a href="#" class="eliminar-remesa" id="selrem_@Model.Model.det[t].ID_Rem"><i class="fa fa-times text-danger"></i></a>
+                                                            }
+                                                        </td>
+                                                    </tr>
+                                                }
+
+                                            }
+                                            else
+                                            {
+                                                <tr>
+                                                    <td colspan="5"><p class="mb-0 fw-5 p-3 text-danger"><i class="fa fa-times"></i> No hay resultados</p></td>
+                                                </tr>
+
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                @Html.Raw(Model.Model.Paginador)
+                            </div>
+                        </div>
+
+                        <div class="col-4 animated fadeIn" id="sindatos">
+
+                            <div class="card-info-wrapper w-100 mb-3" id="sindatos">
+                                <div class="card-info">
+                                    <div class="d-flex justify-content-center align-items-center">
+                                        <img src="https://image.flaticon.com/icons/svg/609/609998.svg" style="width: 20%;" class="animated fadeIn">
+                                        <p class="mb-2 ml-3">
+                                            Si clica encima del nº del mantenimiento, accederá a modificarlo
+                                        </p>
+                                    </div>
+                                </div>
+                                <svg class="card-info-triangle">
+                                    <polygon points="0,0 200,0 0,200" fill="currentColor"></polygon>
+                                </svg>
+                            </div>
+
+                        </div>
+
+
+                        @* Recibos disponibles *@
+
+                        <div class="col-4 animated fadeIn" id="remesa" style="display:none;">
+
+                            <div class="card card-table mb-3">
+                                <div class="card-header card-header-options">
+                                    <span>Listado de recibos disponibles</span>
+                                    <input type="hidden" id="ID_Rem" value="" />
+                                </div>
+                                <div class="card-block">
+
+                                    <table class="table table-striped table-small">
+                                        <thead>
+                                            <tr>
+                                                <th class="">Cliente</th>
+                                                <th class="text-center">Cuenta</th>
+                                                <th class="text-right w-15">Importe</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="recdisp">
+                                            <tr>
+                                                <td colspan="5" class="text-center">
+                                                    <div class="d-flex align-items-center py-2">
+                                                        <i class="fa fa-cog fa-spin fa-2x fa-fw text-success"></i> <span class="text-success fs-1-1">Cargando recibos remesa</span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            @* Paginador *@
+                            <div class="mb-3" id="recdisp-paginador"></div>
+
+                        </div>
+
+                    </div>
+                }
+
+            </div>
+                </div>
+    </div>
+</div>

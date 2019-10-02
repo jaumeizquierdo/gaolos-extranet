@@ -1,0 +1,445 @@
+﻿@model ModuloEmpresasRelacionadasLibrary.ModuloEmpresasRelacionadasResumenAgenteListadoViewModel
+@{
+    Layout = "~/Views/Shared/Modulo-Empresas-Relacionadas/_Modulo-Empresas-Relacionadas.cshtml";
+    ViewData["Title"] = "Clientes Relacionados por agente";
+}
+
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+
+        @if (Model.Model.Err.eserror)
+        {
+
+            <div class="row">
+                <div class="col-md-12">
+                    @{
+                        ViewData["err"] = Model.Model.Err.mensaje;
+                    }
+                    @Html.Partial("AccesoDenegado")
+                </div>
+            </div>
+
+        }
+        else
+        {
+                        <div class="row">
+                            <div class="col-md-12">
+
+                                @* Buscador listado clientes relacionados *@
+
+                                <div class="card mb-3">
+                                    <div class="card-header card-header-options">
+                                        <span>Clientes relacionados</span>
+
+                                        <div class="card-actions">
+                                            <ul>
+                                                <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="card-block">
+
+                                        <div class="row">
+                                            <div class="col-2 text-center">
+                                                <img src="https://image.flaticon.com/icons/svg/432/432023.svg" style="width: 50%">
+                                            </div>
+                                            <div class="col-9">
+
+                                                <form method="post" action="@ViewData["form"]" class="sel-dates mt-2">
+
+                                                    <div class="row mb-1">
+                                                        <div class="col-6">
+                                                            <div class="form-group">
+                                                                <label>Buscar por nombre empresa relacionada, población</label>
+                                                                <input type="text" class="form-control" placeholder="Buscar por nombre empresa relacionada, población" name="buscar" value="@ViewData["buscar"]">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-6">
+                                                            <div class="form-group">
+                                                                <label>Seleccionar técnico</label>
+                                                                @if (Model.Model.EsAdm && Model.Model.Agentes != null)
+                                                                {
+                                                                    <div class="input-group">
+                                                                        <select class="custom-select col-12" id="ID_Agente" name="ID_Agente">
+                                                                            @for (Int32 t = 0; t < Model.Model.Agentes.Length; t++)
+                                                                            {
+                                                                                string sel = "";
+                                                                                if (ViewData["ID_Agente"].ToString() == Model.Model.Agentes[t].id.ToString()) { sel = "sel"; }
+                                                                                if (sel == "")
+                                                                                {
+                                                                                    <option value="@Model.Model.Agentes[t].id">@Model.Model.Agentes[t].det</option>
+                                                                                }
+                                                                                else
+                                                                                {
+                                                                                    <option value="@Model.Model.Agentes[t].id" selected>@Model.Model.Agentes[t].det</option>
+                                                                                }
+                                                                            }
+                                                                        </select>
+                                                                    </div>
+                                                                }
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row mb-1">
+                                                        <div class="col-4">
+                                                            <div class="form-group">
+                                                                <label>Cobros</label>
+                                                                <select class="custom-select form-control-sm col-12" id="Cobro" name="Cobro">
+                                                                    <option value="">- sin filtros -</option>
+                                                                    @if (ViewData["Cobro"].ToString() == "con")
+                                                                    {
+                                                                        <option value="con" selected>Con cobros</option>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <option value="con">Con cobros</option>
+                                                                    }
+                                                                    @if (ViewData["Cobro"].ToString() == "sin")
+                                                                    {
+                                                                        <option value="sin" selected>Sin cobros</option>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <option value="sin">Sin cobros</option>
+                                                                    }
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-4">
+                                                            <div class="form-group">
+                                                                <label>Presupuestos</label>
+                                                                <select class="custom-select form-control-sm col-12" id="Presup" name="Presup">
+                                                                    <option value="">- sin filtros -</option>
+                                                                    @if (ViewData["Presup"].ToString() == "con")
+                                                                    {
+                                                                        <option value="con" selected>Con presupuestos</option>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <option value="con">Con presupuestos</option>
+                                                                    }
+                                                                    @if (ViewData["Presup"].ToString() == "sin")
+                                                                    {
+                                                                        <option value="sin" selected>Sin presupuestos</option>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <option value="sin">Sin presupuestos</option>
+                                                                    }
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-4">
+                                                            <div class="form-group">
+                                                                <label>Solicitudes</label>
+                                                                <select class="custom-select form-control-sm col-12" id="Soli" name="Soli">
+                                                                    <option value="">- sin filtros -</option>
+                                                                    @if (ViewData["Soli"].ToString() == "con")
+                                                                    {
+                                                                        <option value="con" selected>Con solicitudes</option>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <option value="con">Con solicitudes</option>
+                                                                    }
+                                                                    @if (ViewData["Soli"].ToString() == "sin")
+                                                                    {
+                                                                        <option value="sin" selected>Sin solicitudes</option>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <option value="sin">Sin solicitudes</option>
+                                                                    }
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-4">
+                                                            <div class="form-group">
+                                                                <label>Asistencias</label>
+                                                                <select class="custom-select form-control-sm col-12" id="Asis" name="Asis">
+                                                                    <option value="">- sin filtros -</option>
+                                                                    @if (ViewData["Asis"].ToString() == "con")
+                                                                    {
+                                                                        <option value="con" selected>Con asistencias</option>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <option value="con">Con asistencias</option>
+                                                                    }
+                                                                    @if (ViewData["Asis"].ToString() == "sin")
+                                                                    {
+                                                                        <option value="sin" selected>Sin asistencias</option>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <option value="sin">Sin asistencias</option>
+                                                                    }
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-4">
+                                                            <div class="form-group">
+                                                                <label>Precios</label>
+                                                                <select class="custom-select form-control-sm col-12" id="Precios" name="Precios">
+                                                                    <option value="">- sin filtros -</option>
+                                                                    @if (ViewData["Precios"].ToString() == "con")
+                                                                    {
+                                                                        <option value="con" selected>Con precios</option>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <option value="con">Con precios</option>
+                                                                    }
+                                                                    @if (ViewData["Precios"].ToString() == "sin")
+                                                                    {
+                                                                        <option value="sin" selected>Sin precios</option>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <option value="sin">Sin precios</option>
+                                                                    }
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-4">
+                                                            <div class="form-group">
+                                                                <label>Clientes</label>
+                                                                <select class="custom-select form-control-sm col-12" id="Tipos" name="Tipos">
+                                                                    <option value="">- todos -</option>
+                                                                    @if (ViewData["Tipos"].ToString() == "cli")
+                                                                    {
+                                                                        <option value="cli" selected>Clientes</option>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <option value="cli">Clientes</option>
+                                                                    }
+                                                                    @if (ViewData["Tipos"].ToString() == "cont")
+                                                                    {
+                                                                        <option value="cont" selected>Contactos</option>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <option value="cont">Contactos</option>
+                                                                    }
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row mb-3">
+                                                        <div class="col-12 text-center">
+                                                            <button type="submit" class="btn btn-sm btn-primary">Buscar</button>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                </form>
+
+                                                <div class="row">
+                                                    <div class="col-12">
+
+                                                        <div class="card card-table">
+                                                            <div class="card-header card-header-options">
+                                                                <span>Resumen</span>
+                                                            </div>
+                                                            <div class="card-block">
+                                                                <table class="table mb-0" id="">
+                                                                    <thead class="">
+                                                                        <tr>
+                                                                            <th class="text-center w-10"></th>
+                                                                            <th class="text-center w-10">Nº</th>
+                                                                            <th class="text-center w-10">Solicitudes</th>
+                                                                            <th class="text-center w-10">Asisistencias</th>
+                                                                            <th class="text-center w-10">Precios</th>
+                                                                            <th class="text-center w-5 ">Cobros</th>
+                                                                            <th class="text-right w-10">Deben</th>
+                                                                            <th class="text-center w-10">Nº presupuestos</th>
+                                                                            <th class="text-right w-10">Presupuestos €</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        @if (Model.Model.res != null)
+                                                                        {
+                                                                            @for (Int32 t = 0; t < Model.Model.res.Length; t++)
+                                                                            {
+                                                                                string txt = "mdc-bg-blue-grey-50";
+                                                                                string exp = "<i class='fa fa-address-book text-danger mr-1'></i> Contactos";
+                                                                                if (Model.Model.res[t].EsCli) { txt = ""; exp = "<i class='fa fa-user-circle-o mdc-text-blue-grey-300 mr-1'></i> Clientes"; }
+                                                                                if ((t + 1) == Model.Model.res.Length)
+                                                                                {
+                                                                                    exp = "Totales";
+                                                                                }
+                                                                                <tr class="@Html.Raw(txt)">
+                                                                                    <td class=""><p class="mb-0 fw-5">@Html.Raw(exp)</p></td>
+                                                                                    <td class="text-center"><p class="mb-0 fw-5">@Model.Model.res[t].Num</p></td>
+                                                                                    <td class="text-center"><p class="mb-0 fw-5">@Model.Model.res[t].NumSoli</p></td>
+                                                                                    <td class="text-center"><p class="mb-0 fw-5">@Model.Model.res[t].NumAsis</p></td>
+                                                                                    <td class="text-center"><p class="mb-0 fw-5">@Model.Model.res[t].NumPrecios</p></td>
+                                                                                    @{
+                                                                                        string clss = "";
+                                                                                        if (Model.Model.res[t].NumCob != "") { clss = "text-danger"; }
+                                                                                    }
+                                                                                    <td class="text-center"><p class="mb-0 fw-5 @Html.Raw(clss)">@Model.Model.res[t].NumCob</p></td>
+                                                                                    <td class="text-right"><p class="mb-0 fw-5 @Html.Raw(clss)">@Model.Model.res[t].TotalDebe</p></td>
+                                                                                    @{
+                                                                                        clss = "";
+                                                                                        if (Model.Model.res[t].NumPres != "") { clss = "text-success"; }
+                                                                                    }
+                                                                                    <td class="text-center"><p class="mb-0 fw-5 @Html.Raw(clss)">@Model.Model.res[t].NumPres</p></td>
+                                                                                    <td class="text-right"><p class="mb-0 fw-5 @Html.Raw(clss)">@Model.Model.res[t].TotalPres</p></td>
+                                                                                </tr>
+                                                                                        }
+
+                                                                                        }
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                        
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        @* Listado clientes relacionados *@
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card card-table">
+                                    <div class="card-header card-header-options">
+                                        <span>Listado de clientes relacionados</span>
+                                        <div class="card-actions">
+                                            <span class="fw-5"><i class="fa fa-user-circle-o" aria-hidden="true"></i> [@Model.Model.numt] registros localizados</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="card-block">
+
+                                            @* Listado de clientes tabla *@
+
+                                            <table class="table p-0 table-condensed-table" id="">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="text-center" style="width: 50px;">Id</th>
+                                                        <th class="" style="width: 300px;">Empresa relacionada</th>
+                                                        <th class="" style="width: 100px;">Tipo</th>
+                                                        <th class="" style="width: 100px;">Solicitudes</th>
+                                                        <th class="" style="width: 100px;">Nº</th>
+                                                        <th class="" style="width: 100px;">Asisistencias</th>
+                                                        <th class="" style="width: 100px;">Precios</th>
+                                                        <th class="" style="width: 100px;">Cobros</th>
+                                                        <th class="" style="width: 100px;">Deben</th>
+                                                        <th class="" style="width: 100px;">Nº presupuestos</th>
+                                                        <th class="" style="width: 100px;">Presupuestos €</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @if (Model.Model.det == null)
+                                                    {
+                                                        <tr><td colspan="11"><p class='fw-5 text-danger mb-0'><i class='fa fa-exclamation-circle mr-1'></i> No hay resultados</p></td></tr>
+                                                    }
+                                                    else
+                                                    {
+                                                        @for (Int32 t = 0; t < Model.Model.det.Length; t++)
+                                                        {
+                                                        <tr>
+                                                            <td class="text-center" style="width: 50px;">
+                                                                <p class="mb-0 fw-5">@Model.Model.det[t].ID_Cli2</p>
+                                                            </td>
+                                                            <td style="width: 300px;" class="border-table-inner">
+                                                                <p class="mb-0"><a href="#" class="fw-5">@Model.Model.det[t].EmpRel</a></p>
+                                                                <p class="mb-0"><small class="fw-5">@Model.Model.det[t].Pob</small></p>
+                                                            </td>
+                                                            <td class="p-0" colspan="9" style="padding: 0 !important;">
+                                                                <table class="table table-condensed-table-inner">
+                                                                    <tbody>
+                                                                        @for (Int32 p = 0; p < Model.Model.det[t].det.Length; p++)
+                                                                        {
+                                                                            string txt = "";
+                                                                            string txt2 = "";
+                                                                            if (!Model.Model.det[t].det[p].EsCli) { txt = ""; txt2 = "mdc-bg-blue-grey-50"; }
+                                                                            <tr class="@Html.Raw(txt)">
+                                                                                <td class="@Html.Raw(txt2)" style="width: 100px;">
+                                                                                    @if (Model.Model.det[t].det[p].EsCli)
+                                                                                    {
+                                                                                        <p class="mb-0 fw-5"><i class="fa fa-user-circle-o mdc-text-blue-grey-300 mr-1" aria-hidden="true"></i> Clientes</p>
+                                                                                    }
+                                                                                    else
+                                                                                    {
+                                                                                        <p class="mb-0 fw-5"><i class="fa fa-address-book text-danger mr-1" aria-hidden="true"></i> Contactos</p>
+                                                                                    }
+                                                                                </td>
+                                                                                <td class="@Html.Raw(txt2)" style="width: 100px;">
+                                                                                    <p class="mb-0 fw-5">@Model.Model.det[t].det[p].NumSoli</p>
+                                                                                </td>
+                                                                                <td class="@Html.Raw(txt2)" style="width: 100px;">
+                                                                                    <p class="mb-0 fw-5">@Model.Model.det[t].det[p].Num</p>
+                                                                                </td>
+                                                                                <td class="@Html.Raw(txt2)" style="width: 100px;">
+                                                                                    <p class="mb-0 fw-5">@Model.Model.det[t].det[p].NumAsis</p>
+                                                                                </td>
+                                                                                <td class="@Html.Raw(txt2)" style="width: 100px;">
+                                                                                    @if (Model.Model.det[t].det[p].NumPrecios == "")
+                                                                                    {
+                                                                                        <p class="mb-0 fw-5"><i class='fa fa-exclamation-triangle mr-1 text-danger' aria-hidden='true'></i></p>
+                                                                                    }
+                                                                                    else
+                                                                                    {
+                                                                                        <p class="mb-0 fw-5">@Model.Model.det[t].det[p].NumPrecios</p>
+                                                                                    }
+                                                                                </td>
+                                                                                <td class="@Html.Raw(txt2)" style="width: 100px;">
+                                                                                    <p class="mb-0 text-danger fw-5">@Model.Model.det[t].det[p].NumCob</p>
+                                                                                </td>
+                                                                                <td class="@Html.Raw(txt2)" style="width: 100px;">
+                                                                                    <p class="mb-0 text-danger fw-5">@Model.Model.det[t].det[p].TotalDebe</p>
+                                                                                </td>
+                                                                                <td class="@Html.Raw(txt2)" style="width: 100px;">
+                                                                                    <p class="mb-0 text-success fw-5">@Model.Model.det[t].det[p].NumPres</p>
+                                                                                </td>
+                                                                                <td class=" @Html.Raw(txt2)" style="width: 100px;">
+                                                                                    <p class="mb-0 text-success fw-5">@Model.Model.det[t].det[p].TotalPres</p>
+                                                                                </td>
+                                                                            </tr>
+
+                                                                        }
+                                                                        
+                                                                    </tbody>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                        }
+
+                                                    }
+
+                                                </tbody>
+                                            </table>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    @*@Html.Raw(Model.Model.Paginador)*@
+                                </div>
+                            </div>
+                        </div>
+
+                        }
+                    </div>
+                </div>

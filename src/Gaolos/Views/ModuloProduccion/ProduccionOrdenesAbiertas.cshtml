@@ -1,0 +1,148 @@
+﻿@model ModuloProduccionLibrary.ProduccionOrdenesListadoViewModel
+
+@{
+    ViewData["Title"] = "Órdenes de producción";
+    ViewData["TitleOrdenesProduccionAbiertas"] = "Órdenes de producción abiertas";
+    Layout = "~/Views/Shared/Modulo-Produccion/_ProduccionOrdenes.cshtml";
+}
+<div class="main-content m-0" id="widget-area">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                @if (Model.Model.Err.eserror)
+                {
+                    ViewData["err"] = Model.Model.Err.mensaje;
+                    @Html.Partial("AccesoDenegado");
+                }
+                else
+                {
+
+
+                    @* Buscador *@
+
+                <div class="card mb-3">
+                    <div class="card-header card-header-options">
+                        <span>Buscar </span>
+
+                        <div class="card-actions">
+                            <ul>
+                                <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="card-block p-0">
+
+                        <form action="@ViewData["Form"]" method="post" class="">
+                            <div class="d-flex justify-content-center align-items-center">
+                                <div class="col-1 pb-2 pt-2">
+                                    <img src="https://image.flaticon.com/icons/svg/427/427132.svg" style="width: 100%;">
+                                </div>
+                                <div class="col-11 box-border-left-light">
+
+                                    <div class="row p-0">
+                                        <div class="col-12 p-0">
+                                            <div class="d-flex mb-0 px-3 pt-3 mb-2">
+                                                <div class="form-group mb-2 mr-2 col-12 p-0">
+                                                    <label>Buscar</label>
+                                                    <input type="text" class="form-control" placeholder="Buscar ..." name="buscar" value="@ViewData["buscar"]">
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="d-flex justify-content-center mt-2 box-border-top mdc-bg-blue-grey-50 pt-2 pb-2">
+                                                <button type="submit" class="btn btn-sm btn-primary">Buscar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </form>
+
+                    </div>
+
+
+                </div>
+
+
+                    <div class="card mb-3 card-table">
+                        <div class="card-header card-header-options">
+                            <span>@ViewData["TitleOrdenesProduccionAbiertas"]</span>
+
+                            <div class="card-actions">
+                                <ul>
+                                    <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card-block">
+                            <table class="table table-striped">
+
+                                <thead>
+                                    <tr>
+                                        <th>Nº orden Nº Ped.</th>
+                                        <th>Fecha</th>
+                                        <th>Cliente</th>
+                                        <th>Exposición</th>
+                                        <th>Ref. Cli.</th>
+                                        <th class="text-center">Órdenes de trabajo</th>
+                                        <th class="text-center">Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (Model.Model.det != null)
+        {
+            for (Int32 t = 0; t < Model.Model.det.Length; t++)
+            {
+                            <tr>
+                                <td><a href="@ViewData["Form"]/orden-detalles?ID_Ord2=@Model.Model.det[t].ID_Ord2" class="fw-5">@Model.Model.det[t].ID_Ord2</a> / <span>@Model.Model.det[t].ID_PedP2</span></td>
+                                <td>@Model.Model.det[t].Fe_Al</td>
+                                <td class="fw-5"><a href="@ViewData["Form"]/orden-detalles?ID_Ord2=@Model.Model.det[t].ID_Ord2  " class="fw-5">@Model.Model.det[t].Emp</a></td>
+                                <td class="fw-5">@Model.Model.det[t].Expo</td>
+                                <td>@Model.Model.det[t].RefCli</td>
+                                <td class="text-center">@Model.Model.det[t].NumOrd</td>
+                                <td class="text-center">
+                                    @if (!Model.Model.det[t].EsProd)
+                                    {
+                                        <p class="text-danger">Sin producción</p>
+                                    }
+
+                                        @*<div class="d-flex justify-content-between">
+                                            <button type="button" class="btn btn-primary btn-sm cerrar-orden" id="b1_@Model.Model.det[t].ID_Ord2">Cerrar</button>
+                                            <button type="button" class="btn btn-primary btn-sm albaran-orden" id="b2_@Model.Model.det[t].ID_Ord2">Albarán</button>
+                                            <button type="button" class="btn btn-primary btn-sm produccion-orden" id="b3_@Model.Model.det[t].ID_Ord2">Prod.</button>
+                                        </div>*@
+                                </td>
+                            </tr>
+
+}
+}
+                                </tbody>
+                            </table>
+
+                            
+
+                        </div>
+                    </div>
+                }
+                    <div class="mb-3">
+                        @* Paginador *@
+
+                        @Html.Raw(Model.Model.Paginador)
+                    </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>

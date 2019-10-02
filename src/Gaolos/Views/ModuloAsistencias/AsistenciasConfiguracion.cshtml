@@ -1,0 +1,97 @@
+﻿@model ModuloAsistenciasLibrary.ModuloAsisnteicasAsistenciasZonasListadoViewModel
+@{
+    Layout = "~/Views/Shared/Modulo-Asistencias/_Modulo-Asistencias.cshtml";
+    ViewData["Title"] = "Asistencias Configuracion";
+    ViewData["Message"] = "Asistencias - Gaolos App v2017";
+}
+
+<div class="main-content m-0" id="widget-area">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+
+                @if (Model.Model.Err.eserror)
+    {
+        ViewData["err"] = Model.Model.Err.mensaje;
+                @Html.Partial("AccesoDenegado");
+    }
+    else
+    {
+
+
+                <div class="card mb-3">
+                    <div class="card-header card-header-options">
+                        <span>@ViewData["Title"]</span>
+                        @Html.Partial("PanelActions")
+                    </div>
+                    <div class="card-block p-5">
+
+                        <div class="row mb-4">
+                            <div class="col-3 text-center col-conf">
+                                <figure>
+                                    <a href="/modulo-asistencias/configuracion/zonas">
+                                        <img src="https://image.flaticon.com/icons/svg/321/321843.svg" style="width: 64px">
+                                        <h5 class="fs-1-1 mt-2">Zonas</h5>
+                                    </a>
+                                </figure>
+                            </div>
+                            <div class="col-md-3 text-center col-conf">
+                                <figure>
+                                    <a href="/modulo-asistencias/configuracion/reportes">
+                                        <img src="https://image.flaticon.com/icons/svg/321/321737.svg" style="width: 64px">
+                                        <h5 class="fs-1-1 mt-2">Reportes</h5>
+                                    </a>
+                                </figure>
+                            </div>
+                            <div class="col-md-3 text-center col-conf" style="display: none;">
+                                <figure>
+                                    <a href="/modulo-asistencias/configuracion/reportes">
+                                        <img src="https://image.flaticon.com/icons/svg/321/321737.svg" style="width: 64px">
+                                        <h5 class="fs-1-1 mt-2">Reportes</h5>
+                                    </a>
+                                </figure>
+                            </div>
+                            <div class="col-md-3 text-center col-conf" style="display: none;">
+                                <figure>
+                                    <a href="/modulo-asistencias/configuracion/reportes">
+                                        <img src="https://image.flaticon.com/icons/svg/321/321737.svg" style="width: 64px">
+                                        <h5 class="fs-1-1 mt-2">Reportes</h5>
+                                    </a>
+                                </figure>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+
+
+    }
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+
+    $(".col-conf figure").mouseover(function () {
+        $(this).find("img").addClass("animated infinite bounce");
+    });
+    $(".col-conf figure").mouseout(function () {
+        $(this).find("img").removeClass("animated infinite bounce");
+    });
+</script>

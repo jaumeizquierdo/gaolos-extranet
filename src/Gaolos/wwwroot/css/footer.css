@@ -1,0 +1,32 @@
+/* Footer */
+/* Mixins */
+/* Skin v4.6 - White / Dark / Blue */
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5em; }
+  .footer .footer-legend {
+    display: flex;
+    font-size: 0.9em;
+    justify-content: center; }
+  .footer .footer-language {
+    display: flex; }
+  .footer .dropdown-menu {
+    min-width: 10rem; }
+    .footer .dropdown-menu li button {
+      font-weight: 500;
+      font-family: 'Roboto', sans-serif; }
+
+footer {
+  bottom: 0;
+  width: 100%;
+  background: #455a64;
+  z-index: 9999; }
+  footer a {
+    flex: 1; }
+
+.btn-footer {
+  font-size: 0.9em;
+  padding: 0.3em 0.5em; }

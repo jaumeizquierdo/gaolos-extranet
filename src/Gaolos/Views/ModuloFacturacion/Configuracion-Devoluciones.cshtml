@@ -1,0 +1,162 @@
+﻿@model ModuloFacturacionLibrary.ModuloFacturacionConfiguracionDevolucionesViewModel
+@{
+    Layout = "~/Views/Shared/Modulo-Facturacion/_Facturacion-Configuracion.cshtml";
+    ViewData["Title"] = "Configuración Devoluciones";
+}
+
+<div class="main-content m-0" id="widget-area">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+
+                @if (Model.Model.Err.eserror)
+                {
+                    ViewData["err"] = Model.Model.Err.mensaje;
+                    @Html.Partial("AccesoDenegado");
+                }
+                else
+                {
+
+                    <div class="card mb-3">
+                        <div class="card-block card-info-header card-info-header-modulo p-0">
+                            <div class="d-flex justify-content-center align-items-center">
+                                <div class="col-1 pb-2 pt-2 d-flex justify-content-center align-items-center">
+                                    <img src="~/flaticons/pie-chart-1.svg" style="width: 64px">
+                                </div>
+                                <div class="col-11 pt-2 pb-2 box-border-left-light">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="card-info-desc d-flex flex-column py-3">
+                                            <h5 class="fw-5 title-section">Recibos y Remesas</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="card mb-3">
+
+                                <div class="card-header card-header-options">
+                                    <span>Devoluciones</span>
+                                </div>
+
+                                <div class="card-block p-0">
+
+                                    <div class="p-2">
+
+                                        <div class="d-flex align-items-center">
+                                            @if (Model.Model.CobDevoSoli)
+                                            {
+                                                <input type="checkbox" class="mr-2" id="CobDevoSoli" checked>
+                                            }
+                                            else
+                                            {
+                                                <input type="checkbox" class="mr-2" id="CobDevoSoli">
+                                            }
+                                            <span class="fw-5">Crear nueva solicitud o re-abrir solicitud existente en caso de devolución de cobro</span>
+                                        </div>
+
+                                        <div class="d-flex align-items-center">
+                                            @if (Model.Model.CobDevoCobNego)
+                                            {
+                                                <input type="checkbox" class="mr-2" id="CobDevoCobNego" checked>
+                                            }
+                                            else
+                                            {
+                                                <input type="checkbox" class="mr-2" id="CobDevoCobNego">
+                                            }
+                                            <span class="fw-5">Enviar a cobros por negociar</span>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="d-flex justify-content-center box-border-top p-2 mdc-bg-blue-grey-50">
+                                        <a href="#" class="btn btn-sm btn-primary config-devoluciones-guardar">Guardar</a>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-4">
+                            @*<div class="card mb-3">
+
+                                <div class="card-header card-header-options">
+                                    <span>Remesas valores predeterminados</span>
+                                </div>
+
+                                <div class="card-block p-0">
+
+                                    <div class="p-2">
+                                        <div class="d-flex flex-column mb-0">
+
+                                            <div class="d-flex align-items-center mb-2">
+                                                @if (Model.Model.RecRemEnvMail)
+                                                {
+                                                    <input type="checkbox" class="mr-2" id="RecRemEnvMail" checked>
+                                                }
+                                                else
+                                                {
+                                                    <input type="checkbox" class="mr-2" id="RecRemEnvMail">
+                                                }
+                                                <span class="fw-5">Enviar por mail</span>
+                                            </div>
+
+                                            <div class="input-group input-group-sm mb-0">
+                                                <div class="input-group-prepend">
+                                                    <label class="input-group-text" for="">Mail envío</label>
+                                                </div>
+                                                <select class="custom-select" id="ID_Mail">
+                                                    @if (Model.Model.Mails != null)
+                                                    {
+                                                        for (Int32 t = 0; t < Model.Model.Mails.Length; t++)
+                                                        {
+                                                            if (Model.Model.Mails[t].id == Model.Model.ID_Mail)
+                                                            {
+                                                                <option value="@Model.Model.Mails[t].id" selected>@Model.Model.Mails[t].det</option>
+                                                            }
+                                                            else
+                                                            {
+                                                                <option value="@Model.Model.Mails[t].id">@Model.Model.Mails[t].det</option>
+                                                            }
+                                                        }
+                                                    }
+                                                </select>
+                                                <div class="input-group-append input-group-text-auto">
+                                                    <button type="button" class="btn btn-sm btn-primary config-remesas-probar-mail">Probar</button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="d-flex justify-content-center box-border-top p-2 mdc-bg-blue-grey-50">
+                                        <a href="#" class="btn btn-sm btn-primary config-remesas-guardar">Guardar</a>
+                                    </div>
+
+                                </div>
+                            </div>*@
+                        </div>
+
+                    </div>
+
+                }
+
+            </div>
+        </div>
+
+    </div>
+
+</div>

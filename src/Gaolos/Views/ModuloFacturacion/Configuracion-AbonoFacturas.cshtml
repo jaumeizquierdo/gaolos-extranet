@@ -1,0 +1,115 @@
+﻿@model ModuloFacturacionLibrary.ModuloFacturacionConfiguracionAbonoFacturasViewModel
+@{
+    Layout = "~/Views/Shared/Modulo-Facturacion/_Facturacion-Configuracion.cshtml";
+    ViewData["Title"] = "Abono de facturas";
+}
+
+<div class="main-content m-0" id="widget-area">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+
+                @if (Model.Model.Err.eserror)
+                {
+                    ViewData["err"] = Model.Model.Err.mensaje;
+                @Html.Partial("AccesoDenegado");
+                }
+                else
+                {
+
+                <div class="card mb-3">
+                    <div class="card-block card-info-header card-info-header-modulo p-0">
+                        <div class="d-flex justify-content-center align-items-center">
+                            <div class="col-1 pb-2 pt-2 d-flex justify-content-center align-items-center">
+                                <img src="~/flaticons/pie-chart-1.svg" style="width: 64px">
+                            </div>
+                            <div class="col-11 pt-2 pb-2 box-border-left-light">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="card-info-desc d-flex flex-column py-3">
+                                        <h5 class="fw-5 title-section">Abono de facturas</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-6">
+                        <div class="card mb-3">
+
+                            <div class="card-header card-header-options">
+                                <span>Abono de facturas</span>
+                            </div>
+
+                            <div class="card-block p-0">
+
+                                <div class="p-2">
+                                    <div class="d-flex align-items-center mb-2">
+
+                                        <div class="input-group input-group-sm mb-0">
+                                            <div class="input-group-prepend">
+                                                <label class="input-group-text" for="">Serie de facturas predeterminadas para los abonos</label>
+                                            </div>
+
+                                            <select class="custom-select" id="abonoFactPred">
+                                                @if (Model.Model.Series != null)
+                                                {
+                                                    for (Int32 t = 0; t < Model.Model.Series.Length; t++)
+                                                    {
+                                                        if (Model.Model.ID_Serie == Model.Model.Series[t].id)
+                                                        {
+                                                            <option value="@Model.Model.Series[t].id" selected>@Model.Model.Series[t].det</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="@Model.Model.Series[t].id">@Model.Model.Series[t].det</option>
+                                                        }
+                                                    }
+                                                }
+                                            </select>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="d-flex align-items-center">
+                                        @if (Model.Model.AboFacSoloPred)
+                                        {
+                                            <input type="checkbox" class="mr-2" id="abonoSeriePred" checked>
+                                        }
+                                        else
+                                        {
+                                            <input type="checkbox" class="mr-2" id="abonoSeriePred">
+                                        }
+                                        <span class="fw-5">Solo mostrar la serie predeterminada</span>
+                                    </div>
+                                </div>
+
+                                <div class="d-flex justify-content-center box-border-top p-2 mdc-bg-blue-grey-50">
+                                    <a href="#" class="btn btn-sm btn-primary guardar-abono-facturas">Guardar</a>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                }
+
+            </div>
+        </div>
+
+    </div>
+
+</div>

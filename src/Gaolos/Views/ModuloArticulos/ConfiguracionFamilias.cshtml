@@ -1,0 +1,236 @@
+﻿@model ModuloArticulosLibrary.ModuloArticulosListadoConPaginadorViewModel
+
+@{
+    Layout = "~/Views/Shared/Modulo-Articulos/_Modulo-Articulos-Configuracion.cshtml";
+    ViewData["Title"] = "Listado de familias de artículos";
+}
+
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+                @if (Model.Model.Err.eserror)
+                {
+                    ViewData["err"] = Model.Model.Err.mensaje;
+                    @Html.Partial("AccesoDenegado");
+                }
+                else
+                {
+
+                    @* Buscar usuarios *@
+
+                    <div class="card mb-3">
+                        <div class="card-header card-header-options">
+                            <span>Buscar familia</span>
+
+                            <div class="card-actions">
+                                <ul>
+                                    <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card-block p-0">
+
+                            <form action="@ViewData["Form"]" method="post">
+                                <div class="d-flex justify-content-center align-items-center">
+                                    <div class="col-1  pb-2 pt-2">
+                                        <img src="~/flaticons/business/038-user-1.svg" style="width: 100%;">
+                                    </div>
+                                    <div class="col-11 box-border-left-light">
+
+                                        <div class="row p-0">
+                                            <div class="col-12 box-border-right p-0">
+                                                <div class="d-flex mb-0 px-3 pt-3 mb-2">
+                                                    <div class="form-group mb-0 mr-2 col-12 p-0">
+                                                        <label>Buscar</label>
+                                                        <input type="text" class="form-control" placeholder="Buscar" name="buscar" value="@ViewData["buscar"]">
+                                                    </div>
+                                                </div>
+                                                <div class="d-flex justify-content-center mt-2 box-border-top mdc-bg-blue-grey-50 pt-2 pb-2">
+                                                    <button type="submit" class="btn btn-sm btn-primary">Buscar</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </form>
+
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+
+                        <div class="col-7">
+                            @* Listado de categorias servicios *@
+                            <div class="card card-table mb-3">
+                                <div class="card-header card-header-options">
+                                    <span>@ViewData["Title"]</span>
+                                    <div class="input-group input-group-sm col-5 mr-0 pr-0">
+                                        <input type="text" class="form-control form-control-sm" id="FamN" placeholder="Nueva familia" maxlength="100">
+                                        <span class="input-group-append">
+                                            <button type="button" class="btn btn-primary btn-sm nueva-familia-art">Nueva</button>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="card-block">
+
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-center">Familia</th>
+                                                <th class="text-center">Observaciones</th>
+                                                <th class="text-center">Nº Categorias</th>
+                                                <th class="text-center">Nº Artículos</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                            @{
+                                                Models.strArticulosArticulosFamiliasListadoDetalles[] det = (Models.strArticulosArticulosFamiliasListadoDetalles[])ViewData["det"];
+                                            }
+
+
+                                            @if (det != null)
+                                            {
+                                                @for (Int32 t = 0; t < det.Length; t++)
+                                                {
+
+                                                    <tr>
+                                                        <td class="">
+                                                            <p class="fw-5 mb-0"><a href="#" id="fam_@det[t].ID_Fam2" data-toggle="tooltip" data-placement="top" title="" data-original-title="Ver detalles de la familia" class="fw-5 ver-familia-art">@det[t].Fam</a></p>
+                                                        </td>
+                                                        <td class="">
+                                                            <p class="fw-5 mb-0">@det[t].Obs</p>
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <p class="fw-5 mb-0">@det[t].numCat</p>
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <p class="fw-5 mb-0">@det[t].numArt</p>
+                                                        </td>
+                                                    </tr>
+                                                }
+
+                                            }
+                                            else
+                                            {
+                                                <tr><td colspan="4"><p class='fw-5 text-danger mb-0'><i class='fa fa-exclamation-circle mr-1'></i> No hay resultados</p></td></tr>
+
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                @Html.Raw(Model.Model.Paginador)
+                            </div>
+
+                        </div>
+
+                        <div class="col-5">
+
+                            @* Sin datos *@
+                            <div class="card-info-wrapper w-100 animated fadeIn" id="sindatos">
+                                <div class="card-info">
+                                    <div class="d-flex justify-content-center align-items-center">
+                                        <img src="https://image.flaticon.com/icons/svg/609/609998.svg" style="width: 20%;" class="animated fadeIn">
+                                        <div class="d-flex flex-column">
+                                            <p class="mb-2 ml-3 animated fadeIn">En esta pantalla podrá modificar la familia de los artículos</p>
+                                            @*<p class="mb-2 ml-3 mt-2 fs-0-8 animated fadeIn">Las opciones disponibles son:<br><span class="fw-5 text-danger">Editar presupuesto:</span> edición de los parámetros básicos de su presupuesto.<br><span class="fw-5 text-danger">Añadir rápido:</span> añadir un servicio libre no contemplado previamente.<br><span class="fw-5 text-danger">Añadir servicio:</span> añadir un servicio previamente categorizado.</p>
+                                                <p class="mb-2 ml-3 mt-2 fs-0-8 animated fadeIn">Además podrá <span class="fw-5">modificar las características</span> de un servicio presupuestado (código, cantidad, precio, descuento, etc).</p>*@
+                                        </div>
+                                    </div>
+                                </div>
+                                <svg class="card-info-triangle">
+                                    <polygon points="0,0 200,0 0,200" fill="currentColor"></polygon>
+                                </svg>
+                            </div>
+
+                            @* Familia *@
+                            <div class="card mb-3" id="verFamilia" style="display: none;">
+                                <div class="card-header card-header-options">
+                                    <span>Modificar categoría</span>
+                                    <input type="hidden" id="ID_Fam2" value="0" />
+                                </div>
+
+                                <div class="card-block p-2">
+
+                                    <div class="box-labels mb-1">
+                                        <div class="d-flex align-items-center align-self-stretch box-labels-divider">
+                                            <label class="m-0 box-label-label align-self-stretch">Alta</label>
+                                            <p class="mb-0 px-2" id="Alta"></p>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex mb-1">
+                                        <div class="box-labels w-100">
+                                            <div class="d-flex align-items-center align-self-stretch">
+                                                <div class="input-group input-group-sm mb-0 p-0">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">Familia</span>
+                                                    </div>
+                                                    <input type="text" class="form-control form-control-sm" placeholder="Familia" value="" id="Fam" maxlength="100">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex mb-1">
+                                        <div class="input-group input-group-sm mb-0 p-0">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text text-left">Observaciones</span>
+                                            </div>
+                                            <textarea class="form-control form-control-sm" rows="4" placeholder="Observaciones" value="" id="Obs"></textarea>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="d-flex justify-content-center box-border-top p-2 mdc-bg-blue-grey-50">
+                                    <button type="button" class="btn btn-sm btn-primary guardar-familia-art">Guardar</button>
+                                </div>
+                            </div>
+
+
+                            @* Eliminar familia *@
+                            <div class="card card-table mb-3" style="display:none;" id="eli-familia-art">
+                                <div class="card-header card-header-options">
+                                    <span>Eliminar familia</span>
+                                </div>
+                                <div class="card-block p-0">
+                                    <div class="d-flex flex-column p-2" id="ver-mot-eli-fam" style="display:none;">
+                                        <div class="form-group mb-0" id="expo-mot-eli-fam">
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-center box-guardar">
+                                        <button type="button" class="btn btn-sm btn-danger eliminar-familia-art" id="bt-eli-fam">Eliminar</button>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+

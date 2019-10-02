@@ -1,0 +1,1170 @@
+﻿@model CmsLibrary.CmsWebNodosEditarViewModel
+
+@{
+    Layout = "~/Views/Shared/Modulo-Cms/_CmsEditor.cshtml";
+    ViewData["Title"] = "Editar web: " + @Model.CmsWeb.Web;
+    ViewData["Message"] = "CMS - Gaolos App v2017";
+}
+
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                @if (Model.CmsWeb.Err.eserror)
+                {
+                    ViewData["err"] = Model.CmsWeb.Err.mensaje;
+                    @Html.Partial("AccesoDenegado");
+                }
+                else
+                {
+
+                    @* Buscar webs *@
+
+                <div class="card mb-3">
+                    <div class="card-header card-header-options">
+                        <span>@Model.CmsWeb.Web</span>
+
+                        <div class="card-actions">
+                            <ul>
+                                <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-block p-0">
+                        <form action="@ViewData["Form"]" method="post">
+                            <div class="d-flex justify-content-center align-items-center">
+                                <div class="col-1 text-center box-border-right-light py-2">
+                                    <img src="~/flaticons/startup-1.svg" style="width: 100%;">
+                                </div>
+                                <div class="col-11">
+
+                                    <div class="row p-0">
+                                        <div class="col-12 p-0">
+                                            <div class="px-3 py-2">
+
+                                                <h4 class="fw-5">@Model.CmsWeb.Web</h4>
+                                                <p class="fw-5 mb-0 mt-2">Dominio: <span class="text-info">@Model.CmsWeb.Web</span></p>
+                                                @*<p class="fw-5 mb-0">Renovación: <span class="text-info">31/12/2018</span></p>*@
+                                                @*<a href="#" class="d-inline-block btn btn-primary btn-sm mt-2">Ver Estadísticas</a>*@
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+
+
+
+                    @* Edición web *@
+
+                    <div class="row" id="collapse_edit_nodo">
+
+                        <div class="col-3 arbol-nodos" id="idraw">
+
+                            <div class="card mb-3">
+                                <div class="card-header card-header-options">
+                                    <span>Nodos</span>
+
+                                    <div class="card-actions">
+                                        <ul>
+                                            <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="card-block pt-0 pb-0 pl-0 pr-2">
+
+                                    <div class="tree">
+                                        @Html.Raw(Model.CmsWeb.Html)
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-9" id="infonodo" style="display:none;">
+
+                            @*Editar Contenido CMS*@
+                            <div class="card mb-3">
+                                <div class="card-header card-header-options">
+                                    <span>Editar nodo: <strong class="nodo_nombre">[nodo]</strong></span>
+                                </div>
+                                <div class="card-block">
+
+                                    <ol class="breadcrumb">
+                                        <li class="breadcrumb-item"><a href="#" class="fw-5">Home</a></li>
+                                        <li class="breadcrumb-item"><a href="#" class="fw-5">Library</a></li>
+                                        <li class="breadcrumb-item active">Data</li>
+                                    </ol>
+
+                                    <form class="form-inline">
+
+                                        <label class="mb-1" for="inlineFormCustomSelect">Idioma seleccionado</label>
+                                        <select class="custom-select mb-2 nodo_cambio_idi form-control-sm" id="customid">
+                                            @if (Model.CmsWeb.Idioma != null)
+                                            {
+                                                @foreach (Models.Idioma item in Model.CmsWeb.Idioma)
+                                                {
+                                                    <option value="@item.id">@item.Mensaje</option>
+                                                }
+                                            }
+                                        </select>
+
+                                        <label class="custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0 mt-2">
+                                            <input type="checkbox" class="custom-control-input">
+                                            <span class="custom-control-label">Duplicar contenido</span>
+                                        </label>
+
+                                        @*<button type="button" class="btn btn-primary editar-nodo btn-sm">Editar Contenido</button>*@
+
+                                    </form>
+                                </div>
+                            </div>
+
+                            @*Editar Nodo*@
+                            <div class="card mb-3">
+                                <div class="card-header card-header-options">
+                                    <span>Nombre, título y url del nodo: <strong class="nodo_nombre">[nodo]</strong></span>
+                                </div>
+                                <div class="card-block">
+                                    <div class="form-group">
+                                        <label for="NombreNodoInput">Nombre del Nodo</label>
+                                        <input type="text" class="form-control" id="NomNodo" placeholder="Nombre del Nodo">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="TituloNodoInput">Título del Nodo</label>
+                                        <input type="text" class="form-control" id="Titulo" placeholder="Título del Nodo">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="UrlParcial">URL del Nodo</label>
+                                        <label id="baseUrl"></label><input type="text" class="form-control" id="UrlParcial" placeholder="URL del Nodo">
+                                    </div>
+                                    <div class="row justify-content-center">
+                                        <button type="button" class="btn btn-primary form-nodo-info btn-sm">Actualizar Nodo</button>
+                                        <input type="hidden" value="" id="ID_Idi" name="ID_Idi" />
+                                        <input type="hidden" value="" id="nodo_id_tv" name="nodo_id_tv" />
+                                        <input type="hidden" value="" id="nodo_id_nodo" name="nodo_id_nodo" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            @*Título de la web*@
+                            <div class="card mb-3">
+                                <div class="card-header card-header-options">
+                                    <span>Título de la web:</span>
+                                </div>
+                                <div class="card-block">
+                                    <div class="form-group">
+                                        <label for="TituloWebInput" class="d-flex justify-content-between align-items-center">
+                                            <span>Título de la web</span>
+                                            <a href="#" class="btn btn-secondary btn-sm fw-5 ml-3" data-container="body" data-toggle="popover" data-placement="top" data-content="Éste es el título general de la web. El título que aquí se ponga aparecerá siempre en las búsquedas de Google y en las pestañas del navegador. Intenta que no sobrepase de los 70 caracteres para que no aparezca cortado en el buscador."><i class="fa fa-question"></i></a>
+                                        </label>
+                                        <input type="text" class="form-control" id="Titulo" placeholder="Título del Nodo">
+                                    </div>
+                                    <div class="row justify-content-center">
+                                        <button type="button" class="btn btn-primary form-nodo-info btn-sm">Actualizar Título</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            @*[HEAD] CSS Y JS*@
+                            <div class="card mb-3">
+                                <div class="card-header card-header-options">
+                                    <span>[HEAD] CSS y JS</span>
+                                </div>
+                                <div class="card-block">
+                                    <div class="form-group">
+                                        <label for="CustomCSSTextArea" class="d-flex justify-content-between align-items-center">
+                                            <span>Insertar código:</span>
+                                            <a href="#" class="btn btn-secondary btn-sm fw-5 ml-3" data-container="body" data-toggle="popover" data-placement="top" data-content="Líneas CSS cargadas en el HEAD"><i class="fa fa-question"></i></a>
+                                        </label>
+                                        @*<textarea class="form-control" id="CustomCSSTextArea" rows="5"></textarea>*@
+                                        <div id="CustomCSSTextArea" class="editor"></div>
+                                    </div>
+                                    <div class="row justify-content-center">
+                                        <button type="button" class="btn btn-primary form-custom-css btn-sm">Actualizar CSS</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            @*[BODY] Header*@
+                            <div class="card mb-3">
+                                <div class="card-header card-header-options">
+                                    <span>[BODY] Header - Cabecera (logo y menú superior)</span>
+                                </div>
+                                <div class="card-block">
+                                    <div class="form-group">
+                                        <label for="HeaderTextArea" class="d-flex justify-content-between align-items-center">
+                                            <span>Insertar código:</span>
+                                            <a href="#" class="btn btn-secondary btn-sm fw-5 ml-3" data-container="body" data-toggle="popover" data-placement="top" data-content="HEADER. Zona dónde encontraremos el logotipo de la web y el menú principal."><i class="fa fa-question"></i></a>
+                                        </label>
+                                        @*<textarea class="form-control" id="CustomHeaderTextArea" rows="5"></textarea>*@
+                                        <div id="CustomHeaderTextArea" class="editor" style="height: 700px;"></div>
+                                    </div>
+                                    <div class="row justify-content-center">
+                                        <button type="button" class="btn btn-primary form-custom-header btn-sm">Actualizar Top Header</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            @*[BODY] HTML*@
+                            <div class="card mb-3">
+                                <div class="card-header card-header-options">
+                                    <span>[BODY] Código HTML</span>
+                                </div>
+                                <div class="card-block">
+                                    <div class="form-group">
+                                        <label for="CustomFooterTextArea" class="d-flex justify-content-between align-items-center">
+                                            <span>Insertar código:</span>
+                                            <a href="#" class="btn btn-secondary btn-sm fw-5 ml-3" data-container="body" data-toggle="popover" data-placement="top" data-content="Archivos JS que se cargan en el final del documento"><i class="fa fa-question"></i></a>
+                                        </label>
+                                        @*<textarea class="form-control" id="CustomFooterJsTextArea" rows="5"></textarea>*@
+                                        <div id="CustomHTMLTextArea" class="editor" style="height: 700px;"></div>
+                                    </div>
+                                    <div class="row justify-content-center">
+                                        <button type="button" class="btn btn-primary form-custom-html btn-sm">Actualizar HTML</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            @*[FOOTER] Código HTML*@
+                            <div class="card mb-3">
+                                <div class="card-header card-header-options">
+                                    <span>[FOOTER] Código HTML</span>
+                                </div>
+                                <div class="card-block">
+                                    <div class="form-group">
+                                        <label for="CustomFooterTextArea" class="d-flex justify-content-between align-items-center">
+                                            <span>Insertar código:</span>
+                                            <a href="#" class="btn btn-secondary btn-sm fw-5 ml-3" data-container="body" data-toggle="popover" data-placement="top" data-content="HTML estático para el FOOTER"><i class="fa fa-question"></i></a>
+                                        </label>
+                                        @*<textarea class="form-control" id="CustomFooterTextArea" rows="5"></textarea>*@
+                                        <div id="CustomFooterTextArea" class="editor" style="height: 700px;"></div>
+                                    </div>
+                                    <div class="row justify-content-center">
+                                        <button type="button" class="btn btn-primary form-custom-footer btn-sm">Actualizar Footer</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            @* Breve *@
+                            <div class="card mb-3">
+                                <div class="card-header card-header-options">
+                                    <span>Texto breve:</span>
+                                </div>
+                                <div class="card-block">
+                                    <div class="form-group">
+                                        <label for="TituloWebInput" class="d-flex justify-content-between align-items-center">
+                                            <span>Introduce el texto breve:</span>
+                                            <a href="#" class="btn btn-secondary btn-sm fw-5 ml-3" data-container="body" data-toggle="popover" data-placement="top" data-content="Éste es el título general de la web. El título que aquí se ponga aparecerá siempre en las búsquedas de Google y en las pestañas del navegador. Intenta que no sobrepase de los 70 caracteres para que no aparezca cortado en el buscador."><i class="fa fa-question"></i></a>
+                                        </label>
+                                        <textarea class="form-control" id="CustomBreve" rows="5"></textarea>
+                                    </div>
+                                    <div class="row justify-content-center">
+                                        <button type="button" class="btn btn-primary form-nodo-breve btn-sm">Actualizar</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            @*[EDITAR NODOS]*@
+                            <div class="card mb-3">
+                                <div class="card-header card-header-options">
+                                    <span>Nodos relacionados</span>
+                                    <div class="card-actions">
+                                        <ul>
+                                            <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="card-block" id="nodos-relacionados" style="max-height: 20rem; overflow-x: scroll;">
+                                </div>
+                                <div class="mt-3 mb-3 text-center">
+                                    <hr class="m-0" />
+                                    <button class="btn btn-primary btn-sm mt-3 nodo-rel-guardar" id="" type="button">Guardar</button>
+                                </div>
+                            </div>
+
+                            @*Imagen Vinculada*@
+                            <div class="card mb-3">
+                                <div class="card-header card-header-options">
+                                    <span>Imagen destacada</span>
+
+
+
+                                    <div class="card-actions">
+                                        <ul>
+                                            <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="card-block">
+                                    <img alt="" src="" id="img-sel-img">
+
+                                    <form class="text-center mb-1">
+                                        <button type="button" class="btn btn-primary btn-sm mt-1" id="galeria-panel" disabled>Seleccionar un nodo</button>
+                                    </form>
+
+                                </div>
+                            </div>
+
+                            @*Vincular imagen*@
+                            <div class="card mb-3" style="display: none;" id="galeria-panel-content">
+                                <div class="card-header card-header-options">
+                                    <span>Galería</span>
+                                    <div class="card-actions">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <form id="uploadForm" method="post" enctype="multipart/form-data" action="/Content/FileUpload">
+                                                <input type="file" class="jfilestyle mb-0" data-buttontext="Buscar" data-size="sm" id="UploadFormFile" multiple="" tabindex="-1" style="position: absolute; clip: rect(0px 0px 0px 0px);"><div class="jfilestyle jfilestyle-corner "><input type="text" style="width:200px" placeholder="Buscar archivo" disabled=""> <span class="focus-jfilestyle" tabindex="0"><label for="UploadFormFile"><span>Buscar</span></label></span></div>
+                                                <a href="#" class="btn btn-primary btn-sm mr-2 publicar" id="uploadButton"><i class="fa fa-upload"></i> Importar</a>
+                                                <button type="button" class="btn btn-secondary btn-sm" id="galeria-panel-close"><i class="fa fa-times"></i></button>
+                                                <input name="__RequestVerificationToken" type="hidden" value="CfDJ8DLVQ3C7lfZBpHjAX1jwvwsBUokShgf2KuDHmBcfJC6SUsxikSEust_8OGFjB1_rTsjwd66MKslHODm1tooi-oMR3Bni37u8WAjxipCVZt6UvQtJAnkPKGw6JGGZ2AGESQrtqK1dxuezxRILdaA9RdY">
+                                            </form>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                                <div class="card-block">
+
+                                    <div class="row">
+                                        <div class="col-8">
+                                            <div class="d-flex flex-wrap" id="Galeria">
+                                            </div>
+                                            <div id="Galeria-Paginador"></div>
+                                        </div>
+                                        <div class="col-4">
+
+                                            <div class="card mb-3">
+                                                <div class="card-header card-header-options">
+                                                    <span>Seleccionar imagen</span>
+                                                    <div class="card-actions">
+                                                        <ul>
+                                                            <li>
+                                                                <a href="#" class="handle"><i class="fa fa-bars"></i></a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <div class="card-block">
+                                                    <div class="image-gallery" id="selected-image" style="display:none;">
+                                                        <img alt="" src="">
+                                                    </div>
+                                                    <div class="text-center">
+                                                        <button type="button" class="btn btn-success btn-sm boton-seleccionar-imagen" disabled="">Seleccionar imagen</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            @* Detalles de la imagen *@
+
+                                            <div class="card mb-3">
+                                                <div class="card-header card-header-options">
+                                                    <span>Detalles de la imagen</span>
+                                                    <div class="card-actions">
+                                                        <ul>
+                                                            <li>
+                                                                <a href="#" class="handle"><i class="fa fa-bars"></i></a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <div class="card-block" id="info-docu-sin">
+                                                    <p class="mb-0 text-danger fw-5">
+                                                        <i class="fa fa-info-circle"></i> Seleccione un documento
+                                                    </p>
+                                                </div>
+                                                <div class="card-block" id="info-docu" style="display:none;">
+                                                    <div class="text-center">
+                                                        <img id="docu-icon" src="" style="width: 30%;">
+                                                        <p class="mb-0 mt-1">
+                                                            <small><span class="fw-5">Tipo de archivo:</span> </small>
+                                                            <small id="docu-ext" class="fw-5 badge badge-default"></small>
+                                                        </p>
+                                                    </div>
+                                                    <div id="docu-resize"></div>
+                                                    <div class="form-group">
+                                                        <label for=""><small class="fw-5">URL</small></label>
+                                                        <input type="text" class="form-control form-control-sm" id="docu-url" disabled="">
+                                                    </div>
+                                                    <div class="form-group" id="docu-noimg">
+                                                        <label for=""><small class="fw-5">Título</small></label>
+                                                        <input type="text" class="form-control form-control-sm" id="docu-titulo" placeholder="Título">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for=""><small class="fw-5">Leyenda</small></label>
+                                                        <input type="text" class="form-control form-control-sm" id="docu-leye" placeholder="Leyenda">
+                                                    </div>
+                                                    <div class="form-group" id="docu-img">
+                                                        <label for=""><small class="fw-5">Texto alternativo</small></label>
+                                                        <input type="text" class="form-control form-control-sm" id="docu-alt" placeholder="Texto alternativo">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for=""><small class="fw-5">Descripción</small></label>
+                                                        <textarea class="form-control form-control-sm" id="docu-expo" placeholder="Descripción" rows="3"></textarea>
+                                                    </div>
+                                                    <div class="row justify-content-center">
+                                                        <button type="button" class="btn btn-primary form-docu-info-guardar btn-sm">Actualizar</button>
+                                                        <input type="hidden" value="" id="docu-ID_PoolDoc">
+                                                        <input type="hidden" value="" id="docu-ID_Idi">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            @* Añadir etiquetas a la imagen *@
+
+                                            <div class="card mb-3">
+                                                <div class="card-header card-header-options">
+                                                    <span>Añadir etiquetas</span>
+                                                    <div class="card-actions">
+                                                        <ul>
+                                                            <li>
+                                                                <a href="#" class="handle"><i class="fa fa-bars"></i></a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <div class="card-block">
+
+                                                    <div class="form-group text-center px-1">
+                                                        <div class="input-group input-group-sm ui-widget">
+                                                            <input type="text" class="form-control ui-autocomplete-input" value="" placeholder="Buscar tag" id="findtagweb2" name="findtagweb2" autocomplete="off">
+                                                            <input id="vfindtagweb2" name="vfindtagweb2" type="hidden" value="0"><input id="tfindtagweb2" name="tfindtagweb2" type="hidden" value="">
+                                                            <span class="input-group-append">
+                                                                <button class="btn btn-primary" id="" type="button">Añadir</button>
+                                                            </span>
+                                                        </div>
+                                                        <div class="mt-3 mb-0">
+                                                            <span class="badge badge-pill badge-default p-2 mt-1"><i class="fa fa-tag ml-1 mr-1"></i> <a href="#" class="fw-5"> Operador Maquinaria</a> <a href="#" class="tag-del"><i class="fa fa-times"></i></a></span>
+                                                            <span class="badge badge-pill badge-default p-2 mt-1"><i class="fa fa-tag ml-1 mr-1"></i> <a href="#" class="fw-5"> Etiqueta</a> <a href="#" class="tag-del"><i class="fa fa-times"></i></a></span>
+                                                            <span class="badge badge-pill badge-default p-2 mt-1"><i class="fa fa-tag ml-1 mr-1"></i> <a href="#" class="fw-5"> Otra</a> <a href="#" class="tag-del"><i class="fa fa-times"></i></a></span>
+                                                            <span class="badge badge-pill badge-default p-2 mt-1"><i class="fa fa-tag ml-1 mr-1"></i> <a href="#" class="fw-5"> Operador Maquinaria</a> <a href="#" class="tag-del"><i class="fa fa-times"></i></a></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            @*Eliminar nodo*@
+                            <div class="card mb-3">
+                                <div class="card-header card-header-options">
+                                    <span>Eliminar nodo</span>
+                                    <div class="card-actions">
+                                        <ul>
+                                            <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="card-block">
+                                    <div class="text-center">
+                                        <button type="button" class="btn btn-sm btn-danger mt-1 form-nodo-eliminar">Eliminar nodo</button>
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+                            <hr />
+
+                            @*
+
+                            <h4 class="fw-5 mt-4 mb-4">Módulos no funcionales:</h4>
+
+                            @*[BODY] Top Header*@
+                            <div class="card mb-3" style="display: none;">
+                                <div class="card-header card-header-options">
+                                    <span>[BODY] Top Header</span>
+                                </div>
+                                <div class="card-block">
+                                    <div class="form-group">
+                                        <label for="TopHeaderTextArea" class="d-flex justify-content-between align-items-center">
+                                            <span>Insertar código:</span>
+                                            <a href="#" class="btn btn-secondary btn-sm fw-5 ml-3" data-container="body" data-toggle="popover" data-placement="top" data-content="TOP HEADER. Pequeña franja dónde cargamos redes sociales, email, teléfono u otros datos."><i class="fa fa-question"></i></a>
+                                        </label>
+                                        @*<textarea class="form-control" id="CustomTopHeaderTextArea" rows="5"></textarea>*@
+                                        <div id="CustomTopHeaderTextArea" class="editor"></div>
+                                    </div>
+                                    <div class="row justify-content-center">
+                                        <button type="button" class="btn btn-primary form-custom-top-header btn-sm">Actualizar Top Header</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            @*[HEAD] JS*@
+                            <div class="card mb-3" style="display: none;">
+                                <div class="card-header card-header-options">
+                                    <span>[HEAD] JS</span>
+                                </div>
+                                <div class="card-block">
+                                    <div class="form-group">
+                                        <label for="CustomHeadJsTextArea" class="d-flex justify-content-between align-items-center">
+                                            <span>Insertar código:</span>
+                                            <a href="#" class="btn btn-secondary btn-sm fw-5 ml-3" data-container="body" data-toggle="popover" data-placement="top" data-content="Scripts JS cargados en el HEAD"><i class="fa fa-question"></i></a>
+                                        </label>
+                                        @*<textarea class="form-control" id="CustomHeadJsTextArea" rows="5"></textarea>*@
+                                        <div id="CustomHeadJsTextArea" class="editor"></div>
+                                    </div>
+                                    <div class="row justify-content-center">
+                                        <button type="button" class="btn btn-primary form-custom-head-js btn-sm">Actualizar Head Js</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            @*SEO*@
+                            <div class="card mb-3" style="display: none;">
+                                <div class="card-header card-header-options">
+                                    <span>SEO:</span>
+                                </div>
+                                <div class="card-block">
+                                    <div class="form-group">
+                                        <label for="TagsTextArea">Etiquetas</label>
+                                        <textarea class="form-control" id="TagsTextArea" rows="3"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="tags">
+                                            <a href="#" class="badge badge-default mr-1 px-2">etiqueta <i class="fa fa-times"></i></a>
+                                            <a href="#" class="badge badge-default mr-1 px-2">etiqueta <i class="fa fa-times"></i></a>
+                                            <a href="#" class="badge badge-default mr-1 px-2">etiqueta <i class="fa fa-times"></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="KeywordNodoInput">Palabra Clave Objetivo</label>
+                                        <input type="text" class="form-control" id="Palabra" placeholder="Palabra Clave Objetivo">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="metaDescriptionTextarea">Meta Description (texto para aparecer en Google)</label>
+                                        <textarea class="form-control" id="Meta" rows="3"></textarea>
+                                    </div>
+                                    <div class="row justify-content-center">
+                                        <button type="button" class="btn btn-primary form-nodo-info btn-sm">Actualizar SEO</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            @*HEAD: cargar JS y CSS externos*@
+                            <div class="card mb-3" style="display: none;">
+                                <div class="card-header card-header-options">
+                                    <span>HEAD: cargar JS y CSS externos</span>
+                                </div>
+                                <div class="card-block">
+                                    <div class="form-group">
+                                        <label for="HeaderTextArea" class="d-flex justify-content-between align-items-center">
+                                            <span>Insertar código:</span>
+                                            <a href="#" class="btn btn-secondary btn-sm fw-5 ml-3" data-container="body" data-toggle="popover" data-placement="top" data-content="Header"><i class="fa fa-question"></i></a>
+                                        </label>
+                                        <textarea class="form-control" id="HeaderTextArea" rows="5"></textarea>
+                                    </div>
+                                    <div class="row justify-content-center">
+                                        <button type="button" class="btn btn-primary form-nodo-info btn-sm">Actualizar Header</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            @*HEAD: cargar JS externos*@
+                            <div class="card mb-3" style="display: none;">
+                                <div class="card-header card-header-options">
+                                    <span>FOOTER: cargar JS externos</span>
+                                </div>
+                                <div class="card-block">
+                                    <div class="form-group">
+                                        <label for="FooterTextArea" class="d-flex justify-content-between align-items-center">
+                                            <span>Insertar código:</span>
+                                            <a href="#" class="btn btn-secondary btn-sm fw-5 ml-3" data-container="body" data-toggle="popover" data-placement="top" data-content="Footer"><i class="fa fa-question"></i></a>
+                                        </label>
+                                        <textarea class="form-control" id="FooterTextArea" rows="5"></textarea>
+                                    </div>
+                                    <div class="row justify-content-center">
+                                        <button type="button" class="btn btn-primary form-nodo-info btn-sm">Actualizar Footer</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            @*Ajustes Generales*@
+                            <div class="card mb-3" style="display: none;">
+                                <div class="card-header card-header-options">
+                                    <span>Ajustes generales</span>
+                                </div>
+                                <div class="card-block">
+
+                                    <div class="form-group">
+                                        <label for="subirLogoInput" class="d-flex justify-content-between align-items-center">
+                                            <span>Subir logotipo:</span>
+                                            <a href="#" class="btn btn-secondary btn-sm fw-5 ml-3" data-container="body" data-toggle="popover" data-placement="top" data-content="Anchura del contenido (se recomienda 1170px)"><i class="fa fa-question"></i></a>
+                                        </label>
+                                        <input type="file" class="form-control-file" id="subirLogoInput" aria-describedby="fileHelp">
+                                        <small id="fileHelp" class="form-text text-muted">A ser posible, subir en formato SVG</small>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="widthLogoInput" class="d-flex justify-content-between align-items-center">
+                                            <span>Anchura del logotipo:</span>
+                                            <a href="#" class="btn btn-secondary btn-sm fw-5 ml-3" data-container="body" data-toggle="popover" data-placement="top" data-content="Anchura del logotipo"><i class="fa fa-question"></i></a>
+                                        </label>
+                                        <input type="text" class="form-control" id="widthLogoInput" placeholder="Anchura del logotipo">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="subirFaviconInput" class="d-flex justify-content-between align-items-center">
+                                            <span>Subir favicon:</span>
+                                            <a href="#" class="btn btn-secondary btn-sm fw-5 ml-3" data-container="body" data-toggle="popover" data-placement="top" data-content="Anchura del contenido (se recomienda 1170px)"><i class="fa fa-question"></i></a>
+                                        </label>
+                                        <input type="file" class="form-control-file" id="subirFaviconInput" aria-describedby="fileHelp">
+                                        <small id="fileHelp" class="form-text text-muted">El favicon tiene que estar en formato PNG y tener un tamaño de 32x32 pixels</small>
+                                    </div>
+                                    <hr />
+                                    <div class="form-group">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <label class="custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0">
+                                                <input type="checkbox" class="custom-control-input">
+
+                                                <span class="custom-control-label">Habilitar barra de navegación fija</span>
+                                            </label>
+                                            <a href="#" class="btn btn-secondary btn-sm fw-5 ml-3" data-container="body" data-toggle="popover" data-placement="top" data-content="Habilitar barra de navegación fija"><i class="fa fa-question"></i></a>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <label class="custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0">
+                                                <input type="checkbox" class="custom-control-input">
+
+                                                <span class="custom-control-label">Habilitar diseño de caja</span>
+                                            </label>
+                                            <a href="#" class="btn btn-secondary btn-sm fw-5 ml-3" data-container="body" data-toggle="popover" data-placement="top" data-content="Habilitar diseño de caja"><i class="fa fa-question"></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="WidthContentInput" class="d-flex justify-content-between align-items-center">
+                                            <span>Anchura del contenido:</span>
+                                            <a href="#" class="btn btn-secondary btn-sm fw-5 ml-3" data-container="body" data-toggle="popover" data-placement="top" data-content="Anchura del contenido (se recomienda 1170px)"><i class="fa fa-question"></i></a>
+                                        </label>
+                                        <input type="text" class="form-control" id="WidthContentInput" placeholder="Anchura del contenido (se recomienda 1170px)">
+                                    </div>
+
+                                    <div class="row justify-content-center">
+                                        <button type="button" class="btn btn-primary form-nodo-info btn-sm">Actualizar ajustes de formato</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            @*Ajustes Tipografía*@
+                            <div class="card mb-3" style="display: none;">
+                                <div class="card-header card-header-options">
+                                    <span>Tipografía</span>
+                                </div>
+                                <div class="card-block">
+
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label for="PSizeInput" class="d-flex justify-content-between align-items-center">
+                                                    <span>Tamaño del texto [p]</span>
+                                                    <a href="#" class="btn btn-secondary btn-sm fw-5 ml-3" data-container="body" data-toggle="popover" data-placement="top" data-content="Tamaño del texto [p]"><i class="fa fa-question"></i></a>
+                                                </label>
+                                                <input type="number" step="any" class="form-control" id="PSizeInput" placeholder="Especificar en em">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="H2SizeInput" class="d-flex justify-content-between align-items-center">
+                                                    <span>Tamaño de cabecera [h2]</span>
+                                                    <a href="#" class="btn btn-secondary btn-sm fw-5 ml-3" data-container="body" data-toggle="popover" data-placement="top" data-content="Tamaño de cabecera [h2]"><i class="fa fa-question"></i></a>
+                                                </label>
+                                                <input type="number" step="any" class="form-control" id="H2SizeInput" placeholder="Especificar en em">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="H3SizeInput" class="d-flex justify-content-between align-items-center">
+                                                    <span>Tamaño de cabecera [h3]</span>
+                                                    <a href="#" class="btn btn-secondary btn-sm fw-5 ml-3" data-container="body" data-toggle="popover" data-placement="top" data-content="Tamaño de cabecera [h3]"><i class="fa fa-question"></i></a>
+                                                </label>
+                                                <input type="number" step="any" class="form-control" id="H3SizeInput" placeholder="Especificar en em">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="H4SizeInput" class="d-flex justify-content-between align-items-center">
+                                                    <span>Tamaño de cabecera [h4]</span>
+                                                    <a href="#" class="btn btn-secondary btn-sm fw-5 ml-3" data-container="body" data-toggle="popover" data-placement="top" data-content="Tamaño de cabecera [h4]"><i class="fa fa-question"></i></a>
+                                                </label>
+                                                <input type="number" step="any" class="form-control" id="H4SizeInput" placeholder="Especificar en em">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="H5SizeInput" class="d-flex justify-content-between align-items-center">
+                                                    <span>Tamaño de cabecera [h5]</span>
+                                                    <a href="#" class="btn btn-secondary btn-sm fw-5 ml-3" data-container="body" data-toggle="popover" data-placement="top" data-content="Tamaño de cabecera [h5]"><i class="fa fa-question"></i></a>
+                                                </label>
+                                                <input type="number" step="any" class="form-control" id="H5SizeInput" placeholder="Especificar en em">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="H6SizeInput" class="d-flex justify-content-between align-items-center">
+                                                    <span>Tamaño de cabecera [h6]</span>
+                                                    <a href="#" class="btn btn-secondary btn-sm fw-5 ml-3" data-container="body" data-toggle="popover" data-placement="top" data-content="Tamaño de cabecera [h6]"><i class="fa fa-question"></i></a>
+                                                </label>
+                                                <input type="number" step="any" class="form-control" id="H6SizeInput" placeholder="Especificar en em">
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label for="pGoogleFontsSelect" class="d-flex justify-content-between align-items-center">
+                                                    <span>Escoge una fuente para el texto</span>
+                                                    <a href="#" class="btn btn-secondary btn-sm fw-5 ml-3" data-container="body" data-toggle="popover" data-placement="top" data-content="Escoge una fuente para el texto"><i class="fa fa-question"></i></a>
+                                                </label>
+                                                <select class="custom-select" id="pGoogleFontsSelect">
+                                                    <option selected>Fuente Google Fonts [p]</option>
+                                                    <option value="1">Open Sans</option>
+                                                    <option value="2">Roboto</option>
+                                                    <option value="3">Times</option>
+                                                    <option value="4">Lora</option>
+                                                </select>
+                                                @*
+                                        <input id="font" type="text" />
+                                        <p class="sample-preview">
+                                            Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                                            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                                            when an unknown printer took a galley of type and scrambled it to make a type
+                                            specimen book. It has survived not only five centuries, but also the leap into
+                                            electronic typesetting, remaining essentially unchanged. It was popularised
+                                            in the 1960s with the release of Letraset sheets containing Lorem Ipsum
+                                            passages, and more recently with desktop publishing software like Aldus
+                                            PageMaker including versions of Lorem Ipsum.
+                                        </p>
+                                                *@
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="h2GoogleFontsSelect" class="d-flex justify-content-between align-items-center">
+                                                    <span>Escoge una fuente para la cabecera [h2]</span>
+                                                    <a href="#" class="btn btn-secondary btn-sm fw-5 ml-3" data-container="body" data-toggle="popover" data-placement="top" data-content="Escoge una fuente para la cabecera [h2]"><i class="fa fa-question"></i></a>
+                                                </label>
+                                                <select class="custom-select" id="h2GoogleFontsSelect">
+                                                    <option selected>Fuente Google Fonts [h2]</option>
+                                                    <option value="1">Open Sans</option>
+                                                    <option value="2">Roboto</option>
+                                                    <option value="3">Times</option>
+                                                    <option value="4">Lora</option>
+                                                </select>
+                                            </div>
+
+                                            <hr />
+
+                                            <div class="form-group">
+                                                <label for="pColorSelect" class="d-flex justify-content-between align-items-center">
+                                                    <span>Color texto</span>
+                                                    <a href="#" class="btn btn-secondary btn-sm fw-5 ml-3" data-container="body" data-toggle="popover" data-placement="top" data-content="Color text"><i class="fa fa-question"></i></a>
+                                                </label>
+                                                <div class="form-inline">
+                                                    <select class="custom-select mr-1" id="pColorSelect">
+                                                        <option selected>Selecciona color</option>
+                                                        <option value="1">md-red-50</option>
+                                                        <option value="1">md-red-100</option>
+                                                        <option value="2">md-red-200</option>
+                                                        <option value="3">md-red-300</option>
+                                                        <option value="3">md-red-400</option>
+                                                        <option value="3">md-red-500</option>
+                                                        <option value="3">md-red-600</option>
+                                                        <option value="3">md-red-700</option>
+                                                        <option value="3">md-red-800</option>
+                                                        <option value="3">md-red-900</option>
+                                                        <option value="3">md-red-a100</option>
+                                                        <option value="3">md-red-a200</option>
+                                                        <option value="3">md-red-a400</option>
+                                                        <option value="3">md-red-a500</option>
+                                                        <option value="1">md-pink-50</option>
+                                                        <option value="1">md-pink-100</option>
+                                                        <option value="2">md-pink-200</option>
+                                                        <option value="3">md-pink-300</option>
+                                                        <option value="3">md-pink-400</option>
+                                                        <option value="3">md-pink-500</option>
+                                                        <option value="3">md-pink-600</option>
+                                                        <option value="3">md-pink-700</option>
+                                                        <option value="3">md-pink-800</option>
+                                                        <option value="3">md-pink-900</option>
+                                                        <option value="3">md-pink-a100</option>
+                                                        <option value="3">md-pink-a200</option>
+                                                        <option value="3">md-pink-a400</option>
+                                                        <option value="3">md-pink-a500</option>
+                                                    </select>
+                                                    <input type="text" class="form-control" id="pColorInput" placeholder="Color texto">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="aColorSelect" class="d-flex justify-content-between align-items-center">
+                                                    <span>Color enlaces</span>
+                                                    <a href="#" class="btn btn-secondary btn-sm fw-5 ml-3" data-container="body" data-toggle="popover" data-placement="top" data-content="Color enlaces"><i class="fa fa-question"></i></a>
+                                                </label>
+                                                <div class="form-inline">
+                                                    <select class="custom-select mr-1" id="aColorSelect">
+                                                        <option selected>Selecciona color</option>
+                                                        <option value="1">md-red-50</option>
+                                                        <option value="1">md-red-100</option>
+                                                        <option value="2">md-red-200</option>
+                                                        <option value="3">md-red-300</option>
+                                                        <option value="3">md-red-400</option>
+                                                        <option value="3">md-red-500</option>
+                                                        <option value="3">md-red-600</option>
+                                                        <option value="3">md-red-700</option>
+                                                        <option value="3">md-red-800</option>
+                                                        <option value="3">md-red-900</option>
+                                                        <option value="3">md-red-a100</option>
+                                                        <option value="3">md-red-a200</option>
+                                                        <option value="3">md-red-a400</option>
+                                                        <option value="3">md-red-a500</option>
+                                                        <option value="1">md-pink-50</option>
+                                                        <option value="1">md-pink-100</option>
+                                                        <option value="2">md-pink-200</option>
+                                                        <option value="3">md-pink-300</option>
+                                                        <option value="3">md-pink-400</option>
+                                                        <option value="3">md-pink-500</option>
+                                                        <option value="3">md-pink-600</option>
+                                                        <option value="3">md-pink-700</option>
+                                                        <option value="3">md-pink-800</option>
+                                                        <option value="3">md-pink-900</option>
+                                                        <option value="3">md-pink-a100</option>
+                                                        <option value="3">md-pink-a200</option>
+                                                        <option value="3">md-pink-a400</option>
+                                                        <option value="3">md-pink-a500</option>
+                                                    </select>
+                                                    <input type="text" class="form-control" id="pColorInput" placeholder="Color enlaces">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="h2ColorSelect" class="d-flex justify-content-between align-items-center">
+                                                    <span>Color cabecera H2</span>
+                                                    <a href="#" class="btn btn-secondary btn-sm fw-5 ml-3" data-container="body" data-toggle="popover" data-placement="top" data-content="Color cabecera H2"><i class="fa fa-question"></i></a>
+                                                </label>
+                                                <div class="form-inline">
+                                                    <select class="custom-select mr-1" id="h2ColorSelect">
+                                                        <option selected>Selecciona color</option>
+                                                        <option value="1">md-red-50</option>
+                                                        <option value="1">md-red-100</option>
+                                                        <option value="2">md-red-200</option>
+                                                        <option value="3">md-red-300</option>
+                                                        <option value="3">md-red-400</option>
+                                                        <option value="3">md-red-500</option>
+                                                        <option value="3">md-red-600</option>
+                                                        <option value="3">md-red-700</option>
+                                                        <option value="3">md-red-800</option>
+                                                        <option value="3">md-red-900</option>
+                                                        <option value="3">md-red-a100</option>
+                                                        <option value="3">md-red-a200</option>
+                                                        <option value="3">md-red-a400</option>
+                                                        <option value="3">md-red-a500</option>
+                                                        <option value="1">md-pink-50</option>
+                                                        <option value="1">md-pink-100</option>
+                                                        <option value="2">md-pink-200</option>
+                                                        <option value="3">md-pink-300</option>
+                                                        <option value="3">md-pink-400</option>
+                                                        <option value="3">md-pink-500</option>
+                                                        <option value="3">md-pink-600</option>
+                                                        <option value="3">md-pink-700</option>
+                                                        <option value="3">md-pink-800</option>
+                                                        <option value="3">md-pink-900</option>
+                                                        <option value="3">md-pink-a100</option>
+                                                        <option value="3">md-pink-a200</option>
+                                                        <option value="3">md-pink-a400</option>
+                                                        <option value="3">md-pink-a500</option>
+                                                    </select>
+                                                    <input type="text" class="form-control" id="pColorInput" placeholder="Color cabecera H2">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row justify-content-center">
+                                        <button type="button" class="btn btn-primary form-nodo-info btn-sm">Actualizar ajustes de tipografía</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            @*[FOOTER] JS*@
+                            <div class="card mb-3" style="display: none;">
+                                <div class="card-header card-header-options">
+                                    <span>[FOOTER] JS</span>
+                                </div>
+                                <div class="card-block">
+                                    <div class="form-group">
+                                        <label for="CustomFooterTextArea" class="d-flex justify-content-between align-items-center">
+                                            <span>Insertar código:</span>
+                                            <a href="#" class="btn btn-secondary btn-sm fw-5 ml-3" data-container="body" data-toggle="popover" data-placement="top" data-content="Archivos JS que se cargan en el final del documento"><i class="fa fa-question"></i></a>
+                                        </label>
+                                        @*<textarea class="form-control" id="CustomFooterJsTextArea" rows="5"></textarea>*@
+                                        <div id="CustomFooterJsTextArea" class="editor"></div>
+                                    </div>
+                                    <div class="row justify-content-center">
+                                        <button type="button" class="btn btn-primary form-custom-footer-js btn-sm">Actualizar Footer Js</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            @*Redes Sociales*@
+                            <div class="card mb-3" style="display: none;">
+                                <div class="card-header card-header-options">
+                                    <span>APIs y Redes sociales</span>
+                                </div>
+                                <div class="card-block">
+
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label for="APIGoogleMapsInput" class="d-flex justify-content-between align-items-center">
+                                                    <span>API Google Maps</span>
+                                                    <a href="#" class="btn btn-secondary btn-sm fw-5 ml-3" data-container="body" data-toggle="popover" data-placement="top" data-content="Anchura del contenido (se recomienda 1170px)"><i class="fa fa-question"></i></a>
+                                                </label>
+                                                <input type="text" class="form-control" id="APIGoogleMapsInput" placeholder="API Google Maps">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="APIGoogleAnalyticsInput" class="d-flex justify-content-between align-items-center">
+                                                    <span>API Google Analytics</span>
+                                                    <a href="#" class="btn btn-secondary btn-sm fw-5 ml-3" data-container="body" data-toggle="popover" data-placement="top" data-content="Anchura del contenido (se recomienda 1170px)"><i class="fa fa-question"></i></a>
+                                                </label>
+                                                <input type="text" class="form-control" id="APIGoogleAnalyticsInput" placeholder="API Analytics">
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label for="facebookInput" class="d-flex justify-content-between align-items-center">
+                                                    <span>Redes sociales</span>
+                                                    <a href="#" class="btn btn-secondary btn-sm fw-5 ml-3" data-container="body" data-toggle="popover" data-placement="top" data-content="Anchura del contenido (se recomienda 1170px)"><i class="fa fa-question"></i></a>
+                                                </label>
+
+                                                <div class="input-group mb-2">
+                                                    <span class="input-group-addon" id="facebookInput"><i class="fa fa-facebook"></i></span>
+                                                    <input type="text" class="form-control" placeholder="Facebook" aria-describedby="facebookInput">
+                                                </div>
+                                                <div class="input-group mb-2">
+                                                    <span class="input-group-addon" id="twitterInput"><i class="fa fa-twitter"></i></span>
+                                                    <input type="text" class="form-control" placeholder="Twitter" aria-describedby="twitterInput">
+                                                </div>
+                                                <div class="input-group mb-2">
+                                                    <span class="input-group-addon" id="googlePlusInput"><i class="fa fa-google-plus"></i></span>
+                                                    <input type="text" class="form-control" placeholder="GooglePlus" aria-describedby="googlePlusInput">
+                                                </div>
+                                                <div class="input-group mb-2">
+                                                    <span class="input-group-addon" id="linkedinInput"><i class="fa fa-linkedin"></i></span>
+                                                    <input type="text" class="form-control" placeholder="Linkedin" aria-describedby="linkedinInput">
+                                                </div>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon" id="instagramInput"><i class="fa fa-instagram"></i></span>
+                                                    <input type="text" class="form-control" placeholder="Instragram" aria-describedby="instagramInput">
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row justify-content-center">
+                                        <button type="button" class="btn btn-primary form-nodo-info btn-sm">Actualizar redes sociales</button>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            @*Ajustes Menu*@
+                            <div class="card mb-3" style="display: none;">
+                                <div class="card-header card-header-options">
+                                    <span>Ajustes Menú</span>
+                                </div>
+                                <div class="card-block">
+
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label for="menuLinkSizeInput" class="d-flex justify-content-between align-items-center">
+                                                    <span>Tamaño del texto de los enlaces</span>
+                                                    <a href="#" class="btn btn-secondary btn-sm fw-5 ml-3" data-container="body" data-toggle="popover" data-placement="top" data-content="Tamaño del texto del menú"><i class="fa fa-question"></i></a>
+                                                </label>
+                                                <input type="number" step="any" class="form-control" id="menuLinkSizeInput" placeholder="Especificar en em">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="menuGoogleFontsSelect" class="d-flex justify-content-between align-items-center">
+                                                    <span>Escoge una fuente para el texto</span>
+                                                    <a href="#" class="btn btn-secondary btn-sm fw-5 ml-3" data-container="body" data-toggle="popover" data-placement="top" data-content="Escoge una fuente para el texto"><i class="fa fa-question"></i></a>
+                                                </label>
+                                                <select class="custom-select" id="menuGoogleFontsSelect">
+                                                    <option selected>Fuente Google Fonts [p]</option>
+                                                    <option value="1">Open Sans</option>
+                                                    <option value="2">Roboto</option>
+                                                    <option value="3">Times</option>
+                                                    <option value="4">Lora</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="linkMenuSelect" class="d-flex justify-content-between align-items-center">
+                                                    <span>Color del enlace</span>
+                                                    <a href="#" class="btn btn-secondary btn-sm fw-5 ml-3" data-container="body" data-toggle="popover" data-placement="top" data-content="Color del enlace"><i class="fa fa-question"></i></a>
+                                                </label>
+                                                <div class="form-inline">
+                                                    <select class="custom-select mr-1" id="linkMenuColorSelect">
+                                                        <option selected>Selecciona color</option>
+                                                        <option value="1">md-red-50</option>
+                                                        <option value="1">md-red-100</option>
+                                                        <option value="2">md-red-200</option>
+                                                    </select>
+                                                    <input type="text" class="form-control" id="linkMenuSelect" placeholder="Color custom">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="linkActivoMenuSelect" class="d-flex justify-content-between align-items-center">
+                                                    <span>Color del enlace activo</span>
+                                                    <a href="#" class="btn btn-secondary btn-sm fw-5 ml-3" data-container="body" data-toggle="popover" data-placement="top" data-content="Color del enlace activo"><i class="fa fa-question"></i></a>
+                                                </label>
+                                                <div class="form-inline">
+                                                    <select class="custom-select mr-1" id="linkActivoMenuSelect">
+                                                        <option selected>Selecciona color</option>
+                                                        <option value="1">md-red-50</option>
+                                                        <option value="1">md-red-100</option>
+                                                        <option value="2">md-red-200</option>
+                                                    </select>
+                                                    <input type="text" class="form-control" id="linkActivoMenuCustomInput" placeholder="Color custom">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="linkBgHoverMenuSelect" class="d-flex justify-content-between align-items-center">
+                                                    <span>[hover]: Color de fondo del enlace</span>
+                                                    <a href="#" class="btn btn-secondary btn-sm fw-5 ml-3" data-container="body" data-toggle="popover" data-placement="top" data-content="[hover] Color de fondo del enlace"><i class="fa fa-question"></i></a>
+                                                </label>
+                                                <div class="form-inline">
+                                                    <select class="custom-select mr-1" id="linkBgHoverMenuSelect">
+                                                        <option selected>Selecciona color</option>
+                                                        <option value="1">md-red-50</option>
+                                                        <option value="1">md-red-100</option>
+                                                        <option value="2">md-red-200</option>
+                                                    </select>
+                                                    <input type="text" class="form-control" id="linkBgHoverCustomInput" placeholder="Color custom">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="linkColorHoverMenuSelect" class="d-flex justify-content-between align-items-center">
+                                                    <span>[hover]: Color del enlace</span>
+                                                    <a href="#" class="btn btn-secondary btn-sm fw-5 ml-3" data-container="body" data-toggle="popover" data-placement="top" data-content="[hover] Color del enlace"><i class="fa fa-question"></i></a>
+                                                </label>
+                                                <div class="form-inline">
+                                                    <select class="custom-select mr-1" id="linkColorHoverMenuSelect">
+                                                        <option selected>Selecciona color</option>
+                                                        <option value="1">md-red-50</option>
+                                                        <option value="1">md-red-100</option>
+                                                        <option value="2">md-red-200</option>
+                                                    </select>
+                                                    <input type="text" class="form-control" id="linkColorHoverCustomInput" placeholder="Color custom">
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label for="bgMenuDesplegableSelect" class="d-flex justify-content-between align-items-center">
+                                                    <span>Menu desplegable: Color de fondo</span>
+                                                    <a href="#" class="btn btn-secondary btn-sm fw-5 ml-3" data-container="body" data-toggle="popover" data-placement="top" data-content="Color de fondo del menú desplegable"><i class="fa fa-question"></i></a>
+                                                </label>
+                                                <div class="form-inline">
+                                                    <select class="custom-select mr-1" id="bgMenuDesplegableSelect">
+                                                        <option selected>Selecciona color</option>
+                                                        <option value="1">md-red-50</option>
+                                                        <option value="1">md-red-100</option>
+                                                        <option value="2">md-red-200</option>
+                                                    </select>
+                                                    <input type="text" class="form-control" id="bgMenuDesplegableCustomInput" placeholder="Color custom">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="lineaMenuDesplegableSelect" class="d-flex justify-content-between align-items-center">
+                                                    <span>Menú desplegable: Color línea</span>
+                                                    <a href="#" class="btn btn-secondary btn-sm fw-5 ml-3" data-container="body" data-toggle="popover" data-placement="top" data-content="Color línea del menú desplegable"><i class="fa fa-question"></i></a>
+                                                </label>
+                                                <div class="form-inline">
+                                                    <select class="custom-select mr-1" id="lineaMenuDesplegableSelect">
+                                                        <option selected>Selecciona color</option>
+                                                        <option value="1">md-red-50</option>
+                                                        <option value="1">md-red-100</option>
+                                                        <option value="2">md-red-200</option>
+                                                    </select>
+                                                    <input type="text" class="form-control" id="lineaMenuDesplegableCustomInput" placeholder="Color custom">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="linkMenuDesplegableColorSelect" class="d-flex justify-content-between align-items-center">
+                                                    <span>Menú despegable: Color del enlace</span>
+                                                    <a href="#" class="btn btn-secondary btn-sm fw-5 ml-3" data-container="body" data-toggle="popover" data-placement="top" data-content="Color del enlace del menú desplegable"><i class="fa fa-question"></i></a>
+                                                </label>
+                                                <div class="form-inline">
+                                                    <select class="custom-select mr-1" id="linkMenuDesplegableColorSelect">
+                                                        <option selected>Selecciona color</option>
+                                                        <option value="1">md-red-50</option>
+                                                        <option value="1">md-red-100</option>
+                                                        <option value="2">md-red-200</option>
+                                                    </select>
+                                                    <input type="text" class="form-control" id="linkMenuDesplegableCustomInput" placeholder="Color custom">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="linkBgHoverMenuDesplegableSelect" class="d-flex justify-content-between align-items-center">
+                                                    <span>Menú desplegable [hover]: Color del fondo</span>
+                                                    <a href="#" class="btn btn-secondary btn-sm fw-5 ml-3" data-container="body" data-toggle="popover" data-placement="top" data-content="[hover] Color del fondo del enlace"><i class="fa fa-question"></i></a>
+                                                </label>
+                                                <div class="form-inline">
+                                                    <select class="custom-select mr-1" id="linkBgHoverMenuDesplegableSelect">
+                                                        <option selected>Selecciona color</option>
+                                                        <option value="1">md-red-50</option>
+                                                        <option value="1">md-red-100</option>
+                                                        <option value="2">md-red-200</option>
+                                                    </select>
+                                                    <input type="text" class="form-control" id="linkBgHoverMenuDesplegableCustomInput" placeholder="Color custom">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="linkColorHoverMenuDespegableSelect" class="d-flex justify-content-between align-items-center">
+                                                    <span>Menú desplegable [hover]: Color del enlace</span>
+                                                    <a href="#" class="btn btn-secondary btn-sm fw-5 ml-3" data-container="body" data-toggle="popover" data-placement="top" data-content="[hover] Color del enlace"><i class="fa fa-question"></i></a>
+                                                </label>
+                                                <div class="form-inline">
+                                                    <select class="custom-select mr-1" id="linkColorHoverMenuDespegableSelect">
+                                                        <option selected>Selecciona color</option>
+                                                        <option value="1">md-red-50</option>
+                                                        <option value="1">md-red-100</option>
+                                                        <option value="2">md-red-200</option>
+                                                    </select>
+                                                    <input type="text" class="form-control" id="linkColorHoverMenuDespegableCustomInput" placeholder="Color custom">
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="row justify-content-center">
+                                        <button type="button" class="btn btn-primary form-nodo-info btn-sm">Actualizar ajustes del menú</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+        textareaTopHeader();
+        textareaHeader();
+        textareaHeadJs();
+        textareaCss();
+        textareaFooter();
+        textareaFooterJs();
+        textareaHTML();
+    });
+</script>

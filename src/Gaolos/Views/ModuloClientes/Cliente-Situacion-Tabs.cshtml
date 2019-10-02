@@ -1,0 +1,30 @@
+﻿@* tabs *@
+
+@* btn-tab-active *@
+
+@{
+    string Clss = "ml-1 mr-1 btn btn-tab";
+    string ClssSel = "ml-1 mr-1 btn btn-tab btn-tab-active";
+    string ClssApli = "";
+}
+
+<div class="d-flex pb-0 pl-0 mb-3 box-tab">
+    @if (ViewData["Form"].ToString() == "/modulo-clientes/clientes/cliente/situacion") { ClssApli = ClssSel; } else { ClssApli = Clss; }
+    <a href="/modulo-clientes/clientes/cliente/situacion?ID_Cli2=@Model.Model.Cab.ID_Cli2" class="@Html.Raw(ClssApli)">Resumen</a>
+    @if (ViewData["Form"].ToString() == "/modulo-clientes/clientes/cliente/situacion/cobros-pendientes") { ClssApli = ClssSel; } else { ClssApli = Clss; }
+    <a href="/modulo-clientes/clientes/cliente/situacion/cobros-pendientes?ID_Cli2=@Model.Model.Cab.ID_Cli2" class="@Html.Raw(ClssApli)">Cobros pendientes</a>
+    @if (ViewData["Form"].ToString() == "/modulo-clientes/clientes/cliente/situacion/cobros") { ClssApli = ClssSel; } else { ClssApli = Clss; }
+    <a href="/modulo-clientes/clientes/cliente/situacion/cobros?ID_Cli2=@Model.Model.Cab.ID_Cli2" class="@Html.Raw(ClssApli)">Cobros</a>
+    @if (ViewData["Form"].ToString() == "/modulo-clientes/clientes/cliente/situacion/presupuestos") { ClssApli = ClssSel; } else { ClssApli = Clss; }
+    <a href="/modulo-clientes/clientes/cliente/situacion/presupuestos?ID_Cli2=@Model.Model.Cab.ID_Cli2" class="@Html.Raw(ClssApli)">Presupuestos</a>
+    @if (ViewData["Form"].ToString() == "/modulo-clientes/clientes/cliente/situacion/solicitudes") { ClssApli = ClssSel; } else { ClssApli = Clss; }
+    <a href="/modulo-clientes/clientes/cliente/situacion/solicitudes?ID_Cli2=@Model.Model.Cab.ID_Cli2" class="@Html.Raw(ClssApli)">Solicitudes</a>
+    @if (ViewData["Form"].ToString() == "/modulo-clientes/clientes/cliente/situacion/asistencias") { ClssApli = ClssSel; } else { ClssApli = Clss; }
+    <a href="/modulo-clientes/clientes/cliente/situacion/asistencias?ID_Cli2=@Model.Model.Cab.ID_Cli2" class="@Html.Raw(ClssApli)">Asistencias</a>
+    @if (ViewData["Form"].ToString() == "/modulo-clientes/clientes/cliente/situacion/mantenimientos") { ClssApli = ClssSel; } else { ClssApli = Clss; }
+    <a href="/modulo-clientes/clientes/cliente/situacion/mantenimientos?ID_Cli2=@Model.Model.Cab.ID_Cli2" class="@Html.Raw(ClssApli)">Mantenimientos</a>
+    @if (ViewData["Form"].ToString() == "/modulo-clientes/clientes/cliente/situacion/facturas") { ClssApli = ClssSel; } else { ClssApli = Clss; }
+    <a href="/modulo-clientes/clientes/cliente/situacion/facturas?ID_Cli2=@Model.Model.Cab.ID_Cli2" class="@Html.Raw(ClssApli)">Facturas</a>
+    @if (ViewData["Form"].ToString() == "/modulo-clientes/clientes/cliente/situacion/albaranes") { ClssApli = ClssSel; } else { ClssApli = Clss; }
+    <a href="/modulo-clientes/clientes/cliente/situacion/albaranes?ID_Cli2=@Model.Model.Cab.ID_Cli2" class="@Html.Raw(ClssApli)">Albaranes</a>
+</div>

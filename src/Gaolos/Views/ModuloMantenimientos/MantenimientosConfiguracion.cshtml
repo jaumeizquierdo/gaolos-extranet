@@ -1,0 +1,131 @@
+﻿@model ModuloMantenimientosLibrary.ModuloMantenimientosConfiguracionViewModel
+
+@{
+    Layout = "~/Views/Shared/Modulo-Mantenimientos/_Modulo-MantenimientoConfiguracion.cshtml";
+    ViewData["Title"] = "Configuración de mantenimiento";
+    ViewData["Message"] = "Modulo de Mantenimientos - Gaolos App v2017";
+}
+
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+                @if (Model.Model.Err.eserror)
+    {
+        ViewData["err"] = Model.Model.Err.mensaje;
+            @Html.Partial("AccesoDenegado");
+}
+else
+{
+
+            @* Buscar usuarios *@
+
+            <div class="card mb-3">
+                <div class="card-header card-header-options">
+                    <span>Buscar servicio</span>
+
+                    <div class="card-actions">
+                        <ul>
+                            <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card-block p-0">
+
+                    <div class="d-flex justify-content-center align-items-center">
+                        <div class="col-1  pb-2 pt-2">
+                            <img src="https://image.flaticon.com/icons/svg/321/321863.svg" style="width: 100%;">
+                        </div>
+                        <div class="col-11 box-border-left-light">
+
+                            <div class="row p-0">
+                                <div class="col-12 box-border-right p-0">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="row">
+
+                <div class="col-12">
+
+                    <div class="card mb-3">
+                        <div class="card-header card-header-options">
+                            <span>Parte de revisiones</span>
+                            <div class="card-actions">
+                                <ul>
+                                    <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card-block">
+                            <div class="form-group">
+                                <label for="CustomWebsEstilosTextArea" class="d-flex justify-content-between align-items-center">
+                                    <span>Insertar código:</span>
+                                    <a href="#" class="btn btn-secondary btn-sm fw-5 ml-3" data-container="body" data-toggle="popover" data-placement="top" data-content="Plantilla html" data-original-title="" title=""><i class="fa fa-question"></i></a>
+                                </label>
+                                <div id="Html" class="editor" style="height: 700px;">@Model.Model.datoS1</div>
+                            </div>
+                            <div class="row justify-content-center">
+                                <button type="button" class="btn btn-primary form-custom-html btn-sm mantenimiento-configuracion">Guardar</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="row">
+
+                <div class="col-12">
+
+                    <div class="card mb-3">
+                        <div class="card-header card-header-options">
+                            <span>Certificado</span>
+                            <div class="card-actions">
+                                <ul>
+                                    <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card-block">
+                            <div class="form-group">
+                                <label for="HtmlCertificado" class="d-flex justify-content-between align-items-center">
+                                    <span>Insertar código:</span>
+                                    <a href="#" class="btn btn-secondary btn-sm fw-5 ml-3" data-container="body" data-toggle="popover" data-placement="top" data-content="Plantilla html" data-original-title="" title=""><i class="fa fa-question"></i></a>
+                                </label>
+                                <div id="HtmlCertificado" class="editor" style="height: 700px;">@Model.Model.datoS2</div>
+                            </div>
+                            <div class="row justify-content-center">
+                                <button type="button" class="btn btn-primary form-custom-html btn-sm mantenimiento-certificado">Guardar</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+}
+            </div>
+        </div>
+    </div>
+</div>
+
+

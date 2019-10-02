@@ -1,0 +1,170 @@
+﻿@model ModuloClientesLibrary.ModuloClientesClienteClientesRelacionadosPresupuestosViewModel
+@{
+    Layout = "~/Views/Shared/Modulo-Clientes/_Modulo-Clientes.cshtml";
+    ViewData["Title"] = "Presupuestos contactos";
+    ViewData["Message"] = "Modulo de Clientes - Gaolos App v2017";
+}
+
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section mb-0">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 mt-3">
+
+                @if (Model.Model.Err.eserror)
+    {
+        ViewData["err"] = Model.Model.Err.mensaje;
+            @Html.Partial("AccesoDenegado");
+}
+else
+{
+
+            @* cabecera cliente *@
+
+            @Html.Partial("Cliente-Cabecera")
+
+            @* tabs *@
+
+            @Html.Partial("Cliente-Tabs")
+
+            <div class="card">
+                <div class="card-block">
+
+                    @* tabs *@
+
+                    @Html.Partial("Cliente-ClientesRelacionados-Tabs")
+
+                    <div class="row">
+
+                        <div class="col-8">
+                            <div class="card card-table mb-0">
+                                <div class="card-header card-header-options">
+                                    <span>Listado de presupuesto de contactos por aceptar</span>
+                                </div>
+                                <div class="card-block">
+
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-center w-5">Nº</th>
+                                                <th class="text-center w-5">Alta</th>
+                                                <th class="w-30">Cliente</th>
+                                                <th>Información</th>
+                                                <th class="text-center w-2"><i class="fa fa-print"></i></th>
+                                                <th class="text-right w-10">Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (Model.Model.det != null)
+                                            {
+                                                for (Int32 t = 0; t < Model.Model.det.Length; t++)
+                                                {
+                                            <tr>
+                                                <td class="text-center">
+                                                    <p class="fw-5 mb-0"><a href="/modulo-presupuestos/presupuestos/presupuesto?ID_Pres2=@Model.Model.det[t].ID_Pres2" target="_blank" class="fw-5" data-toggle="tooltip" data-placement="top" title="" data-original-title="Ir al presupuesto">@Model.Model.det[t].ID_Pres2</a></p>
+                                                </td>
+                                                <td class="text-center">
+                                                    <p class="fw-5 mb-0"><small data-toggle="tooltip" data-placement="top" title="" data-original-title="@Model.Model.det[t].Usu">@Model.Model.det[t].Fe_Al</small></p>
+                                                </td>
+                                                <td>
+                                                    <p class="fw-5 mb-0">
+                                                        @Model.Model.det[t].Emp
+                                                        @if (Model.Model.det[t].ID_Cli2 != "")
+                                                        {
+                                                            <a href="/modulo-clientes/clientes/cliente?ID_Cli2=@Model.Model.det[t].ID_Cli2" target="_blank" class="fw-5" data-toggle="tooltip" data-placement="top" title="" data-original-title="Ir a la ficha del cliente">(@Model.Model.det[t].ID_Cli2)</a>
+                                                        }
+                                                        else
+                                                        {
+                                                            <a href="#?ID_Cont2=@Model.Model.det[t].ID_Cont2" target="_blank" class="fw-5" data-toggle="tooltip" data-placement="top" title="" data-original-title="Ir a la ficha del contacto">(@Model.Model.det[t].ID_Cont2)</a>
+                                                        }
+                                                    </p>
+                                                    <p class="mb-0 fs-0-75">@Model.Model.det[t].Dir</p>
+                                                    <p class="mb-0 fs-0-75">@Model.Model.det[t].Pob</p>
+                                                </td>
+                                                <td>
+                                                    @if (Model.Model.det[t].TipoPres != "")
+                                                    {
+                                                        <p class="mb-0 fs-0-8"><span class="fw-5">Tipo presup.:</span> @Model.Model.det[t].TipoPres</p>
+                                                    }
+                                                    @if (Model.Model.det[t].UsuAsi != "")
+                                                    {
+                                                        <p class="mb-0 fs-0-8"><span class="fw-5">Asignado:</span> @Model.Model.det[t].UsuAsi</p>
+                                                    }
+                                                    @if (Model.Model.det[t].UsuCom != "")
+                                                    {
+                                                        <p class="mb-0 fs-0-8"><span class="fw-5">Comercial:</span> @Model.Model.det[t].UsuCom</p>
+                                                    }
+                                                    @if (Model.Model.det[t].Breve != "")
+                                                    {
+                                                        <p class="mb-0 fs-0-8"><span class="fw-5">Breve:</span> @Model.Model.det[t].Breve</p>
+                                                    }
+                                                </td>
+                                                <td class="text-center">
+                                                    <a href="/modulo-presupuestos/presupuestos/presupuesto/imprimir?ID_Pres2=@Model.Model.det[t].ID_Pres2" target="_blank" class="fw-5" data-toggle="tooltip" data-placement="top" title="" data-original-title="Ver el presupuesto"><i class="fa fa-print" style="font-size: 14px;"></i></a>
+                                                </td>
+                                                <td class="text-right">
+                                                    <p class="fw-5 mb-0">@Model.Model.det[t].Total</p>
+                                                </td>
+                                            </tr>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <tr><td colspan="6"><p class='fw-5 text-danger mb-0'><i class='fa fa-exclamation-circle mr-1'></i> No hay resultados</p></td></tr>
+
+                                            }
+
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                @Html.Raw(Model.Model.Paginador)
+                            </div>
+
+                        </div>
+
+
+                        <div class="col-4" id="sindatos">
+                            @* Sin datos *@
+                            <div class="card-info-wrapper w-100" id="sindatos">
+                                <div class="card-info">
+                                    <div class="d-flex justify-content-center align-items-center">
+                                        <img src="https://image.flaticon.com/icons/svg/609/609998.svg" style="width: 20%;">
+                                        <div class="ml-3">
+                                            <p class="pb-2">En esta pantalla podrá ver el listado de presupuestos de sus clientes relacionados</p>
+                                            <p class="pb-2 mt-2 fs-0-8">Las opciones disponibles son:</p>
+                                            <p class="fs-0-8"><i class="fa fa-check mr-1 text-danger"></i> Ir al presupuesto</p>
+                                            <p class="fs-0-8"><i class="fa fa-check mr-1 text-danger"></i> Ver ficha del cliente relacionado</p>
+                                            <p class="fs-0-8"><i class="fa fa-check mr-1 text-danger"></i> Visualizar / Imprimir el presupuesto</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <svg class="card-info-triangle">
+                                    <polygon points="0,0 200,0 0,200" fill="currentColor"></polygon>
+                                </svg>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+
+
+}
+            </div>
+        </div>
+    </div>
+</div>

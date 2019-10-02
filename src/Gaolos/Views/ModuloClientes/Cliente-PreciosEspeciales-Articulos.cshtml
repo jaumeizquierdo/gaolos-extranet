@@ -1,0 +1,120 @@
+﻿@model ModuloClientesLibrary.ModuloClientesClientePreciosEspecialesViewModel
+@{
+    Layout = "~/Views/Shared/Modulo-Clientes/_Modulo-Clientes-Precios-Especiales.cshtml";
+    ViewData["Title"] = "Cliente";
+    ViewData["Message"] = "Modulo de Clientes - Gaolos App v2017";
+}
+
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+                @if (Model.Model.Err.eserror)
+                {
+                    ViewData["err"] = Model.Model.Err.mensaje;
+                    @Html.Partial("AccesoDenegado");
+                }
+                else
+                {
+
+                    @* cabecera cliente *@
+
+                    @Html.Partial("Cliente-Cabecera")
+
+                    @* tabs - clientes *@
+
+                    @Html.Partial("Cliente-Tabs")
+
+                    @* tabs - Clientes - Precios especiales *@
+
+                    @Html.Partial("Cliente-PreciosEspeciales-Tabs")
+
+                    @* Buscador *@
+
+                    <div class="card mb-3">
+                        <div class="card-header card-header-options">
+                            <span>Artículos</span>
+                            <div class="card-actions">
+                                <ul>
+                                    <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card-block p-0">
+                            <div class="d-flex justify-content-center align-items-center">
+                                <div class="col-1 pb-2 pt-2 box-border-right-light">
+                                    <img src="https://image.flaticon.com/icons/svg/432/432714.svg" style="width: 100%;">
+                                </div>
+                                <div class="col-11 pt-2 pb-2">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <label>Buscar</label>
+                                                <div class="input-group input-group-sm">
+                                                    <input type="text" class="form-control form-control-sm" id="buscarart" placeholder="Buscar artículo">
+                                                    <span class="input-group-append">
+                                                        <button type="button" class="btn btn-primary btn-sm form-buscar-articulos"><i class="fa fa-search"></i></button>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card card-table mb-3">
+                        <div class="card-header card-header-options">
+                            <span>Artículos</span>
+                        </div>
+                        <div class="card-block">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Artículos</th>
+                                        <th>Categoría</th>
+                                        <th>Código</th>
+                                        <th class="w-10 text-right">Normal</th>
+                                        <th class="w-10 text-right">Dto.(%)</th>
+                                        <th class="w-10 text-right">Dto.(€)</th>
+                                        <th class="w-10 text-right">Especial</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="articulos-listado">
+                                    <tr>
+                                        <td colspan="7" class="text-center">
+                                            <div class="d-flex align-items-center py-2">
+                                                <i class="fa fa-cog fa-spin fa-2x fa-fw text-success"></i> <span class="text-success fs-1-1">Cargando precios especiales</span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div id="articulos-listado-paginador" class="mb-2"></div>
+
+                    </div>
+
+
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    reload_preciosespeciales_articulos(1);
+</script>

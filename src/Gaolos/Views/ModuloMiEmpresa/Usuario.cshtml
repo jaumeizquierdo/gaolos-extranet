@@ -1,0 +1,768 @@
+﻿@model MiEmpresaLibrary.MiEmpresaUsuariosUsuarioInfoViewModel
+
+@{
+    Layout = "~/Views/Shared/Modulo-Mi-Empresa/_Usuario.cshtml";
+    ViewData["Title"] = "Mi Empresa: " + @Model.Datos.Nom;
+    ViewData["Message"] = "Página de Clientes - Gaolos App v2017";
+}
+
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+
+            <div class="col-md-12">
+                @if (Model.Datos.Err.eserror)
+                {
+
+                    ViewData["err"] = Model.Datos.Err.mensaje;
+                    @Html.Partial("AccesoDenegado");
+
+                }
+                else
+                {
+
+                    @* Buscar usuarios *@
+
+                <div class="card mb-3">
+                    <div class="card-header card-header-options">
+                        <span><i class="fa fa-user-circle-o"></i> Mi Empresa: @Model.Datos.Nom</span>
+
+                        <div class="card-actions">
+                            <ul>
+                                <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="card-block p-0">
+
+                        <div class="d-flex justify-content-center align-items-center">
+                            <div class="col-1 text-center box-border-right-light py-2">
+                                <img src="~/flaticons/business/038-user-1.svg" style="width: 100%;">
+                            </div>
+                            <div class="col-11">
+
+                                <h4 class="fw-5 title-section">@Model.Datos.Nom</h4>
+                                @{
+                                    if (Model.Datos.Blo)
+                                    {
+                                        <p class="text-danger"><i class="fa fa-lock mr-1"></i> Usuario bloqueado</p>
+                                    }
+                                }
+                                @{
+                                    if (Model.Datos.Eli)
+                                    {
+                                        <p class="text-danger"><i class="fa fa-exclamation-triangle mr-1"></i> Usuario eliminado de la plataforma Gaolos</p>
+                                    }
+                                }
+                                @if (Model.Datos != null)
+                                {
+                                <div class="d-flex mt-1">
+                                    <div class="box-grey-bg">
+                                        <p class="mb-0"><small class="fw-5"><span class="mr-1">NIC:</span> <span class="text-info">@Model.Datos.NIC</span></small></p>
+                                        <p class="mb-0"><small class="fw-5"><span class="mr-1">Alta:</span> <span class="text-info">@Model.Datos.Fe_Al</span></small></p>
+                                    </div>
+                                </div>
+                                    
+                                }
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+                    
+
+                    
+
+                    @* Ficha cliente *@
+
+
+                    <div class="row">
+                        <div class="col-6">
+
+                            @* Editar usuario *@
+
+                            <div class="card card-table">
+                                <div class="card-header card-header-options">
+                                    <span>@Model.Datos.Nom</span>
+                                </div>
+                                <div class="card-block table-responsive-xs table-responsive-md table-responsive-xl">
+
+                                    <form>
+                                        <table class="table table-striped permisos">
+                                            <tbody>
+                                                @if (Model.Datos != null)
+                                                {
+                                                    <tr>
+                                                        <td class="box-border-right w-20"><p class="fw-5 mb-0">Fecha de alta</p></td>
+                                                        <td colspan="4">
+                                                            @Model.Datos.Fe_Al
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="box-border-right"><p class="fw-5 mb-0">Usuario alta</p></td>
+                                                        <td colspan="4">
+                                                            @Model.Datos.UsuAlta
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="box-border-right"><p class="fw-5 mb-0">Nombre</p></td>
+                                                        <td colspan="4" class="fw-5">
+                                                            @{
+                                                                if (Model.Datos.EditNom)
+                                                                {
+                                                                    <input type="text" class="form-control" id="Nom" value="@Model.Datos.Nom" />
+                                                                }
+                                                                else
+                                                                {
+                                                                    @Model.Datos.Nom
+                                                                }
+                                                            }
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="box-border-right"><p class="fw-5 mb-0">NIC</p></td>
+                                                        <td colspan="4">
+                                                            <input type="hidden" id="NIC" value="@Model.Datos.NIC" />
+                                                            @Model.Datos.NIC
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="box-border-right"><p class="fw-5 mb-0">Departamento</p></td>
+                                                        <td colspan="4">
+                                                            <select class="custom-select" id="ID_Dep">
+                                                                @for (Int32 t = 0; t < Model.Datos.Deps.Length; t++)
+                                                                {
+                                                                    string op = "<option value='" + Model.Datos.Deps[t].id + "' ";
+                                                                    if (Model.Datos.Deps[t].id == Model.Datos.ID_Dep) { op += "selected"; }
+                                                                    op += ">" + Model.Datos.Deps[t].det + "</option>";
+                                                                    @Html.Raw(op)
+                                                                }
+                                                            </select>
+
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="box-border-right"><p class="fw-5 mb-0">E-mail</p></td>
+                                                        <td>
+                                                            <select class="custom-select" id="ID_Mail">
+                                                                @for (Int32 t = 0; t < Model.Datos.Mails.Length; t++)
+                                                                {
+                                                                    string op = "<option value='" + Model.Datos.Mails[t].id + "' ";
+                                                                    if (Model.Datos.Mails[t].id == Model.Datos.ID_Mail) { op += "selected"; }
+                                                                    op += ">" + Model.Datos.Mails[t].det + "</option>";
+                                                                    @Html.Raw(op)
+                                                                }
+                                                            </select>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="box-border-right"><p class="fw-5 mb-0">Teléfono</p></td>
+                                                        <td>
+                                                            <select class="custom-select" id="ID_Tel">
+                                                                @for (Int32 t = 0; t < Model.Datos.Tels.Length; t++)
+                                                                {
+                                                                    string op = "<option value='" + Model.Datos.Tels[t].id + "' ";
+                                                                    if (Model.Datos.Tels[t].id == Model.Datos.ID_Tel) { op += "selected"; }
+                                                                    op += ">" + Model.Datos.Tels[t].det + "</option>";
+                                                                    @Html.Raw(op)
+                                                                }
+                                                            </select>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="box-border-right"><p class="fw-5 mb-0">Acceso web</p></td>
+                                                        <td colspan="4">
+                                                            <input id="AccesoWeb" type="checkbox" class="" @{if (Model.Datos.AccWeb) { @Html.Raw(" checked ")  } }>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="box-border-right"><p class="fw-5 mb-0">Acceso app</p></td>
+                                                        <td colspan="4">
+                                                            <input id="AccesoApp" type="checkbox" class="" @{if (Model.Datos.AccApp) { @Html.Raw(" checked ")  } }>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="box-border-right"><p class="fw-5 mb-0">Es agente</p></td>
+                                                        <td colspan="4">
+                                                            <input id="EsAgente" type="checkbox" class="" @{if (Model.Datos.EsAgente) { @Html.Raw(" checked ")  } }>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="box-border-right"><p class="fw-5 mb-0">Es técnico</p></td>
+                                                        <td colspan="4">
+                                                            <input id="EsTecnico" type="checkbox" class="" @{if (Model.Datos.EsTecnico) { @Html.Raw(" checked ")  } }>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="box-border-right"><p class="fw-5 mb-0">Es administrador</p></td>
+                                                        <td colspan="4">
+                                                            <input id="EsAdm" type="checkbox" readonly class="" @{if (Model.Datos.EsAdm) { @Html.Raw(" checked ")  } }>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="box-border-right"><p class="fw-5 mb-0">Último acceso</p></td>
+                                                        <td colspan="4">
+                                                            @Model.Datos.Fe_Ul_Acc
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="box-border-right"><p class="fw-5 mb-0">Número de accesos</p></td>
+                                                        <td colspan="4">
+                                                            @Model.Datos.NumAcc
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td colspan="2" class="text-center"><button type="button" class="btn btn-primary btn-sm actualizar-usuario">Guardar cambios</button></td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </form>
+                                </div>
+                            </div>
+
+                            @* Firma *@
+
+                            <div class="card card-table mt-4">
+                                <div class="card-header card-header-options">
+                                    <span>Modificar firma</span>
+                                </div>
+
+                                <div class="card-block">
+                                    <div class="form-group p-3 pb-0">
+                                        @Html.Raw(@Model.Datos.FirmaPreview)
+                                    </div>
+                                    <div class="form-group text-center">
+                                        <button type="button" class="btn btn-primary btn-sm visualizar-firma">Editar firma</button>
+                                    </div>
+                                </div>
+
+                                <div class="card-block" style="display: none;" id="visualizar-firma">
+                                    <hr class="mt-0" />
+                                    <div class="form-group p-3 pb-0">
+                                        @*<textarea class="form-control form-control-sm" id="elementoObservaciones" rows="5" placeholder="Firma">@Model.Datos.Firma</textarea>*@
+                                        <div id="elementoObservaciones" class="editor">@Model.Datos.Firma</div>
+                                        <div id="preview-firma" class="mt-3"></div>
+                                    </div>
+                                    <div class="form-group text-center">
+                                        <button type="button" class="btn btn-primary btn-sm">Guardar firma</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            @if (Model.Datos.Blo)
+                            {
+                                @* Desbloquear usuario *@
+                                <div class="card card-table mt-4">
+                                    <div class="card-header card-header-options">
+                                        <span>Bloqueado <strong>[@Model.Datos.Nom]</strong></span>
+                                    </div>
+                                    <div class="card-block">
+
+                                        <form>
+                                            <table class="table table-striped permisos">
+                                                <tbody>
+                                                    <tr>
+                                                        <th scope="row">Motivo</th>
+                                                        <td colspan="4">@Model.Datos.Expo_Blo</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row">Fecha</th>
+                                                        <td colspan="4">@Model.Datos.Fe_Blo</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row">Bloqueado por</th>
+                                                        <td colspan="4">@Model.Datos.UsuBlo</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row">Tiempo restante para su eliminación</th>
+                                                        <td colspan="4"><small class="timer fw-5 text-danger"></small></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+
+                                            <hr class="mt-0" />
+
+                                            <div class="form-group text-center">
+                                                <button type="button" class="btn btn-success btn-sm desbloquear-usuario">Desbloquear usuario</button>
+                                            </div>
+
+                                        </form>
+
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+
+                                @* Bloquear usuario *@
+
+                                <div class="card card-table mt-4">
+                                    <div class="card-header card-header-options">
+                                        <span>Bloquear <strong>@Model.Datos.Nom</strong></span>
+                                    </div>
+                                    <div class="card-block">
+
+                                        <form class="p-3">
+                                            <textarea class="form-control form-control-sm col-12" id="Expo_Blo" rows="5" placeholder="Motivo del bloqueo"></textarea>
+                                        </form>
+
+                                        <hr class="mt-0" />
+
+                                        <div class="form-group text-center">
+                                            <button type="button" class="btn btn-danger btn-sm bloquear-usuario">Bloquear usuario</button>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            }
+
+                            @* Subir foto *@
+
+                            <div class="card card-table mt-4">
+                                <div class="card-header card-header-options">
+                                    <span>Subir foto</span>
+                                </div>
+                                <div class="card-block">
+
+                                    <form>
+                                        <div class="form-group text-center mt-3">
+                                            <button type="button" class="btn btn-primary btn-sm">Subir foto</button>
+                                        </div>
+                                    </form>
+
+                                    <div class="demo"></div>
+
+                                </div>
+                            </div>
+
+                            @* Coste y precio hora operario *@
+
+                            <div class="card card-table mt-4 mb-3">
+                                <div class="card-header card-header-options">
+                                    <span>Precio y coste hora</span>
+                                </div>
+                                <div class="card-block">
+
+
+                                    <div class="d-flex box-border-top-light p-2">
+                                        <div class="d-flex flex-column w-100">
+                                            <div class="d-flex">
+
+                                                <div class="d-flex mr-2 w-50 p-0">
+                                                    <div class="input-group input-group-sm mb-0">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text" style="min-width: 130px !important;">Precio hora</span>
+                                                        </div>
+                                                        <input type="text" class="form-control" placeholder="Precio" id="precio" value="@Model.Datos.usuPrecio">
+                                                        <div class="input-group-append">
+                                                            <button type="button" class="btn btn-sm btn-primary actualizar-usuario-precio" style="min-width: 66px;">Guardar</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="d-flex w-50 p-0">
+                                                    <div class="input-group input-group-sm mb-0">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text" style="min-width: 130px !important;">Coste hora</span>
+                                                        </div>
+                                                        <input type="text" class="form-control" placeholder="Coste" id="coste" value="@Model.Datos.usuCoste">
+                                                        <div class="input-group-append">
+                                                            <button type="button" class="btn btn-sm btn-primary actualizar-usuario-coste" style="min-width: 66px;">Guardar</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+                                </div>
+                            </div>
+
+
+                            @* My Gaolos *@
+
+                            <div class="card card-table mt-4">
+                                <div class="card-header card-header-options">
+                                    <span>MyGaolos</span>
+                                </div>
+                                <div class="card-block">
+
+                                    <form>
+                                        <div class="form-group text-center mt-3">
+                                            <button type="button" class="btn btn-primary btn-sm">Liberar usuario</button>
+                                        </div>
+                                    </form>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-6">
+
+                            @* Módulos heredados *@
+
+                            <div class="card card-table mb-4">
+                                <div class="card-header card-header-options">
+                                    <span>Módulos Heredados</span>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                    </div>
+                                </div>
+                                @if (false)
+                                {
+                                    <div class="card-block">
+                                        <table class="table permisos permisos-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Permisos</th>
+                                                    <th><i class="fa fa-plus" data-toggle="tooltip" data-placement="top" title="Crear"></i></th>
+                                                    <th><i class="fa fa-pencil" data-toggle="tooltip" data-placement="top" title="Modificar"></i></th>
+                                                    <th><i class="fa fa-search" data-toggle="tooltip" data-placement="top" title="Consultar"></i></th>
+                                                    <th><i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="Eliminar"></i></th>
+                                                    <th><i class="fa fa-list" data-toggle="tooltip" data-placement="top" title="Listar"></i></th>
+                                                    <th><i class="fa fa-user" data-toggle="tooltip" data-placement="top" title="Autor"></i></th>
+                                                    <th style="background: #ffcdd2 !important"><i class="fa fa-ban" data-toggle="tooltip" data-placement="top" title="Denegar"></i></th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="infoselhere">
+                                                <tr class="modules">
+                                                    <th scope="row" colspan="9">Seleccione un nodo</th>
+                                                </tr>
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <th scope="row" colspan="9" class="text-center"><button type="button" class="guardar-permisos btn btn-primary btn-sm">Guardar</button></th>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="card-block">
+                                        <table class="table permisos permisos-table">
+                                            <tbody id="infoselhere">
+                                                <tr class="modules">
+                                                    <th scope="row" colspan="9"><span class="text-danger">No hay herencia</span></th>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                }
+                            </div>
+
+                            @* Módulos seleccionados para este usuario *@
+
+                            <div class="card card-table mt-4 mb-4">
+                                <div class="card-header card-header-options">
+                                    <span>Módulos seleccionados para este nodo</span>
+                                </div>
+                                <div class="card-block">
+                                    <table class="table permisos permisos-table" id="tabla-permisos">
+                                        <thead>
+                                            <tr>
+                                                <th>Permisos</th>
+                                                <th class='text-center'><i class="fa fa-plus" data-toggle="tooltip" data-placement="top" title="Crear"></i></th>
+                                                <th class='text-center'><i class="fa fa-pencil" data-toggle="tooltip" data-placement="top" title="Modificar"></i></th>
+                                                <th class='text-center'><i class="fa fa-search" data-toggle="tooltip" data-placement="top" title="Consultar"></i></th>
+                                                <th class='text-center'><i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="Eliminar"></i></th>
+                                                <th class='text-center'><i class="fa fa-list" data-toggle="tooltip" data-placement="top" title="Listar"></i></th>
+                                                <th class='text-center'><i class="fa fa-user" data-toggle="tooltip" data-placement="top" title="Autor"></i></th>
+                                                <th class='text-center'><i class="fa fa-ban" data-toggle="tooltip" data-placement="top" title="Denegar"></i></th>
+                                                <th class='text-center'><i class="fa fa-times" data-toggle="tooltip" data-placement="top" title="Quitar módulo"></i></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="infosel">
+                                            @{
+                                                if (Model.Datos.sel != null)
+                                                {
+                                                    for (Int32 t = 0; t < Model.Datos.sel.Length; t++)
+                                                    {
+                                                        string txt = "";
+                                                        string cls = " class='submodulo' ";
+                                                        string cls2 = " modulosel";
+                                                        if (Model.Datos.sel[t].ID_Apa == 0) { cls = ""; } else { cls2 = ""; }
+                                                        txt += "<tr " + cls + "><td scope='row' class='fw-5'><i class='fa fa-angle-right'></i> " + Model.Datos.sel[t].Modulo + "</td><td class='text-center'><input type='checkbox' data-toggle='tooltip' data-placement='top' title='Crear' class='" + cls2 + "' id='crear_" + Model.Datos.sel[t].ID_Modulo + "_" + Model.Datos.sel[t].ID_Apa + "' ";
+                                                        if (Model.Datos.sel[t].Crear == true) { txt += " checked "; }
+                                                        txt += "></td><td class='text-center'><input type='checkbox' data-toggle='tooltip' data-placement='top' html='true' title='Modificar' class='" + cls2 + "' id='mod_" + Model.Datos.sel[t].ID_Modulo + "_" + Model.Datos.sel[t].ID_Apa + "' ";
+                                                        if (Model.Datos.sel[t].Modificar == true) { txt += " checked "; }
+                                                        txt += "></td><td class='text-center'><input type='checkbox' data-toggle='tooltip' data-placement='top' title='Consultar' class='" + cls2 + "' id='cons_" + Model.Datos.sel[t].ID_Modulo + "_" + Model.Datos.sel[t].ID_Apa + "' ";
+                                                        if (Model.Datos.sel[t].Consultar == true) { txt += " checked "; }
+                                                        txt += "></td><td class='text-center'><input type='checkbox' data-toggle='tooltip' data-placement='top' title='Eliminar' class='" + cls2 + "' id='eli_" + Model.Datos.sel[t].ID_Modulo + "_" + Model.Datos.sel[t].ID_Apa + "' ";
+                                                        if (Model.Datos.sel[t].Eliminar == true) { txt += " checked "; }
+                                                        txt += "></td><td class='text-center'><input type='checkbox' data-toggle='tooltip' data-placement='top' title='Listar' class='" + cls2 + "' id='list_" + Model.Datos.sel[t].ID_Modulo + "_" + Model.Datos.sel[t].ID_Apa + "' ";
+                                                        if (Model.Datos.sel[t].Listar == true) { txt += " checked "; }
+                                                        txt += "></td><td class='text-center' style='border-right: none !important;'><input type='checkbox' data-toggle='tooltip' data-placement='top' title='Autor' class='" + cls2 + "' id='Autor_" + Model.Datos.sel[t].ID_Modulo + "_" + Model.Datos.sel[t].ID_Apa + "' ";
+                                                        if (Model.Datos.sel[t].Autor == true) { txt += " checked "; }
+                                                        txt += "></td><td class='text-center' style='background: #EF9A9A; border-bottom: 1px solid #E57373 !important; border-right: 1px solid #E57373 !important;  border-left: 1px solid #E57373 !important;'><input type='checkbox' data-toggle='tooltip' data-placement='top' title='Denegar' class='check-denegado" + cls2 + "' id='denegar_" + Model.Datos.sel[t].ID_Modulo + "_" + Model.Datos.sel[t].ID_Apa + "' ";
+                                                        if (Model.Datos.sel[t].Denegar == true) { txt += " checked "; }
+                                                        if (Model.Datos.sel[t].ID_Apa == 0)
+                                                        {
+                                                            txt += "></td><td class='text-center'><a href='#' class='eli-modulo' data-toggle='tooltip' data-placement='top' title='Eliminar módulo' id='elimodulo_" + Model.Datos.sel[t].ID_Modulo + "'><i class='fa fa-times text-danger'></i></a></td></tr>";
+                                                        }
+                                                        else
+                                                        {
+                                                            txt += "></td><td></td></tr>";
+                                                        }
+                                                        @Html.Raw(txt)
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <tr class="modules">
+                                                        <th scope="row" colspan="2"><span class="text-danger">No hay permisos asignados</span></th>
+                                                    </tr>
+                                                }
+
+                                            }
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <th scope="row" colspan="9" class="text-center"><button type="button" class="guardar-permisos btn btn-primary btn-sm">Guardar</button></th>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+
+                            @* html5sortable / accordion *@
+
+                            <div class="card mt-4 mb-4" style="background: rgba(236, 239, 241, 0.8);" id="">
+                                <div class="card-header card-header-options">
+                                    <span>Módulos seleccionados para este nodo</span>
+                                </div>
+                                <div class="card-block">
+                                    <div id="permisosMenu">
+                                        <ul class="list d-flex flex-column" id="accordion" aria-drop-effect="move">
+
+                                            @if (Model.Datos.sel != null)
+                                            {
+                                                for (Int32 t = 0; t < Model.Datos.sel.Length; t++)
+                                                {
+                                                    if (Model.Datos.sel[t].ID_Apa == 0)
+                                                    {
+                                                        <li class="main-item fw-5 px-3 py-2" role="option" aria-grabbed="false" id="">
+                                                            <div class="d-flex justify-content-between mb-0 fw-5" id="">
+                                                                <span><i class="fa fa-arrows moverItem mdc-text-blue-500 mr-2" draggable="true"></i> @Model.Datos.sel[t].Modulo</span>
+                                                                <a href="#" class="open-menu" data-toggle="collapse" data-target="#table-@Model.Datos.sel[t].ID_Modulo" aria-expanded="true" aria-controls="table-@Model.Datos.sel[t].ID_Modulo" _0"=""><i class="fa fa-chevron-down"></i></a>
+                                                            </div>
+                                                            <div class="collapse" id="table-@Model.Datos.sel[t].ID_Modulo">
+                                                                <div class="card card-table my-2">
+
+                                                                    <div class="card-block">
+                                                                        <table class="table table-modulo-permisos">
+                                                                            <tr>
+                                                                                <th class="w-30">Permisos</th>
+                                                                                <th class="text-center"><i class="fa fa-plus" data-toggle="tooltip" data-placement="top" title="" data-original-title="Crear"></i></th>
+                                                                                <th class="text-center"><i class="fa fa-pencil" data-toggle="tooltip" data-placement="top" title="" data-original-title="Modificar"></i></th>
+                                                                                <th class="text-center"><i class="fa fa-search" data-toggle="tooltip" data-placement="top" title="" data-original-title="Consultar"></i></th>
+                                                                                <th class="text-center"><i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="" data-original-title="Eliminar"></i></th>
+                                                                                <th class="text-center"><i class="fa fa-list" data-toggle="tooltip" data-placement="top" title="" data-original-title="Listar"></i></th>
+                                                                                <th class="text-center"><i class="fa fa-user" data-toggle="tooltip" data-placement="top" title="" data-original-title="Autor"></i></th>
+                                                                                <th class="text-center"><i class="fa fa-ban" data-toggle="tooltip" data-placement="top" title="" data-original-title="Denegar"></i></th>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td class="mdc-bg-white" style="border-left: none !important;"></td>
+                                                                                <td class="mdc-bg-blue-grey-50 text-center"><input type="checkbox" data-toggle="tooltip" data-placement="top" title="" class="" id="mod-@Model.Datos.sel[t].ID_Modulo-@Model.Datos.sel[t].ID_Apa" checked="" data-original-title="Modificar"></td>
+                                                                                <td class="mdc-bg-blue-grey-50 text-center"><input type="checkbox" data-toggle="tooltip" data-placement="top" title="" class="" id="mod-@Model.Datos.sel[t].ID_Modulo-@Model.Datos.sel[t].ID_Apa" checked="" data-original-title="Modificar"></td>
+                                                                                <td class="mdc-bg-blue-grey-50 text-center"><input type="checkbox" data-toggle="tooltip" data-placement="top" title="" class="" id="cons-@Model.Datos.sel[t].ID_Modulo-@Model.Datos.sel[t].ID_Apa" checked="" data-original-title="Consultar"></td>
+                                                                                <td class="mdc-bg-blue-grey-50 text-center"><input type="checkbox" data-toggle="tooltip" data-placement="top" title="" class="" id="eli-@Model.Datos.sel[t].ID_Modulo-@Model.Datos.sel[t].ID_Apa" checked="" data-original-title="Eliminar"></td>
+                                                                                <td class="mdc-bg-blue-grey-50 text-center" style="border-right: none !important;"><input type="checkbox" data-toggle="tooltip" data-placement="top" title="" class="" id="list-@Model.Datos.sel[t].ID_Modulo-@Model.Datos.sel[t].ID_Apa" checked="" data-original-title="Listar"></td>
+                                                                                <td class="teal mdc-bg-blue-grey-50 text-center"><input type="checkbox" data-toggle="tooltip" data-placement="top" title="" class="" id="autor-@Model.Datos.sel[t].ID_Modulo-@Model.Datos.sel[t].ID_Apa" data-original-title="Autor"></td>
+                                                                                <td class="red text-center"><input type="checkbox" data-toggle="tooltip" data-placement="top" title="" class="check-denegado" id="denegado-@Model.Datos.sel[t].ID_Modulo-@Model.Datos.sel[t].ID_Apa" data-original-title="Denegar"></td>
+                                                                            </tr>
+                                                                            @{
+                                                                                Int32 p = 1;
+                                                                            }
+                                                                            @while ((t + p) < Model.Datos.sel.Length)
+                                                                            {
+                                                                                if (Model.Datos.sel[t + p].ID_Apa != 0)
+                                                                                {
+                                                                                    <tr class="">
+                                                                                        <td scope="row" class="fw-5" style="border-left: none !important;">@Model.Datos.sel[t + p].Modulo</td>
+                                                                                        <td class="text-center mdc-bg-white">
+                                                                                            <input type="checkbox" data-toggle="tooltip" data-placement="top" title="" class="" id="crear-@Model.Datos.sel[t].ID_Modulo-@Model.Datos.sel[t].ID_Apa" checked="" data-original-title="Crear">
+                                                                                        </td>
+                                                                                        <td class="text-center mdc-bg-white">
+                                                                                            <input type="checkbox" data-toggle="tooltip" data-placement="top" title="" class="" id="mod-@Model.Datos.sel[t].ID_Modulo-@Model.Datos.sel[t].ID_Apa" checked="" data-original-title="Modificar">
+                                                                                        </td>
+                                                                                        <td class="text-center mdc-bg-white">
+                                                                                            <input type="checkbox" data-toggle="tooltip" data-placement="top" title="" class="" id="cons-@Model.Datos.sel[t].ID_Modulo-@Model.Datos.sel[t].ID_Apa" checked="" data-original-title="Consultar">
+                                                                                        </td>
+                                                                                        <td class="text-center mdc-bg-white">
+                                                                                            <input type="checkbox" data-toggle="tooltip" data-placement="top" title="" class="" id="eli-@Model.Datos.sel[t].ID_Modulo-@Model.Datos.sel[t].ID_Apa" checked="" data-original-title="Eliminar">
+                                                                                        </td>
+                                                                                        <td class="text-center mdc-bg-white" style="border-right: none !important;">
+                                                                                            <input type="checkbox" data-toggle="tooltip" data-placement="top" title="" class="" id="list-@Model.Datos.sel[t].ID_Modulo-@Model.Datos.sel[t].ID_Apa" checked="" data-original-title="Listar">
+                                                                                        </td>
+                                                                                        <td class="text-center teal">
+                                                                                            <input type="checkbox" data-toggle="tooltip" data-placement="top" title="" class="" id="autor-@Model.Datos.sel[t].ID_Modulo-@Model.Datos.sel[t].ID_Apa" data-original-title="Autor">
+                                                                                        </td>
+                                                                                        <td class="text-center red">
+                                                                                            <input type="checkbox" data-toggle="tooltip" data-placement="top" title="" class="check-denegado" id="denegado-@Model.Datos.sel[t].ID_Modulo-@Model.Datos.sel[t].ID_Apa" data-original-title="Denegar">
+                                                                                        </td>
+                                                                                    </tr>
+
+                                                                                    p++;
+
+                                                                                }
+                                                                                else
+                                                                                {
+                                                                                    break;
+                                                                                }
+                                                                            }
+                                                                        </table>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+
+                                                        </li>
+                                                    }
+
+                                                }
+                                            }
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <script>
+                                $(".open-menu").click(function () {
+                                    console.log('click');
+                                    $(this)
+                                        .find('i.fa')
+                                        .toggleClass('fa-chevron-down fa-chevron-up')
+                                });
+                            </script>
+                            @*
+                            <script>
+                                $(function () {
+                                    sortable('.js-sortable-connected', {
+                                        forcePlaceholderSize: true,
+                                        connectWith: '.js-connected',
+                                        handle: '.moverItem',
+                                        items: 'li',
+                                        placeholderClass: 'sortable-ghost'
+                                    });
+                                    sortable('.js-sortable-inner-connected', {
+                                        forcePlaceholderSize: true,
+                                        connectWith: 'js-inner-connected',
+                                        handle: '.moverSubItem',
+                                        items: '.item',
+                                        maxItems: 3,
+                                        placeholderClass: 'sortable-ghost'
+                                    });
+                                });
+                            </script>
+                            *@
+
+                            @* Módulos disponibles *@
+
+                            <div class="card card-table mt-4">
+                                <div class="card-header card-header-options">
+                                    <span>Módulos disponibles</span>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <input type="hidden" value="" id="ID_Nodo" />
+                                        <label class="custom-control custom-checkbox" data-toggle="tooltip" data-placement="top" title="Denegar todos">
+                                            <input type="checkbox" class="custom-control-input" id="check-asigna-todo">
+                                            <span class="custom-control-label" data-toggle="tooltip" data-placement="top" title="Asignar todos"></span>
+                                        </label>
+                                        <a href="#" class="btn btn-secondary btn-sm fw-5 adddisp"><i class="fa fa-chevron-up"></i></a>
+                                    </div>
+                                </div>
+                                <div class="card-block">
+
+                                    <table class="table permisos permisos-table">
+                                        <thead>
+                                            <tr>
+                                                <th><i class="fa fa-check" data-toggle="tooltip" data-placement="top" title="Asignar Módulo"></i></th>
+                                                <th>Módulos</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="infodisp">
+                                            @{
+                                                if (Model.Datos.disp != null)
+                                                {
+                                                    for (Int32 t = 0; t < Model.Datos.disp.Length; t++)
+                                                    {
+                                                        string txt = "<tr class='modules'><td class='td-check'><label class='custom-control custom-checkbox check-asignado'><input type='checkbox' class='custom-control-input addseldisp' id='disp_" + Model.Datos.disp[t].ID_Modulo + "'><span class='custom-control-label'></span></label></td><td scope='row'><strong>" + Model.Datos.disp[t].Modulo + "</strong></td></tr>";
+                                                        @Html.Raw(txt)
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <tr class="modules">
+                                                        <th scope="row" colspan="2"><span class="text-danger">No hay módulos disponibles</span></th>
+                                                    </tr>
+                                                }
+                                            }
+
+
+                                        </tbody>
+
+                                    </table>
+
+                                </div>
+                            </div>
+
+                            @* Copiar Permisos *@
+
+                            <div class="card card-table mt-4 mb-3">
+                                <div class="card-header card-header-options">
+                                    <span>Copiar permisos</span>
+                                </div>
+                                <div class="card-block">
+
+                                    <form class="form-group text-center px-3">
+
+                                        <div class="input-group input-group-sm card-search-box mb-3 mt-3">
+                                            <input type="text" class="form-control" value="" placeholder="Usuario" id="findcarac1" name="findcarac1">
+                                            <input id="vfindcarac1" name="vfindcarac1" type="hidden" value="" /><input id="tfindcarac1" name="tfindcarac1" type="hidden" value="" />
+                                            <span class="input-group-append">
+                                                <button type="button" class="btn btn-primary actualizar-usuario-copiar-permisos">Copiar</button>
+                                            </span>
+                                        </div>
+
+                                    </form>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (Model.Datos.Fe_Eli != "")
+{
+    <script>
+            @Html.Raw("var d = new Date('" + @Model.Datos.Fe_Eli + "');")
+            @Html.Raw("$('.timer').tinyTimer({ to: d, format: '%d días, %h horas, %m minutos, %s segundos' });")
+    </script>
+
+}

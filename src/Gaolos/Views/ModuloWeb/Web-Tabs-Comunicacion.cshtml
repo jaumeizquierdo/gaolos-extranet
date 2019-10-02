@@ -1,0 +1,14 @@
+﻿@* tabs *@
+
+@* btn-tab-active *@
+
+@{
+    string Clss = "mr-1 ml-1 btn btn-tab";
+    string ClssSel = "mr-1 ml-1 btn btn-tab btn-tab-active";
+    string ClssApli = "";
+}
+
+<div class="d-flex pt-0 pb-0 pl-0 mb-3 box-tab">
+    @if (ViewData["Form"].ToString() == "/modulo-web/webs/web/comunicacion/registro") { ClssApli = ClssSel; } else { ClssApli = Clss; }
+    <a href="/modulo-web/webs/web/comunicacion/registro" class="@Html.Raw(ClssApli)">General</a>
+</div>

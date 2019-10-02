@@ -1,0 +1,128 @@
+﻿@model ModuloClientesLibrary.ModuloClientesClienteCorrespondenciaViewModel
+@{
+    Layout = "~/Views/Shared/Modulo-Clientes/_Modulo-Clientes-Cliente.cshtml";
+    ViewData["Title"] = "Correspondencia";
+}
+
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+                @if (Model.Model.Err.eserror)
+                {
+                    ViewData["err"] = Model.Model.Err.mensaje;
+                    @Html.Partial("AccesoDenegado");
+                }
+                else
+                {
+
+                    @* cabecera cliente *@
+
+                    @Html.Partial("Cliente-Cabecera")
+
+                    @* tabs *@
+
+                    @Html.Partial("Cliente-Tabs")
+
+                    <div class="row">
+
+                        <div class="col-9">
+
+                            @* Comercial *@
+                            <div class="card">
+                                <div class="card-header card-header-options">
+                                    <span>Facturación</span>
+                                </div>
+                                <div class="card-block p-0">
+
+                                    @* Primer bloque *@
+
+                                    <div class="row px-2 mb-2">
+
+                                        <div class="col-12 d-flex">
+                                            <div class="d-flex align-items-center">
+                                                <input type="checkbox" class="mr-2" id="FacEMail" @if (Model.Model.FacEMail) { @Html.Raw("checked") }>
+                                                <span class="fw-5">Enviar factura por mail</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row px-2 mb-2">
+
+                                        <div class="col-12 d-flex">
+                                            <div class="d-flex align-items-center">
+                                                <input type="checkbox" class="mr-2" id="CorrFac" @if (Model.Model.CorrFac) { @Html.Raw("checked") }>
+                                                <span class="fw-5">Enviar factura por correo ordinario</span>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    @if (Model.Model.Facs != null)
+                                    {
+                                        <div class="card-block p-0">
+                                            <div class="d-flex align-items-center ml-4">
+                                                <p>Adjuntar a la factura:</p>
+                                            </div>
+                                            @for (Int32 t = 0; t < Model.Model.Facs.Length; t++)
+                                            {
+                                                <div class="d-flex mb-2 mt-2 px-2">
+
+                                                    <div class="input-group input-group-sm w-15 mb-0">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text input-group-text-auto">@Model.Model.Facs[t].datoS1</span>
+                                                        </div>
+                                                        <div class="box-label-check">
+                                                            <input type="checkbox" class="mrc-sel" id="mrc_@Model.Model.Facs[t].datoI" @if (Model.Model.Facs[t].datoB) { @Html.Raw("checked") }>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="input-group input-group-sm w-25 mb-0">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text input-group-text-auto">Observaciones</span>
+                                                        </div>
+                                                        <input type="text" class="form-control" id="obs_@Model.Model.Facs[t].datoI" placeholder="Observaciones al enviar" value="@Model.Model.Facs[t].datoS2">
+                                                    </div>
+
+                                                </div>
+
+                                            }
+
+                                        </div>
+                                    }
+
+
+
+                                    <div class="d-flex justify-content-center box-border-top p-2 mdc-bg-blue-grey-50">
+                                        <button type="button" class="btn btn-sm btn-primary guardar-cli-correspondencia">Guardar</button>
+                                    </div>
+
+
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-3">
+
+                        </div>
+
+                    </div>
+
+                }
+            </div>
+        </div>
+    </div>
+</div>
+

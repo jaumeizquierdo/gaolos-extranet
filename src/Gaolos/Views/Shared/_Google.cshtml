@@ -1,0 +1,73 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Gaolos</title>
+    
+    @* Estilos CSS *@
+    @Html.Partial("Estilos")
+
+    <meta name="google-signin-client_id" content="733483521618-grnt5e6d4c1v425kea2ndulfut5oqcsn.apps.googleusercontent.com">
+    <meta name="google-signin-scope" content="https://www.googleapis.com/auth/analytics.readonly">
+
+</head>
+<body>
+
+    <header id="MenuUsuarioComponent">
+        @await Component.InvokeAsync(nameof(MenuUsuarioLibrary.MenuUsuarioComponent))
+    </header>
+
+    <div class="layout__body">
+
+        <aside class="layout__nav layout__columns" id="MenuGaolosComponent">
+            @await Component.InvokeAsync(nameof(MenuGaolosLibrary.MenuGaolosComponent))
+        </aside>
+
+        <main class="layout__content">
+            @RenderBody()
+        </main>
+
+        <aside class="layout__aside layout__columns" id="MenuNotificacionesComponent">
+            @await Component.InvokeAsync(nameof(MenuNotificacionesLibrary.MenuNotificacionesComponent))
+        </aside>
+
+    </div>
+
+    <footer id="MenuFooterComponent">
+        @await Component.InvokeAsync(nameof(MenuFooterLibrary.MenuFooterComponent))
+    </footer>
+
+    @* Core Scripts *@
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/tether.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="~/lib/bootbox.min.js"></script>
+
+    @* Gaolos Scripts *@
+    <script src="~/js/bootstrap-events.js" asp-append-version="true"></script>
+    <script src="~/js/core.js" asp-append-version="true"></script>
+    <script src="~/js/menu-lateral.js" asp-append-version="true"></script>
+
+    @* Lib Scripts *@
+    <script src="~/lib/pnotify.custom.min.js" asp-append-version="true"></script>
+    <script src="~/lib/Chart.bundle.min.js" asp-append-version="true"></script>
+    <script src="~/lib/bootstrap-datepicker.min.js" asp-append-version="true"></script>
+    <script src="~/lib/bootstrap-datepicker.es.min.js" asp-append-version="true"></script>
+
+    <!-- Include the ViewSelector2 component script. -->
+    <script src="~/lib/ga-dev-tools/javascript/embed-api/components/view-selector2.js"></script>
+
+    <!-- Include the DateRangeSelector component script. -->
+    <script src="~/lib/ga-dev-tools/javascript/embed-api/components/date-range-selector.js"></script>
+
+
+    @* Lib Initi Scripts *@
+    <script src="~/js/graficas.js" asp-append-version="true"></script>
+
+    @RenderSection("scripts", required: false)
+
+
+</body>
+</html>

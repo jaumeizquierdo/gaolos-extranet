@@ -1,0 +1,62 @@
+﻿/* Full Image Parallax */
+
+@import "variables.scss";
+@import "materialdesign.scss";
+
+.tab-pane {
+    padding: $tab-pane-padding;
+}
+
+/* Tabs */
+
+.box-tab {
+    border-bottom: 1px solid $md-blue-grey-100;
+}
+
+.btn-tab {
+    font-size: 0.9em;
+    font-weight: 500;
+    border: 1px solid $md-blue-grey-100;
+    border-bottom: none;
+    background: #fff;
+    color: $md-blue-grey-500;
+    position: relative;
+    border-radius: 2px;
+    text-transform: uppercase;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+
+    &:hover {
+        background: $md-blue-500;
+        color: #fff;
+        border: 1px solid $md-blue-500;
+        border-bottom: none;
+    }
+}
+
+.btn-tab-active {
+    /*
+    background: $md-blue-grey-50;
+    color: $md-blue-grey-500;
+    border: 1px solid $md-blue-grey-100;
+    */
+    background: $main-color;
+    color: #fff;
+    border: 1px solid $main-color;
+    border-bottom: none;
+}
+
+.btn-tab-active::before {
+    content: "\f0d7";
+    font-family: 'FontAwesome';
+    display: inline-block;
+    width: 1rem;
+    color: $main-color;
+    font-size: 1.3em;
+    position: absolute;
+    top: 21px;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+}

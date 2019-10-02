@@ -1,0 +1,20 @@
+﻿@* tabs *@
+
+@* btn-tab-active *@
+
+@{
+    string Clss = "mr-1 ml-2 btn btn-tab";
+    string ClssSel = "mr-1 ml-2 btn btn-tab btn-tab-active";
+    string ClssApli = "";
+}
+
+<div class="d-flex pt-3 pb-0 pl-0 mb-3 box-tab">
+    @if (ViewData["Form"].ToString() == "/modulo-firewall/nivel-ip") { ClssApli = ClssSel; } else { ClssApli = Clss; }
+    <a href="/modulo-firewall/nivel-ip" class="@Html.Raw(ClssApli)">Nivel IP</a>
+    @if (ViewData["Form"].ToString() == "/modulo-firewall/nivel-aplicacion") { ClssApli = ClssSel; } else { ClssApli = Clss; }
+    <a href="/modulo-firewall/nivel-aplicacion" class="@Html.Raw(ClssApli)">Nivel Aplicación</a>
+    @if (ViewData["Form"].ToString() == "/modulo-firewall/reglas") { ClssApli = ClssSel; } else { ClssApli = Clss; }
+    <a href="/modulo-firewall/reglas" class="@Html.Raw(ClssApli)">Reglas</a>
+    @if (ViewData["Form"].ToString() == "/modulo-firewall/grupos") { ClssApli = ClssSel; } else { ClssApli = Clss; }
+    <a href="/modulo-firewall/grupos" class="@Html.Raw(ClssApli)">Grupos</a>
+</div>

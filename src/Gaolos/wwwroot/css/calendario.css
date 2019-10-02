@@ -1,0 +1,183 @@
+/* Calenarios */
+/* https://github.com/uxsolutions/bootstrap-datepicker */
+/* Mixins */
+/* Skin v4.6 - White / Dark / Blue */
+.date {
+  cursor: pointer; }
+
+.datepicker-dropdown {
+  background: #fff !important;
+  border-radius: 4px;
+  border: 1px solid rgba(0, 0, 0, 0.15) !important; }
+  .datepicker-dropdown table {
+    font-size: 0.9rem;
+    width: 100%; }
+    .datepicker-dropdown table td {
+      padding: 0.2rem 0.5rem;
+      font-weight: 500;
+      border-bottom: none !important; }
+    .datepicker-dropdown table td.active {
+      background-color: #2196f3 !important;
+      background-image: none !important; }
+    .datepicker-dropdown table tr:hover td {
+      background: none; }
+  .datepicker-dropdown li {
+    margin: 0;
+    padding: 0; }
+    .datepicker-dropdown li a, .datepicker-dropdown li button {
+      font-size: 0.9rem !important; }
+      .datepicker-dropdown li a:hover, .datepicker-dropdown li button:hover {
+        color: #fff;
+        background: #2196f3; }
+    .datepicker-dropdown li button {
+      cursor: pointer; }
+
+/* Calendario Tareas */
+.calendario-tareas th {
+  width: 14.2% !important; }
+
+.calendario-tareas tr td {
+  border-right: 1px solid #e0e0e0;
+  border-bottom: 1px solid #e0e0e0;
+  padding: 0 !important;
+  cursor: pointer; }
+  .calendario-tareas tr td div {
+    padding: 0.3rem;
+    margin: 0.2rem;
+    border-radius: 3px;
+    border: 1px solid transparent; }
+    .calendario-tareas tr td div p {
+      font-size: 0.9em;
+      margin-bottom: 0.5em; }
+    .calendario-tareas tr td div:hover {
+      border: 1px solid #b3e5fc;
+      background: #e1f5fe; }
+
+.calendario-tareas tr td:last-child {
+  border-right: none; }
+
+.calendario-tareas tr:last-child {
+  border-bottom: none; }
+
+.calendario-tareas .tarea-alta,
+.calendario-tareas .tarea-media,
+.calendario-tareas .tarea-baja,
+.calendario-tareas .tarea-none {
+  display: block;
+  text-align: center;
+  margin: 0 auto;
+  border-radius: 4px;
+  color: #fff;
+  width: 30px;
+  font-size: 0.9em; }
+
+.calendario-tareas .tarea-alta {
+  background: #d32f2f; }
+
+.calendario-tareas .tarea-media {
+  background: #ffc107; }
+
+.calendario-tareas .tarea-baja {
+  background: #4caf50; }
+
+.calendario-tareas .tarea-empty {
+  background: none; }
+
+.calendario-tareas .tarea-empty:before {
+  content: "\20";
+  height: 20px;
+  display: block; }
+
+.calendario-tareas .tarea-no-laborable div {
+  background: #ebebeb; }
+
+.calendario-tareas .tarea-festivo div {
+  background: #f3e5f5;
+  border: 1px solid #ce93d8; }
+
+.calendario-tareas .tarea-dia-en-curso div {
+  background: #ffebee;
+  border: 1px solid #ef9a9a; }
+
+.calendario-tareas .tarea-vacaciones div {
+  background: #e3f2fd;
+  border: 1px solid #64b5f6; }
+
+/* ASISTENCIAS CARGA DE TRABAJO */
+/* /modulo-asistencias/carga-de-trabajo */
+.carga {
+  font-size: 0.9em;
+  border-radius: 2px;
+  box-shadow: 0px 1px 2px #e0e0e0; }
+  .carga:hover {
+    transition: all ease-in-out .3s; }
+
+.carga-header {
+  color: #fff;
+  padding: 0.2em 0.3em;
+  border-radius: 2px; }
+  .carga-header a {
+    color: #fff !important; }
+    .carga-header a:hover {
+      text-decoration: underline; }
+
+.carga-info {
+  border-radius: 2px;
+  background: #fff;
+  padding: 0.2em 0.3em; }
+  .carga-info .round-item a {
+    color: #fff;
+    font-weight: 500; }
+    .carga-info .round-item a:hover {
+      color: #fff !important; }
+
+.carga-urgente {
+  border: 1px solid #ffcdd2;
+  background: #ffebee; }
+  .carga-urgente .carga-header {
+    background: #ff1744; }
+  .carga-urgente .carga-info {
+    border: 1px solid #ffcdd2; }
+  .carga-urgente i {
+    color: #ff1744; }
+  .carga-urgente a {
+    color: #ff1744; }
+    .carga-urgente a:hover {
+      color: #d50000;
+      text-decoration: underline; }
+  .carga-urgente:hover {
+    border: 1px solid #ef9a9a; }
+
+.carga-concluida {
+  border: 1px solid #b2dfdb;
+  background: #e0f2f1; }
+  .carga-concluida .carga-header {
+    background: #009688; }
+  .carga-concluida .carga-info {
+    border: 1px solid #b2dfdb; }
+  .carga-concluida i {
+    color: #009688; }
+  .carga-concluida a {
+    color: #00695c; }
+    .carga-concluida a:hover {
+      color: #004d40;
+      text-decoration: underline; }
+  .carga-concluida:hover {
+    border: 1px solid #80cbc4; }
+
+.carga-en-curso {
+  border: 1px solid #cfd8dc;
+  background: #fff; }
+  .carga-en-curso .carga-header {
+    background: #37474f; }
+  .carga-en-curso .carga-info {
+    border: 1px solid #cfd8dc; }
+  .carga-en-curso i {
+    color: #2196f3; }
+  .carga-en-curso a {
+    color: #2196f3; }
+    .carga-en-curso a:hover {
+      color: #ff1744;
+      text-decoration: underline; }
+  .carga-en-curso:hover {
+    border: 1px solid #b0bec5; }

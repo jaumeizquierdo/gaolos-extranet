@@ -1,0 +1,166 @@
+﻿@model ModuloProduccionLibrary.ProduccionOrdenesConIncidenciasListadoViewModel
+@{
+    Layout = "~/Views/Shared/Modulo-Produccion/_ProduccionOrdenes.cshtml";
+    ViewData["Title"] = "Ordenes de producción con incidencias";
+}
+
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+                @if(Model.Model.Err.eserror)
+{
+    ViewData["err"] = Model.Model.Err.mensaje;
+                @Html.Partial("AccesoDenegado");
+}
+else
+{
+
+                @* Listado de direcciones *@
+
+                <div class="card mb-3">
+                    <div class="card-header card-header-options">
+                        <span>Buscar</span>
+                        @Html.Partial("PanelActions")
+                    </div>
+                    <div class="card-block p-0">
+                        <div class="d-flex justify-content-center align-items-center">
+                            <div class="col-1 pb-2 pt-2 box-border-right-light">
+                                <img src="https://image.flaticon.com/icons/svg/138/138360.svg" style="width: 100%">
+                            </div>
+                            <div class="col-11">
+
+                                <form action="@ViewData["Form"]" method="post" class="pr-0 pl-0">
+
+                                    <div class="d-flex p-3 justify-content-center align-items-center w-100">
+
+                                        <div class="input-group input-group-sm mb-0 mr-2">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text input-group-text-auto">Buscar</span>
+                                            </div>
+                                            <input type="text" class="form-control" placeholder="Cliente, exposición y ref.cliente" name="buscar" value="@ViewData["buscar"]">
+                                        </div>
+
+                                    </div>
+                                    <div class="d-flex justify-content-center align-self-baseline col-12 mb-2">
+                                        <button type="submit" class="btn btn-sm btn-primary">Buscar</button>
+                                    </div>
+
+                                </form>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-8">
+                        <div class="card card-table mb-3">
+                            <div class="card-header card-header-options">
+                                <span>Ordenes con incidencias</span>
+                            </div>
+                            <div class="card-block">
+
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th class="w-10 text-center">Nº Orden</th>
+                                            <th class="w-15 text-center">Fecha</th>
+                                            <th class="w-15 text-center">Usuario</th>
+                                            <th>Cliente</th>
+                                            <th>Incidencia</th>
+                                            <th>Exposición</th>
+                                            <th class="w-5 text-center">Orden</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (Model.Model.det != null)
+                                        {
+                                        @for (Int32 t = 0; t < Model.Model.det.Length; t++)
+                                            {
+                                        <tr>
+                                            <td class="text-center"><p class="mb-0 fw-5"><a href="#" class="ver-resolucion" id="reso_@Html.Raw(Model.Model.det[t].ID_Ord2+"_"+Model.Model.det[t].ID_CtrlI)">@Model.Model.det[t].ID_Ord2</a></p></td>
+                                            <td class="text-center"><p class="mb-0 fw-5"><small>@Model.Model.det[t].Fe_Al</small></p></td>
+                                            <td><p class="mb-0 fw-5">@Model.Model.det[t].Usu</p></td>
+                                            <td><p class="mb-0 fw-5">@Model.Model.det[t].Emp</p></td>
+                                            <td><p class="mb-0 fw-5">@Model.Model.det[t].Inci</p></td>
+                                            <td><p class="mb-0 fw-5">@Model.Model.det[t].Expo</p></td>
+                                            <td class="text-center"><p class="mb-0 fw-5">@Model.Model.det[t].Orden</p></td>
+                                        </tr>
+                                            }
+                                        }
+                                        else
+                                        {
+                                        <tr>
+                                            <td colspan="7"><p class="mb-0 fw-5 p-3 text-danger"><i class="fa fa-times"></i> No hay resultados</p></td>
+                                        </tr>
+                                        }
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            @Html.Raw(Model.Model.Paginador)
+                        </div>
+                    </div>
+
+                    <div class="col-4">
+
+                        <div class="card card-table mb-3" id="sindatos">
+                            <div class="card-header card-header-options">
+                                <span>Información</span>
+                                <div class="card-actions">
+                                    <ul>
+                                        <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="card-block" role="tablist" aria-multiselectable="true">
+                                <div class="text-center mt-4 mb-4 p-5 bloque-sin-informacion">
+                                    <img src="/flaticons/chat.svg" style="width: 25%;" class="animated fadeIn">
+                                    <p class="pt-4 animated fadeIn">Si clica encima del nº de orden, le aparecerá la opcion de resolución de la incidencia</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card card-table mb-3" id="ver-reso-orden-prod" style="display:none;">
+                            <div class="card-header card-header-options">
+                                <span>Resolución de la incidencia - Orden nº <span id="inci-orden"></span></span>
+                            </div>
+                            <div class="card-block p-0">
+                                <div class="d-flex flex-column p-2">
+                                    <div class="form-group mb-0">
+                                        <textarea class="form-control" rows="3" placeholder="Resolución" id="Motivo"></textarea>
+                                        <input type="hidden" id="ID_Ord2" value="0" />
+                                        <input type="hidden" id="ID_CtrlI" value="0" />
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-center box-guardar">
+                                    <a href="#" target="_blank" class="btn btn-sm btn-danger orden-resolucion">Resolver</a>
+                                </div>
+
+                            </div>
+                        </div>                    
+
+                    </div>
+                </div>
+
+}
+            </div>
+        </div>
+    </div>
+</div>

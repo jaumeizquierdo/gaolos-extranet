@@ -1,0 +1,176 @@
+﻿@model DashBoardLibrary.DashBoardViewModel
+@{
+    Layout = "~/Views/Shared/Modulo-Presupuestos/_Modulo-Presupuestos-Nuevo.cshtml";
+    ViewData["Title"] = "Nuevo Presupuesto";
+}
+
+<div class="main-content m-0" id="widget-area">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+
+                @if (Model.Model.Err.eserror)
+                {
+                    ViewData["err"] = Model.Model.Err.mensaje;
+                    @Html.Partial("AccesoDenegado");
+                }
+                else
+                {
+                <div class="row">
+
+                    <div class="col-8">
+                        @* Listado de mantenimientos *@
+                        <div class="card mb-3">
+                            <div class="card-header card-header-options">
+                                <span>Nuevo presupuesto</span>
+                                <div class="card-actions">
+                                    <ul>
+                                        <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="card-block p-0">
+
+                                <div class="p-2">
+
+                                    <div class="d-flex mb-1">
+
+                                        <div class="input-group input-group-sm mb-0 mr-2">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Cliente</span>
+                                            </div>
+                                            <input type="text" class="form-control" id="nuevoPresCliente" value="" placeholder="Cliente">
+                                            <input type="hidden" id="vnuevoPresCliente" value=""><input type="hidden" id="tnuevoPresCliente" value="">
+                                        </div>
+
+                                        <div class="input-group input-group-sm mb-0">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Contacto</span>
+                                            </div>
+                                            <input type="text" class="form-control" id="nuevoPresContacto" value="" placeholder="Contacto">
+                                            <input type="hidden" id="vnuevoPresContacto" value=""><input type="hidden" id="tnuevoPresContacto" value="">
+                                        </div>
+
+                                    </div>
+
+                                    <div class="d-flex mb-1">
+                                        <div class="box-labels col-12">
+                                            <div class="d-flex align-items-center align-self-stretch">
+                                                <label class="m-0 box-label-label align-self-stretch">Dirección</label>
+                                                <div class="d-flex flex-column px-2 pb-0 my-1" id="Dirs">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex mb-1">
+
+                                        <div class="input-group input-group-sm mb-0">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Breve</span>
+                                            </div>
+                                            <textarea class="form-control" aria-label="With textarea" placeholder="Breve" id="nuevoPresBreve" maxlength="200"></textarea>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="d-flex mb-1">
+
+                                        <div class="input-group input-group-sm mb-0">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Att</span>
+                                            </div>
+                                            <input type="text" class="form-control" id="nuevoPresAtt" value="" placeholder="A la atención de">
+                                        </div>
+
+                                    </div>
+
+                                    <div class="d-flex mb-1">
+
+                                        <div class="input-group input-group-sm mb-0 mr-2">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Teléfono</span>
+                                            </div>
+                                            <input type="text" class="form-control" id="nuevoPresTel" value="" placeholder="Teléfono" list="Tels" maxlength="15">
+                                            <datalist id="Tels" />
+                                        </div>
+
+                                        <div class="input-group input-group-sm mb-0">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Mail</span>
+                                            </div>
+                                            <input type="text" class="form-control" id="nuevoPresMail" value="" placeholder="Mail" list="Mails" maxlength="200">
+                                            <datalist id="Mails" />
+                                        </div>
+
+                                    </div>
+
+                                    <div class="d-flex mb-1">
+
+                                        <div class="input-group input-group-sm mb-0">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Asignar a</span>
+                                            </div>
+                                            <input type="text" class="form-control" id="nuevoPresAsignar" value="" placeholder="Asignar a">
+                                            <input type="hidden" id="vnuevoPresAsignar" value=""><input type="hidden" id="tnuevoPresAsignar" value="">
+                                        </div>
+
+                                    </div>
+
+                                    <div class="d-flex">
+
+                                        <div class="input-group input-group-sm mb-0">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Obs. Privadas</span>
+                                            </div>
+                                            <textarea class="form-control" aria-label="With textarea" placeholder="Breve" id="nuevoPresObsPriv"></textarea>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <div class="d-flex justify-content-center box-border-top p-2 mdc-bg-blue-grey-50">
+                                <a href="#" class="btn btn-sm btn-primary nuevo-presupuesto">Generar nuevo presupuesto</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-4">
+
+                        @* Sin datos *@
+                        <div class="card-info-wrapper w-100" id="sindatos" style="display: none;">
+                            <div class="card-info">
+                                <div class="d-flex justify-content-center align-items-center">
+                                    <img src="https://image.flaticon.com/icons/svg/609/609998.svg" style="width: 20%;">
+                                    <p class="mb-2 ml-3">Seleccione un cliente o un contacto para generar un nuevo presupuesto.</p>
+                                </div>
+                            </div>
+                            <svg class="card-info-triangle">
+                                <polygon points="0,0 200,0 0,200" fill="currentColor"></polygon>
+                            </svg>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                }
+
+            </div>
+        </div>
+
+    </div>
+
+</div>

@@ -1,0 +1,11 @@
+@charset "UTF-8";
+/* Bootstrap fixes */
+/* Estos estilos tendrán que modificarse en el core de bootstrap cuando haga el gulpfile */
+/* Mixins */
+/* Skin v4.6 - White / Dark / Blue */
+.form-control {
+  font-size: 0.9rem; }
+
+.tooltip {
+  font-family: 'Roboto';
+  font-size: 0.9em; }

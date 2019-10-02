@@ -1,0 +1,261 @@
+﻿@model ModuloAsistenciasLibrary.ModuloAsisnteicasAsistenciasComisionesInicioViewModel
+
+@{
+    Layout = "~/Views/Shared/Modulo-Asistencias/_Modulo-Asistencias.cshtml";
+    ViewData["Title"] = "Comisiones";
+    ViewData["Message"] = "Modulo de Asistencias - Gaolos App v2018";
+}
+
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+
+                @if (Model.Model.Err.eserror)
+                {
+                    ViewData["err"] = Model.Model.Err.mensaje;
+                    @Html.Partial("AccesoDenegado");
+                }
+                else
+                {
+
+                    @* Buscar usuarios *@
+                    <form action="@ViewData["Form"]" method="post">
+
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="card card-table mb-3">
+                                    <div class="card-header card-header-options">
+                                        <span>Comisiones pendientes de pago</span>
+                                    </div>
+                                    <div class="card-block p-0">
+                                        <div class="d-flex flex-column pt-2 pb-0 px-2">
+                                            <div class="input-group input-group-sm mb-2">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text" id="" style="width: 120px;">Buscar usuario</span>
+                                                </div>
+                                                <input type="text" class="form-control form-control-sm ui-autocomplete-input" placeholder="Buscar usuario" name="opecompend" id="opecompend" value="@ViewData["topecompend"]" autocomplete="off">
+                                                <input type="hidden" id="vopecompend" name="vopecompend" value="@ViewData["vopecompend"]" />
+                                                <input type="hidden" id="topecompend" name="topecompend" value="@ViewData["topecompend"]" />
+                                            </div>
+                                            <div class="input-group input-group-sm mb-0">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text" id="">Buscar empresa</span>
+                                                </div>
+                                                <input type="text" class="form-control form-control-sm ui-autocomplete-input" placeholder="Buscar empresa" name="clicompend" id="clicompend" value="@ViewData["tclicompend"]" autocomplete="off">
+                                                <input type="hidden" id="vclicompend" name="vclicompend" value="@ViewData["vclicompend"]" />
+                                                <input type="hidden" id="tclicompend" name="tclicompend" value="@ViewData["tclicompend"]" />
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex pt-2 px-2">
+                                            <div class="d-flex align-items-center mr-3">
+                                                @if (ViewData["Tipo"].ToString() == "0")
+                                                {
+                                                    <input name="Tipo" type="radio" class="mr-2" value="0" checked>
+                                                }
+                                                else
+                                                {
+                                                    <input name="Tipo" type="radio" class="mr-2" value="0">
+                                                }
+                                                <span class="fw-5">Todos</span>
+                                            </div>
+
+                                            <div class="d-flex align-items-center mr-3">
+                                                @if (ViewData["Tipo"].ToString() == "1")
+                                                {
+                                                    <input name="Tipo" type="radio" class="mr-2" value="1" checked>
+                                                }
+                                                else
+                                                {
+                                                    <input name="Tipo" type="radio" class="mr-2" value="1">
+                                                }
+                                                <span class="fw-5">Usuarios</span>
+                                            </div>
+
+                                            <div class="d-flex align-items-center mr-0">
+                                                @if (ViewData["Tipo"].ToString() == "2")
+                                                {
+                                                    <input name="Tipo" type="radio" class="mr-2" value="2" checked>
+                                                }
+                                                else
+                                                {
+                                                    <input name="Tipo" type="radio" class="mr-2" value="2">
+                                                }
+                                                <span class="fw-5">Empresas</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex justify-content-center mt-0">
+                                            <button type="submit" class="btn btn-sm btn-primary">Buscar</button>
+                                        </div>
+                                        <div class="d-flex flex-column p-0 mt-3">
+                                            <table class="table table-striped table-small">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Nombre/Empresa</th>
+                                                        <th>Tipo</th>
+                                                        <th class="w-20 text-right">Saldo</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @if (Model.Model.det != null)
+                                                    {
+                                                        @for (Int32 t = 0; t < Model.Model.det.Length; t++)
+                                                        {
+                                                            <tr>
+                                                                @{
+                                                                    string txt = "sel_" + Model.Model.det[t].ID_Us_Com + "_" + Model.Model.det[t].ID_Cli2;
+                                                                }
+                                                                <td><a href="#" class="selcomiusu fw-5" id="@Html.Raw(txt)">@Model.Model.det[t].Nom</a></td>
+                                                                <td>@Model.Model.det[t].Tipo</td>
+                                                                <td class="text-right">@Model.Model.det[t].Saldo</td>
+                                                            </tr>
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        <tr>
+                                                            <td colspan="4">No hay comisiones</td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    @Html.Raw(Model.Model.Paginador)
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="card card-table mb-3">
+                                    <div class="card-header card-header-options">
+                                        <span>Buscar comisión</span>
+                                    </div>
+                                    <div class="card-block p-0">
+
+                                        <div class="d-flex flex-column pt-2 pb-0 px-2">
+                                            <div class="input-group input-group-sm mb-1">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">Usuario</span>
+                                                </div>
+                                                <input type="text" class="form-control form-control-sm ui-autocomplete-input" placeholder="Buscar usuario" name="comisionope" id="comisionope" value="" autocomplete="off">
+                                                <input type="hidden" value="" name="vcomisionope" id="vcomisionope" />
+                                                <input type="hidden" value="" name="tcomisionope" id="tcomisionope" />
+                                            </div>
+                                            <div class="input-group input-group-sm mb-1">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">Empresa</span>
+                                                </div>
+                                                <input type="text" class="form-control form-control-sm ui-autocomplete-input" placeholder="Buscar empresa" name="comisionemp" id="comisionemp" value="" autocomplete="off">
+                                                <input type="hidden" value="" name="vcomisionemp" id="vcomisionemp" />
+                                                <input type="hidden" value="" name="tcomisionemp" id="tcomisionemp" />
+                                            </div>
+                                            <div class="input-group input-group-sm mb-1">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text" id="">Factura</span>
+                                                </div>
+                                                <input type="text" class="form-control form-control-sm ui-autocomplete-input" placeholder="Nº factura" name="comibuscar" id="comibuscar" value="" autocomplete="off">
+                                            </div>
+                                            <div class="input-group input-group-sm mb-1">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">De fecha</span>
+                                                </div>
+                                                <input type="text" class="form-control form-control-sm ui-autocomplete-input" placeholder="Fecha inicio" name="Fe_In" id="Fe_In" value="@Model.Model.Fe_In" autocomplete="off">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">a</span>
+                                                </div>
+                                                <input type="text" class="form-control form-control-sm ui-autocomplete-input" placeholder="Fecha fin" name="Fe_Fi" id="Fe_Fi" value="@Model.Model.Fe_Fi" autocomplete="off">
+                                            </div>
+                                            <div class="d-flex justify-content-center mb-2 ">
+                                                <button type="button" class="btn btn-sm btn-primary selcomibuscar">Buscar</button>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex flex-column p-0">
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="w-20 text-center">Fecha</th>
+                                                        <th>Concepto</th>
+                                                        <th class="w-20 text-right">Pago</th>
+                                                        <th class="w-20 text-right">Ingreso</th>
+                                                        <th class="w-20 text-right">Saldo</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="contenido-comisiones">
+                                                    <tr>
+                                                        <td colspan="4" class="p-0"><p class="mb-0 fw-5 p-2 text-danger">Debe seleccionar a un comisionista o indicar un texto a buscar</p></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3" id="detcom-paginador">
+                                </div>
+
+                                <div class="card card-table mb-3" id="card_pago" style="display:none;">
+                                    <div class="card-header card-header-options">
+                                        <span>Pago</span>
+                                    </div>
+                                    <div class="card-block p-0">
+                                        <div class="d-flex flex-column p-2">
+
+                                            <div class="d-flex mb-1">
+                                                <div class="box-labels w-100">
+                                                    <div class="d-flex align-items-center align-self-stretch">
+                                                        <label class="m-0 box-label-label align-self-stretch" id="labelsel">Fecha</label>
+                                                        <p class="mb-0 px-2" id="nomsel"></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="d-flex mb-1">
+                                                <div class="input-group input-group-sm mb-0">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">Concepto</span>
+                                                    </div>
+                                                    <input type="text" class="form-control" id="Expo" value="" placeholder="Concepto del pago" maxlength="50">
+                                                </div>
+                                            </div>
+
+                                            <div class="d-flex">
+                                                <div class="input-group input-group-sm mb-0">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">Pago</span>
+                                                    </div>
+                                                    <input type="text" class="form-control" id="Imp" value="" placeholder="Pago">
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="d-flex justify-content-center box-guardar">
+                                            <a href="#" target="_blank" class="btn btn-sm btn-primary comi-pago">Registrar pago</a>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </form>
+
+                }
+
+            </div>
+        </div>
+    </div>
+</div>

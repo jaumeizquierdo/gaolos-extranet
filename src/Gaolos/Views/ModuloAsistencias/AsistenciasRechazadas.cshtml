@@ -1,0 +1,305 @@
+﻿@model ModuloAsistenciasLibrary.ModuloAsisnteicasAsistenciasPorAsignarListadoViewModel
+
+@{
+    Layout = "~/Views/Shared/Modulo-Asistencias/_Modulo-Asistencias.cshtml";
+    ViewData["Title"] = "Listado de asistencias rechazadas";
+    ViewData["Message"] = "Modulo de Asistencias - Gaolos App v2018";
+}
+
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+                @if (Model.Model.Err.eserror)
+    {
+        ViewData["err"] = Model.Model.Err.mensaje;
+            @Html.Partial("AccesoDenegado");
+}
+else
+{
+
+            @* Buscar usuarios *@
+
+            <div class="card mb-3">
+                <div class="card-header card-header-options">
+                    <span>Buscar asistencias</span>
+
+                    <div class="card-actions">
+                        <ul>
+                            <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card-block p-0">
+
+                    <form action="@ViewData["Form"]" method="post">
+
+                        <div class="d-flex justify-content-center align-items-center">
+
+                            <div class="col-1  pb-2 pt-2">
+                                <img src="https://image.flaticon.com/icons/svg/321/321863.svg" style="width: 100%;">
+                            </div>
+
+                            <div class="col-11 box-border-left-light">
+
+                                <div class="d-flex py-3">
+
+                                    <div class="input-group input-group-sm mb-0 mr-2">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="">Buscar</span>
+                                        </div>
+                                        <input type="text" class="form-control form-control-sm" placeholder="Buscar" id="Buscar" name="Buscar" value="@ViewData["buscar"]">
+                                    </div>
+
+                                    <div class="input-group input-group-sm mb-0 ml-2 mr-2">
+                                        <div class="input-group-prepend">
+                                            <label class="input-group-text" for="ID_ZonaSub">Zona</label>
+                                        </div>
+                                        <select class="custom-select" id="ID_ZonaSub" name="ID_ZonaSub">
+                                            @for (Int32 t = 0; t < Model.Model.Zonas.Length; t++)
+                                            {
+                                                if (Model.Model.Zonas[t].ID_ZonaSub == Convert.ToInt32(ViewData["ID_ZonaSub"]))
+                                                {
+                                                    <option value="@Model.Model.Zonas[t].ID_ZonaSub" selected>@Model.Model.Zonas[t].ZonaSub</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@Model.Model.Zonas[t].ID_ZonaSub">@Model.Model.Zonas[t].ZonaSub</option>
+                                                }
+
+                                            }
+                                        </select>
+                                    </div>
+
+                                    <div class="input-group input-group-sm mb-0 ml-2">
+                                        <div class="input-group-prepend">
+                                            <label class="input-group-text" for="ID_Tipo2">Tipos</label>
+                                        </div>
+                                        <select class="custom-select" id="ID_Tipo2" name="ID_Tipo2">
+                                            @for (Int32 t = 0; t < Model.Model.Tipos.Length; t++)
+                                            {
+                                                if (Model.Model.Tipos[t].id == Convert.ToInt32(ViewData["ID_Tipo2"]))
+                                                {
+                                                    <option value="@Model.Model.Tipos[t].id" selected>@Model.Model.Tipos[t].det</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@Model.Model.Tipos[t].id">@Model.Model.Tipos[t].det</option>
+                                                }
+                                            }
+                                        </select>
+                                    </div>
+
+                                </div>
+
+                                <div class="d-flex">
+                                    <div class="p-0 mr-3">
+                                        <label class="custom-control custom-checkbox">
+                                            @{
+                                                string txt = "";
+                                                if (Convert.ToBoolean(ViewData["Urg"]))
+                                                {
+                                                    txt = " checked ";
+                                                }
+                                            }
+                                            <input type="checkbox" class="custom-control-input" @Html.Raw(txt) id="Urg" name="Urg">
+                                            <span class="custom-control-label p-0">Urgente <span class="text-danger">(@Model.Model.Urg)</span></span>
+                                        </label>
+                                        
+                                    </div>
+
+                                    <div class="p-0">
+                                        <label class="custom-control custom-checkbox">
+                                            @{
+                                                txt = "";
+                                                if (Convert.ToBoolean(ViewData["Man"]))
+                                                {
+                                                    txt = " checked ";
+                                                }
+                                            }
+                                            <input type="checkbox" class="custom-control-input" @Html.Raw(txt) id="Man" name="Man">
+                                            <span class="custom-control-label p-0">Mantenimiento <span class="text-danger">(@Model.Model.Man)</span></span>
+                                        </label>
+                                        
+                                    </div>
+                                </div>
+
+                                <div class="row px-3 box-border-top-light" id="form-check">
+                                    @if (Model.Model.TiposElem != null)
+                                    {
+                                        <div class="col-6 p-0 pt-3 pb-3">
+                                            <h3 class="fs-1-1 mb-3">Que tengan:</h3>
+                                            @{
+                                                string res = ViewData["QS"].ToString();
+                                                if (res != "") { res = "_" + res + "_"; }
+
+                                            }
+
+                                            @for (Int32 t = 0; t < Model.Model.TiposElem.Length; t++)
+                                            {
+                                                <label class="custom-control custom-checkbox mr-3 mb-0 d-inline-flex">
+                                                    @if (res.IndexOf("_" + Model.Model.TiposElem[t].datoI.ToString() + "_") >= 0)
+                                                    {
+                                                        <input type="checkbox" class="custom-control-input" id="qs_@Model.Model.TiposElem[t].datoI" name="qs_@Model.Model.TiposElem[t].datoI" checked>
+                                                    }
+                                                    else
+                                                    {
+                                                        <input type="checkbox" class="custom-control-input" id="qs_@Model.Model.TiposElem[t].datoI" name="qs_@Model.Model.TiposElem[t].datoI">
+                                                    }
+
+
+                                                    <span class="custom-control-label">@Model.Model.TiposElem[t].datoS</span>
+                                                </label>
+                                            }
+
+
+                                        </div>
+                                        <div class="col-6 p-0 box-border-left-light pt-3 pl-3 pb-3">
+                                            <h3 class="fs-1-1 mb-3">Que NO tengan:</h3>
+                                            @{
+                                                res = ViewData["QN"].ToString();
+                                                if (res != "") { res = "_" + res + "_"; }
+
+                                            }
+                                            @for (Int32 t = 0; t < Model.Model.TiposElem.Length; t++)
+                                            {
+                                                <label class="custom-control custom-checkbox mr-3 mb-0 d-inline-flex">
+                                                    @if (res.IndexOf("_" + Model.Model.TiposElem[t].datoI.ToString() + "_") >= 0)
+                                                    {
+                                                        <input type="checkbox" class="custom-control-input" id="qn_@Model.Model.TiposElem[t].datoI" name="qn_@Model.Model.TiposElem[t].datoI" checked>
+                                                    }
+                                                    else
+                                                    {
+                                                        <input type="checkbox" class="custom-control-input" id="qn_@Model.Model.TiposElem[t].datoI" name="qn_@Model.Model.TiposElem[t].datoI">
+                                                    }
+
+                                                    <span class="custom-control-label">@Model.Model.TiposElem[t].datoS</span>
+                                                </label>
+                                            }
+
+
+                                        </div>
+
+                                    }
+                                </div>
+
+                                <div class="row">
+                                    <div class="d-flex justify-content-center box-border-top col-12 p-2 mdc-bg-blue-grey-50">
+                                        <button type="submit" class="btn btn-sm btn-primary">Buscar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+
+            <div class="row">
+
+                <div class="col-12">
+                    @* Listado *@
+                    <div class="card card-table mb-3">
+                        <div class="card-header card-header-options">
+                            <span>@ViewData["Title"]</span>
+                            <div class="input-group input-group-sm col-5 mr-0 pr-0">
+                                <input type="text" class="form-control form-control-sm" id="Tecnico" placeholder="Buscar técnico">
+                                @{ 
+                                    Int32 num = 0;
+                                    if (Model.Model.det!=null) { num = Model.Model.det.Length; }
+                                }
+                                <input type="hidden" id="vTecnico" name="vTecnico" value=""><input type="hidden" id="tTecnico" name="tTecnico" value="">
+                                <span class="input-group-append">
+                                    <button type="button" class="btn btn-primary btn-sm sel-rechazadas-reasignar">Asignar</button>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="card-block">
+
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center w-5">Nº</th>
+                                        <th class="text-left">Empresa</th>
+                                        <th class="text-left">Población</th>
+                                        <th class="text-left">Categoría</th>
+                                        <th class="text-left w-10">Usuario</th>
+                                        <th class="text-left">Motivo rechazo</th>
+                                        <th class="text-center w-5"><a href="#" class="sel-asis fw-5">Sel.</a></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="content">
+
+
+                                    @if (Model.Model.det != null)
+                    {
+                        @for (Int32 t = 0; t < Model.Model.det.Length; t++)
+        {
+                                    <tr>
+                                        <td class="text-center">
+                                            <a href="/modulo-asistencias/historial/asistencia?ID_Asis2=@Model.Model.det[t].ID_Asis2" target="_blank" data-toggle="tooltip" data-placement="top" title="" data-original-title="Ver detalles de la asistencia" class="fw-5">@Model.Model.det[t].ID_Asis2</a>
+                                        </td>
+                                        <td class="text-left">
+                                            <p class="mb-0">@Model.Model.det[t].Emp</p>
+                                        </td>
+                                        <td>
+                                            <p class="mb-0">
+                                                @if (Model.Model.det[t].Lat == "" || Model.Model.det[t].Lon == "")
+                                                {
+                                                    <i class="fa fa-exclamation-triangle mr-1 text-danger" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="Dirección sin Geolocalización"></i>
+
+                                                }
+                                                @Model.Model.det[t].Pob
+                                            </p>
+                                        </td>
+                                        <td>
+                                            <p class="mb-0">@Model.Model.det[t].Cat</p>
+                                        </td>
+                                        <td>
+                                            <p class="mb-0">@Model.Model.det[t].Usu</p>
+                                        </td>
+                                        <td>
+                                            <p class="mb-0">@Model.Model.det[t].Expo</p>
+                                        </td>
+                                        <td class="text-center">
+                                            <input type="checkbox" id="sel_@Model.Model.det[t].ID_Asis2">
+                                        </td>
+                                    </tr>
+}
+    }
+    else
+    {
+                <tr><td colspan="5"><p class='fw-5 text-danger mb-0'><i class='fa fa-exclamation-circle mr-1'></i> No hay resultados</p></td></tr>
+}
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        @Html.Raw(Model.Model.Paginador)
+                    </div>
+
+                </div>
+
+
+            </div>
+
+}
+
+            </div>
+        </div>
+    </div>
+</div>

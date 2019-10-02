@@ -1,0 +1,259 @@
+﻿@model ModuloContabilidadLibrary.ModuloContabilidadConciliacionDashBoardViewModel
+
+@{
+    Layout = "~/Views/Shared/Modulo-Contabilidad/_Modulo-Contabilidad-Conciliacion-DashBoard.cshtml";
+
+    ViewData["Title"] = "Conciliación Dashboard";
+    ViewData["TitleFacturasClientes"] = "Facturas Clientes";
+    ViewData["TitleFacturasProveedores"] = "Facturas Proveedores";
+    ViewData["TitleRemesas"] = "Remesas";
+    ViewData["TitleTarjetas"] = "Tarjetas";
+    ViewData["TitlePasarelaPago"] = "Pasarelas Banco";
+    ViewData["TitlePasarelaClientes"] = "Pasarelas Clientes";
+    ViewData["MovCue"] = "Movimientos Cuentas";
+}
+
+<div class="main-content">
+
+    <div class="container-fluid">
+
+
+        @if (Model.Model.Err.eserror)
+        {
+            ViewData["err"] = Model.Model.Err.mensaje;
+            <div class="col-12">
+                @Html.Partial("AccesoDenegado");
+            </div>
+        }
+        else
+        {
+
+            <div class="row">
+                <div class="col-4">
+                    @* Facturas de Clientes *@
+                    <div class="card mb-3">
+                        <div class="card-header card-header-options">
+                            <a class="fs-1-1 fw-4" href="/modulo-contabilidad/conciliacion/clientes">@ViewData["TitleFacturasClientes"]</a>
+                            <div class="card-actions">
+                                <ul>
+                                    <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card-block">
+
+                            <div class="row" style="min-height: 10rem;">
+                                <div class="col-3 text-center">
+                                    <img src="~/images/semaforo-apagado.svg" style="width: 110%" id="db-fra-cli_sema">
+                                </div>
+                                <div class="col-8">
+                                    <h5 class="fw-5 mb-0">Pendientes: <a href="#"><span class="text-info fw-8" id="db-fra-cli_num">@Model.Model.NumFraCli</span></a></h5>
+                                    <div class="mt-3" id="db-fra-cli_text">
+                                        <div class="text-center"><img src="~/images/loading-rolling.svg" style="width: 30%" /></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4">
+                    @* Remesas *@
+                    <div class="card mb-3">
+                        <div class="card-header card-header-options">
+                            <a class="fs-1-1 fw-4" href="/modulo-contabilidad/conciliacion/remesas">@ViewData["TitleRemesas"]</a>
+                            <div class="card-actions">
+                                <ul>
+                                    <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card-block">
+
+                            <div class="row" style="min-height: 10rem;">
+                                <div class="col-3 text-center">
+                                    <img src="~/images/semaforo-apagado.svg" style="width: 110%" id="db-rem_sema">
+                                </div>
+                                <div class="col-8">
+                                    <h5 class="fw-5 mb-0">Pendientes: <a href="#"><span class="text-info fw-8" id="db-rem_num">@Model.Model.NumRem</span></a></h5>
+                                    <div class="mt-3" id="db-rem_text">
+                                        <div class="text-center"><img src="~/images/loading-rolling.svg" style="width: 30%" /></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4">
+                    @* Tarjetas *@
+                    <div class="card mb-3">
+                        <div class="card-header card-header-options">
+                            <a class="fs-1-1 fw-4" href="/modulo-contabilidad/conciliacion/tarjetas">@ViewData["TitleTarjetas"]</a>
+
+                            <div class="card-actions">
+                                <ul>
+                                    <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card-block">
+
+                            <div class="row" style="min-height: 10rem;">
+                                <div class="col-3 text-center">
+                                    <img src="~/images/semaforo-apagado.svg" style="width: 110%" id="db-mov-tar_sema">
+                                </div>
+                                <div class="col-8">
+                                    <h5 class="fw-5 mb-0">Pendientes: <a href="#"><span class="text-info fw-8" id="db-mov-tar_num">@Model.Model.NumTar</span></a></h5>
+                                    <div class="mt-3" id="db-mov-tar_text">
+                                        <div class="text-center"><img src="~/images/loading-rolling.svg" style="width: 30%" /></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-4">
+                    @* Facturas de Proveedores *@
+                    <div class="card mb-3">
+                        <div class="card-header card-header-options">
+                            <a class="fs-1-1 fw-4" href="/modulo-contabilidad/conciliacion/proveedores">@ViewData["TitleFacturasProveedores"]</a>
+
+                            <div class="card-actions">
+                                <ul>
+                                    <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card-block">
+
+                            <div class="row" style="min-height: 10rem;">
+                                <div class="col-3 text-center">
+                                    <img src="~/images/semaforo-apagado.svg" style="width: 110%" id="db-fra-prov_sema">
+                                </div>
+                                <div class="col-8">
+                                    <h5 class="fw-5 mb-0">Pendientes: <a href="#"><span class="text-info fw-8" id="db-fra-prov_num">@Model.Model.NumFraProv</span></a></h5>
+                                    <div class="mt-3" id="db-fra-prov_text">
+                                        <div class="text-center"><img src="~/images/loading-rolling.svg" style="width: 30%" /></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4">
+                    @* Movimientos de cuentas *@
+                    <div class="card mb-3">
+                        <div class="card-header card-header-options">
+                            <span class="fs-1-1 fw-4">@ViewData["MovCue"]</span>
+
+                            <div class="card-actions">
+                                <ul>
+                                    <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card-block">
+
+                            <div class="row" style="min-height: 10rem;">
+                                <div class="col-3 text-center">
+                                    <img src="~/images/semaforo-apagado.svg" style="width: 110%" id="db-mov-cue_sema">
+                                </div>
+                                <div class="col-8">
+                                    <h5 class="fw-5 mb-0">Pendientes: <a href="#"><span class="text-info fw-8" id="db-mov-cue_num">@Model.Model.NumCueMov</span></a></h5>
+                                    <div class="mt-3" id="db-mov-cue_text">
+                                        <div class="text-center"><img src="~/images/loading-rolling.svg" style="width: 30%" /></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4">
+                    @* Pasarelas Banco *@
+                    <div class="card mb-3">
+                        <div class="card-header card-header-options">
+                            <a class="fs-1-1 fw-4" href="/modulo-contabilidad/conciliacion/pasarelas">@ViewData["TitlePasarelaPago"]</a>
+
+                            <div class="card-actions">
+                                <ul>
+                                    <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card-block">
+
+                            <div class="row" style="min-height: 10rem;">
+                                <div class="col-3 text-center">
+                                    <img src="~/images/semaforo-apagado.svg" style="width: 110%" id="db-pasa-ban_sema">
+                                </div>
+                                <div class="col-8">
+                                    <h5 class="fw-5 mb-0">Pendientes: <a href="#"><span class="text-info fw-8" id="db-pasa-ban_num">@Model.Model.NumPasaBan</span></a></h5>
+                                    <div class="mt-3" id="db-pasa-ban_text">
+                                        <div class="text-center"><img src="~/images/loading-rolling.svg" style="width: 30%" /></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-4">
+                    @* Pasarelas Clientes *@
+                    <div class="card mb-3">
+                        <div class="card-header card-header-options">
+                            <a class="fs-1-1 fw-4" href="/modulo-contabilidad/conciliacion/pasarelas-facturas">@ViewData["TitlePasarelaClientes"]</a>
+
+                            <div class="card-actions">
+                                <ul>
+                                    <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card-block">
+
+                            <div class="row" style="min-height: 10rem;">
+                                <div class="col-3 text-center">
+                                    <img src="~/images/semaforo-apagado.svg" style="width: 110%" id="db-pasa-cli_sema">
+                                </div>
+                                <div class="col-8">
+                                    <h5 class="fw-5 mb-0">Pendientes: <a href="#"><span class="text-info fw-8" id="db-pasa-cli_num">@Model.Model.NumPasaCli</span></a></h5>
+                                    <div class="text-left" id="db-pasa-cli_text">
+                                        <div class="text-center"><img src="~/images/loading-rolling.svg" style="width: 30%" /></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4"></div>
+                <div class="col-4"></div>
+            </div>
+
+        }
+
+    </div>
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        DashBoardConciliacionFraCli("db-fra-cli");
+        DashBoardConciliacionFraProv("db-fra-prov");
+        DashBoardConciliacionRem("db-rem");
+        DashBoardConciliacionMovCue("db-mov-cue");
+        DashBoardConciliacionMovTar("db-mov-tar");
+        DashBoardConciliacionPasaBan("db-pasa-ban");
+        DashBoardConciliacionPasaCli("db-pasa-cli");
+    });
+</script>

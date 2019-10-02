@@ -1,0 +1,1076 @@
+@charset "UTF-8";
+/* Estilos Básicos */
+/* Mixins */
+/* Skin v4.6 - White / Dark / Blue */
+/*#f9f9f9*/
+/* Font-size */
+.fs-6-5 {
+  font-size: 6.5rem !important; }
+
+.fs-6 {
+  font-size: 6rem !important; }
+
+.fs-5-5 {
+  font-size: 5.5rem !important; }
+
+.fs-5 {
+  font-size: 5rem !important; }
+
+.fs-4-5 {
+  font-size: 4.5rem !important; }
+
+.fs-4 {
+  font-size: 4rem !important; }
+
+.fs-3-5 {
+  font-size: 3.5rem !important; }
+
+.fs-3 {
+  font-size: 3rem !important; }
+
+.fs-2-5 {
+  font-size: 2.5rem !important; }
+
+.fs-2 {
+  font-size: 2rem !important; }
+
+.fs-1-9 {
+  font-size: 1.9rem !important; }
+
+.fs-1-8 {
+  font-size: 1.8rem !important; }
+
+.fs-1-7 {
+  font-size: 1.7rem !important; }
+
+.fs-1-6 {
+  font-size: 1.6rem !important; }
+
+.fs-1-5 {
+  font-size: 1.5rem !important; }
+
+.fs-1-4 {
+  font-size: 1.4rem !important; }
+
+.fs-1-3 {
+  font-size: 1.3rem !important; }
+
+.fs-1-25 {
+  font-size: 1.25rem !important; }
+
+.fs-1-2 {
+  font-size: 1.2rem !important; }
+
+.fs-1-15 {
+  font-size: 1.15rem !important; }
+
+.fs-1-1 {
+  font-size: 1.1rem !important; }
+
+.fs-1-05 {
+  font-size: 1.05rem !important; }
+
+.fs-1 {
+  font-size: 1rem !important; }
+
+.fs-0-95 {
+  font-size: 0.95rem !important; }
+
+.fs-0-9 {
+  font-size: 0.9rem !important; }
+
+.fs-0-85 {
+  font-size: 0.85rem !important; }
+
+.fs-0-8 {
+  font-size: 0.8rem !important; }
+
+.fs-0-75 {
+  font-size: 0.75rem !important; }
+
+.fs-0-7 {
+  font-size: 0.7rem !important; }
+
+body {
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Roboto', sans-serif;
+  font-size: 0.9rem;
+  min-height: 100vh; }
+
+html {
+  height: 100%;
+  margin: 0; }
+
+.container-fluid {
+  width: 100%; }
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0; }
+  ul li {
+    margin: 0;
+    padding: 0; }
+
+h1 {
+  margin: 0;
+  font-size: 15px; }
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 400;
+  color: #0275d8;
+  font-family: 'Roboto', sans-serif; }
+
+h4 {
+  font-size: 1.25rem; }
+
+h5 {
+  font-size: 0.9rem; }
+
+a {
+  color: #0275d8;
+  font-weight: 400;
+  transition: all ease-in-out .3s; }
+  a:hover {
+    color: #f50057;
+    text-decoration: none; }
+  a:focus {
+    outline: 0;
+    text-decoration: none; }
+
+p {
+  font-size: 1.1em; }
+  p a {
+    font-weight: 500; }
+    p a:hover {
+      color: #025aa5; }
+
+header, footer {
+  color: #fff; }
+
+canvas {
+  vertical-align: inherit; }
+
+.text-blue {
+  color: #2196f3; }
+
+.container-bg {
+  background: #fff; }
+
+.main-color {
+  color: #0275d8; }
+
+small {
+  font-size: 90%; }
+
+hr {
+  border-top: 2px solid #eceff1; }
+
+/* Font Weight*/
+.fw-1 {
+  font-weight: 100; }
+
+.fw-2 {
+  font-weight: 200; }
+
+.fw-5,
+strong {
+  font-weight: 500; }
+
+.fw-8 {
+  font-weight: 800; }
+
+.fw-9 {
+  font-weight: 900; }
+
+/* Custom Width */
+.w-5 {
+  width: 5% !important; }
+
+.w-10 {
+  width: 10% !important; }
+
+.w-15 {
+  width: 10% !important; }
+
+.w-20 {
+  width: 20% !important; }
+
+/* Max-Width */
+.mw-100 {
+  max-width: 100%; }
+
+/* Max-Height */
+.mh-100 {
+  max-height: 100%; }
+
+/* Borders */
+.bc-main {
+  border-color: #0275d8; }
+
+.bc-1 {
+  border: 1px solid; }
+
+.bc-2 {
+  border: 2px solid; }
+
+.bc-3 {
+  border: 3px solid; }
+
+.bc-4 {
+  border: 4px solid; }
+
+.bc-5 {
+  border: 5px solid; }
+
+/* Custom padding */
+.p-help {
+  padding: 0.10rem 0.4rem !important; }
+
+/* Loading */
+.loader {
+  margin: 0 0 2em;
+  height: 100px;
+  width: 20%;
+  text-align: center;
+  padding: 1em;
+  margin: 0 auto 1em;
+  display: inline-block;
+  vertical-align: top; }
+
+#loading {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(69, 90, 100, 0.5);
+  z-index: 9999; }
+
+/* Header sections */
+.header-section {
+  background: #f5f5f5;
+  height: 25rem; }
+
+/* Logo */
+#previfoc-logo-header {
+  display: block;
+  width: 200px;
+  height: 25px;
+  background: url(https://public.gaolos.com/cdn/public/grupread/2017/10/04/logo-previfoc-2018.svg) no-repeat; }
+
+#previco-logo-header {
+  display: block;
+  width: 180px;
+  height: 25px;
+  background: url(https://public.gaolos.com/cdn/public/grupread/2017/10/04/logo-previco-2018.svg) no-repeat; }
+
+/* Navbar */
+.nav-link {
+  font-weight: 500; }
+
+.main-menu {
+  /* Logo */ }
+  .main-menu .dropdown-item {
+    font-size: 0.9rem;
+    font-weight: 400;
+    color: #546e7a; }
+    .main-menu .dropdown-item:hover {
+      background: #0275d8;
+      color: #fff; }
+  .main-menu .st0, .main-menu .st1 {
+    fill: #0275d8 !important; }
+
+/* Google Maps */
+#map-container {
+  width: 100%;
+  height: 25rem;
+  border-bottom: 10px solid #0275d8; }
+
+/* Streetview */
+.streetview {
+  width: 100%;
+  height: 20rem;
+  border: 3px solid #0275d8 !important; }
+
+/* Colors */
+.text-info {
+  color: #0275d8 !important; }
+
+/* Botones */
+.btn-primary {
+  background: #fff;
+  border: 2px solid #0275d8;
+  color: #0275d8;
+  font-weight: 500; }
+  .btn-primary:hover {
+    background: #f50057;
+    border: 2px solid #f50057; }
+  .btn-primary:focus {
+    color: #fff;
+    border: 2px solid #0275d8; }
+
+.btn-red {
+  background: #0275d8;
+  color: #fff; }
+  .btn-red:hover {
+    background: #546e7a;
+    border-color: #546e7a; }
+
+/* Forms */
+.form-control:focus {
+  border-color: #0275d8; }
+
+.form-group label {
+  font-weight: 500; }
+
+.title-badge {
+  background: #0275d8;
+  padding: 0.25rem 0.5rem;
+  color: #fff;
+  font-weight: 900;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+  font-size: 1.1em;
+  display: inline-flex; }
+
+.form-control {
+  border: 2px solid #cfd8dc; }
+
+.custom-control-input:checked ~ .custom-control-indicator {
+  background-color: #0275d8; }
+
+.custom-control-input:focus ~ .custom-control-indicator {
+  box-shadow: 0 0 0 1px #fff, 0 0 0 3px #0275d8; }
+
+button.btn-primary {
+  font-weight: 600; }
+  button.btn-primary:hover {
+    cursor: pointer; }
+
+.box-border-grey {
+  border: 4px solid #cfd8dc; }
+
+/* Info */
+.section-info {
+  border-left: 5px solid #b0bec5;
+  padding-left: 1rem; }
+  .section-info p {
+    font-size: 1.2em; }
+
+.inner-title {
+  background: #78909c;
+  color: #fff;
+  display: inline-flex;
+  padding: 0.4rem;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  border-radius: 4px;
+  font-weight: 500; }
+
+/* Listas */
+ul.list-section {
+  margin-left: 1.3rem; }
+  ul.list-section li {
+    margin-bottom: 0.5rem;
+    font-size: 1.1em; }
+  ul.list-section li:before {
+    content: "\f00c";
+    font-family: 'FontAwesome';
+    display: inline-block;
+    margin-left: -1.3rem;
+    width: 1.3rem;
+    color: #0275d8; }
+
+ul.list-comp li {
+  line-height: 1rem;
+  margin-bottom: 0.8rem; }
+
+/* Enlaces especiales */
+a.special-link:before {
+  content: "\f054";
+  font-family: 'FontAwesome';
+  display: inline-block;
+  margin-left: 0;
+  width: 1rem;
+  color: #0275d8; }
+
+/* Iconos SVG */
+.ico-previfoc-0 {
+  fill: #0275d8; }
+
+.ico-previfoc-1 {
+  fill: #0275d8; }
+
+/* Col Img */
+.col-img img {
+  max-width: 80%;
+  border: 3px solid #cfd8dc; }
+
+/* Menu */
+.dropdown-toggle::after {
+  font-family: 'FontAwesome' !important;
+  content: '\f107' !important;
+  border: none !important;
+  position: absolute;
+  margin: 0 0 0 0.3rem;
+  top: 0; }
+
+/* Carousel */
+.carousel .active {
+  background: none !important; }
+
+.carousel .btn-primary {
+  background: none;
+  border-color: #fff;
+  color: #fff; }
+  .carousel .btn-primary:hover {
+    background: #0275d8;
+    color: #0275d8;
+    border-color: #0275d8;
+    color: #fff; }
+
+.carousel h3 {
+  font-weight: 800 !important; }
+
+.carousel h4 {
+  text-transform: uppercase;
+  font-size: 1.1rem !important; }
+
+/* Fondos */
+.bg-grey {
+  background: #f5f5f5; }
+
+/* Footer */
+.footer {
+  border-top: 5px solid #0275d8;
+  background: #f5f5f5; }
+  .footer h5::after {
+    content: '';
+    width: 50px;
+    height: 3px;
+    background-color: #0275d8;
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
+    display: block; }
+
+.footer-bottom {
+  background: #263238; }
+  .footer-bottom a {
+    color: #fff; }
+    .footer-bottom a:hover {
+      color: #c51162; }
+
+.logos-certificados {
+  background: #fff; }
+
+.logos-items {
+  font-size: 0.9em; }
+
+/* Stripes */
+#header {
+  position: relative;
+  height: 40rem; }
+
+#stripes {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  transform: skewY(-12deg);
+  transform-origin: 0;
+  position: absolute;
+  background: linear-gradient(150deg, #2979ff 15%, #42a5f5 70%, #f06292 94%); }
+  #stripes span {
+    position: absolute;
+    height: 190px; }
+
+#stripes :nth-child(1) {
+  width: 33.33333%;
+  left: -16.66666%;
+  background: #1069ff; }
+
+#stripes :nth-child(2) {
+  width: 33.33333%;
+  top: 0;
+  left: 16.66666%;
+  right: auto;
+  background: #4389ff; }
+
+#stripes :nth-child(3) {
+  width: 33.33333%;
+  left: 49.99999%;
+  bottom: auto;
+  background: #1e88e5; }
+
+#stripes :nth-child(4) {
+  width: 33.33333%;
+  top: 380px;
+  right: -16.66666%;
+  background: #f06292; }
+
+#stripes :nth-child(5) {
+  width: 33.33333%;
+  bottom: 0;
+  background: #5293ff; }
+
+/* Columnas - contenedores de cards */
+.dos-col .card {
+  flex: 0 0 50%;
+  max-width: 50%; }
+
+.tres-col .card {
+  flex: 0 0 33.333333%;
+  max-width: 33.333333%; }
+
+.cuatro-col .card {
+  flex: 0 0 25%;
+  max-width: 25%; }
+
+/* Section Title */
+.section-title h2, .section-title h4 {
+  margin: 0;
+  padding: 0; }
+
+.section-title h2::after,
+.section-title h4::after {
+  content: '';
+  width: 110px;
+  height: 5px;
+  background-color: #f50057;
+  margin: auto;
+  display: block;
+  margin-top: 1rem; }
+
+.section-title h4::after {
+  width: 80px;
+  height: 3px;
+  background-color: #eeeeee; }
+
+.section-title h2 {
+  font-weight: 800; }
+
+.section-title-b h2 {
+  font-size: 1.8em; }
+
+.section-title-b h2::after {
+  width: 80px; }
+
+/* Top Header */
+.top-menu {
+  background: #0275d8;
+  color: #fff; }
+  .top-menu a {
+    color: #fff; }
+  .top-menu .dropdown-menu h6 a {
+    color: #ff1744; }
+  .top-menu .dropdown-menu .dropdown-item {
+    color: #546e7a !important;
+    font-size: 0.9rem; }
+    .top-menu .dropdown-menu .dropdown-item:hover {
+      background: #ff1744;
+      color: #fff !important; }
+  .top-menu p {
+    font-size: 1em; }
+
+.top-header a {
+  color: #fff; }
+  .top-header a:hover {
+    color: #0275d8; }
+
+/* Sticker header */
+.sticky-wrapper .btn-primary {
+  background: #f50057;
+  border: 2px solid #f50057;
+  color: #fff; }
+  .sticky-wrapper .btn-primary:hover {
+    background: #fff;
+    border: 2px solid #0275d8;
+    color: #0275d8; }
+
+.is-sticky {
+  transition: all ease-in-out .3s; }
+  .is-sticky .main-menu {
+    z-index: 1999 !important;
+    background: #37474f;
+    padding: 0.3rem 0 !important;
+    /* Logo */ }
+    .is-sticky .main-menu a {
+      color: #fff; }
+    .is-sticky .main-menu .btn-primary {
+      border-color: #f50057;
+      background: #f50057;
+      color: #fff; }
+    .is-sticky .main-menu .st0, .is-sticky .main-menu .st1 {
+      fill: #fff !important; }
+    .is-sticky .main-menu svg {
+      width: 140px !important; }
+    .is-sticky .main-menu .dropdown-item {
+      color: #546e7a !important; }
+      .is-sticky .main-menu .dropdown-item:hover {
+        color: #fff !important; }
+    .is-sticky .main-menu .dropdown-header a {
+      color: #0275d8 !important; }
+    .is-sticky .main-menu h4 a, .is-sticky .main-menu h6 a {
+      color: #0275d8 !important; }
+  .is-sticky #previco-logo-header {
+    background: url(https://public.gaolos.com/cdn/public/grupread/2017/10/04/logo-previco-2018-white.svg) no-repeat !important; }
+  .is-sticky #previfoc-logo-header {
+    background: url(https://public.gaolos.com/cdn/public/grupread/2017/10/04/logo-previfoc-2018-white.svg) no-repeat !important; }
+
+/* Previfoc Panel Contáctanos */
+#previfoc-panel {
+  position: fixed;
+  right: 0;
+  margin-top: 20%;
+  width: 3rem;
+  background: #0275d8;
+  height: 6rem;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  padding: 0.5rem;
+  text-align: center;
+  color: #fff;
+  transition: all ease-in-out .3s;
+  cursor: pointer; }
+  #previfoc-panel i {
+    font-size: 2em; }
+  #previfoc-panel:hover {
+    background: #37474f; }
+
+#previfoc-panel-content {
+  display: block;
+  position: fixed;
+  width: 70rem;
+  right: 0;
+  left: 0;
+  margin: 10% auto;
+  background: #fff;
+  border: 2px solid #f5f5f5;
+  transition: left .7s, top 0s, padding-top 0s;
+  z-index: 99999; }
+  #previfoc-panel-content p {
+    font-size: 1em; }
+
+#previfoc-panel-close {
+  border: 2px solid #0275d8;
+  background: #fff;
+  padding: 0.2rem 0.5rem;
+  border-radius: 3px;
+  text-transform: uppercase;
+  font-size: 0.7rem;
+  font-weight: 500;
+  position: absolute;
+  right: 0;
+  top: -35px;
+  z-index: 99999; }
+  #previfoc-panel-close i {
+    color: #0275d8; }
+  #previfoc-panel-close:hover {
+    background: #0275d8;
+    color: #fff; }
+    #previfoc-panel-close:hover i {
+      color: #fff; }
+
+.previfoc-panel-content-active {
+  right: 0 !important; }
+
+.overlay {
+  background: rgba(0, 0, 0, 0.6);
+  height: 100%;
+  width: 100%;
+  display: none;
+  position: fixed;
+  z-index: 2999; }
+
+/* Cards */
+.card {
+  border: 1px solid #cfd8dc;
+  box-shadow: 0 1px 2px #cfd8dc; }
+  .card p, .card li {
+    font-size: 1em !important; }
+  .card .card-block {
+    padding: 1rem; }
+  .card .card-img-top {
+    border-bottom: 3px solid #0275d8;
+    max-width: 100%; }
+  .card:hover {
+    border: 1px solid #b0bec5; }
+  .card .card-img {
+    max-height: 180px;
+    overflow: hidden;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    border-bottom: 2px solid #0275d8; }
+
+.card-no-shadow {
+  box-shadow: none; }
+
+.container-grey {
+  background: #eceff1;
+  border-radius: 4px;
+  border: 1px solid rgba(207, 216, 220, 0.3); }
+
+/* Carousel home */
+.carousel-home {
+  max-height: 500px;
+  overflow: hidden; }
+  .carousel-home img {
+    position: relative;
+    bottom: 200px; }
+
+.carousel-news {
+  border-bottom: none; }
+
+/* Tabs Home */
+.active {
+  background: #0275d8 !important; }
+
+.ico-previfoc {
+  fill: #0275d8; }
+
+/* Noticias - Actualidad */
+.container-actualidad {
+  position: relative;
+  padding: 0;
+  margin: 0; }
+  .container-actualidad .container-stripes {
+    position: absolute !important;
+    overflow: hidden;
+    width: 100%; }
+  .container-actualidad .container-actualidad-title {
+    background: none; }
+  .container-actualidad .section-title h2 {
+    color: #fff; }
+  .container-actualidad .section-title h2::after {
+    background: #fff; }
+  .container-actualidad .card {
+    border: none;
+    transition: all ease-in-out .3s; }
+    .container-actualidad .card img {
+      border-top-right-radius: 4px;
+      border-top-left-radius: 4px; }
+
+/* Servicios */
+.container-servicios .card {
+  border: 1px solid #fff;
+  transition: all ease-in-out .3s; }
+  .container-servicios .card:hover {
+    border: 1px solid #0275d8; }
+
+/* Table */
+table th p, table td p {
+  font-size: 1em; }
+
+/* Top Stripes */
+.blog p {
+  text-align: justify; }
+
+.blog ul {
+  margin-left: 1.3rem;
+  margin-bottom: 1rem; }
+  .blog ul li:before {
+    content: "\f00c";
+    font-family: 'FontAwesome';
+    display: inline-block;
+    margin-left: -1.3rem;
+    width: 1.3rem;
+    color: #0275d8; }
+
+.blog .tags a {
+  color: #fff; }
+
+.blog .badge-default {
+  transition: all ease-in-out .3s;
+  background: #90a4ae; }
+  .blog .badge-default:hover {
+    background: #546e7a; }
+
+.blog h3 {
+  font-size: 1.2em;
+  margin-top: 1.5rem;
+  margin-bottom: 1.1rem; }
+
+.blog .img-entrada img {
+  max-width: 100%;
+  border-radius: 0;
+  margin-bottom: 2rem;
+  border: 3px solid #0275d8; }
+
+.blog .post p, .blog .post li {
+  font-size: 1rem; }
+
+.blog .post ul, .blog .post ol {
+  margin-top: 1rem;
+  margin-bottom: 1rem; }
+  .blog .post ul li, .blog .post ol li {
+    margin-bottom: 1rem; }
+
+.blog .post ol {
+  counter-reset: item;
+  list-style: none; }
+  .blog .post ol li:before {
+    counter-increment: item;
+    content: counter(item) ". ";
+    color: #0275d8;
+    font-weight: 500;
+    display: inline-block;
+    margin-right: 10px; }
+
+.blog .post h3 {
+  font-weight: 500; }
+
+.blog .post .card img {
+  max-width: 100%; }
+
+.blog .post .card .card-block h4 {
+  font-size: 1.4rem; }
+
+.blog .post .card .card-block p {
+  font-size: 0.95rem; }
+
+.blog-list {
+  margin-top: 3rem; }
+  .blog-list .blog-date {
+    color: #0275d8; }
+  .blog-list .blog-img {
+    border-radius: 0;
+    max-width: 80%;
+    border: 3px solid #cfd8dc;
+    transition: all ease-in-out .3s; }
+    .blog-list .blog-img:hover {
+      border: 3px solid #0275d8; }
+  .blog-list .badge-default {
+    background: #90a4ae;
+    margin-right: 0.2rem;
+    transition: all ease-in-out .3s; }
+    .blog-list .badge-default a {
+      color: #fff; }
+    .blog-list .badge-default:hover {
+      background: #546e7a; }
+
+/* comentarios */
+.comments p {
+  font-size: 0.9rem !important; }
+
+.comments ul {
+  margin: 0 !important; }
+  .comments ul li {
+    margin-bottom: 2rem !important; }
+  .comments ul li:before {
+    content: '';
+    display: none; }
+  .comments ul .reply {
+    margin-left: 2rem !important;
+    margin-top: 2rem !important; }
+
+.comments .reply {
+  margin-left: 3rem; }
+
+/* paginador */
+.page-link {
+  color: #0275d8;
+  font-weight: 500; }
+
+.page-item.active .page-link {
+  background: #0275d8;
+  border-color: #0275d8; }
+
+.page-link:focus, .page-link:hover {
+  color: #0275d8; }
+
+.paginadortotal .text-primary {
+  color: #0275d8 !important; }
+
+.parallax {
+  background-size: cover !important;
+  background-attachment: fixed !important;
+  background-position: center;
+  height: 30rem;
+  width: 100%;
+  border-bottom: 10px solid #0275d8; }
+  .parallax h3 {
+    font-weight: 800; }
+  .parallax h5 {
+    font-weight: 400;
+    color: #fff; }
+    .parallax h5 a {
+      color: #fff; }
+
+.parallax-home {
+  background-size: cover !important;
+  background-position: center;
+  width: 100%; }
+
+.parallax-deteccion {
+  background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url("https://public.gaolos.com/cdn/public/previfoc/img/parallax-deteccion-b.jpg") no-repeat;
+  background-position: 0 -370px !important; }
+
+.parallax-residencial {
+  background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url("https://public.gaolos.com/cdn/public/previfoc/img/previfoc-sliders-01-residencial.jpg") no-repeat;
+  background-position: 0 0 !important; }
+
+.parallax-administradores {
+  background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url("https://public.gaolos.com/cdn/public/previfoc/img/previfoc-sliders-02-administradores.jpg") no-repeat;
+  background-position: 0 0 !important; }
+
+.parallax-empresas {
+  background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url("https://public.gaolos.com/cdn/public/previfoc/img/previfoc-sliders-03-empresas.jpg") no-repeat;
+  background-position: 0 0 !important; }
+
+.parallax-organismos {
+  background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url("https://public.gaolos.com/cdn/public/previfoc/img/previfoc-sliders-04-organismos.jpg") no-repeat;
+  background-position: 0 -340px !important; }
+
+.parallax-corporativa {
+  background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url("https://public.gaolos.com/cdn/public/grupread/2017/09/26/previfoc-slider-quienes-trabaja.jpg") no-repeat;
+  background-position: 0 -380px !important; }
+
+.parallax-alumbrado {
+  background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url("https://public.gaolos.com/cdn/public/previfoc/img/previfoc-slider-alumbrado.jpg") no-repeat;
+  background-position: 0 -340px !important; }
+
+.parallax-ignifugaciones {
+  background: url("https://public.gaolos.com/cdn/public/previfoc/img/previfoc-slider-ignifugaciones.jpg") no-repeat;
+  background-position: 0 -340px !important; }
+
+.parallax-extincion {
+  background: url("https://public.gaolos.com/cdn/public/previfoc/img/previfoc-slider-extincion.jpg") no-repeat;
+  background-position: 0 -340px !important; }
+
+.parallax-evacuacion {
+  background: url("https://public.gaolos.com/cdn/public/previfoc/img/previfoc-slider-evacuacion.jpg") no-repeat;
+  background-position: 0 -340px !important; }
+
+.parallax-extintores {
+  background: url("https://public.gaolos.com/cdn/public/previfoc/img/5801b-previfoc-extintores.jpg") no-repeat;
+  background-position: 0 -340px !important; }
+
+.parallax-previfoc-residencial {
+  background: url("https://public.gaolos.com/cdn/public/previco/img/previco-sliders-01-residencial.jpg") no-repeat;
+  background-position: 0 -80px !important; }
+
+.parallax-previfoc-administradores {
+  background: url("https://public.gaolos.com/cdn/public/previco/img/previco-sliders-02-administradores.jpg") no-repeat;
+  background-position: 0 -80px !important; }
+
+.parallax-previfoc-empresas {
+  background: url("https://public.gaolos.com/cdn/public/previco/img/previco-sliders-03-empresas.jpg") no-repeat;
+  background-position: 0 -80px !important; }
+
+.parallax-previfoc-organismos {
+  background: url("https://public.gaolos.com/cdn/public/previco/img/previco-sliders-04-organismos.jpg") no-repeat;
+  background-position: 0 -80px !important; }
+
+.parallax-servicios {
+  background: url("https://public.gaolos.com/cdn/public/grupread/2017/09/20/parallax-deteccion-b-thumbnails.jpg-large.jpg") no-repeat;
+  background-position: 0 0 !important; }
+
+.parallax-normativa {
+  background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url("https://public.gaolos.com/cdn/public/grupread/2017/09/22/previfoc-normativas.jpg") no-repeat;
+  background-position: 0 -100px !important; }
+
+.parallax-contacto {
+  background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url("https://public.gaolos.com/cdn/public/grupread/2017/09/22/previfoc-slider-contacto.jpg") no-repeat;
+  background-position: 0 -100px !important; }
+
+.parallax-contratos-mantenimiento {
+  background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url("https://public.gaolos.com/cdn/public/grupread/2017/09/22/proteccion-premium-residencial-thumbnails.jpg-large.jpg") no-repeat;
+  background-position: 0 -100px !important; }
+
+.parallax-proteccion-estandar-residencial {
+  background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url("https://public.gaolos.com/cdn/public/grupread/2017/09/28/extintores-blog-49-thumbnails.jpg-large.jpg") no-repeat;
+  background-position: 0 -100px !important; }
+
+.parallax-proteccion-plus-residencial {
+  background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url("https://public.gaolos.com/cdn/public/grupread/2017/09/28/extintores-blog-46-thumbnails.jpg-large.jpg") no-repeat;
+  background-position: 0 -360px !important; }
+
+.parallax-proteccion-estandar-empresa {
+  background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url("https://public.gaolos.com/cdn/public/grupread/2017/09/28/extintores-blog-43-thumbnails.jpg-large.jpg") no-repeat;
+  background-position: 0 -100px !important; }
+
+.parallax-proteccion-plus-empresa {
+  background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url("https://public.gaolos.com/cdn/public/grupread/2017/09/27/previfoc-blog-041-thumbnails.jpg-large.jpg") no-repeat;
+  background-position: 0 -360px !important; }
+
+.parallax-instalacion-mantenimiento {
+  background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url("https://public.gaolos.com/cdn/public/grupread/2017/09/26/seccion-normativas.jpg") no-repeat;
+  background-position: 0 -150px !important; }
+
+.parallax-contratos-mantenimiento-transparente {
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.2)), url("https://public.gaolos.com/cdn/public/grupread/2017/09/29/contratomantenimiento.jpg") no-repeat;
+  background-position: 0 -150px !important; }
+
+.parallax-grup-read-online {
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.3)), url("https://public.gaolos.com/cdn/public/grupread/2017/09/29/grup-read-online-b-thumbnails.jpg-large.jpg") no-repeat;
+  background-position: 0 0 !important; }
+
+.parallax-blog {
+  background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url("https://public.gaolos.com/cdn/public/grupread/2017/10/09/pantallas-led-eventos-thumbnails.jpg-large.jpg") no-repeat;
+  background-position: 0 -340px !important;
+  height: 25rem; }
+
+.parallax-baja-tension {
+  background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url("https://public.gaolos.com/cdn/public/previco/img/previco-slider-baja-tension.jpg") no-repeat;
+  background-position: 0 0 !important; }
+
+.parallax-bombas-achique {
+  background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url("https://public.gaolos.com/cdn/public/previco/img/previco-slider-bombas-achique.jpg") no-repeat;
+  background-position: 0 -220px !important; }
+
+.parallax-telecomunicaciones {
+  background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url("https://public.gaolos.com/cdn/public/previco/img/previco-slider-telecomunicaciones.jpg") no-repeat;
+  background-position: 0 -250px !important; }
+
+.parallax-ingenieria {
+  background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url("https://public.gaolos.com/cdn/public/previco/img/previco-slider-ingenieria.jpg") no-repeat;
+  background-position: 0 -500px !important; }
+
+.parallax-eca {
+  background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url("https://public.gaolos.com/cdn/public/previco/img/previco-slider-gestion-documental.jpg") no-repeat;
+  background-position: 0 -500px !important; }
+
+.parallax-termografia {
+  background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url("https://public.gaolos.com/cdn/public/previco/img/previco-slider-termografia.jpg") no-repeat;
+  background-position: 0 -40px !important; }
+
+.parallax-puertas-parking {
+  background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url("https://public.gaolos.com/cdn/public/grupread/2017/10/06/puerta-parking.jpg") no-repeat;
+  background-position: 0 -100px !important; }
+
+.parallax-previco-residencial {
+  background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url("https://public.gaolos.com/cdn/public/previco/img/previco-sliders-01-residencial.jpg") no-repeat;
+  background-position: 0 -200px !important; }
+
+.parallax-previco-administradores {
+  background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url("https://public.gaolos.com/cdn/public/previco/img/previco-sliders-02-administradores.jpg") no-repeat;
+  background-position: 0 -200px !important; }
+
+.parallax-previco-empresas {
+  background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url("https://public.gaolos.com/cdn/public/previco/img/previco-sliders-03-empresas.jpg") no-repeat;
+  background-position: 0 -200px !important; }
+
+.parallax-previco-organismos {
+  background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url("https://public.gaolos.com/cdn/public/previco/img/previco-sliders-04-organismos.jpg") no-repeat;
+  background-position: 0 -200px !important; }
+
+.parallax-blog-previco {
+  background: url("https://public.gaolos.com/cdn/public/grupread/2017/10/09/pantallas-led-eventos-thumbnails.jpg-large.jpg") no-repeat;
+  background-position: 0 -340px !important;
+  height: 25rem; }
+
+.parallax-contratos-mantenimiento-transparente-previco {
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.2)), url("https://public.gaolos.com/cdn/public/grupread/2017/10/26/previco-contratos-transparentes-thumbnails.jpg-large.jpg") no-repeat;
+  background-position: 0 -150px !important; }
+
+.parallax-grup-read-online-previco {
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.3)), url("https://public.gaolos.com/cdn/public/grupread/2017/10/26/previco-plataforma-web-thumbnails.jpg-large.jpg") no-repeat;
+  background-position: 0 -210px !important; }
+
+.parallax-cctv-previco {
+  background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url("https://public.gaolos.com/cdn/public/grupread/2017/10/26/previco-cctv-thumbnails.jpg-large.jpg") no-repeat;
+  background-position: 0 0 !important; }
+
+.parallax-empresas-previco {
+  background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url("https://public.gaolos.com/cdn/public/grupread/2017/09/20/previco-slider-bombas-achique-thumbnails.jpg-large.jpg") no-repeat;
+  background-position: 0 -200px !important; }

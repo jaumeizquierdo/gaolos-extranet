@@ -1,0 +1,176 @@
+﻿@model ModuloClientesLibrary.ModuloClientesClienteClientesSituacionAsistenciasViewModel
+@{
+    Layout = "~/Views/Shared/Modulo-Clientes/_Modulo-Clientes.cshtml";
+    ViewData["Title"] = "Situación";
+    ViewData["Message"] = "Modulo de Clientes - Gaolos App v2017";
+}
+
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+@if(Model.Model.Err.eserror)
+{
+    ViewData["err"] = Model.Model.Err.mensaje;
+    @Html.Partial("AccesoDenegado");
+}
+else
+{
+
+                @* cabecera cliente *@
+
+                @Html.Partial("Cliente-Cabecera")
+
+                @* tabs *@
+
+                @Html.Partial("Cliente-Tabs")
+
+                @* Listado de direcciones *@
+
+                <div class="card">
+                    <div class="card-block">
+
+                        @* tabs *@
+
+                        @Html.Partial("Cliente-Situacion-Tabs")
+
+                        <div class="row">
+
+                            <div class="col-8">
+                                @* Listado *@
+                                <div class="card card-table mb-3">
+                                    <div class="card-header card-header-options">
+                                        <span>Asistencias</span>
+                                    </div>
+                                    <div class="card-block">
+
+                                        @{
+                                            Models.strAsistenciasAsistenciasEnCursoListadoDetalles[] det = Model.Model.lis.det;
+                                        }
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-center w-10">Nº</th>
+                                                    <th class="text-center w-5"><i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="Indica si es asistencia o mantenimiento"></i></th>
+                                                    <th class="text-center w-7"><i class="fa fa-file-text-o mr-2" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="Ver detalles de la asistencia"></i> <i class="fa fa-print" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="Imprimir"></i></th>
+                                                    <th class="text-left">Categoría</th>
+                                                    <th class="text-center w-10">Planificada</th>
+                                                    <th class="text-center w-10">Último parte</th>
+                                                    <th class="text-center w-10">Finalizada</th>
+                                                    <th class="text-center w-10">Cerrada</th>
+                                                    <th class="text-center w-5">Partes</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="content">
+
+
+                                                @if (det != null)
+                                                {
+                                                    @for (Int32 t = 0; t < det.Length; t++)
+                                                    {
+                                                <tr>
+                                                    <td class="text-center">
+                                                        <b>@det[t].ID_Asis2</b><br /><small>@det[t].Fe_Al</small>
+                                                    </td>
+                                                    <td class="text-center w-5">
+                                                        @{
+                                                            string Tipo = "A";
+                                                            string classTipo = "round-item mdc-bg-red-A400";
+                                                            if (det[t].Man)
+                                                            {
+                                                                Tipo = "M";
+                                                                if (det[t].ManAnual)
+                                                                {
+                                                                    Tipo = "M*";
+                                                                }
+                                                                classTipo = "round-item mdc-bg-teal-A700";
+                                                            }
+                                                        }
+                                                        @if (det[t].ID_Man2 != "")
+                                                        {
+                                                            <div class="@classTipo"><a href="/modulo-mantenimientos/mantenimientos/mantenimiento?ID_Man2=@det[t].ID_Man2" target="_blank">@Tipo</a></div>
+                                                        }
+                                                        else
+                                                        {
+                                                            <div class="@classTipo">@Tipo</div>
+                                                        }
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <a href="/modulo-asistencias/historial/asistencia?ID_Asis2=@det[t].ID_Asis2" target="_blank" data-toggle="tooltip" data-placement="top" title="" data-original-title="Ver detalles de la asistencia" class="mr-2"><i class="fa fa-file-text-o" aria-hidden="true"></i></a>
+                                                        <a href="/modulo-asistencias/asistencias-por-asignar/imprimir?ID_Asis2=@det[t].ID_Asis2" target="_blank"><i class="fa fa-print" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="Imprimir"></i></a>
+                                                    </td>
+                                                    <td>
+                                                        <p class="mb-0"><span class="fw-5">@det[t].Cat</span><br /><span class="fs-0-75">@det[t].Expo</span></p>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <p class="mb-0"><small>@det[t].Fe_Plan</small></p>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <p class="mb-0"><small>@det[t].Fe_Ul_Parte</small></p>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <p class="mb-0"><small>@det[t].Fe_Fin</small></p>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <p class="mb-0"><small>@det[t].Fe_Cerr</small></p>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <p class="mb-0">@det[t].NumPartes</p>
+                                                    </td>
+                                                </tr>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <tr><td colspan="9"><p class='fw-5 text-danger mb-0'><i class='fa fa-exclamation-circle mr-1'></i> No hay resultados</p></td></tr>
+                                                }
+                                            </tbody>
+                                        </table>
+
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    @Html.Raw(Model.Model.lis.Paginador)
+                                </div>
+
+                            </div>
+
+
+                            <div class="col-4">
+                                @* Sin datos *@
+                                <div class="card-info-wrapper w-100" id="sindatos" style="display: none;">
+                                    <div class="card-info">
+                                        <div class="d-flex justify-content-center align-items-center">
+                                            <img src="https://image.flaticon.com/icons/svg/609/609998.svg" style="width: 20%;">
+                                            <p class="mb-2 ml-3">Si clica encima del nº de factura, en este espacio le aparecerán los datos de la factura</p>
+                                        </div>
+                                    </div>
+                                    <svg class="card-info-triangle">
+                                        <polygon points="0,0 200,0 0,200" fill="currentColor"></polygon>
+                                    </svg>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+}
+</div>
+        </div>
+    </div>
+</div>
+

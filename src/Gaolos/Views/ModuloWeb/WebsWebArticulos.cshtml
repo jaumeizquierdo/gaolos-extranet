@@ -1,0 +1,193 @@
+﻿@model DashBoardLibrary.DashBoardViewModel
+@{
+    Layout = "~/Views/Shared/Modulo-Web/_Modulo-Web-Web.cshtml";
+    ViewData["Title"] = Model.Model.Modulo;
+}
+
+<div class="main-content m-0" id="widget-area">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+
+                @if (Model.Model.Err.eserror)
+                {
+                    ViewData["err"] = Model.Model.Err.mensaje;
+                    @Html.Partial("AccesoDenegado");
+                }
+                else
+                {
+
+                    @Html.Partial("WebsCabecera")
+
+                    @* tabs *@
+
+                    @Html.Partial("Web-Tabs")
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card mb-3">
+                                <div class="card-header card-header-options">
+                                    <span>Artículos</span>
+                                </div>
+                                <div class="card-block p-0">
+
+                                    <div class="d-flex flex-column p-2">
+
+                                        <div class="d-flex mb-2">
+                                            <div class="input-group input-group-sm mr-2">
+                                                <div class="input-group-prepend">
+                                                    <label class="input-group-text mw-140" for="">Núm. Máx artículos por página</label>
+                                                </div>
+                                                <input type="text" class="form-control" id="" aria-describedby="" value="" placeholder="Núm. Máx artículos por página">
+                                            </div>
+                                            <div class="input-group input-group-sm mr-0">
+                                                <div class="input-group-prepend">
+                                                    <label class="input-group-text" for="">Descuento global</label>
+                                                </div>
+                                                <input type="text" class="form-control" id="" aria-describedby="" value="" placeholder="Descuento global">
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex mb-0">
+
+                                            <div class="input-group input-group-sm mb-2 mr-0">
+                                                <div class="input-group-prepend">
+                                                    <label class="input-group-text" style="min-width: 204px !important;" for="">Pasarela vinculada</label>
+                                                </div>
+                                                <select class="custom-select" id="">
+                                                    <option value="1" selected="">Pasarela vinculada</option>
+                                                </select>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="d-flex" style="padding: 2px 0 1px 0;">
+                                            <div class="d-flex align-items-center mr-3">
+                                                <input type="checkbox" class="mr-2" id="" checked="">
+                                                <span class="fw-5 mr-2">Ver precios</span>
+                                            </div>
+                                            <div class="d-flex align-items-center">
+                                                <input type="checkbox" class="mr-2" id="" checked="">
+                                                <span class="fw-5 mr-2">Mostrar precios con IVA incluído</span>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="d-flex justify-content-center box-border-top p-2 mdc-bg-blue-grey-50">
+                                        <button type="submit" class="btn btn-sm btn-primary cliente-comercial-programa-guardar">Guardar</button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card mb-3">
+                                <div class="card-header card-header-options">
+                                    <span>Imágenes</span>
+                                </div>
+                                <div class="card-block p-0">
+                                    <div class="p-2">
+
+                                        <div class="d-flex mb-1">
+                                            <div class="input-group input-group-sm mb-0 mr-2">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text mw-260">Anchura de la foto en baja resolución</span>
+                                                </div>
+                                                <input type="text" class="form-control" id="" value="0" placeholder="Anchura de la foto en baja resolución" maxlength="2">
+                                            </div>
+                                            <div class="input-group input-group-sm mb-0">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text mw-260">Anchura de la foto en alta resolución</span>
+                                                </div>
+                                                <input type="text" class="form-control" id="CopiasFac" value="0" placeholder="Anchura de la foto en alta resolución" maxlength="2">
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex mb-1">
+                                            <div class="input-group input-group-sm mb-0 mr-2">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text mw-260">Altura de la foto en baja resolución</span>
+                                                </div>
+                                                <input type="text" class="form-control" id="" value="0" placeholder="Altura de la foto en baja resolución" maxlength="2">
+                                            </div>
+                                            <div class="input-group input-group-sm mb-0">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text mw-260">Altura de la foto en alta resolución</span>
+                                                </div>
+                                                <input type="text" class="form-control" id="CopiasFac" value="0" placeholder="Altura de la foto en alta resolución" maxlength="2">
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex">
+                                            <div class="input-group input-group-sm mb-0">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text mw-260">URL de la imagen para artículos sin foto</span>
+                                                </div>
+                                                <input type="text" class="form-control" id="" value="0" placeholder="URL de la imagen para artículos sin foto" maxlength="2">
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="d-flex justify-content-center box-border-top p-2 mdc-bg-blue-grey-50">
+                                        <button type="submit" class="btn btn-sm btn-primary cliente-comercial-programa-guardar">Guardar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card mb-3">
+                                <div class="card-header card-header-options">
+                                    <span>Vincular con un catálogo de productos</span>
+                                </div>
+                                <div class="card-block p-0">
+
+                                    <div class="d-flex flex-column p-2">
+
+                                        <div class="d-flex mb-0">
+
+                                            <div class="input-group input-group-sm mb-2 mr-0">
+                                                <div class="input-group-prepend">
+                                                    <label class="input-group-text" style="min-width: 204px !important;" for="">Familia de catálogos vinculados</label>
+                                                </div>
+                                                <select class="custom-select" id="">
+                                                    <option value="1" selected="">Familia de catálogos vinculados</option>
+                                                </select>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="d-flex justify-content-center box-border-top p-2 mdc-bg-blue-grey-50">
+                                        <button type="submit" class="btn btn-sm btn-primary cliente-comercial-programa-guardar">Guardar</button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                }
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+@Html.Partial("DashboardScripts")

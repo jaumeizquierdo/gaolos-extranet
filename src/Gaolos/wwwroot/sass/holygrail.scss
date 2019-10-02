@@ -1,0 +1,41 @@
+﻿/* Holy Grail Flex Box Stylesheet */
+
+@import "variables.scss";
+@import "materialdesign.scss";
+
+.layout__body {
+  display: flex;
+  flex: 1;
+  //min-height: 100vh;
+}
+
+.layout__content {
+    flex: 1;
+    overflow-y: auto;
+    height: 100vh;
+    //overflow: scroll;
+}
+
+.layout__columns {
+  //flex: 0 0 17em;
+  text-align: left;
+}
+
+.layout__nav {
+    order: -1;
+    //background: $menu-lateral-bg;
+    background: #262f3d;
+    width: 15rem;
+    position: relative;
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 100vh;
+    //transition: width .3s cubic-bezier(0.4,0.0,0.2,1);
+}
+
+.layout__aside {
+    background: $notificaciones-bg;
+    width: 15rem;
+    position: relative;
+    display: none;
+}

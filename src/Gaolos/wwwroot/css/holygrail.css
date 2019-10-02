@@ -1,0 +1,29 @@
+/* Holy Grail Flex Box Stylesheet */
+/* Mixins */
+/* Skin v4.6 - White / Dark / Blue */
+.layout__body {
+  display: flex;
+  flex: 1; }
+
+.layout__content {
+  flex: 1;
+  overflow-y: auto;
+  height: 100vh; }
+
+.layout__columns {
+  text-align: left; }
+
+.layout__nav {
+  order: -1;
+  background: #262f3d;
+  width: 15rem;
+  position: relative;
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 100vh; }
+
+.layout__aside {
+  background: #cfd8dc;
+  width: 15rem;
+  position: relative;
+  display: none; }

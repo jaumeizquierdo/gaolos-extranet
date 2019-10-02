@@ -1,0 +1,195 @@
+﻿
+    @model ModuloSolicitudesLibrary.ModuloSolicitudesAbiertasListadoViewModel
+
+@{
+    Layout = "~/Views/Shared/Modulo-Solicitudes/_Solicitudes.cshtml";
+    ViewData["Title"] = "Solicitudes por asignar";
+    ViewData["Title-Bloque-1"] = "Solicitudes";
+    ViewData["BuscarTags"] = "Buscar solicitudes";
+    ViewData["Message"] = "Solicitudes - Gaolos App v2017";
+}
+
+<div class="main-content m-0" id="widget-area">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+
+
+                @if (Model.Model.Err.eserror)
+                {
+                    ViewData["err"] = Model.Model.Err.mensaje;
+                    @Html.Partial("AccesoDenegado");
+                }
+                else
+                {
+
+                    <div class="card mb-3">
+                        <div class="card-header card-header-options">
+                            <span>@ViewData["BuscarTags"]</span>
+                            @Html.Partial("PanelActions")
+                        </div>
+                        <div class="card-block p-0">
+                            <div class="d-flex justify-content-center align-items-center">
+                                <div class="col-1 pb-2 pt-2 box-border-right-light">
+                                    <img src="~/flaticons/computer-2.svg" style="width: 100%">
+                                </div>
+                                <div class="col-11">
+                                    <form action="@ViewData["Form"]" method="post" class="pr-0 pl-0">
+
+                                        <div class="input-group card-search-box">
+                                            <input type="text" class="form-control" placeholder="Buscar por nombre, teléfono, mail, provincia, exposición y nº solicitud" name="buscar" value="@ViewData["buscar"]">
+                                            <span class="input-group-append">
+                                                <button class="btn btn-primary" type="submit">Buscar</button>
+                                            </span>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    @* Listado de solicitudes *@
+
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="card card-table">
+                                <div class="card-header card-header-options">
+                                    <span>Listado de solicitudes</span>
+                                </div>
+                                <div class="card-block">
+
+                                    <table class="table table-striped table-select">
+                                        <thead>
+                                            <tr>
+                                                <th class="w-5 text-center">Nº</th>
+                                                <th class="w-10 text-center">Fechas</th>
+                                                <th class="">Contacto / Exposición</th>
+                                                <th class="w-15">Web / Usuario</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (Model.Model.det != null)
+                                            {
+                                                for (Int32 t = 0; t < Model.Model.det.Length; t++)
+                                                {
+                                                    string clase = "tr-priority";
+                                                    string clase2 = "text-danger";
+                                                    <tr class="@clase">
+                                                        <td>
+                                                            <p class="mt-0 mb-0">@Model.Model.det[t].ID_Soli2</p>
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <p class="fw-5 mb-0" title="Fecha entrada"><span class="@clase2">@Model.Model.det[t].Fe_Al @Model.Model.det[t].Ho_Al</span></p>
+                                                        </td>
+                                                        <td>
+                                                            <div class="priority">
+                                                                <a href="#" class="sel-soli" id="soli_@Model.Model.det[t].ID_Soli2">
+                                                                    <p class="m-0"><strong>@Model.Model.det[t].Emp</strong></p>
+                                                                    <p class="m-0"><small><strong>@Html.Raw(Model.Model.det[t].Expo_New)</strong></small></p>
+                                                                    @if (Model.Model.det[t].Expo != "")
+                                                                    {
+                                                                        <hr class="m-1" />
+                                                                            <p class="m-0"><small>@Html.Raw(Model.Model.det[t].Expo)</small></p>
+                                                                    }
+                                                                    @if (Model.Model.det[t].Dom != "")
+                                                                    {
+                                                                        <hr class="m-1" />
+                                                                        string txt = Model.Model.det[t].Dom;
+                                                                        if (Model.Model.det[t].Referer != "")
+                                                                        {
+                                                                            txt += " - " + Model.Model.det[t].Referer;
+                                                                        }
+                                                                        <p class="m-0"><small>@txt</small></p>
+                                                                    }
+                                                                </a>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <p class="m-0 fw-5">
+                                                            @if (Model.Model.det[t].Dom != "")
+                                                            {
+                                                            <p class="m-0 fw-5">@Html.Raw(Model.Model.det[t].Dom)</p>
+                                                            }
+                                                            @if (Model.Model.det[t].Usu_Alta != "")
+                                                            {
+                                                                <p class="m-0 fw-5">@Html.Raw(Model.Model.det[t].Usu_Alta)</p>
+                                                            }
+
+                                                            </p>
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <tr><td colspan="4"><p class='fw-5 text-danger mb-0'><i class='fa fa-exclamation-circle mr-1'></i> No hay resultados</p></td></tr>
+                                            }
+
+                                        </tbody>
+                                    </table>
+
+
+                                </div>
+                            </div>
+
+                            @* Resultado Búsqueda Paginador *@
+
+                            @if (Model.Model.det != null)
+                            {
+                                <nav aria-label="Búsqueda Listado" class="mb-3">
+                                    @Html.Raw(Model.Model.Paginador)
+                                </nav>
+                            }
+
+                        </div>
+                        <div class="col-4">
+                            <div class="card card-table mb-3" id="sel-soli" style="display: none;">
+                                <div class="card-header card-header-options">
+                                    <span>Asignar solicitud <label id="numSoli"></label></span>
+                                    <div class="card-actions">
+                                        <ul>
+                                            <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="card-block" role="tablist" aria-multiselectable="true">
+                                    <form class="p-3 mb-0">
+                                        <div class="form-group mb-2">
+                                            <input type="text" class="form-control ui-autocomplete-input" value="" placeholder="Usuario" id="findcarac1" name="findcarac1" autocomplete="off">
+                                            <input id="vfindcarac1" name="vfindcarac1" type="hidden" value=""><input id="tfindcarac1" name="tfindcarac1" type="hidden" value="">
+                                            <input id="ID_Soli2" type="hidden" value="">
+                                        </div>
+                                        <div class="form-group mb-2">
+                                            <select class="custom-select col-12" id="Prio">
+                                                <option value="100">Prioridad media</option>
+                                                <option value="99">Prioridad alta</option>
+                                                <option value="101">Prioridad baja</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group mb-2">
+                                            <textarea class="form-control form-control-sm" rows="5" id="Nota" placeholder="Nota (Opcional)"></textarea>
+                                        </div>
+                                        <div class="row justify-content-center">
+                                            <button type="button" class="btn btn-primary btn-sm asignar-solicitud">Asignar</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                }
+
+            </div>
+        </div>
+    </div>
+</div>

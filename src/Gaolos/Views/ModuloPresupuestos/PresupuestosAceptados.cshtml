@@ -1,0 +1,712 @@
+﻿@model ModuloPresupuestosLibrary.ModuloPresupuestosPresupuestosAceptadosListadoViewModel
+@{
+    Layout = "~/Views/Shared/Modulo-Presupuestos/_Presupuestos.cshtml";
+    ViewData["Title"] = "Presupuestos aceptados";
+}
+
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+@if(Model.Model.Err.eserror)
+{
+    ViewData["err"] = Model.Model.Err.mensaje;
+    @Html.Partial("AccesoDenegado");
+}
+else
+{
+
+                @* Listado de direcciones *@
+
+                <div class="card mb-3">
+                    <div class="card-header card-header-options">
+                        <span>Buscar presupuesto aceptado</span>
+                        <div class="d-flex">
+                            <div class="d-flex mr-2" style="border-right: 1px solid #B0BEC5;">
+                                <a href="/modulo-presupuestos/nuevo" class="btn btn-sm btn-primary mr-2">Nuevo presupuesto</a>
+                            </div>
+                            <div class="d-flex mr-2" style="border-right: 1px solid #B0BEC5;">
+                                <a href="/modulo-presupuestos/borradores" class="btn btn-sm btn-primary mr-2">Borradores</a>
+                            </div>
+                            <div class="d-flex mr-2" style="border-right: 1px solid #B0BEC5;">
+                                <a href="/modulo-presupuestos/presupuestos" class="btn btn-sm btn-primary mr-2">Presupuestos</a>
+                            </div>
+                            <div class="d-flex">
+                                <a href="/modulo-presupuestos/historial" class="btn btn-sm btn-primary mr-1">Historial</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-block p-0">
+                        <div class="d-flex justify-content-center align-items-center">
+                            <div class="col-1 pb-2 pt-2 box-border-right-light">
+                                <img src="https://image.flaticon.com/icons/svg/138/138360.svg" style="width: 100%">
+                            </div>
+                            <div class="col-11">
+                                <form action="@ViewData["Form"]" method="post" class="pr-0 pl-0">
+                                    <div class="input-group card-search-box">
+                                        <input type="text" class="form-control" placeholder="Nº presupueso, empresa, dirección, población, NIF, breve, nº cliente y nº cc" name="buscar" value="@ViewData["buscar"]">
+                                        <span class="input-group-append">
+                                            <button class="btn btn-primary" type="submit">Buscar</button>
+                                        </span>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-6">
+                        <div class="card card-table mb-3">
+                            <div class="card-header card-header-options">
+                                <span>Presupuestos localizados</span>
+                            </div>
+                            <div class="card-block">
+
+                                <table class="table table-striped" id="tablePresupuestosAceptados">
+                                    <thead>
+                                        <tr>
+                                            <th class="w-10 text-center">Nº Pres.</th>
+                                            <th class="w-5 text-center"><i class="fa fa-print"></i></th>
+                                            <th class="w-15 text-center">Aceptado</th>
+                                            <th>Cliente</th>
+                                            <th class="w-5 text-center">Web</th>
+                                            <th class="text-left"><i class="fa fa-file-text-o" style="font-size: 14px;"></i></th>
+                                            <th class="text-center w-2"><i class="fa fa-search-plus"></i></th>
+                                            <th class="text-center w-2"><i class="fa fa-times"></i></th>
+                                            <th class="text-left w-10">Importe</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (Model.Model.det != null)
+                                        {
+                                            @for (Int32 t = 0; t < Model.Model.det.Length; t++)
+                                            {
+                                                @if (Model.Model.det[t].Sep != "")
+                                                {
+                                                    <tr class="tr-sel">
+                                                        <td colspan="9"><p class="mb-0 fw-5 p-3">@Model.Model.det[t].Sep</p></td>
+                                                    </tr>
+                                                }
+                                                <tr>
+                                                    <td class="text-center"><a href="#" class="fw-5 pres-sel" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="Seleccionar presupuesto" id="pres_@Model.Model.det[t].ID_PresAcep">@Model.Model.det[t].ID_Pres2</a></td>
+                                                    <td class="text-center"><a href="/modulo-presupuestos/presupuestos/presupuesto/imprimir?ID_Pres2=@Model.Model.det[t].ID_Pres2" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="Imprimir presupuesto" target="_blank"><i class="fa fa-print" style="font-size: 14px;"></i></a></td>
+                                                    <td class="text-center">
+                                                        <p class="mb-0 fs-0-8"><small>@Model.Model.det[t].Fe_Al</small></p>
+                                                        <p class="mb-0 fs-0-8"><small>@Model.Model.det[t].Usu</small></p>
+                                                    </td>
+                                                    <td>
+                                                        <p class="mb-0 fs-0-8">
+                                                            @if (!Model.Model.det[t].EsCli)
+                                                            {
+                                                                <i class="fa fa-exclamation-triangle mr-1 text-danger" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="Pendiente de validar contacto"></i>
+                                                            }
+                                                            @Model.Model.det[t].Emp
+                                                        </p>
+                                                        @if (Model.Model.det[t].EmpRel != "")
+                                                        {
+                                                            <p class="mb-0 fs-0-8"><small>@Model.Model.det[t].EmpRel</small></p>
+                                                        }
+                                                        @if (Model.Model.det[t].Breve != "")
+                                                        {
+                                                            <p class="mb-0 fs-0-8"><small>@Model.Model.det[t].Breve</small></p>
+                                                        }
+                                                    </td>
+                                                    <td class="text-center">
+                                                        @if (Model.Model.det[t].ViaWeb)
+                                                        {
+                                                            <i class="fa fa-check text-success"></i>
+                                                        }
+                                                    </td>
+                                                    <td class="text-center">
+                                                        @if (Model.Model.det[t].ID_Soli2 != "")
+                                                        {
+                                                            @if (!Model.Model.det[t].SoliCerr)
+                                                            {
+                                                                <a href="/tareas-pendientes/tarea-pendiente?ID_Soli2=@Model.Model.det[t].ID_Soli2" target="_blank" class="text-danger"><i class="fa fa-file-text" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="Solicitud abierta. Ir a la solicitud nº @Model.Model.det[t].ID_Soli2 "></i></a>
+                                                            }
+                                                            else
+                                                            {
+                                                                <a href="/tareas-pendientes/tarea-pendiente?ID_Soli2=@Model.Model.det[t].ID_Soli2" target="_blank" class="text-muted"><i class="fa fa-file-text" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="Solicitud cerrada. Ir a la solicitud nº @Model.Model.det[t].ID_Soli2 "></i></a>
+                                                            }
+                                                        }
+                                                    </td>
+                                                    <td>
+                                                        <p class="mb-0 fs-0-8"><a href="/modulo-presupuestos/presupuestos/presupuesto?ID_Pres2=@Model.Model.det[t].ID_Pres2" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="Ir al presupuesto" target="_blank"><i class="fa fa-search-plus" style="font-size: 14px;"></i></a></p>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <a href="#" class="anular-aceptacion" id="anuacep_@Model.Model.det[t].ID_PresAcep"><i class="fa fa-times text-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="Anular aceptación"></i></a>
+                                                    </td>
+                                                    <td>
+                                                        <p class="mb-0 fs-0-8 text-right">@Model.Model.det[t].Total</p>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <tr>
+                                                <td colspan="5"><p class="mb-0 fw-5 p-3 text-danger"><i class="fa fa-times" style="font-size: 14px;"></i> No hay resultados</p></td>
+                                            </tr>
+                                        }
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            @Html.Raw(Model.Model.Paginador)
+                        </div>
+                    </div>
+                    <div class="col-6">
+
+                        @* Sin datos *@
+                        <div class="card-info-wrapper w-100" id="sindatos" style="display: none">
+                            <div class="card-info">
+                                <div class="d-flex align-items-center">
+                                    <img src="https://image.flaticon.com/icons/svg/609/609998.svg" style="width: 10%;">
+                                    <div class="d-flex flex-column ml-3">
+                                        <p class="mb-2">Clique en el <span class="fw-5">nº del presupuesto</span> para seleccionar la acción a realizar</p>
+                                        <input type="hidden" id="ID_PresAcep" value="" />
+                                    </div>
+                                </div>
+                            </div>
+                            <svg class="card-info-triangle">
+                                <polygon points="0,0 200,0 0,200" fill="currentColor"></polygon>
+                            </svg>
+                        </div>
+
+                        @* Acciones *@
+                        <div class="card card-table mb-3" id="card_tipo" style="display:none;">
+                            <div class="card-header card-header-options">
+                                <span>Presupuesto nº <span id="presupuestoNum"></span></span>
+                            </div>
+                            <div class="card-block p-0">
+                                <div class="p-2">
+
+                                    <div class="box-labels">
+                                        <div class="d-flex align-items-center align-self-stretch box-labels-divider">
+                                            <label class="m-0 box-label-label align-self-stretch" style="width: 235px;">Pasar a albarán</label>
+                                            <input type="radio" class="ml-3 sel1" id="sel_1" name="selector">
+                                        </div>
+                                        <div class="d-flex align-items-center align-self-stretch box-labels-divider">
+                                            <label class="m-0 box-label-label align-self-stretch" style="width: 235px;" id="sel_2_lab"></label>
+                                            <input type="radio" class="ml-3 sel2" id="sel_2" name="selector">
+                                            <input type="hidden" id="sel2_tipo" value="" />
+                                        </div>
+                                        <div class="d-flex align-items-center align-self-stretch">
+                                            <label class="m-0 box-label-label align-self-stretch" style="width: 235px;">Marcar como revisado</label>
+                                            <input type="radio" class="mx-3 sel3" id="sel_3" name="selector">
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        @* Accion - Pasar a albarán *@
+                        <div class="card card-table mb-3" id="card_alb" style="display:none;">
+                            <div class="card-header card-header-options">
+                                <span>Pasar a albarán</span>
+                            </div>
+                            <div class="card-block p-2">
+                                <div class="d-flex justify-content-center">
+                                    <a href="#" target="_blank" class="btn btn-sm btn-primary generar-alb">Confirmar</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        @* Accion - Marcar como revisado *@
+                        <div class="card card-table mb-3" id="card_rev" style="display:none;">
+                            <div class="card-header card-header-options">
+                                <span>Marcar como revisado</span>
+                            </div>
+                            <div class="card-block p-2">
+                                <div class="d-flex justify-content-center">
+                                    <a href="#" target="_blank" class="btn btn-sm btn-primary generar-marca">Confirmar</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        @* Validar contacto *@
+                        <div class="card card-table mb-3" id="card_validar" style="display:none;">
+                            <div class="card-header card-header-options">
+                                <span>Validar contacto</span>
+                            </div>
+                            <div class="card-block p-0">
+
+                                <div class="p-2">
+                                    <div class="d-flex flex-column mb-2">
+                                        <div class="box-labels">
+                                            <div class="d-flex align-items-center align-self-stretch">
+                                                <label class="m-0 box-label-label align-self-stretch">Nº</label>
+                                                <a href="#" target="_blank" class="fw-5 px-2" id="lnk_id_cont2"></a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex flex-column mb-2">
+                                        <div class="input-group input-group-sm mb-2">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Nombre com.</span>
+                                            </div>
+                                            <input type="text" class="form-control" id="valEmp" value="" placeholder="Nombre comercial">
+                                        </div>
+
+                                        <div class="input-group input-group-sm mb-2">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Nombre fiscal</span>
+                                            </div>
+                                            <input type="text" class="form-control" id="valEmpFis" value="" placeholder="Nombre fiscal">
+                                        </div>
+
+                                        <div class="input-group input-group-sm mb-1">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Dirección</span>
+                                            </div>
+                                            <input type="text" class="form-control" id="valDir" value="" placeholder="Dirección">
+                                        </div>
+
+                                        @*<div class="d-flex justify-content-end">
+                            <a href="#" data-toggle="tooltip" data-placement="top" title="" class="d-flex align-items-center" data-original-title="Ver en Google Maps"><img src="~/images/google-maps-logo.svg" style="width: 100px;" /></a>
+                        </div>*@
+                                    </div>
+
+                                    <div class="d-flex mb-2">
+                                        <div class="d-flex flex-column w-50 mr-2">
+                                            <div class="box-labels">
+                                                <div class="d-flex align-items-center align-self-stretch box-labels-divider">
+                                                    <label class="m-0 box-label-label align-self-stretch">Población</label>
+                                                    <p class="mb-0 px-2" id="valPob"></p>
+                                                </div>
+                                                <div class="d-flex align-items-center align-self-stretch">
+                                                    <label class="m-0 box-label-label align-self-stretch">Provincia</label>
+                                                    <p class="mb-0 px-2" id="valPro"></p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex flex-column w-50">
+                                            <div class="box-labels">
+                                                <div class="d-flex align-items-center align-self-stretch box-labels-divider">
+                                                    <label class="m-0 box-label-label align-self-stretch">C.P.</label>
+                                                    <p class="mb-0 px-2" id="valCP"></p>
+                                                </div>
+                                                <div class="d-flex align-items-center align-self-stretch">
+                                                    <label class="m-0 box-label-label align-self-stretch">País</label>
+                                                    <p class="mb-0 px-2" id="valPai"></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex mb-2">
+                                        <div class="input-group input-group-sm mr-2 w-50">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">NIF</span>
+                                            </div>
+                                            <input type="text" class="form-control" id="valNIF" value="" placeholder="NIF">
+                                        </div>
+
+                                        <div class="box-labels w-50">
+                                            <div class="d-flex align-items-center align-self-stretch">
+                                                <label class="m-0 box-label-label align-self-stretch">Agente</label>
+                                                <p class="mb-0 px-2" id="valAgente"></p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex mb-2">
+                                        <div class="input-group input-group-sm mb-0">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Observaciones</span>
+                                            </div>
+                                            <textarea class="form-control" id="valObs" value="" placeholder="Observaciones" rows="3"></textarea>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="d-flex flex-column mb-2">
+                                        <div class="box-labels">
+                                            <div class="d-flex align-items-center align-self-stretch box-labels-divider">
+                                                <label class="m-0 box-label-label align-self-stretch">Teléfonos</label>
+                                                <p class="mb-0 px-2" id="valTels"></p>
+                                            </div>
+                                            <div class="d-flex align-items-center align-self-stretch box-labels-divider">
+                                                <label class="m-0 box-label-label align-self-stretch">Mails</label>
+                                                <p class="mb-0 px-2" id="valMails"></p>
+                                            </div>
+                                            <div class="d-flex align-items-center align-self-stretch box-labels-divider">
+                                                <label class="m-0 box-label-label align-self-stretch">Webs</label>
+                                                <p class="mb-0 px-2" id="valWebs"></p>
+                                            </div>
+                                            <div class="d-flex align-items-center align-self-stretch">
+                                                <label class="m-0 box-label-label align-self-stretch">NICs</label>
+                                                <p class="mb-0 px-2" id="valUsus"></p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="card-header card-header-options mb-2">
+                                        <span>Relacionados</span>
+                                    </div>
+
+                                    <div id="valEmpRels"></div>
+
+                                    <div class="card-header card-header-options mb-2">
+                                        <span>Formas de pago</span>
+                                    </div>
+
+                                    <div class="d-flex flex-column mb-2">
+                                        <div class="box-labels">
+                                            <div class="d-flex align-items-center align-self-stretch box-labels-divider">
+                                                <label class="m-0 box-label-label align-self-stretch">Efectivo</label>
+                                                <input type="radio" class="ml-3" id="ID_For1" name="ID_For">
+                                            </div>
+                                            <div class="d-flex align-items-center align-self-stretch box-labels-divider">
+                                                <label class="m-0 box-label-label align-self-stretch">Transferencia</label>
+                                                <input type="radio" class="ml-3" id="ID_For2" name="ID_For">
+                                            </div>
+                                            <div class="d-flex align-items-center align-self-stretch box-labels-divider">
+                                                <label class="m-0 box-label-label align-self-stretch">Domiciliación</label>
+                                                <input type="radio" class="mx-3" id="ID_For3" name="ID_For">
+                                                <input type="text" class="form-control form-control-sm m-1" id="IBAN" value="" placeholder="IBAN">
+                                            </div>
+                                            <div class="d-flex align-items-center align-self-stretch">
+                                                <label class="m-0 box-label-label align-self-stretch">Talón</label>
+                                                <input type="radio" class="ml-3" id="ID_For4" name="ID_For">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex">
+                                        <div class="input-group input-group-sm mb-0">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text text-left">Observaciones<br />administrativas</span>
+                                            </div>
+                                            <textarea class="form-control" id="valObsAdm" value="" placeholder="Observaciones administrativas" rows="3"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="d-flex justify-content-center box-guardar">
+                                    <a href="#" target="_blank" class="btn btn-sm btn-primary validar-cont">Validar</a>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        @* Acción Asistencia *@
+                        <div class="card card-table mb-3" id="card_asis" style="display:none;">
+                            <div class="card-header card-header-options">
+                                <span>Asistencia</span>
+                            </div>
+                            <div class="card-block p-0">
+                                <div class="p-2">
+
+                                    <div class="d-flex flex-column mb-2">
+                                        <div class="box-labels">
+                                            <div class="d-flex align-items-center align-self-stretch">
+                                                <label class="m-0 box-label-label align-self-stretch">Cliente</label>
+                                                <p class="mb-0 px-2" id="lab_asis_cli"></p> <a href="#" target="_blank" id="lnk_asis_cli" class="fw-5"></a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex flex-column mb-2">
+                                        <div class="input-group input-group-sm mb-2">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Ref. Cli.</span>
+                                            </div>
+                                            <input type="text" class="form-control" id="asis_ref_cli" value="" placeholder="Referencia Cliente">
+                                        </div>
+
+                                        <div class="input-group input-group-sm mb-2">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Tipo</span>
+                                            </div>
+                                            <select class="custom-select" id="asis_id_tipo"></select>
+                                        </div>
+
+                                        <div class="input-group input-group-sm mb-0">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Exposición</span>
+                                            </div>
+                                            <textarea class="form-control" id="asis_expo" value="" placeholder="Exposición" rows="3"></textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex flex-column mb-2">
+                                        <div class="box-labels">
+                                            <div class="d-flex align-items-center align-self-stretch box-labels-divider">
+                                                <label class="m-0 box-label-label align-self-stretch">Urgente</label>
+                                                <input type="checkbox" class="ml-3" id="asis_urg">
+                                            </div>
+                                            <div class="d-flex align-items-center align-self-stretch">
+                                                <label class="m-0 box-label-label align-self-stretch">Cliente parado</label>
+                                                <input type="checkbox" class="ml-3" id="asis_cliparado">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="card-header card-header-options mb-2">
+                                        <span>Empresa</span>
+                                    </div>
+
+                                    <div class="d-flex flex-column mb-2">
+                                        <div class="input-group input-group-sm mb-0">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Empresa</span>
+                                            </div>
+                                            <input type="text" class="form-control" id="asis_emp" value="" placeholder="Empresa">
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex flex-column mb-2">
+                                        <div class="box-labels">
+                                            <div class="d-flex align-items-center align-self-stretch">
+                                                <label class="m-0 box-label-label align-self-stretch">Dirección</label>
+                                                <div class="d-flex flex-column p-2 pb-0 mb-2" id="asis_dirs">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex mb-2">
+
+                                        <div class="input-group input-group-sm mr-2 w-50">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Horario</span>
+                                            </div>
+                                            <input type="text" class="form-control" id="asis_horario" value="" placeholder="Horario">
+                                        </div>
+
+                                        <div class="box-labels w-50">
+                                            <div class="d-flex align-items-center align-self-stretch">
+                                                <label class="m-0 box-label-label align-self-stretch" style="width: 120px;">Guardar horario</label>
+                                                <input type="checkbox" class="ml-3" id="asis_horario_guardar">
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="d-flex mb-2">
+
+                                        <div class="input-group input-group-sm mr-2">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Contacto</span>
+                                            </div>
+                                            <input type="text" class="form-control" id="asis_cont" value="" placeholder="Contacto">
+                                        </div>
+
+                                        <div class="input-group input-group-sm">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" style="width: 120px;">Tel. Contacto</span>
+                                            </div>
+                                            <input type="text" class="form-control" id="asis_tel" value="" placeholder="Teléfono" list="asis_tels" maxlength="15">
+                                            <datalist id="asis_tels"></datalist>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="d-flex mb-0">
+                                        <div class="input-group input-group-sm mb-0">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Obs. asistencia</span>
+                                            </div>
+                                            <textarea class="form-control" id="asis_obs" value="" placeholder="Observaciones para la asistencia" rows="3"></textarea>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="d-flex justify-content-center box-guardar">
+                                    <a href="#" target="_blank" class="btn btn-sm btn-primary generar-asis">Generar asistencia</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        @* Acción Mantenimiento *@
+                        <div class="card card-table mb-3" id="card_man" style="display:none;">
+                            <div class="card-header card-header-options">
+                                <span>Mantenimiento</span>
+                            </div>
+                            <div class="card-block p-0">
+
+                                <div class="p-2">
+
+                                    <div class="d-flex flex-column mb-2">
+                                        <div class="box-labels">
+                                            <div class="d-flex align-items-center align-self-stretch box-labels-divider">
+                                                <label class="m-0 box-label-label align-self-stretch">Cliente</label>
+                                                <p class="mb-0 px-2" id="lab_man_cli"></p> <a href="#" target="_blank" id="lnk_man_cli" class="fw-5"></a>
+                                            </div>
+                                            <div class="d-flex align-items-center align-self-stretch" id="vis-emp-rel" style="display:none;">
+                                                <label class="m-0 box-label-label align-self-stretch" id="lab_tipoemprel"></label>
+                                                <p class="mb-0 px-2" id="lab_emprel"></p> <a href="#" target="_blank" id="lnk_emprel" class="fw-5"></a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex flex-column mb-2">
+                                        <div class="input-group input-group-sm">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Ref. Cli.</span>
+                                            </div>
+                                            <input type="text" class="form-control" id="man_ref_cli" value="" placeholder="Referencia Cliente">
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex mb-2">
+
+                                        <div class="input-group input-group-sm mr-2">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Fecha inicio</span>
+                                            </div>
+                                            <input type="text" class="form-control" id="fe_in" value="" placeholder="Fecha inicio">
+                                        </div>
+
+                                        <div class="input-group input-group-sm">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" style="width: 120px;">Periodo contrato</span>
+                                            </div>
+                                            <select class="custom-select" id="PeriFac"></select>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="d-flex mb-2">
+                                        <div class="input-group input-group-sm">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Periocidad</span>
+                                            </div>
+                                            <select class="custom-select" id="PeriVis"></select>
+                                        </div>
+                                    </div>
+
+                                    <div class="card-header card-header-options mb-2">
+                                        <span>Empresa</span>
+                                    </div>
+
+                                    <div class="d-flex flex-column mb-2">
+                                        <div class="input-group input-group-sm mb-0">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Empresa</span>
+                                            </div>
+                                            <input type="text" class="form-control" id="man_emp" value="" placeholder="Empresa">
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex flex-column mb-2">
+                                        <div class="box-labels">
+                                            <div class="d-flex align-items-center align-self-stretch">
+                                                <label class="m-0 box-label-label align-self-stretch">Dirección</label>
+                                                <div class="d-flex flex-column p-2 pb-0 mb-2" id="man_dirs">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex mb-2">
+
+                                        <div class="input-group input-group-sm">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Horario</span>
+                                            </div>
+                                            <input type="text" class="form-control" id="man_horario" value="" placeholder="Horario">
+                                        </div>
+
+                                    </div>
+
+                                    <div class="d-flex mb-2">
+
+                                        <div class="input-group input-group-sm mr-2">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Contacto</span>
+                                            </div>
+                                            <input type="text" class="form-control" id="man_cont" value="" placeholder="Contacto">
+                                        </div>
+
+                                        <div class="input-group input-group-sm">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" style="width: 120px;">Tel. Contacto</span>
+                                            </div>
+                                            <input type="text" class="form-control" id="man_tel" value="" placeholder="Teléfono" list="man_tels" maxlength="15">
+                                            <datalist id="man_tels"></datalist>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="d-flex mb-2">
+                                        <div class="input-group input-group-sm mb-0">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Observaciones dirección</span>
+                                            </div>
+                                            <textarea class="form-control" id="ObsUbi" value="" placeholder="Observaciones dirección" rows="3"></textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex flex-column mb-2" id="ver-man-det">
+                                        <div class="box-labels">
+                                            <div class="d-flex align-items-center align-self-stretch">
+                                                <label class="m-0 box-label-label align-self-stretch">Elementos</label>
+                                                <div class="d-flex flex-column p-2 pb-0 mb-2" id="man-det">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex flex-column mb-2" id="ver-man-otros">
+                                        <div class="box-labels">
+                                            <div class="d-flex align-items-center align-self-stretch">
+                                                <label class="m-0 box-label-label align-self-stretch">Material</label>
+                                                <div class="d-flex flex-column px-2" id="man-otros">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex">
+                                        <div class="input-group input-group-sm mb-0 mr-2 w-50">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" style="text-align: left;">Observaciones<br />Privadas</span>
+                                            </div>
+                                            <textarea class="form-control" id="ObsPriv" value="" placeholder="Observaciones Privadas" rows="3"></textarea>
+                                        </div>
+                                        <div class="input-group input-group-sm mb-0 w-50">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" style="text-align: left;">Observaciones<br />Públicas</span>
+                                            </div>
+                                            <textarea class="form-control" id="ObsPub" value="" placeholder="Observaciones Públicas" rows="3"></textarea>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+                                <div class="d-flex justify-content-center box-guardar">
+                                    <a href="#" target="_blank" class="btn btn-sm btn-primary generar-man">Generar Mantenimiento</a>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+}
+            </div>
+        </div>
+    </div>
+</div>

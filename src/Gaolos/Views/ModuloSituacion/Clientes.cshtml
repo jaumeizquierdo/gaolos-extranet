@@ -1,0 +1,731 @@
+﻿@model SituacionLibrary.SituacionClientesViewModel
+@{
+    Layout = "~/Views/Shared/Modulo-Situacion/_Situacion.cshtml";
+    ViewData["Title"] = "Situación Clientes";
+    ViewData["Message"] = "Google API Analytics Test - Gaolos App v2017";
+}
+
+@if (!Model._Model.Err.eserror)
+{
+
+    <script type="text/javascript">
+    google.charts.load('current', { 'packages': ['corechart'], 'language': 'es' });
+    google.charts.setOnLoadCallback(Clientes);
+    google.charts.setOnLoadCallback(ClientesBlo);
+    google.charts.setOnLoadCallback(ClientesBaja);
+    google.charts.setOnLoadCallback(ClientesRelNuevos);
+    google.charts.setOnLoadCallback(ClientesRelBajas);
+    google.charts.setOnLoadCallback(CliFac);
+    google.charts.setOnLoadCallback(CliFacRel);
+    google.charts.setOnLoadCallback(CliFacNumRel);
+
+    function Clientes() {
+
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Tipo cliente');
+        data.addColumn('number', 'Nº de clientes');
+
+        @{
+            string txt = "";
+            if (Model._Model.CliNuevos.dat!=null)
+            {
+                for (Int32 t = 0; t < Model._Model.CliNuevos.dat.Length; t++)
+                {
+                    if (t > 0) { txt += ","; }
+                    txt += "['" + Model._Model.CliNuevos.dat[t].datoS1 + "', " + Model._Model.CliNuevos.dat[t].datoI.ToString() + "]";
+                }
+            }
+    }
+        @Html.Raw("data.addRows([" + txt + "]);")
+
+        var options = {
+            chart: {
+                title: '@Model._Model.CliNuevos.Titulo'
+            },
+            pieHole: 0.4,
+            width: 600,
+            height: 350,
+            'chartArea': { 'width': '100%', 'height': '80%' },
+            fontName: 'Roboto'
+            //'legend': { 'position': 'bottom' }
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('Clientes'));
+        chart.draw(data, options);
+    }
+
+    function ClientesBlo() {
+
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Tipo cliente');
+        data.addColumn('number', 'Nº de clientes');
+
+        @{
+            txt = "";
+            if (Model._Model.CliBlo.dat!=null)
+            {
+                for (Int32 t = 0; t < Model._Model.CliBlo.dat.Length; t++)
+                {
+                    if (t > 0) { txt += ","; }
+                    txt += "['" + Model._Model.CliBlo.dat[t].datoS1 + "', " + Model._Model.CliBlo.dat[t].datoI.ToString() + "]";
+                }
+            }
+    }
+        @Html.Raw("data.addRows([" + txt + "]);")
+
+        var options = {
+            chart: {
+                title: '@Model._Model.CliBlo.Titulo'
+            },
+            pieHole: 0.4,
+            width: 600,
+            height: 350,
+            'chartArea': { 'width': '100%', 'height': '80%' },
+            fontName: 'Roboto'
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('ClientesBlo'));
+        chart.draw(data, options);
+    }
+
+    function ClientesBaja() {
+
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Tipo cliente');
+        data.addColumn('number', 'Nº de clientes');
+
+        @{
+            txt = "";
+            if (Model._Model.CliBaja.dat != null)
+            {
+                for (Int32 t = 0; t < Model._Model.CliBaja.dat.Length; t++)
+                {
+                    if (t > 0) { txt += ","; }
+                    txt += "['" + Model._Model.CliBaja.dat[t].datoS1 + "', " + Model._Model.CliBaja.dat[t].datoI.ToString() + "]";
+                }
+            }
+    }
+        @Html.Raw("data.addRows([" + txt + "]);")
+
+        var options = {
+            chart: {
+                //stitle: '@Model._Model.CliBaja.Titulo'
+            },
+            pieHole: 0.4,
+            width: 600,
+            height: 350,
+            'chartArea': { 'width': '100%', 'height': '80%' },
+            fontName: 'Roboto'
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('ClientesBaja'));
+        chart.draw(data, options);
+    }
+
+    function ClientesRelNuevos() {
+
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Cliente relacionado');
+        data.addColumn('number', 'Nº de clientes');
+
+        @{
+            txt = "";
+            if (Model._Model.CliRelNuevos.dat != null)
+            {
+                for (Int32 t = 0; t < Model._Model.CliRelNuevos.dat.Length; t++)
+                {
+                    if (t > 0) { txt += ","; }
+            txt += "['" + Model._Model.CliRelNuevos.dat[t].datoS1 + "', " + Model._Model.CliRelNuevos.dat[t].datoI.ToString() + "]";
+        }
+    }
+    }
+        @Html.Raw("data.addRows([" + txt + "]);")
+
+        var options = {
+            chart: {
+                //title: '@Model._Model.CliRelNuevos.Titulo'
+            },
+            pieHole: 0.4,
+            width: 600,
+            height: 350,
+            'chartArea': { 'width': '100%', 'height': '80%' },
+            fontName: 'Roboto'
+            //sliceVisibilityThreshold: .02
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('ClientesRelNuevos'));
+        chart.draw(data, options);
+    }
+
+    function ClientesRelBajas() {
+
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Cliente relacionado');
+        data.addColumn('number', 'Nº de clientes');
+
+        @{
+            txt = "";
+            if (Model._Model.CliRelBaja.dat != null)
+            {
+                for (Int32 t = 0; t < Model._Model.CliRelBaja.dat.Length; t++)
+                {
+                    if (t > 0) { txt += ","; }
+            txt += "['" + Model._Model.CliRelBaja.dat[t].datoS1 + "', " + Model._Model.CliRelBaja.dat[t].datoI.ToString() + "]";
+        }
+    }
+    }
+        @Html.Raw("data.addRows([" + txt + "]);")
+
+        var options = {
+            chart: {
+                //title: '@Model._Model.CliRelBaja.Titulo'
+            },
+            pieHole: 0.4,
+            width: 600,
+            height: 350,
+            'chartArea': { 'width': '100%', 'height': '80%' },
+            fontName: 'Roboto'
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('ClientesRelBajas'));
+        chart.draw(data, options);
+    }
+
+
+    function CliFac() {
+
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Cliente');
+        data.addColumn('number', 'Total');
+        data.addColumn('number', 'Nº facturas');
+        @{
+            txt = "";
+            if (Model._Model.CliFac.dat!=null)
+            {
+                for (Int32 t = 0; t < Model._Model.CliFac.dat.Length; t++)
+                {
+                    if (t > 0) { txt += ","; }
+                    txt += "['" + Model._Model.CliFac.dat[t].datoS1 + "', " + Model._Model.CliFac.dat[t].datoS2 + ", " + Model._Model.CliFac.dat[t].datoI.ToString() + "]";
+                }
+            }
+    }
+        @Html.Raw("data.addRows([" + txt + "]);")
+
+        var options = {
+            //title: '@Model._Model.CliFac.Titulo',
+            pieHole: 0.4,
+            width: 600,
+            height: 350,
+            'chartArea': { 'width': '100%', 'height': '80%' },
+            fontName: 'Roboto'
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('CliFac'));
+        chart.draw(data, options);
+    }
+
+    function CliFacRel() {
+
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Cliente relacionado');
+        data.addColumn('number', 'Total');
+        data.addColumn('number', 'Nº facturas');
+        @{
+            txt = "";
+            if (Model._Model.CliRelFac.dat!=null)
+            {
+                for (Int32 t = 0; t < Model._Model.CliRelFac.dat.Length; t++)
+                {
+                    if (t > 0) { txt += ","; }
+                    txt += "['" + Model._Model.CliRelFac.dat[t].datoS1 + "', " + Model._Model.CliRelFac.dat[t].datoS2 + ", " + Model._Model.CliRelFac.dat[t].datoI.ToString() + "]";
+                }
+            }
+    }
+        @Html.Raw("data.addRows([" + txt + "]);")
+
+        var options = {
+            //title: '@Model._Model.CliRelFac.Titulo',
+            pieHole: 0.4,
+            width: 600,
+            height: 350,
+            'chartArea': { 'width': '100%', 'height': '80%' }
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('CliFacRel'));
+        chart.draw(data, options);
+    }
+
+    function CliFacNumRel() {
+
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Cliente relacionado');
+        data.addColumn('number', 'Total');
+        data.addColumn('number', 'Nº facturas');
+        @{
+            txt = "";
+            if (Model._Model.CliRelNumFac.dat!=null)
+            {
+                for (Int32 t = 0; t < Model._Model.CliRelNumFac.dat.Length; t++)
+                {
+                    if (t > 0) { txt += ","; }
+                    txt += "['" + Model._Model.CliRelNumFac.dat[t].datoS1 + "', " + Model._Model.CliRelNumFac.dat[t].datoS2 + ", " + Model._Model.CliRelNumFac.dat[t].datoI.ToString() + "]";
+                }
+            }
+    }
+        @Html.Raw("data.addRows([" + txt + "]);")
+
+        var options = {
+            //title: '@Model._Model.CliRelNumFac.Titulo',
+            pieHole: 0.4,
+            width: 600,
+            height: 350,
+            'chartArea': { 'width': '100%', 'height': '80%' },
+            fontName: 'Roboto'
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('CliFacNumRel'));
+        chart.draw(data, options);
+    }
+
+    </script>
+
+    }
+
+<div class="main-content m-0">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+
+        <div class="row">
+
+            <div class="col-12">
+
+                @if (Model._Model.Err.eserror)
+                {
+
+                    ViewData["err"] = Model._Model.Err.mensaje;
+                    @Html.Partial("AccesoDenegado");
+
+                }
+                else
+                {
+                    @* Buscar módulos *@
+
+                    <div class="card mb-3">
+                        <div class="card-header card-header-options">
+                            <span>Situación clientes</span>
+
+                            <div class="card-actions">
+                                <ul>
+                                    <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card-block">
+
+                            <div class="row">
+                                <div class="col-2 text-center">
+                                    <img src="~/flaticons/file-2.svg" style="width: 50%">
+                                </div>
+                                <div class="col-9">
+                                    <h5 class="fw-5">Seleccione fecha de inicio y final</h5>
+                                    <form method="post" action="@ViewData["Form"]" class="sel-dates d-inline-flex mt-2">
+                                        <div class="input-group seldate date mr-2">
+                                            <input type="text" class="form-control" placeholder="Fecha Inicio" value="@Model._Model.Fe_In" name="Fe_In" data-toggle="tooltip" data-placement="top" title="" data-original-title="Fecha de inicio" />
+                                        </div>
+                                        <div class="input-group seldate date">
+                                            <input type="text" class="form-control" placeholder="Fecha Fin" value="@Model._Model.Fe_Fi" name="Fe_Fi" data-toggle="tooltip" data-placement="top" title="" data-original-title="Fecha final" />
+                                        </div>
+                                        <button type="submit" class="btn btn-primary ml-2">Buscar</button>
+                                    </form>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    @* Clientes nuevos *@
+
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card card-table mb-4 mt-2">
+                                <div class="card-header card-header-options">
+                                    <span>@Model._Model.CliNuevos.Titulo <span id="fechares"></span></span>
+                                    @* @Html.Partial("PanelActions") *@
+                                </div>
+                                <div class="card-block">
+                                    <div class="row">
+                                        <div class="col-5 pr-0">
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="w-50">Tipo de cliente</th>
+                                                        <th class="w-50 text-center">Nº de clientes</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @if (Model._Model.CliNuevos.dat != null)
+                                                    {
+                                                        @for (Int32 t = 0; t < Model._Model.CliNuevos.dat.Length; t++)
+                                                        {
+                                                            <tr>
+                                                                <td scope="row">
+                                                                    <p class="mb-0 fw-5">@Model._Model.CliNuevos.dat[t].datoS1</p>
+                                                                </td>
+                                                                <td class="text-center fw-5">@Model._Model.CliNuevos.dat[t].datoI</td>
+                                                            </tr>
+                                                        }
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="col-7 card-table-chart">
+                                            <div class="googlechart">
+                                                <div id="Clientes"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    @* Clientes bloqueados *@
+
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card card-table mb-4">
+                                <div class="card-header card-header-options">
+                                    <span>@Model._Model.CliBlo.Titulo <span id="fechares"></span></span>
+                                    @* @Html.Partial("PanelActions") *@
+                                </div>
+                                <div class="card-block">
+                                    <div class="row">
+                                        <div class="col-5 pr-0">
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="w-50">Tipo de cliente</th>
+                                                        <th class="w-50 text-center">Nº de clientes</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @if (Model._Model.CliBlo.dat != null)
+                                                    {
+                                                        @for (Int32 t = 0; t < Model._Model.CliBlo.dat.Length; t++)
+                                                        {
+                                                            <tr>
+                                                                <td scope="row">
+                                                                    <p class="mb-0 fw-5">@Model._Model.CliBlo.dat[t].datoS1</p>
+                                                                </td>
+                                                                <td class="text-center fw-5">@Model._Model.CliBlo.dat[t].datoI</td>
+                                                            </tr>
+                                                        }
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="col-7 card-table-chart">
+                                            <div class="googlechart">
+                                                <div id="ClientesBlo"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    @* Clientes eliminados *@
+
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card card-table mb-4">
+                                <div class="card-header card-header-options">
+                                    <span>@Model._Model.CliBaja.Titulo <span id="fechares"></span></span>
+                                    @* @Html.Partial("PanelActions") *@
+                                </div>
+                                <div class="card-block">
+                                    <div class="row">
+                                        <div class="col-5 pr-0">
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="w-50">Tipo de cliente</th>
+                                                        <th class="w-50 text-center">Nº de clientes</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @if (Model._Model.CliBaja.dat != null)
+                                                    {
+                                                        for (Int32 t = 0; t < Model._Model.CliBaja.dat.Length; t++)
+                                                        {
+                                                            <tr>
+                                                                <td scope="row">
+                                                                    <p class="mb-0 fw-5">@Model._Model.CliBaja.dat[t].datoS1</p>
+                                                                </td>
+                                                                <td class="text-center fw-5">@Model._Model.CliBaja.dat[t].datoI</td>
+                                                            </tr>
+                                                        }
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="col-7 card-table-chart">
+                                            <div class="googlechart">
+                                                <div id="ClientesBaja"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    @* Clientes nuevos relacionados *@
+
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card card-table mb-4">
+                                <div class="card-header card-header-options">
+                                    <span>@Model._Model.CliRelNuevos.Titulo <span id="fechares"></span></span>
+                                    @* @Html.Partial("PanelActions") *@
+                                </div>
+                                <div class="card-block">
+                                    <div class="row">
+                                        <div class="col-5 pr-0">
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="w-50">Cliente relacionado</th>
+                                                        <th class="w-50 text-center">Nº de clientes</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @if (Model._Model.CliRelNuevos.dat != null)
+                                                    {
+                                                        for (Int32 t = 0; t < Model._Model.CliRelNuevos.dat.Length; t++)
+                                                        {
+                                                            <tr>
+                                                                <td scope="row">
+                                                                    <p class="mb-0 fw-5">@Model._Model.CliRelNuevos.dat[t].datoS1</p>
+                                                                </td>
+                                                                <td class="text-center fw-5">@Model._Model.CliRelNuevos.dat[t].datoI</td>
+                                                            </tr>
+                                                        }
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="col-7 card-table-chart">
+                                            <div class="googlechart">
+                                                <div id="ClientesRelNuevos"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    @* Clientes relacionados bajas *@
+
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card card-table mb-4">
+                                <div class="card-header card-header-options">
+                                    <span>@Model._Model.CliRelBaja.Titulo <span id="fechares"></span></span>
+                                    @* @Html.Partial("PanelActions") *@
+                                </div>
+                                <div class="card-block">
+                                    <div class="row">
+                                        <div class="col-5 pr-0">
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="w-50">Cliente relacionado</th>
+                                                        <th class="w-50 text-center">Nº de clientes</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @if (Model._Model.CliRelBaja.dat != null)
+                                                    {
+                                                        for (Int32 t = 0; t < Model._Model.CliRelBaja.dat.Length; t++)
+                                                        {
+                                                            <tr>
+                                                                <td scope="row">
+                                                                    <p class="mb-0 fw-5">@Model._Model.CliRelBaja.dat[t].datoS1</p>
+                                                                </td>
+                                                                <td class="text-center fw-5">@Model._Model.CliRelBaja.dat[t].datoI</td>
+                                                            </tr>
+                                                        }
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="col-7 card-table-chart">
+                                            <div class="googlechart">
+                                                <div id="ClientesRelBajas"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    @* Clientes top 10 con más facturación *@
+
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card card-table mb-4">
+                                <div class="card-header card-header-options">
+                                    <span>@Model._Model.CliFac.Titulo <span id="fechares"></span></span>
+                                    @* @Html.Partial("PanelActions") *@
+                                </div>
+                                <div class="card-block">
+                                    <div class="row">
+                                        <div class="col-5 pr-0">
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="w-50">Cliente</th>
+                                                        <th class="w-25 text-center">Nº facturas</th>
+                                                        <th class="w-25 text-right">Total</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @if (Model._Model.CliFac.dat != null)
+                                                    {
+                                                        @for (Int32 t = 0; t < Model._Model.CliFac.dat.Length; t++)
+                                                        {
+                                                            <tr>
+                                                                <td scope="row">
+                                                                    <p class="mb-0 fw-5">@Model._Model.CliFac.dat[t].datoS1</p>
+                                                                </td>
+                                                                <td class="text-center fw-5">@Model._Model.CliFac.dat[t].datoI</td>
+                                                                <td class="text-right fw-5">@Model._Model.CliFac.dat[t].datoS3 €</td>
+                                                            </tr>
+                                                        }
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="col-7 card-table-chart">
+                                            <div class="googlechart">
+                                                <div id="CliFac"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    @* Clientes relacionados top 10 con más facturación *@
+
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card card-table mb-4">
+                                <div class="card-header card-header-options">
+                                    <span>@Model._Model.CliRelFac.Titulo <span id="fechares"></span></span>
+                                    @* @Html.Partial("PanelActions") *@
+                                </div>
+                                <div class="card-block">
+                                    <div class="row">
+                                        <div class="col-5 pr-0">
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="w-50">Cliente</th>
+                                                        <th class="w-25 text-center">Nº facturas</th>
+                                                        <th class="w-25 text-right">Total</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @if (Model._Model.CliRelFac.dat != null)
+                                                    {
+                                                        @for (Int32 t = 0; t < Model._Model.CliRelFac.dat.Length; t++)
+                                                        {
+                                                            <tr>
+                                                                <td scope="row">
+                                                                    <p class="mb-0 fw-5">@Model._Model.CliRelFac.dat[t].datoS1</p>
+                                                                </td>
+                                                                <td class="text-center fw-5">@Model._Model.CliRelFac.dat[t].datoI</td>
+                                                                <td class="text-right fw-5">@Model._Model.CliFac.dat[t].datoS3 €</td>
+                                                            </tr>
+                                                        }
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="col-7 card-table-chart">
+                                            <div class="googlechart">
+                                                <div id="CliFacRel"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    @* Clientes relacionados Top 10 con más número de facturas *@
+
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card card-table mb-4">
+                                <div class="card-header card-header-options">
+                                    <span>@Model._Model.CliRelNumFac.Titulo <span id="fechares"></span></span>
+                                    @* @Html.Partial("PanelActions") *@
+                                </div>
+                                <div class="card-block">
+                                    <div class="row">
+                                        <div class="col-5 pr-0">
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="w-50">Cliente</th>
+                                                        <th class="w-25 text-center">Nº facturas</th>
+                                                        <th class="w-25 text-right">Total</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @if (Model._Model.CliRelNumFac.dat != null)
+                                                    {
+                                                        @for (Int32 t = 0; t < Model._Model.CliRelNumFac.dat.Length; t++)
+                                                        {
+                                                            <tr>
+                                                                <td scope="row">
+                                                                    <p class="mb-0 fw-5">@Model._Model.CliRelNumFac.dat[t].datoS1</p>
+                                                                </td>
+                                                                <td class="text-center fw-5">@Model._Model.CliRelNumFac.dat[t].datoI</td>
+                                                                <td class="text-right fw-5">@Model._Model.CliRelNumFac.dat[t].datoS3 €</td>
+                                                            </tr>
+                                                        }
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="col-7 card-table-chart">
+                                            <div class="googlechart">
+                                                <div id="CliFacNumRel"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

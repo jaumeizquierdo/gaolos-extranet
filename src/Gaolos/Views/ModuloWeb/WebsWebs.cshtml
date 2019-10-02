@@ -1,0 +1,138 @@
+﻿@model WebsLibrary.WebsWebsListadoViewModel
+
+@{
+    Layout = "~/Views/Shared/Modulo-Web/_Modulo-Web.cshtml";
+    ViewData["Title"] = "Webs - Listado de webs";
+    ViewData["Title-Bloque-1"] = "Webs";
+    ViewData["Message"] = "CMS - Gaolos App v2017";
+}
+
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                @if (Model.Model.Err.eserror)
+                {
+                    ViewData["err"] = Model.Model.Err.mensaje;
+                    @Html.Partial("AccesoDenegado");
+                }
+                else
+                {
+
+                    @* Buscador de dominios *@
+
+                <div class="card mb-3">
+                    <div class="card-header card-header-options">
+                        <span>Buscar web</span>
+
+                        <div class="card-actions">
+                            <ul>
+                                <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="card-block p-0">
+                        <form action="@ViewData["Form"]" method="post">
+                            <div class="d-flex justify-content-center align-items-center">
+                                <div class="col-1 text-center box-border-right-light py-2">
+                                    <img src="~/flaticons/business/085-browser.svg" style="width: 100%;">
+                                </div>
+                                <div class="col-11">
+
+                                    <div class="row p-0">
+                                        <div class="col-12 p-0">
+                                            <div class="d-flex mb-0 px-3">
+
+                                                <div class="input-group card-search-box">
+                                                    <input type="text" class="form-control" placeholder="Buscar por..." name="buscar" value="@ViewData["buscar"]">
+                                                    <span class="input-group-append">
+                                                        <button class="btn btn-primary btn-sm" type="submit">BUSCAR</button>
+                                                    </span>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+
+                    @* Listado de dominios *@
+
+                    <div class="card card-table">
+                        <div class="card-header card-header-options">
+                            <span>@ViewData["Title-Bloque-1"]</span>
+                        </div>
+                        <div class="card-block">
+
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Alta</th>
+                                        <th>Url</th>
+                                        <th>Url Beta</th>
+                                        <th class="text-center">Nodo</th>
+                                        <th class="text-center">Global</th>
+                                        <th class="text-center">Pasarela</th>
+                                        <th class="text-center">Pre-Autorización</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (Model != null)
+                                    {
+                                        for (Int32 t = 0; t < Model.Model.num; t++)
+                                        {
+                                            <tr class="dominio-urls" id="dom_@Model.Model.det[t].ID_Tv">
+                                                <td class="fw-5">@Model.Model.det[t].Fe_Al</td>
+                                                <td><a href="/modulo-web/webs/web"><strong>@Model.Model.det[t].Url</strong></a></td>
+                                                <td class="fw-5">@Model.Model.det[t].UrlBeta</td>
+                                                @{
+                                                    string str = "<i class='fa fa-times text-danger'></i>";
+                                                    if (Model.Model.det[t].Nodo) { str = "<i class='fa fa-check text-success'></i>"; }
+                                                }
+                                                <td class="text-center">@Html.Raw(str)</td>
+                                                @{
+                                                    str = "<i class='fa fa-times text-danger'></i>";
+                                                    if (Model.Model.det[t].Global) { str = "<i class='fa fa-check text-success'></i>"; }
+                                                }
+                                                <td class="text-center">@Html.Raw(str)</td>
+                                                @{
+                                                    str = "<i class='fa fa-times text-danger'></i>";
+                                                    if (Model.Model.det[t].HayPasa) { str = "<i class='fa fa-check text-success'></i>"; }
+                                                }
+                                                <td class="text-center">@Html.Raw(str)</td>
+                                                @{
+                                                    str = "<i class='fa fa-times text-danger'></i>";
+                                                    if (Model.Model.det[t].PreAuto) { str = "<i class='fa fa-check text-success'></i>"; }
+                                                }
+                                                <td class="text-center">@Html.Raw(str)</td>
+                                            </tr>
+                                                        }
+                                                    }
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+
+                    @Html.Raw(Model.Model.Paginador)
+                }
+            </div>
+        </div>
+    </div>
+</div>

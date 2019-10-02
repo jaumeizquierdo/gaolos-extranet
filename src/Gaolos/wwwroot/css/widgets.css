@@ -1,0 +1,9 @@
+/* Dashboards Widgets */
+/* Mixins */
+/* Skin v4.6 - White / Dark / Blue */
+.widget {
+  border: 1px solid #eeeeee;
+  padding: 0;
+  margin: 0 0 3em 0;
+  box-shadow: 0 2px 0 #eeeeee;
+  border-radius: 2px; }

@@ -1,0 +1,166 @@
+﻿@model WebsLibrary.WebsReferidosViewModel
+
+@{
+    Layout = "~/Views/Shared/Webs/_Webs.cshtml";
+    ViewData["Title"] = "Webs - Listado de referidos";
+    ViewData["Message"] = "Web - Gaolos App v2017";
+}
+
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                @if (Model.Model.Err.eserror)
+                {
+                    ViewData["err"] = Model.Model.Err.mensaje;
+                    @Html.Partial("AccesoDenegado");
+                }
+                else
+                {
+                    @* Buscador de dominios *@
+
+                <div class="card mb-3">
+                    <div class="card-header card-header-options">
+                        <span>Buscar referidos</span>
+
+                        <div class="card-actions">
+                            <ul>
+                                <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="card-block p-0">
+                        <form action="@ViewData["Form"]" method="post">
+                            <div class="d-flex justify-content-center align-items-center">
+                                <div class="col-1 text-center box-border-right-light py-2">
+                                    <img src="~/flaticons/pay-per-click-1.svg" style="width: 100%;">
+                                </div>
+                                <div class="col-11">
+
+                                    <div class="row p-0">
+                                        <div class="col-12 p-0">
+                                            <div class="d-flex mb-0 px-3">
+
+                                                <div class="input-group card-search-box">
+                                                    <input type="text" class="form-control" placeholder="Buscar referidos..." name="buscar" value="@ViewData["buscar"]">
+                                                    <span class="input-group-append">
+                                                        <button class="btn btn-primary btn-sm" type="submit">BUSCAR</button>
+                                                    </span>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    
+                </div>
+
+                    <div class="row">
+                        <div class="col-8">
+                            @* Listado de dominios *@
+
+                            <div class="card card-table">
+                                <div class="card-header card-header-options">
+                                    <span>Referidos</span>
+                                    <a href="#" class="btn btn-sm btn-primary nuevo-referido">Nuevo</a>
+                                </div>
+                                <div class="card-block">
+
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Alta</th>
+                                                <th class="">Referencia</th>
+                                                <th class="">Título</th>
+                                                <th class="">Url</th>
+                                                <th class="">Última entrada</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (Model != null)
+                                            {
+                                                for (Int32 t = 0; t < Model.Model.num; t++)
+                                                {
+                                                    <tr class="dominio-urls" id="dom_@Model.Model.det[t].Fe_Al">
+                                                        <td><small class="fw-5">31/10/2017</small></td>
+                                                        <td><a href="#"><strong>@Model.Model.det[t].Ref</strong></a></td>
+                                                        <td class=""><strong>@Model.Model.det[t].Obs</strong></td>
+                                                        <td class=""><strong>@Model.Model.det[t].Url</strong></td>
+                                                        <td class=""><small class="fw-5">@Model.Model.det[t].Fe_Ul (@Model.Model.det[t].NumVis)</small></td>
+                                                    </tr>
+                                                }
+                                            } else
+                                            {
+                                                <tr><td colspan="5" class="text-danger">No hay resultados</td></tr>
+
+                                            }
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+
+                            @Html.Raw(Model.Model.Paginador)
+                        </div>
+                        <div class="col-4">
+                            <div class="card" style="display:none;" id="nuevo">
+
+                                <div class="card-header card-header-options">
+                                    <span>Nuevo referido</span>
+                                    <div class="card-actions">
+                                        <ul>
+                                            <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="card-block">
+
+                                    <div class="row justify-content-md-center">
+                                        <div class="col-12">
+                                            <div class="form-group mb-1">
+                                                <label for="zonasSelect" class="col-form-label">Título</label>
+                                                <input type="text" class="form-control" id="Tit" placeholder="Título" maxlength="200">
+                                            </div>
+                                            <div class="form-group mb-1">
+                                                <label for="zonasSelect" class="col-form-label">Exposición</label>
+                                                <input type="text" class="form-control" id="Expo" placeholder="Exposición">
+                                            </div>
+                                            <div class="form-group mb-1">
+                                                <label for="tiposSelect" class="col-form-label">Dominio</label>
+                                                <select class="form-control custom-select" id="ID_Url">
+                                                </select>
+                                            </div>
+                                            <div class="form-group mb-1">
+                                                <label for="tiposSelect" class="col-form-label">Referencia</label>
+                                                <input type="text" class="form-control" id="Ref" placeholder="Referido" maxlength="200">
+                                            </div>
+                                            <div class="form-group mb-0 mt-3 text-center">
+                                                <button type="button" class="btn btn-primary btn-sm nuevo-referido-crear">Crear</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

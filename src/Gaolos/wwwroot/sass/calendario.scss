@@ -1,0 +1,267 @@
+﻿/* Calenarios */
+/* https://github.com/uxsolutions/bootstrap-datepicker */
+
+@import "variables.scss";
+@import "materialdesign.scss";
+
+.date {
+    cursor: pointer;
+}
+
+.datepicker-dropdown {
+    background: #fff !important;
+    border-radius: $border-radius-menu;
+    border: 1px solid rgba(0, 0, 0, 0.15) !important;
+    table {
+        font-size: 0.9rem;
+        width: 100%;
+        td {
+            padding: 0.2rem 0.5rem;
+            font-weight: 500;
+            border-bottom: none !important;
+        }
+        td.active {
+            background-color: $md-blue-500 !important;
+            background-image: none !important;
+        }
+        tr:hover {
+            td {
+                background: none;
+            }
+        }
+    }
+    li {
+        margin: $dropdown-menu-li-margin;
+        padding: $dropdown-menu-li-padding;
+        a, button {
+            font-size: 0.9rem !important;
+            &:hover {
+                color: $dropdown-menu-li-a-hover-color;
+                background: $dropdown-menu-li-a-hover-bg;
+            }
+        }
+        button {
+            cursor: pointer;
+        }
+    }
+}
+
+/* Calendario Tareas */
+
+.calendario-tareas {
+    //border-top: 1px solid $md-grey-300;
+    th {
+        width: 14.2% !important;
+    }
+    tr {
+        td {
+            border-right: 1px solid $md-grey-300;
+            border-bottom: 1px solid $md-grey-300;
+            padding: 0 !important;
+            cursor: pointer;
+            div {
+                padding: 0.3rem;
+                margin: 0.2rem;
+                border-radius: 3px;
+                border: 1px solid transparent;
+                p {
+                    font-size: 0.9em;
+                    margin-bottom: 0.5em;
+                }
+                &:hover {
+                    border: 1px solid $md-light-blue-100;
+                    background: $md-light-blue-50;
+                }
+            }
+        }
+        td:last-child {
+            border-right: none;
+        }
+    }
+    tr:last-child {
+        border-bottom: none;
+    }
+    .tarea-alta,
+    .tarea-media,
+    .tarea-baja,
+    .tarea-none {
+        display: block;
+        text-align: center;
+        margin: 0 auto;
+        border-radius: 4px;
+        color: #fff;
+        width: 30px;
+        font-size: 0.9em;
+    }
+    .tarea-alta {
+        background: $md-red-700;        
+    }
+    .tarea-media {
+        background: $md-amber-500;
+    }
+    .tarea-baja {
+        background: $md-green-500;
+    }
+    .tarea-empty {
+        background: none;
+    }
+    .tarea-empty:before {
+        content: "\20";
+        height: 20px;
+        display: block;
+    }
+    .tarea-no-laborable {
+        div {
+            background: #ebebeb;
+        }
+    }
+    .tarea-festivo {
+        div {
+            background: $md-purple-50;
+            border: 1px solid $md-purple-200;
+        }
+    }
+    .tarea-dia-en-curso {
+        div {
+            background: $md-red-50;
+            border: 1px solid $md-red-200;
+        }
+    }
+    .tarea-vacaciones {
+        div {
+            background: $md-blue-50;
+            border: 1px solid $md-blue-300;
+        }
+    }
+
+}
+
+/* ASISTENCIAS CARGA DE TRABAJO */
+/* /modulo-asistencias/carga-de-trabajo */
+
+.carga {
+    font-size: 0.9em;
+    border-radius: 2px;
+    box-shadow: 0px 1px 2px $md-grey-300;
+
+    &:hover {
+        @include fade-link;
+    }
+}
+
+.carga-header {
+    color: #fff;
+    padding: 0.2em 0.3em;
+    border-radius: 2px;
+    a {
+        color: #fff !important;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
+
+.carga-info {
+    border-radius: 2px;
+    background: #fff;
+    padding: 0.2em 0.3em;
+    .round-item {
+        a {
+            color: #fff;
+            font-weight: 500;
+            &:hover {
+                color: #fff !important;
+            }
+        }
+    }
+}
+
+.carga-urgente {
+    .carga-header {
+        background: $md-red-a400;
+    }
+
+    .carga-info {
+        border: 1px solid $md-red-100;
+    }
+
+    border: 1px solid $md-red-100;
+    background: $md-red-50;
+
+    i {
+        color: $md-red-a400;
+    }
+
+    a {
+        color: $md-red-a400;
+
+        &:hover {
+            color: $md-red-a700;
+            text-decoration: underline;
+        }
+    }
+
+    &:hover {
+        border: 1px solid $md-red-200;
+    }
+}
+
+.carga-concluida {
+    .carga-header {
+        background: $md-teal-500;
+    }
+
+    .carga-info {
+        border: 1px solid $md-teal-100;
+    }
+
+    border: 1px solid $md-teal-100;
+    background: $md-teal-50;
+
+    i {
+        color: $md-teal-500;
+    }
+
+    a {
+        color: $md-teal-800;
+
+        &:hover {
+            color: $md-teal-900;
+            text-decoration: underline;
+        }
+    }
+
+    &:hover {
+        border: 1px solid $md-teal-200;
+    }
+}
+
+.carga-en-curso {
+    .carga-header {
+        background: $md-blue-grey-800;
+    }
+
+    .carga-info {
+        border: 1px solid $md-blue-grey-100;
+    }
+
+    border: 1px solid $md-blue-grey-100;
+    background: #fff;
+
+    i {
+        color: $md-blue-500;
+    }
+
+    a {
+        color: $md-blue-500;
+
+        &:hover {
+            color: $md-red-a400;
+            text-decoration: underline;
+        }
+    }
+    &:hover {
+        border: 1px solid $md-blue-grey-200;
+    }
+}

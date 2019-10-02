@@ -1,0 +1,384 @@
+﻿@model CursosLibrary.ModuloCursosCursoDetallesEditar_GeneralViewModel
+@{
+    Layout = "~/Views/Shared/Modulo-Cursos/_Cursos-Curso.cshtml";
+    ViewData["Title"] = "Curso";
+    ViewData["Message"] = "Modulo de cursos - Gaolos App v2017";
+}
+
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section mb-0">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+@if(Model.Model.Err.eserror)
+{
+    ViewData["err"] = Model.Model.Err.mensaje;
+    @Html.Partial("AccesoDenegado");
+}
+else
+{
+    @* tabs *@
+
+    @Html.Partial("Curso-Tabs")
+
+    @* cabecera *@
+
+    @Html.Partial("Curso-Cabecera")
+
+                <div class="card mb-3">
+                    <div class="card-header card-header-options">
+                        <span>Curso</span>
+                        <div class="card-actions">
+                            <ul>
+                                <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-block p-0">
+                        <div class="sel-dates">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="d-flex pt-2 px-2">
+                                        <div class="input-group input-group-sm mb-0">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Nombre del curso</span>
+                                            </div>
+                                            <input type="text" class="form-control" placeholder="Nombre del curso" id="Curso" value="@Model.Model.Curso" maxlength="200" />
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex pt-2 px-2">
+                                        <div class="input-group input-group-sm mr-2">
+                                            <div class="input-group-prepend">
+                                                <label class="input-group-text input-group-text-auto">Tipo</label>
+                                            </div>
+                                            <select class="custom-select" id="ID_TipoCurso">
+                                                @if (Model.Model.TiposCursos != null)
+                                                {
+                                                    @for (Int32 t = 0; t < Model.Model.TiposCursos.Length; t++)
+                                                    {
+                                                        @if (Model.Model.TiposCursos[t].id.ToString() == Model.Model.ID_TipoCurso.ToString())
+                                                        {
+                                                            <option value="@Model.Model.TiposCursos[t].id" selected>@Model.Model.TiposCursos[t].det</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="@Model.Model.TiposCursos[t].id">@Model.Model.TiposCursos[t].det</option>
+                                                        }
+                                                    }
+                                                }
+                                            </select>
+                                        </div>
+                                        <div class="input-group input-group-sm mr-2">
+                                            <div class="input-group-prepend">
+                                                <label class="input-group-text input-group-text-auto">Nivel</label>
+                                            </div>
+                                            <select class="custom-select" id="ID_Nivel">
+                                                <option value="0">- seleccione nivel -</option>
+                                            </select>
+                                        </div>
+                                        <div class="input-group input-group-sm mr-2">
+                                            <div class="input-group-prepend">
+                                                <label class="input-group-text input-group-text-auto">Plazas</label>
+                                            </div>
+                                            <input type="text" class="form-control" placeholder="Plazas" id="Plazas" value="@Model.Model.PlazasTotal" />
+                                        </div>
+                                        <div class="input-group input-group-sm">
+                                            <div class="input-group-prepend">
+                                                <label class="input-group-text">Centro de coste</label>
+                                            </div>
+                                            <select class="custom-select" id="ID_CentroCoste">
+                                                <option value="0">- seleccione centro de coste -</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex pt-2 px-2">
+                                        <div class="input-group input-group-sm mr-2">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text input-group-text-auto">Fecha inicio publicación</span>
+                                            </div>
+                                            <input type="text" class="form-control" placeholder="Fecha inicio publicación" id="Fe_In_Pub" value="@Model.Model.Fe_In_Pub" />
+                                        </div>
+                                        <div class="input-group input-group-sm mr-2">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text input-group-text-auto">Fecha fin publicación</span>
+                                            </div>
+                                            <input type="text" class="form-control" placeholder="Fecha fin publicación" id="Fe_Fi_Pub" value="@Model.Model.Fe_Fi_Pub" />
+                                        </div>
+                                        <div class="input-group input-group-sm mr-2">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text input-group-text-auto">Fecha inicio inscripción</span>
+                                            </div>
+                                            <input type="text" class="form-control" placeholder="Fecha inicio inscripción" id="Fe_In_Ins" value="@Model.Model.Fe_In_Ins" />
+                                        </div>
+                                        <div class="input-group input-group-sm">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text input-group-text-auto">Fecha fin inscripción</span>
+                                            </div>
+                                            <input type="text" class="form-control" placeholder="Fecha fin inscripción" id="Fe_Fi_Ins" value="@Model.Model.Fe_Fi_Ins" />
+                                        </div>
+                                       
+                                    </div>
+
+                                    <div class="d-flex pt-2 px-2">
+                                        <div class="input-group input-group-sm mr-2">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text input-group-text-auto">Fecha actualización</span>
+                                            </div>
+                                            <input type="text" class="form-control" placeholder="Fecha actualización" id="Fe_Act" value="@Model.Model.Fe_Act" />
+                                        </div>
+                                        <div class="input-group input-group-sm mr-2">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text input-group-text-auto">IVA %</span>
+                                            </div>
+                                            <input type="text" class="form-control" placeholder="IVA %" id="IVA" value="@Model.Model.IVA" />
+                                        </div>
+                                        <div class="input-group input-group-sm mr-2">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text input-group-text-auto">Prioridad</span>
+                                            </div>
+                                            <input type="text" class="form-control" placeholder="Prioridad" id="Prioridad" value="@Model.Model.Prioridad" />
+                                        </div>
+                                        <div class="input-group input-group-sm">
+                                            <div class="input-group-prepend">
+                                                <label class="input-group-text">Agente</label>
+                                            </div>
+                                            <select class="custom-select" id="ID_Us_Agente">
+                                                @if (Model.Model.Agentes != null)
+                                                {
+                                                    @for (Int32 t = 0; t < Model.Model.Agentes.Length; t++)
+                                                    {
+                                                        @if (Model.Model.Agentes[t].id.ToString() == Model.Model.ID_Us_Agente.ToString())
+                                                        {
+                                                            <option value="@Model.Model.Agentes[t].id" selected>@Model.Model.Agentes[t].det</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="@Model.Model.Agentes[t].id">@Model.Model.Agentes[t].det</option>
+                                                        }
+                                                    }
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex pt-2 px-2">
+                                        <div class="input-group input-group-sm">
+                                            <div class="input-group-prepend">
+                                                <label class="input-group-text">Observaciones</label>
+                                            </div>
+                                            <textarea class="form-control" placeholder="Observaciones" id="Obs">@Model.Model.Obs</textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex p-2">
+                                        @{
+                                            if (!Model.Model.online)
+                                            {
+                                            <div class="d-flex align-items-center">
+                                                <input type="checkbox" class="mr-2" id="online">
+                                                <span class="fw-5">Curso on-line</span>
+                                            </div>
+                                            }
+                                            else
+                                            {
+                                            <div class="d-flex align-items-center">
+                                                <input type="checkbox" class="mr-2" id="online" checked>
+                                                <span class="fw-5">Curso on-line</span>
+                                            </div>
+                                            }
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-center box-guardar">
+                                <button type="submit" class="btn btn-sm btn-primary curso-guardar-general">Guardar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-5">
+                        <div class="card card-table mb-3">
+                            <div class="card-header card-header-options">
+                                <span>Precios</span>
+                                <div class="card-actions">
+                                    <ul>
+                                        <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="card-block">
+                                <table class="table table-striped table-select">
+                                    <thead>
+                                        <tr>
+                                            <th class="">Tarifa</th>
+                                            <th class="w-20">Precio</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (Model.Model.Precios != null)
+                                        {
+                                            @for (Int32 t = 0; t < Model.Model.Precios.Length; t++)
+                                            {
+                                                <tr>
+                                                    <td>
+                                                        <p class="mb-0 fw-5">@Model.Model.Precios[t].datoS1</p>
+                                                    </td>
+                                                    <td>
+                                                        @{
+                                                            string id = "Precio_" + Model.Model.Precios[t].datoI.ToString() + "_" + Convert.ToInt32(Model.Model.Precios[t].datoD).ToString();
+                                                        }
+                                                        <div class="input-group">
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text input-group-text-auto">€</span>
+                                                            </div>
+                                                            <input type="text" class="form-control precios-curso" placeholder="Precio" value="@Model.Model.Precios[t].datoS2" id="@id">
+                                                        </div>
+
+                                                    </td>
+                                                </tr>
+                                            }
+                                         }
+                                        else
+                                        {
+                                            <tr>
+                                                <td colspan="2">
+                                                    <p class='fw-5 text-danger mb-0'><i class='fa fa-exclamation-circle mr-1'></i> No hay resultados</p>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                                <div class="d-flex justify-content-center box-guardar">
+                                    <button type="submit" class="btn btn-sm btn-primary curso-guardar-general-precios">Guardar</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card card-table">
+                            <div class="card-header card-header-options">
+                                <span>Duplicar curso</span>
+                            </div>
+                            <div class="card-block p-3 text-center">
+                                <button type="button" class="btn btn-sm btn-primary curso-duplicar">Duplicar</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-5">
+                        <div class="card card-table">
+                            <div class="card-header card-header-options">
+                                <span>Edades</span>
+                            </div>
+                            <div class="card-block">
+                                <table class="table table-striped table-select">
+                                    <thead>
+                                        <tr>
+                                            <th class="">Nombre</th>
+                                            <th class="text-center">De</th>
+                                            <th class="text-center">A</th>
+                                            <th class="text-center">Eliminar</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (Model.Model.Edades!=null)
+                                        {
+                                            @for (Int32 t = 0; t < Model.Model.Edades.Length; t++)
+                                            {
+                                                <tr>
+                                                    <td>
+                                                        <p class="mb-0 fw-5">@Model.Model.Edades[t].datoS1</p>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <p class="mb-0 fw-5">@Model.Model.Edades[t].datoS2</p>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <p class="mb-0 fw-5">@Model.Model.Edades[t].datoS3</p>
+                                                    </td>
+                                                    <td class="text-center w-20">
+                                                        <a href="#" class="text-danger curso-eliminar-general-edad" id="edad_@Model.Model.Edades[t].datoI"><i class="fa fa-times" aria-hidden="true"></i></a>
+                                                    </td>
+                                                </tr>
+                                            }
+
+                                        }
+                                        else
+                                        {
+                                            <tr>
+                                                <td colspan="4">
+                                                    <p class='fw-5 text-danger mb-0'><i class='fa fa-exclamation-circle mr-1'></i> No hay resultados</p>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <div class="card">
+                            <div class="card-header card-header-options">
+                                <span>Nueva edad</span>
+                                <div class="card-actions">
+                                    <ul>
+                                        <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="card-block p-0">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="d-flex pt-2 px-2">
+                                            <div class="input-group input-group-sm">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text input-group-text-auto">Nombre</span>
+                                                </div>
+                                                <input type="text" class="form-control" placeholder="Nombre" maxlength="50" id="NomEdad">
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex p-2 px-2">
+                                            <div class="d-flex">
+                                                <div class="input-group input-group-sm mr-2">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text input-group-text-auto">De</span>
+                                                    </div>
+                                                    <input type="text" class="form-control" placeholder="De" id="DeEdad">
+                                                </div>
+                                            </div>
+                                            <div class="d-flex">
+                                                <div class="input-group input-group-sm">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text input-group-text-auto">A</span>
+                                                    </div>
+                                                    <input type="text" class="form-control" placeholder="a" id="AEdad">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-center box-guardar">
+                                    <button type="submit" class="btn btn-sm btn-primary curso-guardar-general-edad">Guardar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+}
+            </div>
+        </div>
+    </div>
+</div>

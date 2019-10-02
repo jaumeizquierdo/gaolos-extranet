@@ -1,0 +1,201 @@
+﻿@model GaolosMantenimientoModel.GaolosMantenimientoModulosListadoViewModel
+
+@{
+    Layout = "~/Views/Shared/Gaolos-Mantenimiento/_GaolosMantenimiento.cshtml";
+    ViewData["Title"] = "Gaolos Mantenimiento";
+    ViewData["Message"] = "Gaolos Mantenimiento - Gaolos App v2017";
+}
+
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+                @if(Model.Model.Err.eserror)
+    {
+        ViewData["err"] = Model.Model.Err.mensaje;
+                @Html.Partial("AccesoDenegado");
+    }
+    else
+    {
+
+                @* Buscar usuarios *@
+
+                <div class="card mb-3">
+                    <div class="card-header card-header-options">
+                        <span>Buscar curso</span>
+
+                        <div class="card-actions">
+                            <ul>
+                                <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-block p-0">
+
+                        <form action="" method="post">
+                            <div class="d-flex justify-content-center align-items-center">
+                                <div class="col-1  pb-2 pt-2">
+                                    <img src="https://image.flaticon.com/icons/svg/321/321777.svg" style="width: 100%;">
+                                </div>
+                                <div class="col-11 box-border-left-light">
+
+                                    <div class="row p-0">
+                                        <div class="col-12 p-0">
+                                            <div class="container-fluid">
+                                                <div class="d-flex pt-3">
+                                                    <div class="input-group input-group-sm mb-0 mr-2">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text input-group-text-auto" id="">Buscar</span>
+                                                        </div>
+                                                        <input type="text" class="form-control" placeholder="Buscar módulo" name="buscar" value="@ViewData["buscar"]">
+                                                    </div>
+                                                    <div class="input-group input-group-sm mb-0 ml-2 mr-2">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text input-group-text-auto" id="">Aplicación</span>
+                                                        </div>
+                                                        <select class="custom-select" name="">
+                                                            <option value="">Aplicación</option>
+                                                            
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+
+                                            <div class="d-flex mt-3 px-3">
+
+                                                <div class="d-flex align-items-center mr-3">
+                                                    <input name="" type="radio" class="mr-2" value="1">
+                                                    <span class="fw-5">Todo</span>
+                                                </div>
+
+                                                <div class="d-flex align-items-center mr-3">
+                                                    <input name="" type="radio" class="mr-2" value="5">
+                                                    <span class="fw-5">Solo global</span>
+                                                </div>
+
+                                                <div class="d-flex align-items-center mr-3">
+                                                    <input name="" type="radio" class="mr-2" value="4">
+                                                    <span class="fw-5">Solo Gaolos</span>
+                                                </div>
+
+                                            </div>
+                                            <div class="d-flex justify-content-center box-guardar mt-2">
+                                                <button type="submit" class="btn btn-sm btn-primary">Buscar</button>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </form>
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card card-table mb-3">
+                            <div class="card-header card-header-options">
+                                <span>Listado de módulos</span>
+                            </div>
+                            <div class="card-block">
+
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center w-5">Nº</th>
+                                            <th class="text-center w-10">Fecha alta</th>
+                                            <th class="text-center w-5">Icono</th>
+                                            <th>Módulo</th>
+                                            <th class="text-center w-5">Global</th>
+                                            <th class="text-center w-5">Gaolos</th>
+                                            <th class="text-center w-5">Base</th>
+                                            <th class="text-center w-5">Común</th>
+                                            <th class="text-center w-5">Oculto</th>
+                                            <th class="text-center w-5">Nº Apa.</th>
+                                            <th class="text-center w-5">Nº Acc.</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (Model.Model.det != null)
+                                        {
+                                            @for (Int32 t = 0; t < Model.Model.det.Length; t++)
+                                            {
+                                        <tr>
+                                            <td class="text-center"><p class="fw-5 mb-0">@Model.Model.det[t].ID_Modulo</p></td>
+                                            <td class="text-center">@Model.Model.det[t].Fe_Al</td>
+                                            <td class="text-center"><i class="material-icons mdc-text-blue-grey-500 mt-1" data-toggle="tooltip" data-placement="top" title="" data-original-title="@Model.Model.det[t].Icono">@Model.Model.det[t].Icono</i></td>
+                                            <td><a href="/gaolos-mantenimiento/modulos/modulo/?Modulo=@Model.Model.det[t].ID_Modulo" class="fw-5">@Model.Model.det[t].Modulo</a></td>
+                                            <td class="text-center">
+                                                @if (Model.Model.det[t].EsGlobal)
+                                                {
+                                                    <i class="fa fa-check text-success"></i>
+                                                }
+                                            </td>
+                                            <td class="text-center">
+                                                @if (Model.Model.det[t].EsGaolos)
+                                                {
+                                                    <i class="fa fa-check text-success"></i>
+                                                }
+                                            </td>
+                                            <td class="text-center">
+                                                @if (Model.Model.det[t].Base)
+                                                {
+                                                    <i class="fa fa-check text-success"></i>
+                                                }
+                                            </td>
+                                            <td class="text-center">
+                                                @if (Model.Model.det[t].Comun)
+                                                {
+                                                    <i class="fa fa-check text-success"></i>
+                                                }
+                                            </td>
+                                            <td class="text-center">
+                                                @if (Model.Model.det[t].Oculto)
+                                                {
+                                                    <i class="fa fa-check text-success"></i>
+                                                }
+                                            </td>
+                                            <td class="text-center">@Model.Model.det[t].Num</td>
+                                            <td class="text-center">@Model.Model.det[t].Num2</td>
+                                        </tr>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <tr>
+                                                <td colspan="11">
+                                                    <p class='fw-5 text-danger mb-0'><i class='fa fa-exclamation-circle mr-1'></i> No hay resultados</p>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                             @Html.Raw(Model.Model.Paginador) 
+                        </div>
+
+                    </div>
+                </div>
+
+}
+            </div>
+        </div>
+    </div>
+</div>

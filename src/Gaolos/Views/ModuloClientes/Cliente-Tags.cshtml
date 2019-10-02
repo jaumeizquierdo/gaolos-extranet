@@ -1,0 +1,105 @@
+﻿@model ModuloClientesLibrary.ModuloClientesClienteTagsViewModel
+@{
+    Layout = "~/Views/Shared/Modulo-Clientes/_Modulo-Clientes-Cliente.cshtml";
+    ViewData["Title"] = "Tags del cliente";
+}
+
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+                @if(Model.Model.Err.eserror)
+{
+    ViewData["err"] = Model.Model.Err.mensaje;
+                @Html.Partial("AccesoDenegado");
+}
+else
+{
+
+                @* cabecera cliente *@
+
+                @Html.Partial("Cliente-Cabecera")
+
+                @* tabs *@
+
+                @Html.Partial("Cliente-Tabs")
+
+                @* Listado de direcciones *@
+
+                <div class="row">
+                    <div class="col-6">
+
+                        <div class="card mb-3">
+                            <div class="card-header card-header-options">
+                                <span>Tags</span>
+                            </div>
+                            <div class="card-block p-2">
+
+                                <div class="form-group text-center px-3">
+
+                                    <div class="input-group input-group-sm ui-widget">
+                                        <input type="text" class="form-control ui-autocomplete-input" value="" placeholder="Buscar tag" id="buscartagcli" name="buscartagcli" autocomplete="off">
+                                        <input id="vbuscartagcli" name="vbuscartagcli" type="hidden" value="0"><input id="tbuscartagcli" name="tbuscartagcli" type="hidden" value="">
+                                        <span class="input-group-append">
+                                            <button class="btn btn-primary clis-cli-add-tag" type="button">Añadir</button>
+                                        </span>
+                                    </div>
+                                    <div class="mt-3 mb-0" id="vertags">
+                                        @if (Model.Model.Tags != null)
+                                        {
+                                            for (Int32 t = 0; t < Model.Model.Tags.Length; t++)
+                                            {
+                                        <span class="badge badge-pill badge-default p-2 mt-1" id="elem-del-cli-tag_@Model.Model.Tags[t].id">
+                                            <i class="fa fa-tag ml-1 mr-1"></i> <a href="#" class="fw-5">@Model.Model.Tags[t].det</a> <a href="#" class="clis-cli-del-tag" id="del-cli-tag_@Model.Model.Tags[t].id"><i class="fa fa-times"></i></a>
+                                        </span>
+                                            }
+                                        }
+
+
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-6">
+                        <div class="card mb-3">
+                            <div class="card-header card-header-options">
+                                <span>Información</span>
+                            </div>
+                            <div class="card-block p-0">
+
+                                <div class="card-info-wrapper w-100">
+                                    <div class="card-info py-2 px-3">
+                                        <div class="d-flex justify-content-center align-items-center">
+                                            <img src="https://image.flaticon.com/icons/svg/609/609998.svg" style="width: 14%;">
+                                            <p class="mb-2 ml-3">En este apartado se muestran los Tags asociados al cliente. Podemos vincular Tags existentes, añadir nuevos Tags y eliminar la vinculación del Tag con el cliente.</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+}
+            </div>
+        </div>
+    </div>
+</div>
+

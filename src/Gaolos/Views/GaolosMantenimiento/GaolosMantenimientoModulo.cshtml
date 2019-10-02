@@ -1,0 +1,295 @@
+﻿@model GaolosMantenimientoModel.GaolosMantenimientoModulosModuloViewModel
+
+@{
+    Layout = "~/Views/Shared/Gaolos-Mantenimiento/_GaolosMantenimiento.cshtml";
+    ViewData["Title"] = "Mantenimiento - " + Model.Model.Modulo;
+    ViewData["Message"] = "Gaolos Mantenimiento - Gaolos App v2017";
+}
+
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+                @if (Model.Model.Err.eserror)
+                {
+                    ViewData["err"] = Model.Model.Err.mensaje;
+                    @Html.Partial("AccesoDenegado");
+                }
+                else
+                {
+
+                    @* Buscar usuarios *@
+
+                    <div class="card mb-3">
+                        <div class="card-header card-header-options">
+                            <span>Información módulo</span>
+                            <div class="card-actions">
+                                <ul>
+                                    <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card-block p-0">
+                            <div class="d-flex justify-content-center align-items-center">
+                                <div class="col-1 pb-2 pt-2">
+                                    <img src="https://image.flaticon.com/icons/svg/321/321777.svg" style="width: 100%;">
+                                </div>
+                                <div class="col-11 pt-2 pb-2 box-border-left-light">
+                                    <h5 class="fw-5 title-section">@Model.Model.Modulo</h5>
+                                    <div class="d-flex">
+                                        <div class="box-grey-bg mr-3">
+                                            <p class="mb-0"><small class="fw-5"><span class="mr-1">Nº módulo:</span> <span class="text-danger">@Model.Model.ID_Modulo</span></small></p>
+                                            <p class="mb-0"><small class="fw-5"><span class="mr-1">Alta:</span> <span class="text-danger">@Model.Model.Fe_Al</span></small></p>
+                                            <p class="mb-0"><small class="fw-5"><span class="mr-1">Nombre módulo:</span> <span class="text-danger">@Model.Model.Modulo</span></small></p>
+                                            <p class="mb-0"><small class="fw-5"><span class="mr-1">Aplicación:</span> <span class="text-danger">@Model.Model.App</span></small></p>
+                                            <div class="pt-2 pb-1 px-0">
+                                                @if (Model.Model.EsGlobal)
+                                                {
+                                                    <span class="badge badge-pill badge-danger p-1 px-2 mb-0 fw-6 fs-0-7">Global</span>
+                                                }
+                                                @if (Model.Model.EsGaolos)
+                                                {
+                                                    <span class="badge badge-pill badge-danger p-1 px-2 mb-0 fw-6 fs-0-7">Gaolos</span>
+                                                }
+                                                @if (Model.Model.Base)
+                                                {
+                                                    <span class="badge badge-pill badge-danger p-1 px-2 mb-0 fw-6 fs-0-7">Base</span>
+                                                }
+                                                @if (Model.Model.Comun)
+                                                {
+                                                    <span class="badge badge-pill badge-danger p-1 px-2 mb-0 fw-6 fs-0-7">Común</span>
+                                                }
+                                                @if (Model.Model.Oculto)
+                                                {
+                                                    <span class="badge badge-pill badge-danger p-1 px-2 mb-0 fw-6 fs-0-7">Oculto</span>
+                                                }
+                                            </div>
+                                        </div>
+
+                                        <div class="box-grey-bg mr-3 d-flex align-center justify-content-center">
+                                            <i class="material-icons ico m-0 mdc-text-blue-grey-200 d-flex align-items-center" style="font-size: 5em;" data-toggle="tooltip" data-placement="top" title="" data-original-title="@Model.Model.Icono">@Model.Model.Icono</i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card card-table mb-3">
+                                <div class="card-header card-header-options">
+                                    <span>Modificar</span>
+                                    <input type="hidden" id="ID_Modulo" value="@Model.Model.ID_Modulo">
+                                </div>
+                                <div class="card-block p-0">
+                                    <div class="d-flex p-0">
+
+                                        <div class="d-flex col-4 mb-1 p-1 pt-2 pl-2">
+                                            <div class="input-group input-group-sm mb-0">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text input-group-text-auto">Vista</span>
+                                                </div>
+                                                <input type="text" class="form-control" id="Vista" value="@Model.Model.Vista" placeholder="Nombre vista">
+                                                <div class="input-group-append">
+                                                    <button class="btn btn-primary btn-sm cambiar-vista" type="submit">Guardar</button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex col-4 mb-1 pt-2 p-1">
+                                            <div class="input-group input-group-sm mb-0">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text input-group-text-auto">Icono</span>
+                                                </div>
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text input-group-text-auto"><i class="material-icons ico m-0 mdc-text-blue-grey-300 d-flex align-items-center">@Model.Model.Icono</i></span>
+                                                </div>
+                                                <input type="text" class="form-control" id="Ico" value="@Model.Model.Icono" placeholder="Icono">
+                                                <div class="input-group-append">
+                                                    <button class="btn btn-primary btn-sm cambiar-icono" type="button">Guardar</button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        @*<div class="d-flex col-4 mb-1 p-1 pt-2 pr-2">
+                                            <div class="input-group input-group-sm mb-0">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text input-group-text-auto">Icono SVG</span>
+                                                </div>
+                                                <input type="text" class="form-control" id="IcoSvg" value="" placeholder="">
+                                                <div class="input-group-append">
+                                                    <button class="btn btn-primary btn-sm cambiar-icono-svg" type="button">Guardar</button>
+                                                </div>
+                                            </div>
+                                        </div>*@
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card card-table mb-3">
+                                <div class="card-header card-header-options">
+                                    <span>Observaciones técnicas</span>
+                                </div>
+                                <div class="card-block p-0">
+
+                                    <div class="d-flex flex-column p-2">
+
+                                        <textarea name="observacionesTecnicas" rows="2" class="form-control" id="ObsTec" placeholder="Observaciones técnicas">@Model.Model.Obs</textarea>
+
+                                    </div>
+                                    <div class="d-flex justify-content-center box-guardar">
+                                        <a href="#" target="_blank" class="btn btn-sm btn-primary cambiar-obstec">Guardar</a>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card card-table mb-3">
+                                <div class="card-header card-header-options">
+                                    <span>Exposición</span>
+                                </div>
+                                <div class="card-block p-0">
+
+                                    <div class="d-flex flex-column p-2">
+
+                                        <textarea name="exposicion" rows="2" class="form-control" id="Expo" placeholder="Exposición">@Model.Model.Expo</textarea>
+
+                                    </div>
+                                    <div class="d-flex justify-content-center box-guardar">
+                                        <a href="#" target="_blank" class="btn btn-sm btn-primary cambiar-expo">Guardar</a>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card card-table mb-3">
+                        <div class="card-header card-header-options">
+                            <span>Modificar Icono SVG</span>
+                        </div>
+                        <div class="card-block p-0">
+
+                            <div class="d-flex flex-column p-2">
+
+                                <div id="svgEditor" class="editor">@Model.Model.IconoSvg</div>
+
+                            </div>
+                            <div class="d-flex justify-content-center box-guardar">
+                                <a href="#" target="_blank" class="btn btn-sm btn-primary cambiar-icono-svg-modulo">Guardar</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card card-table mb-3">
+                                <div class="card-header card-header-options">
+                                    <span>Listado de apartados</span>
+                                </div>
+                                <div class="card-block">
+
+                                    <table class="table table-striped table-small">
+                                        <thead>
+                                            <tr>
+                                                <th>Apartado</th>
+                                                <th class="text-center w-10">Fecha alta</th>
+                                                <th class="text-center w-5">Oculto</th>
+                                                <th class="text-center w-5">Orden</th>
+                                                <th class="">Llamada</th>
+                                                <th class="text-center w-5">DSA</th>
+                                                <th class="text-center w-10">Nº acciones</th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (Model.Model.det != null)
+                                            {
+                                                @for (Int32 t = 0; t < Model.Model.det.Length; t++)
+                                                {
+                                                    <tr>
+                                                        <td><a href="/gaolos-mantenimiento/modulos/modulo/apartado?Modulo=@Model.Model.ID_Modulo&Apa=@Model.Model.det[t].ID_Apa" class="fw-5">@Model.Model.det[t].Apa</a></td>
+                                                        <td class="text-center">@Model.Model.det[t].Fe_Al</td>
+                                                        <td class="text-center">
+                                                            @if (Model.Model.det[t].Oculto)
+                                                            {
+                                                                <i class="fa fa-check text-success"></i>
+                                                            }
+                                                        </td>
+                                                        <td class="text-center">@Model.Model.det[t].Orden</td>
+                                                        <td class="copy-data">
+                                                            <p class="mb-0"><a href="@Model.Model.det[t].Llamada" class="fw-5"><span>@Model.Model.det[t].Llamada</span></a></p>
+                                                        </td>
+                                                        <td class="text-center">
+                                                            @if (Model.Model.det[t].DSA)
+                                                            {
+                                                                <i class="fa fa-check text-success"></i>
+                                                            }
+                                                        </td>
+                                                        <td class="text-center">@Model.Model.det[t].Num</td>
+                                                    </tr>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <tr>
+                                                    <td colspan="7">
+                                                        <p class='fw-5 text-danger mb-0'><i class='fa fa-exclamation-circle mr-1'></i> No hay resultados</p>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                @* @Html.Raw(Model.Model.Paginador) *@
+                            </div>
+
+                        </div>
+                    </div>
+
+
+
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@*
+<script>
+    var observacionesTecnicas = CKEDITOR.replace('observacionesTecnicas');
+    var exposicion = CKEDITOR.replace('exposicion');
+</script>
+*@
+
+<script>
+    $(document).ready(function () {
+        getSVGEditor();
+    });
+</script>

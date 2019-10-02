@@ -1,0 +1,213 @@
+﻿@model ModuloServiciosLibrary.ModuloServiciosServiciosListadoViewModel
+
+@{
+    Layout = "~/Views/Shared/Modulo-Servicios/_Servicios.cshtml";
+    ViewData["Title"] = "Listado de servicios";
+    ViewData["Message"] = "Modulo de servicios - Gaolos App v2017";
+}
+
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+@if(Model.Model.Err.eserror)
+    {
+        ViewData["err"] = Model.Model.Err.mensaje;
+        @Html.Partial("AccesoDenegado");
+    }
+    else
+    {
+
+        @* Buscar usuarios *@
+
+        <div class="card mb-3">
+            <div class="card-header card-header-options">
+                <span>Buscar servicio</span>
+
+                <div class="card-actions">
+                    <ul>
+                        <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="card-block p-0">
+
+                <form action="@ViewData["Form"]" method="post">
+                    <div class="d-flex justify-content-center align-items-center">
+                        <div class="col-1  pb-2 pt-2">
+                            <img src="https://image.flaticon.com/icons/svg/321/321863.svg" style="width: 100%;">
+                        </div>
+                        <div class="col-11 box-border-left-light">
+
+                            <div class="row p-0">
+                                <div class="col-12 box-border-right p-0">
+                                    <div class="d-flex mb-0 px-3 pt-3 mb-2">
+                                        <div class="form-group mb-0 mr-2 col-12 p-0">
+                                            <label>Buscar</label>
+                                            <input type="text" class="form-control" placeholder="Buscar" name="buscar" value="@ViewData["buscar"]">
+                                        </div>
+                                    </div>
+                                    <div class="d-flex mt-3 px-3">
+
+                                        <div class="d-flex justify-content-center align-items-center mr-3">
+                                            <label class="mb-0">Sin precio</label>
+                                            <input name="SinPrecio" type="checkbox" class="ml-1" @{ if (ViewData["SinPrecio"].ToString() != "") { @Html.Raw(" checked ")  } }>
+                                        </div>
+
+                                        <div class="d-flex justify-content-center align-items-center mr-3">
+                                            <label class="mb-0">Sin precio mínimo</label>
+                                            <input name="SinPrecioMin" type="checkbox" class="ml-1" @{ if (ViewData["SinPrecioMin"].ToString() != "") { @Html.Raw(" checked ")  } }>
+                                        </div>
+
+                                        <div class="d-flex justify-content-center align-items-center mr-3">
+                                            <label class="mb-0">Sin categoría</label>
+                                            <input name="SinCat" type="checkbox" class="ml-1" @{ if (ViewData["SinCat"].ToString() != "") { @Html.Raw(" checked ")  } }>
+                                        </div>
+
+                                        <div class="d-flex justify-content-center align-items-center mr-3">
+                                            <label class="mb-0">Sin código</label>
+                                            <input name="SinCod" type="checkbox" class="ml-1" @{ if (ViewData["SinCod"].ToString() != "") { @Html.Raw(" checked ")  } }>
+                                        </div>
+
+                                        <div class="d-flex justify-content-center align-items-center">
+                                            <label class="mb-0">Sin impuestos</label>
+                                            <input name="SinImpu" type="checkbox" class="ml-1" @{ if (ViewData["SinImpu"].ToString() != "") { @Html.Raw(" checked ")  } }>
+                                        </div>
+
+                                    </div>
+                                    <div class="d-flex justify-content-center mt-2 box-border-top mdc-bg-blue-grey-50 pt-2 pb-2">
+                                        <button type="submit" class="btn btn-sm btn-primary">Buscar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+
+
+        <div class="row">
+
+                <div class="col-8">
+                    @* Listado de servicios *@
+                    <div class="card card-table mb-3">
+                        <div class="card-header card-header-options">
+                            <span>@ViewData["Title"]</span>
+                            <div class="input-group input-group-sm col-5 mr-0 px-0">
+                                <div class="input-group-append">
+                                    <a href="/modulo-servicios/servicios/exportar" class="btn btn-primary btn-sm mr-2">Exportar en CSV</a>
+                                </div>
+                                @*<input type="text" class="form-control" value="" placeholder="Nuevo servicio" id="" name="">
+                                <div class="input-group-append">
+                                    <button type="button" class="btn btn-primary btn-sm">Nuevo</button>
+                                </div>*@
+                            </div>
+                        </div>
+                        <div class="card-block">
+
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">Nº</th>
+                                        <th class="text-center">Código</th>
+                                        <th class="text-left">Servicio</th>
+                                        <th class="text-left">Categoría / Familia</th>
+                                        <th class="text-right">Precio</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (Model.Model.det != null)
+{
+                @for (Int32 t = 0; t < Model.Model.det.Length; t++)
+{
+                                    <tr>
+                                        <td class="text-center">
+                                            <p class="fw-5 mb-0"><a href="@ViewData["Form"]/servicio?ID_Serv2=@Model.Model.det[t].ID_Serv2" data-toggle="tooltip" data-placement="top" title="" data-original-title="Ir al servicio" class="fw-5">@Model.Model.det[t].ID_Serv2</a></p>
+                                        </td>
+                                        <td class="text-center">
+                                            <p class="fw-5 mb-0">@Model.Model.det[t].Codigo</p>
+                                        </td>
+                                        <td>
+                                            <p class="fw-5 mb-0">@Model.Model.det[t].Serv</p>
+                                        </td>
+                                        <td>
+                                            <p class="fw-5 mb-0"><small>
+@if (Model.Model.det[t].Cat != "" && Model.Model.det[t].Fam != "")
+{
+@Html.Raw("<b>"+Model.Model.det[t].Cat + "</b> <br/> " + Model.Model.det[t].Fam)
+
+}
+else if (Model.Model.det[t].Cat != "" && Model.Model.det[t].Fam == "")
+{
+@Html.Raw("<b>"+Model.Model.det[t].Cat+"</b>")
+}
+
+</small></p>
+                                        </td>
+                                        <td class="text-right">
+                                            <p class="fw-5 mb-0">@Model.Model.det[t].Precio€</p>
+                                        </td>
+                                    </tr>
+}
+
+}
+else
+{
+                <tr><td colspan="7"><p class='fw-5 text-danger mb-0'><i class='fa fa-exclamation-circle mr-1'></i> No hay resultados</p></td></tr>
+
+}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        @Html.Raw(Model.Model.Paginador)
+                    </div>
+                                        
+                </div>
+
+                <div class="col-4" id="sindatos">
+
+                    @* Sin datos *@
+                    <div class="card card-table mb-3">
+                        <div class="card-header card-header-options">
+                            <span>Información</span>
+                            <div class="card-actions">
+                                <ul>
+                                    <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card-block" role="tablist" aria-multiselectable="true">
+                            <div class="text-center mt-4 mb-4 p-5 bloque-sin-informacion">
+                                <img src="~/flaticons/chat.svg" style="width: 25%;">
+                                <p class="pt-4 fw-5">Si clica encima del nº del servicio, accederá a modificarlo</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+    
+            </div>
+                              
+    }
+            </div>
+        </div>
+    </div>
+</div>
+
+

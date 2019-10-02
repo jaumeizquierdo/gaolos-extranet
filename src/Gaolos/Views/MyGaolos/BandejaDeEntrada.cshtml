@@ -1,0 +1,142 @@
+﻿@model MyGaolosLibrary.MyGaolosTareasPendienesListadoViewModel
+@{
+    Layout = "~/Views/Shared/MyGaolos/_MyGaolos.cshtml";
+    ViewData["Title"] = "Bandeja de entrada [listado de tareas no leidas]";
+}
+
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                    
+    @if(Model.Model.Err.eserror)
+    {
+        ViewData["err"] = Model.Model.Err.mensaje;
+        @Html.Partial("AccesoDenegado");
+    }
+    else
+    {
+                     
+                <div class="card mb-3">
+                    <div class="card-header card-header-options">
+                        <span>Bandeja de entrada</span>
+
+                        <div class="card-actions">
+                            <ul>
+                                <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-block p-0">
+
+                        <div class="d-flex justify-content-center align-items-center">
+                            <div class="col-1 box-border-right-light pb-2 pt-2">
+                                <img src="~/flaticons/email.svg" style="width: 100%">
+                            </div>
+                            <div class="col-11 pt-2 pb-2 pl-4">
+                                <h4 class="fw-5 title-section">Bandeja de entrada</h4>
+                                <div class="d-flex">
+                                    <div class="box-grey-bg">
+                                        <p class="mb-0"><small class="fw-5">elementos por leer: <span class="text-danger">@Model.Model.numt</span></small></p>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                @* Listado de tareas pendientes *@
+
+                <div class="row">
+                    @* Listado tareas *@
+                    <div class="col-12">
+                        <div class="card card-table mb-3">
+                            <div class="card-header card-header-options">
+                                <span>@ViewData["Title"]</span>
+                            </div>
+                            <div class="card-block">
+
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th class="w-10 text-center">Fecha</th>
+                                            <th>Tareas</th>
+                                            <th class="text-center w-20">Asignado por</th>
+                                            <th class="text-center w-20">Prioridad</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (Model.Model.det != null)
+                                        {
+                                            @for (Int32 t = 0; t < Model.Model.det.Length; t++)
+                                            {
+                                                string str = " class='tr-priority' ";
+                                                if (!Model.Model.det[t].Atraso) { str = " class='tr-no-priority' "; }
+                                                <tr @Html.Raw(str)>
+                                                    <td class="fw-5 text-center">
+                                                        <span class="text-info">@Model.Model.det[t].Fe_Prev_Ini</span>
+                                                        <small class="fw-5">@Model.Model.det[t].Ho_Prev_Ini</small>
+                                                    </td>
+                                                    <td>
+                                                        <div class="priority">
+                                                            <a href="/tareas-pendientes/tarea-pendiente?ID_Twit=@Model.Model.det[t].ID_Twit" class="fw-5">
+                                                                @Html.Raw(Model.Model.det[t].ExpoIni)
+                                                            @if (Model.Model.MultiNeg)
+                                                            {
+                                                                <p class="mb-0 text-danger"><small class="fw-5">@Model.Model.det[t].Neg</small></p>
+                                                            }
+                                                        </a>
+                                                        </div>
+                                                    </td>
+                                                    <td class="text-center fw-5">@Model.Model.det[t].Usu</td>
+                                                    <td class="text-center">
+                                                        @if (Model.Model.det[t].Prio < 100)
+                                                        {
+                                                            <p class="badge badge-danger fw-5 mb-0">Alta</p>
+
+
+                                                        }
+                                                        else if (Model.Model.det[t].Prio == 100)
+                                                        {
+                                                            <p class="badge badge-warning fw-5 mb-0">Media</p>
+                                                        }
+                                                        else
+                                                        {
+                                                            <p class="badge badge-success fw-5 mb-0">Baja</p>
+                                                        }
+                                                    </td>
+                                                </tr>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <tr><td colspan="6"><p class="mb-0 fw-5 p-3 text-danger"><i class="fa fa-times"></i> No hay tarea pendientes</p></td></tr>
+
+                                        }
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        @Html.Raw(Model.Model.Paginador)
+                    </div>
+                </div>
+                
+    }
+                
+            </div>
+        </div>
+    </div>
+</div>

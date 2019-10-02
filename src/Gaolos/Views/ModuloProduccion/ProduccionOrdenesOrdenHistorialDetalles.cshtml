@@ -1,0 +1,405 @@
+﻿@model ModuloProduccionLibrary.ProduccionOrdenesOrdenDetallesViewModel
+
+@{
+    ViewData["Title"] = "Órdenes de producción";
+    ViewData["TitleOrdenesProduccionAbiertas"] = "Listado de órdenes de trabajo";
+    Layout = "~/Views/Shared/Modulo-Produccion/_ProduccionOrdenes.cshtml";
+}
+<div class="main-content m-0" id="widget-area">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                @if (Model.Model.Err.eserror)
+                {
+                    ViewData["err"] = Model.Model.Err.mensaje;
+                    @Html.Partial("AccesoDenegado");
+                }
+                else
+                {
+                    @* Órden de producción *@
+                    <div class="card mb-3">
+                        <div class="card-header card-header-options">
+                            <span>Nº de orden de trabajo: @Model.Model.ID_Ord2</span><input type="hidden" value="@Model.Model.ID_Ord2" id="ID_Ord2" />
+                            <div class="card-actions">
+                                <ul>
+                                    <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card-block">
+
+                            <div class="row">
+                                <div class="col-2 text-center">
+                                    <img src="~/flaticons/settings-3.svg" style="width: 50%">
+                                </div>
+                                <div class="col-9">
+                                    <h4 class="fw-5">@Model.Model.Cli</h4>
+                                    <p class="mb-1"><i class="fa fa-calendar-o"></i> <small class="fw-5"><code class="highlighter-rouge">fecha</code> @Model.Model.Fe_Al</small></p>
+                                    <p><small class="fw-5"><code class="highlighter-rouge">exposición</code> @Model.Model.Expo</small></p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    @* Listado de órdenes de producción *@
+
+                    <div class="row">
+                        <div class="col-9">
+                            <div class="card card-table mb-3">
+                                <div class="card-header card-header-options">
+                                    <span>@ViewData["TitleOrdenesProduccionAbiertas"]</span>
+                                </div>
+                                <div class="card-block">
+
+                                    <table class="table table-striped">
+
+                                        <thead>
+                                            <tr>
+                                                <th class="w-10">Pos.</th>
+                                                <th>Fecha</th>
+                                                <th>Tipo</th>
+                                                <th>Acción</th>
+                                                <th>Exposición</th>
+                                                <th>Proveedor</th>
+                                                <th class="text-right">Importe</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (Model.Model.det != null)
+                                            {
+                                                for (Int32 t = 0; t < Model.Model.det.Length; t++)
+                                                {
+                                            <tr>
+                                                <td><span class="fw-5">@Model.Model.det[t].Pos</span></td>
+                                                <td>@Model.Model.det[t].Fe_Al</td>
+                                                <td class="fw-5">@Model.Model.det[t].Tipo</td>
+                                                <td class="fw-5">@Model.Model.det[t].Accion</td>
+                                                <td>@Model.Model.det[t].Expo</td>
+                                                <td><span class="fw-5">@Model.Model.det[t].Prov</span></td>
+                                                <td class="text-right"><span class="fw-5">@Model.Model.det[t].PrecioF</span></td>
+                                            </tr>
+                                                }
+                                            }
+                                            <tr>
+                                                <td></td>
+                                                <td class="fw-5">Benef.</td>
+                                                <td class="fw-5">@Model.Model.GanF</td>
+                                                <td class="fw-5">Coste</td>
+                                                <td class="fw-5">@Model.Model.CosteF</td>
+                                                <td class="fw-5">Precio</td>
+                                                <td class="fw-5 text-right">@Model.Model.PrecioF</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3">
+
+                            @*Presupuesto*@
+                            @if (Model.Model.ID_Pres2 != "")
+                            {
+                                <div class="card card-table mb-3">
+                                    <div class="card-header card-header-options">
+                                        <span>Presupuesto nº <a href="/modulo-presupuestos/presupuestos/presupuesto?ID_Pres2=@Model.Model.ID_Pres2" target="_blank" id="ID_Cli2">@Model.Model.ID_Pres2</a></span>
+                                        <div class="card-actions">
+                                            <ul>
+                                                <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="card-block" role="tablist" aria-multiselectable="true">
+                                        <div>
+
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="">Base</th>
+                                                        <th class="w-25 text-right"><b>@Model.Model.PresBase</b></th>
+                                                    </tr>
+                                                </thead>
+                                            </table>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            }
+
+                            @*Fin Presupuesto*@
+
+                            @*Materiales*@
+                            <div class="card card-table mb-3">
+                                <div class="card-header card-header-options">
+                                    <span>Materiales (@Model.Model.MatDetNum)</span>
+                                    <div class="card-actions">
+                                        <ul>
+                                            <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="card-block" role="tablist" aria-multiselectable="true">
+                                    <div>
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th class="">Beneficio bruto</th>
+                                                    <th class="w-25 text-center">Precio</th>
+                                                    <th class="w-25 text-right">Coste</th>
+                                                </tr>
+                                            </thead>
+                                            <tr>
+                                                <td>
+                                                    @if (!Model.Model.TotalBenefMaterialNegativo)
+                                                    {
+                                                        <p><small><b>@Model.Model.TotalBenefMaterial</b></small></p>
+                                                    }
+                                                    else
+                                                    {
+                                                        <p class="text-danger"><small><b>@Model.Model.TotalBenefMaterial</b></small></p>
+                                                    }
+                                                </td>
+                                                <td class="text-center">
+                                                    <p><small>@Model.Model.MatDetPrecio</small></p>
+                                                </td>
+                                                <td class="text-right">
+                                                    <p><small>@Model.Model.MatDetCoste</small></p>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            @*Fin Materiales*@
+
+                            @*Operarios*@
+                            <div class="card card-table mb-3">
+                                <div class="card-header card-header-options">
+                                    @{
+                                        Int32 num = 0;
+                                        if (Model.Model.Opes != null) { num = Model.Model.Opes.Length; }
+                                    }
+                                    <span>Operarios (@num)</span>
+                                    <div class="card-actions">
+                                        <ul>
+                                            <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="card-block" role="tablist" aria-multiselectable="true">
+                                    <div>
+                                        @if (Model.Model.Opes != null)
+                                        {
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="">Operario</th>
+                                                        <th class="w-25 text-center">Horas</th>
+                                                        <th class="w-25 text-right">Coste</th>
+                                                    </tr>
+                                                </thead>
+                                                @for (Int32 t = 0; t < Model.Model.Opes.Length; t++)
+                                                {
+                                                    <tr>
+                                                        <td>
+                                                            <p><small>@Model.Model.Opes[t].datoS1</small></p>
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <p><small>@Model.Model.Opes[t].datoS2</small></p>
+                                                        </td>
+                                                        <td class="text-right">
+                                                            <p><small>@Model.Model.Opes[t].datoS3</small></p>
+                                                        </td>
+                                                    </tr>
+                                                }
+                                                <tfoot>
+                                                    <tr>
+                                                        <td class="bg-danger"><b>Total</b></td>
+                                                        <td class="w-25 text-center"><b>@Model.Model.TotalHoras</b></td>
+                                                        <td class="w-25 text-right"><b>@Model.Model.TotalCosteOpe2</b></td>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
+                                        }
+                                        else
+                                        {
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th><p class="text-danger"><i class="fa fa-times"></i> No horas realizadas</p></th>
+                                                    </tr>
+                                                </thead>
+                                            </table>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            @*Fin Materiales*@
+
+                            @*Resultado presupuesto*@
+
+                            @if (Model.Model.ID_Pres2 != "")
+                            {
+                                <div class="card card-table mb-3">
+                                    <div class="card-header card-header-options">
+                                        <span>Resultado presupuesto</span>
+                                        <div class="card-actions">
+                                            <ul>
+                                                <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="card-block" role="tablist" aria-multiselectable="true">
+                                        <div>
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="">Concepto</th>
+                                                        <th class="w-25 text-right">Importe</th>
+                                                    </tr>
+                                                </thead>
+                                                <tr>
+                                                    <td class="">
+                                                        <p><small>Base presupuesto</small></p>
+                                                    </td>
+                                                    <td class="text-right">
+                                                        <p><small>@Model.Model.PresBase</small></p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="">
+                                                        <p><small>Coste materiales</small></p>
+                                                    </td>
+                                                    <td class="text-right">
+                                                        <p><small class="text-danger">@Model.Model.TotalCosteMaterial</small></p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="">
+                                                        <p><small>Coste operarios</small></p>
+                                                    </td>
+                                                    <td class="text-right">
+                                                        <p><small class="text-danger">@Model.Model.TotalCosteOpe</small></p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="">
+                                                        <p><small><b>Resultado</b></small></p>
+                                                    </td>
+                                                    <td class="text-right">
+                                                        @if (!Model.Model.ResultadoConPresNegativo)
+                                                        {
+                                                            <p><small><b>@Model.Model.ResultadoConPres</b></small></p>
+                                                        }
+                                                        else
+                                                        {
+                                                            <p class="text-danger"><small><b>@Model.Model.ResultadoConPres</b></small></p>
+                                                        }
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            }
+
+                            @*Fin Resultado presupuesto*@
+
+
+                            @*Resultado sin presupuesto*@
+                            <div class="card card-table mb-3">
+                                <div class="card-header card-header-options">
+                                    <span>Resultado</span>
+                                    <div class="card-actions">
+                                        <ul>
+                                            <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="card-block" role="tablist" aria-multiselectable="true">
+                                    <div>
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th class="">Concepto</th>
+                                                    <th class="w-25 text-right">Importe</th>
+                                                </tr>
+                                            </thead>
+                                            <tr>
+                                                <td class="">
+                                                    <p><small>Material PVP</small></p>
+                                                </td>
+                                                <td class="text-right">
+                                                    <p><small>@Model.Model.TotalPrecioMaterial</small></p>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="">
+                                                    <p><small>Operarios PVP</small></p>
+                                                </td>
+                                                <td class="text-right">
+                                                    <p><small>@Model.Model.TotalPrecioOpe</small></p>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="">
+                                                    <p><small>Material coste</small></p>
+                                                </td>
+                                                <td class="text-right">
+                                                    <p class="text-danger"><small>@Model.Model.TotalCosteMaterial</small></p>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="">
+                                                    <p><small>Operarios coste</small></p>
+                                                </td>
+                                                <td class="text-right">
+                                                    <p class="text-danger"><small>@Model.Model.TotalCosteOpe</small></p>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="">
+                                                    <p><small><b>Resultado</b></small></p>
+                                                </td>
+                                                <td class="text-right">
+                                                    @if (!Model.Model.ResultadoSinPresNegativo)
+                                                    {
+                                                        <p><small><b>@Model.Model.ResultadoSinPres</b></small></p>
+                                                    }
+                                                    else
+                                                    {
+                                                        <p class="text-danger"><small><b>@Model.Model.ResultadoSinPres</b></small></p>
+                                                    }
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            @*Fin Resultado sin presupuesto*@
+
+                        </div>
+                    </div>
+
+                }
+            </div>
+        </div>
+
+    </div>
+
+</div>

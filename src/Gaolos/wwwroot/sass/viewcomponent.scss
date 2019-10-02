@@ -1,0 +1,18 @@
+﻿/* View-Component wrapper */
+
+@import "variables.scss";
+@import "materialdesign.scss";
+
+#viewcomponent-wrapper {
+    margin: 1em 0;
+    border: 1px solid #ededed;
+    padding: 1em;
+    a {
+        color: #b0bec5;
+    }
+}
+
+.vc-list-buttons .btn-submit {
+    font-size: 1em;
+    padding: 0.5em 1em;
+}

@@ -1,0 +1,170 @@
+﻿@model ModuloAsistenciasLibrary.ModuloAsisnteicasAsistenciasComisionarInicioViewModel
+
+@{
+    Layout = "~/Views/Shared/Modulo-Asistencias/_Modulo-Asistencias.cshtml";
+    ViewData["Title"] = "Comisionar";
+    ViewData["Message"] = "Modulo de Asistencias - Gaolos App v2018";
+}
+
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+
+                @if (Model.Model.Err.eserror)
+                {
+                    ViewData["err"] = Model.Model.Err.mensaje;
+                    @Html.Partial("AccesoDenegado");
+                }
+                else
+                {
+
+                    @* Buscar usuarios *@
+
+                    <div class="card mb-3">
+                        <div class="card-header card-header-options">
+                            <span>Buscar operario</span>
+
+                            <div class="card-actions">
+                                <ul>
+                                    <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card-block p-0">
+                            <div class="d-flex justify-content-center align-items-center">
+                                <div class="col-1 text-center box-border-right-light py-2">
+                                    <img src="https://image.flaticon.com/icons/svg/306/306059.svg" style="width: 100%;">
+                                </div>
+                                <div class="col-11 p-0">
+                                    <form name="frm" action="@ViewData["Form"]" method="post">
+                                        
+                                        <div class="d-flex flex-column">
+                                            <div class="d-flex mb-0 p-2">
+
+                                                <div class="input-group input-group-sm mb-0 mr-2">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text" id="">Buscar operario</span>
+                                                    </div>
+                                                    <input type="text" class="form-control form-control-sm ui-autocomplete-input" placeholder="Buscar operario" name="opecom" id="opecom" value="@Model.Model.UsuAsi">
+                                                    <input type="hidden" value="@ViewData["ID_Us_Asi"]" name="vopecom" id="vopecom" />
+                                                    <input type="hidden" value="@Model.Model.UsuAsi" name="topecom" id="topecom" />
+                                                </div>
+
+                                                <div class="input-group input-group-sm mb-0 mr-2">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text" id="">Seleccionar fecha</span>
+                                                    </div>
+                                                    <input type="text" class="form-control form-control-sm" placeholder="Fecha" name="Fe_Fi" id="Fe_Fi" value="@Model.Model.Fe_Fi">
+                                                </div>
+
+                                                <div class="input-group input-group-sm mb-0">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text" id="">Factura</span>
+                                                    </div>
+                                                    <input type="text" class="form-control form-control-sm" placeholder="Factura" name="Fac" id="Fac" value="@ViewData["Fac"]">
+                                                </div>
+
+                                            </div>
+
+                                            <div class="d-flex justify-content-center mt-2">
+                                                <button type="submit" class="btn btn-sm btn-primary">BUSCAR</button>
+                                            </div>
+                                        </div>
+
+                                        
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="card card-table mb-3">
+                                <div class="card-header card-header-options">
+                                    <span>Comisiones</span>
+                                </div>
+                                <div class="card-block p-0">
+                                    <table class="table table-striped table-small">
+                                        <thead>
+                                            <tr>
+                                                <th class="w-10 text-center">Factura</th>
+                                                <th class="">Cliente</th>
+                                                <th class="">Tipo</th>
+                                                <th class="w-20">Administrador</th>
+                                                <th class="w-10 text-right">Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (Model.Model.det != null)
+                                            {
+                                                @for (Int32 t = 0; t < Model.Model.det.Length; t++)
+                                                {
+                                                    <tr>
+                                                        <td class="text-center">
+                                                            <a href="/modulo-asistencias/comisionar/factura?ID_Fac=@Model.Model.det[t].ID_Fac&ID_Us_Asi=@ViewData["ID_Us_Asi"]&pag=@ViewData["pag"]&Fe_Fi=@ViewData["Fe_Fi"]" class="fw-5">@Model.Model.det[t].Fac</a>
+                                                            <p class="mb-0"><small class="fs-0-8">@Model.Model.det[t].Fe_Fa</small></p>
+                                                        </td>
+                                                        <td>
+                                                            <p class="mb-0">@Model.Model.det[t].Emp</p>
+                                                            <p class="mb-0"><small>@Model.Model.det[t].Dir - @Model.Model.det[t].Pob</small></p>
+                                                        </td>
+                                                        <td>
+                                                            <p class="mb-0">@Model.Model.det[t].Usu</p>
+                                                            <p class="mb-0"><small>@Model.Model.det[t].Cat</small></p>
+                                                        </td>
+                                                        <td>@Model.Model.det[t].EmpRel</td>
+                                                        <td class="text-right">@Model.Model.det[t].Total €</td>
+                                                    </tr>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                    <tr>
+                                                        <td colspan="5" class="p-0"><p class="mb-0 fw-5 p-2 text-danger"><i class="fa fa-times"></i> No hay resultados</p></td>
+                                                    </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                @Html.Raw(Model.Model.Paginador)
+                            </div>
+                        </div>
+                        <div class="col-4">
+
+                            @* Sin datos *@
+                            <div class="card-info-wrapper w-100" id="sindatos">
+                                <div class="card-info">
+                                    <div class="d-flex justify-content-center align-items-center">
+                                        <img src="https://image.flaticon.com/icons/svg/609/609998.svg" style="width: 20%;">
+                                        <p class="mb-2 ml-3">Seleccione la factura que quiera comisionar</p>
+                                    </div>
+                                </div>
+                                <svg class="card-info-triangle">
+                                    <polygon points="0,0 200,0 0,200" fill="currentColor"></polygon>
+                                </svg>
+                            </div>
+
+                        </div>
+                    </div>
+
+                }
+
+            </div>
+        </div>
+    </div>
+</div>

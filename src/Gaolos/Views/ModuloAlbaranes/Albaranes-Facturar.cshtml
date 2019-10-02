@@ -1,0 +1,703 @@
+﻿@model ModuloAlbaranesLibrary.ModuloAlbaranesFacturarAlbaranesInicioViewModel
+
+@{
+    Layout = "~/Views/Shared/Modulo-Albaranes/_Modulo-Albaranes-Facturar.cshtml";
+    ViewData["Title"] = "Facturar albaranes";
+}
+
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+                @if (Model.Model.Err.eserror)
+                {
+                    ViewData["err"] = Model.Model.Err.mensaje;
+                @Html.Partial("AccesoDenegado");
+                }
+                else
+                {
+
+                @* Cabecera *@
+
+                <div class="card mb-3">
+                    <div class="card-header card-header-options">
+                        <span>Total albaranes</span>
+
+                        <div class="card-actions">
+                            <ul>
+                                <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-block p-0">
+
+                        <div class="d-flex justify-content-center align-items-center">
+                            <div class="col-lg-1 pb-2 pt-2 hidden-md hidden-md-down">
+                                <img src="https://image.flaticon.com/icons/svg/321/321863.svg" style="width: 100%;">
+                            </div>
+                            <div class="col-lg-11 col-sm-12 pt-2 pb-2">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <h5 class="fw-5 title-section">
+                                        @if (Model.Model.Emp != Model.Model.Emp_Fis)
+                                        {
+                                            @Html.Raw(Model.Model.Emp_Fis + " (" + Model.Model.Emp + ")")
+                                        }
+                                        else
+                                        {
+                                            @Html.Raw(Model.Model.Emp_Fis)
+                                        }
+                                    </h5>
+                                    @if (Model.Model.RevCli)
+                                    {
+                                        <div class="d-flex">
+                                            <div class="box-labels d-flex justify-content-center mdc-bg-pink-A400" style="border: 1px solid #f50057 !important; border-radius: 3px !important;">
+                                                <div class="d-flex align-items-center">
+                                                    <p class="mb-0 px-2 fs-1 text-white">Cliente por revisar</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                                <div class="d-flex">
+                                    <div class="box-grey-bg mr-2">
+                                        <input type="hidden" value="@ViewData["go"]" id="go" />
+                                        <p class="mb-0"><small class="fw-5"><span class="mr-1">Cliente nº:</span> <a href="/modulo-clientes/clientes/cliente/fiscal?ID_Cli2=@Model.Model.ID_Cli2" target="_blank"><span class="text-danger">@Model.Model.ID_Cli2</span></a> - @Model.Model.CCCli</small></p>
+                                        <p class="mb-0"><small class="fw-5"><span class="mr-1">Dirección:</span> <span class="text-danger">@Model.Model.Dir - @Model.Model.Pob - @Model.Model.CP - @Model.Model.Pro</span></small></p>
+                                        <p class="mb-0"><small class="fw-5"><span class="mr-1">NIF:</span> <span class="text-danger">@Model.Model.NIF</span></small></p>
+                                        @if (Model.Model.TipCli != "")
+                                        {
+                                            <p class="mb-0"><small class="fw-5"><span class="mr-1">Tipo:</span> <span class="text-danger">@Model.Model.TipCli</span></small></p>
+                                        }
+                                        @if (Model.Model.Mails != "" && Model.Model.EnvMail)
+                                        {
+                                            <p class="mb-0"><small class="fw-5"><span class="mr-1">Enviar a:</span> <span class="text-danger">@Model.Model.Mails</span></small></p>
+                                        }
+                                        <p class="mb-0">
+                                            <small class="fw-5">
+                                                <span class="mr-1">Condiciones: </span> <span class="text-danger">@Model.Model.Forma</span>
+                                                <span class="mr-1 text-danger">@Model.Model.NumFrac vencimiento/s</span>
+                                                @{
+                                                    string sty = "";
+                                                }
+                                                @if (Model.Model.HeredaForPag)
+                                                {
+                                                    sty = "style='text-decoration:line-through;'";
+                                                }
+                                                @if (Model.Model.AxDiasCli != "")
+                                                {
+                                                    <span class="mr-1 text-danger" @Html.Raw(sty)>A @Model.Model.AxDiasCli días</span>
+                                                }
+                                                @if (Model.Model.DiasCli != "")
+                                                {
+                                                    <span class="mr-1 text-danger" @Html.Raw(sty)>día/s @Model.Model.DiasCli</span>
+                                                }
+                                            </small>
+                                        </p>
+
+                                        @if (Model.Model.Obs != "")
+                                        {
+                                            <p class="mb-0"><small class="fw-5"><span class="mr-1">Tiene observaciones:</span> <a href="/modulo-clientes/clientes/cliente/fiscal?ID_Cli2=@Model.Model.ID_Cli2" target="_blank">Abrir ficha de cliente</a></small></p>
+                                        }
+                                    </div>
+                                    @if (Model.Model.EmpRel != "")
+                                    {
+                                        <div class="box-grey-bg mr-2">
+                                            <p class="mb-0"><small class="fw-5"><span class="mr-1">@Model.Model.TipEmpRel :</span> @Model.Model.EmpRel (<a href="/modulo-clientes/clientes/cliente/fiscal?ID_Cli2=@Model.Model.ID_Cli2Rel" target="_blank"><span class="text-danger">@Model.Model.ID_Cli2Rel</span></a>)</small></p>
+                                            @if (Model.Model.MailsRel != "" && Model.Model.EnvMailRel)
+                                            {
+                                                <p class="mb-0"><small class="fw-5"><span class="mr-1">Enviar a:</span> <span class="text-danger">@Model.Model.MailsRel</span></small></p>
+                                            }
+                                            @if (Model.Model.HeredaForPag)
+                                            {
+                                                @if (Model.Model.AxDiasRel != "" || Model.Model.DiasRel != "")
+                                                {
+                                                    <p class="mb-0">
+                                                        <small class="fw-5">
+                                                            <span class="mr-1">Condiciones: </span>
+                                                            @if (Model.Model.AxDiasRel != "")
+                                                            {
+                                                                <span class="mr-1 text-danger">A @Model.Model.AxDiasRel días</span>
+                                                            }
+                                                            @if (Model.Model.DiasRel != "")
+                                                            {
+                                                                <span class="mr-1 text-danger">día/s @Model.Model.DiasRel</span>
+                                                            }
+                                                        </small>
+                                                    </p>
+                                                }
+                                            }
+                                            @if (Model.Model.CobEnEspera)
+                                            {
+                                                <p class="mb-0"><small class="fw-5"><span class="mr-1 text-danger">Cobro en espera</span></small></p>
+                                            }
+
+
+                                            @if (Model.Model.ObsRel != "")
+                                            {
+                                                <p class="mb-0"><small class="fw-5"><span class="mr-1">Tiene observaciones:</span> <a href="/modulo-clientes/clientes/cliente/fiscal?ID_Cli2=@Model.Model.ID_Cli2Rel" target="_blank">Abrir ficha de @Model.Model.TipEmpRel</a></small></p>
+                                            }
+                                        </div>
+                                    }
+                                    @if (Model.Model.TotalDebe != "")
+                                    {
+                                        <div class="box-grey-bg mr-2">
+                                            <p class="mb-0"><small class="fw-5"><span class="mr-1">Resumen cobros</span></small></p>
+                                            @if (Model.Model.Cob_Inco != "")
+                                            {
+                                                <p class="mb-0"><small class="fw-5"><span class="mr-1">Incobrebles:</span> <span class="text-danger">@Model.Model.Cob_Inco</span></small></p>
+                                            }
+                                            @if (Model.Model.Cob_Dev != "")
+                                            {
+                                                <p class="mb-0"><small class="fw-5"><span class="mr-1">Devoluciones:</span> <span class="text-danger">@Model.Model.Cob_Dev</span></small></p>
+                                            }
+                                            @if (Model.Model.Cob_Atraso != "")
+                                            {
+                                                <p class="mb-0"><small class="fw-5"><span class="mr-1">Atrasos:</span> <span class="text-danger">@Model.Model.Cob_Atraso</span></small></p>
+                                            }
+                                            @if (Model.Model.Cob_Atraso_esp != "")
+                                            {
+                                                <p class="mb-0"><small class="fw-5"><span class="mr-1">Atrasos en espera:</span> <span class="text-danger">@Model.Model.Cob_Atraso_esp</span></small></p>
+                                            }
+                                            @if (Model.Model.Cob_NoVenci != "")
+                                            {
+                                                <p class="mb-0"><small class="fw-5"><span class="mr-1">No vencidos:</span> <span class="text-danger">@Model.Model.Cob_NoVenci</span></small></p>
+                                            }
+                                            @if (Model.Model.Cob_NoVenci_esp != "")
+                                            {
+                                                <p class="mb-0"><small class="fw-5"><span class="mr-1">No vencidos en espera:</span> <span class="text-danger">@Model.Model.Cob_NoVenci_esp</span></small></p>
+                                            }
+                                            <p class="mb-0"><small class="fw-5"><span class="mr-1">Total debe:</span> <span class="text-danger">@Model.Model.TotalDebe</span></small></p>
+                                        </div>
+                                    }
+                                        <div class="box-grey-bg mr-2">
+                                            @if (Model.Model.Bruto != "")
+                                            {
+                                                <p class="mb-0"><small class="fw-5"><span class="mr-1">Bruto:</span> <span class="text-danger">@Model.Model.Bruto</span></small></p>
+                                                <p class="mb-0"><small class="fw-5"><span class="mr-1">Dto:</span> <span class="text-danger">@Model.Model.ImpDto</span></small></p>
+                                            }
+                                            <p class="mb-0"><small class="fw-5"><span class="mr-1">Base:</span> <span class="text-danger">@Model.Model.Base</span></small></p>
+                                            @if (Model.Model.Impuestos != null)
+                                            {
+                                                for (Int32 t = 0; t < Model.Model.Impuestos.Length; t++)
+                                                {
+                                                    <p class="mb-0"><small class="fw-5"><span class="mr-1">@Model.Model.Impuestos[t].datoS1 (@Model.Model.Impuestos[t].datoS2 % - @Model.Model.Impuestos[t].datoS4):</span> <span class="text-danger">@Model.Model.Impuestos[t].datoS3</span></small></p>
+                                                }
+                                            }
+
+                                            <p class="mb-0"><small class="fw-5"><span class="mr-1">Total:</span> <span class="text-danger">@Model.Model.Total</span></small></p>
+                                            @if (Model.Model.TipoIVA != "")
+                                            {
+                                                <p class="mb-0"><small class="fw-5"><span class="mr-1">Tipo IVA:</span> <span class="text-danger">@Model.Model.TipoIVA</span></small></p>
+                                            }
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row">
+
+                    <div class="col-md-12 col-lg-8 col-sm-12">
+
+                        @* Datos clientes *@
+
+                        <div class="card mb-3">
+                            <div class="card-header card-header-options">
+                                <span>Factura</span>
+                            </div>
+                            <div class="card-block p-0">
+                                <div class="d-flex box-border-top-light p-2">
+
+                                    <div class="d-flex flex-column w-100">
+
+                                        <div class="d-flex mb-1">
+
+                                            <div class="d-flex w-50 p-0 mr-2">
+                                                <div class="input-group input-group-sm mb-0">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">Nº factura</span>
+                                                    </div>
+                                                    <input type="text" class="form-control" id="Fac" value="@Model.Model.Fac" placeholder="" disabled>
+                                                </div>
+                                            </div>
+
+                                            <div class="d-flex w-50 p-0">
+                                                <div class="input-group input-group-sm">
+                                                    <div class="input-group-prepend">
+                                                        <label class="input-group-text" style="min-width: 130px !important;">Fecha</label>
+                                                        <input type="hidden" id="ID_Serie" value="@Model.Model.ID_Serie" />
+                                                        <input type="hidden" id="ID_Eli" value="@Model.Model.ID_Eli" />
+                                                        <input type="hidden" id="lTotal" value="@Model.Model.lTotal" />
+                                                    </div>
+                                                    @if (Model.Model.ID_Eli == 0)
+                                                    {
+                                                        <input type="text" class="form-control" value="@Model.Model.Fe_Fa" placeholder="Fecha de la factura" id="Fe_Fa">
+                                                    }
+                                                    else
+                                                    {
+                                                        <input type="text" class="form-control" value="@Model.Model.Fe_Fa" placeholder="Fecha de la factura" id="Fe_Fa" disabled>
+                                                    }
+                                                    <div class="input-group-append">
+                                                        @if (Model.Model.ID_Eli == 0)
+                                                        {
+                                                            <button type="button" class="btn btn-sm btn-primary recalcular-fe-fa" id="btn_act_fe_fa">Actualizar</button>
+                                                        }
+                                                        else
+                                                        {
+                                                            <button type="button" class="btn btn-sm btn-primary recalcular-fe-fa" id="btn_act_fe_fa" disabled>Actualizar</button>
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="d-flex mb-1">
+
+                                            <div class="d-flex mr-2 w-50 p-0">
+                                                <div class="input-group input-group-sm mb-0">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">Enviar por mail</span>
+                                                    </div>
+                                                    <div class="d-flex align-items-center ml-2 mr-3">
+                                                        @if (Model.Model.EnvMail || Model.Model.EnvMailRel)
+                                                        {
+                                                            <input type="checkbox" class="mr-2" id="SendMail" value="" checked>
+                                                        }
+                                                        else
+                                                        {
+                                                            <input type="checkbox" class="mr-2" id="SendMail" value="" disabled>
+                                                        }
+                                                    </div>
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">Enviar en mí nombre</span>
+                                                    </div>
+                                                    <div class="d-flex align-items-center ml-2 mr-3">
+                                                        @if (Model.Model.EnvMail || Model.Model.EnvMailRel)
+                                                        {
+                                                            <input type="checkbox" class="mr-2" id="EnMi" value="">
+                                                        }
+                                                        else
+                                                        {
+                                                            <input type="checkbox" class="mr-2" id="EnMi" value="" disabled>
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="d-flex w-50 p-0">
+                                                <div class="input-group input-group-sm mb-0">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text" style="min-width: 130px !important;">Mails destino</span>
+                                                    </div>
+                                                    <div class="d-flex align-items-center ml-2 mr-3">
+                                                        @if (Model.Model.Mails != "")
+                                                        {
+                                                            <span class="fw-5"><small class="mr-1">@Model.Model.Mails</small></span>
+                                                        }
+                                                        @if (Model.Model.MailsRel != "")
+                                                        {
+                                                            <span class="fw-5"><small class="mr-1">@Model.Model.MailsRel</small></span>
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="d-flex">
+
+                                            <div class="d-flex mr-2 w-50 p-0">
+                                                <div class="input-group input-group-sm mb-0">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">Cobro en espera</span>
+                                                    </div>
+                                                    <div class="d-flex align-items-center ml-2 mr-3">
+                                                        @if (Model.Model.CobEnEspera)
+                                                        {
+                                                            <input type="checkbox" class="mr-2" id="CobEnEspera" value="" checked>
+                                                        }
+                                                        else
+                                                        {
+                                                            <input type="checkbox" class="mr-2" id="CobEnEspera" value="">
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="d-flex w-50 p-0">
+                                                <div class="input-group input-group-sm mb-0">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text" style="min-width: 130px !important;">Observaciones</span>
+                                                    </div>
+                                                    <input type="text" class="form-control" id="Obs" value="" placeholder="Observaciones de la factura">
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        @* Forma de pago *@
+
+                        <div class="card mb-3">
+                            <div class="card-header card-header-options">
+                                <span>Forma de pago</span>
+                            </div>
+                            <div class="card-block p-0">
+                                <div class="d-flex box-border-top-light p-2">
+
+                                    <div class="d-flex flex-column w-100">
+
+                                        <div class="d-flex mb-1">
+
+                                            <div class="d-flex w-50 p-0 mr-2">
+                                                <div class="input-group input-group-sm mb-0">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">Nº vencimientos (@Model.Model.NumFrac)</span>
+                                                    </div>
+                                                    <input type="text" class="form-control" id="NumFra" value="@Model.Model.NumFrac" placeholder="Número de vencimientos">
+                                                    <div class="input-group-append">
+                                                        @if (Model.Model.ID_Eli == 0)
+                                                        {
+                                                            <button type="button" class="btn btn-sm btn-primary recalcular-numfra" id="btn_act_numfrac">Actualizar</button>
+                                                        }
+                                                        else
+                                                        {
+                                                            <button type="button" class="btn btn-sm btn-primary recalcular-numfra" id="btn_act_numfrac" disabled>Actualizar</button>
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="d-flex w-50 p-0">
+                                                <div class="input-group input-group-sm">
+                                                    <div class="input-group-prepend">
+                                                        <label class="input-group-text" style="min-width: 130px !important;">1er vencimiento</label>
+                                                    </div>
+                                                    <input type="text" class="form-control" id="Fe_Fra" value="@Model.Model.Fe_Fra" placeholder="Fecha primer vencimiento">
+                                                    <div class="input-group-append">
+                                                        @if (Model.Model.ID_Eli == 0)
+                                                        {
+                                                            <button type="button" class="btn btn-sm btn-primary recalcular-fe-ve1" id="btn_act_fefra">Actualizar</button>
+                                                        }
+                                                        else
+                                                        {
+                                                            <button type="button" class="btn btn-sm btn-primary recalcular-fe-ve1" id="btn_act_fefra" disabled>Actualizar</button>
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="d-flex">
+
+                                            <div class="d-flex w-50 p-0 mr-2">
+                                                <div class="input-group input-group-sm mb-0">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">
+                                                            Dia de pago
+                                                            @if (Model.Model.Dias != "")
+                                                            {
+                                                                @Html.Raw(" (" + Model.Model.Dias + ")")
+                                                            }
+                                                        </span>
+                                                    </div>
+                                                    <input type="text" class="form-control" id="Dia" value="@Model.Model.Dia" placeholder="Día de pago">
+                                                    <div class="input-group-append">
+                                                        @if (Model.Model.ID_Eli == 0)
+                                                        {
+                                                            <button type="button" class="btn btn-sm btn-primary recalcular-dia" id="btn_act_dia">Actualizar</button>
+                                                        }
+                                                        else
+                                                        {
+                                                            <button type="button" class="btn btn-sm btn-primary recalcular-dia" id="btn_act_dia" disabled>Actualizar</button>
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="d-flex w-50 p-0">
+                                                <div class="input-group input-group-sm">
+                                                    <div class="input-group-prepend">
+                                                        <label class="input-group-text" style="min-width: 130px !important;">A x días
+                                                        @if (Model.Model.AxDias!="")
+                                                        {
+                                                            @Html.Raw(" (" + Model.Model.AxDias + ")")
+                                                        }
+                                                        </label>
+                                                    </div>
+                                                    <input type="text" class="form-control" id="AxDias" value="@Model.Model.AxDias" placeholder="A x días de la fecha de la factura">
+                                                    <div class="input-group-append">
+                                                        @if (Model.Model.ID_Eli == 0)
+                                                        {
+                                                            <button type="button" class="btn btn-sm btn-primary recalcular-axdias" id="btn_act_axdias">Actualizar</button>
+                                                        }
+                                                        else
+                                                        {
+                                                            <button type="button" class="btn btn-sm btn-primary recalcular-axdias" id="btn_act_axdias" disabled>Actualizar</button>
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                        @* Vencimientos *@
+
+
+                        <div class="card card-table mb-3">
+                            <div class="card-header card-header-options">
+                                <span>Vencimientos</span>
+                                <div class="card-actions">
+                                    <ul>
+                                        <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="card-block" role="tablist" aria-multiselectable="true">
+                                <div>
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th class="w-5">Nº</th>
+                                                <th class="w-10">Vencimiento</th>
+                                                <th class="w-15">Forma</th>
+                                                <th class="w-20">Cuenta cliente</th>
+                                                <th class="w-20">Cuenta destino</th>
+                                                <th class="w-5 text-center">Ajustar</th>
+                                                <th class="text-right">Importe</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="vencimientos">
+                                            <tr>
+                                                <td colspan="7" class="text-center">
+                                                    <div class="d-flex align-items-center py-2">
+                                                        <i class="fa fa-cog fa-spin fa-2x fa-fw text-success"></i> <span class="text-success fs-1-1">Calculando vencimientos</span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                            @*@if (Model.Model.Venci != null)
+        {
+            @for (Int32 t = 0; t < Model.Model.Venci.Length; t++)
+            {
+                <tr>
+                    <td class=""><input type="text" class="form-control form-control-sm text-center" value="@Model.Model.Venci[t].datoS1" /></td>
+                    <td class="">
+                        <select class="custom-select">
+                            @if (Model.Model.Formas != null)
+                            {
+                                for (Int32 b = 0; b < Model.Model.Formas.Length; b++)
+                                {
+                                    if (Model.Model.Formas[b].id.ToString() == Model.Model.Venci[t].datoS3)
+                                    {
+                                        <option value="@Model.Model.Formas[b].id" selected>@Model.Model.Formas[b].det</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@Model.Model.Formas[b].id">@Model.Model.Formas[b].det</option>
+                                    }
+                                }
+                            }
+                        </select>
+                    </td>
+                    <td class="">
+                        <select class="custom-select">
+                            @if (Model.Model.Cues != null)
+                            {
+                                for (Int32 b = 0; b < Model.Model.Cues.Length; b++)
+                                {
+                                    if (Model.Model.Cues[b].id.ToString() == Model.Model.Venci[t].datoS4)
+                                    {
+                                        <option value="@Model.Model.Cues[b].id" selected>@Model.Model.Cues[b].det</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@Model.Model.Cues[b].id">@Model.Model.Cues[b].det</option>
+                                    }
+                                }
+                            }
+                        </select>
+                    </td>
+                    <td class="">
+                        <select class="custom-select">
+                            @if (Model.Model.CueNeg != null)
+                            {
+                                for (Int32 b = 0; b < Model.Model.CueNeg.Length; b++)
+                                {
+                                    if (Model.Model.CueNeg[b].id.ToString() == Model.Model.Venci[t].datoS5)
+                                    {
+                                        <option value="@Model.Model.CueNeg[b].id" selected>@Model.Model.CueNeg[b].det</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@Model.Model.CueNeg[b].id">@Model.Model.CueNeg[b].det</option>
+                                    }
+                                }
+                            }
+                        </select>
+                    </td>
+                    <td class=""><p><small></small></p></td>
+                    <td class=""><p><small><button class="btn btn-secondary btn-sm sel-ajustar-fra" id="aju_@t">Ajustar</button></small></p></td>
+                    <td class=""><input type="text" class="form-control form-control-sm text-right cambio-importe-fra" value="@Model.Model.Venci[t].datoS2" id="fra_@t" name="imp" autocomplete="off" /></td>
+                </tr>
+            }
+            <tr>
+                <td colspan="6" class="text-right">Total recibos</td>
+                <td class="text-right" id="total-recibos">@Model.Model.Total</td>
+            </tr>
+            <tr>
+                <td colspan="6" class="text-right">Total factura</td>
+                <td class="text-right">@Model.Model.Total</td>
+            </tr>
+            <tr>
+                <td colspan="6" class="text-right">Descuadre</td>
+                <td class="text-right" id="total-descuadre"></td>
+            </tr>
+        }*@
+                                        </tbody>
+                                    </table>
+
+                                    <div class="d-flex justify-content-center align-items-center box-border-top pt-2 pb-2 mdc-bg-blue-grey-50">
+                                        <button type="button" class="btn btn-primary btn-sm facturar">Facturar</button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+
+                    <div class="col-md-12 col-lg-4 col-sm-12">
+
+                        <div class="card card-table mb-3">
+                            <div class="card-header card-header-options">
+                                <span>Series</span>
+                                <div class="card-actions">
+                                    <ul>
+                                        <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="card-block" role="tablist" aria-multiselectable="true">
+                                <div>
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th class="">Serie</th>
+                                                <th class="">Nº</th>
+                                                <th class="">Fecha</th>
+                                                <th class="">Observaciones</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (Model.Model.Series != null)
+                                            {
+                                                for (Int32 t = 0; t < Model.Model.Series.Length; t++)
+                                                {
+                                                    @if (Model.Model.Series[t].datoB)
+                                                    {
+                                                        <tr class="bg-danger">
+                                                            <td class=""><p><small><a href="#" class="sel-serie" id="serie_@Html.Raw(Model.Model.Series[t].datoI + "_" + Convert.ToInt32(Model.Model.Series[t].datoD))">@Model.Model.Series[t].datoS1</a></small></p></td>
+                                                            <td class=""><p><small>@Model.Model.Series[t].datoS2</small></p></td>
+                                                            <td class=""><p><small>@Model.Model.Series[t].datoS3</small></p></td>
+                                                            <td class=""><p><small>@Model.Model.Series[t].datoS4</small></p></td>
+                                                        </tr>
+
+                                                    }
+                                                    else
+                                                    {
+                                                        <tr>
+                                                            <td class=""><p><small><a href="#" class="sel-serie" id="serie_@Html.Raw(Model.Model.Series[t].datoI + "_" + Convert.ToInt32(Model.Model.Series[t].datoD))">@Model.Model.Series[t].datoS1</a></small></p></td>
+                                                            <td class=""><p><small>@Model.Model.Series[t].datoS2</small></p></td>
+                                                            <td class=""><p><small>@Model.Model.Series[t].datoS3</small></p></td>
+                                                            <td class=""><p><small>@Model.Model.Series[t].datoS4</small></p></td>
+                                                        </tr>
+                                                    }
+                                                }
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card card-table mb-3">
+                            <div class="card-header card-header-options">
+                                <span>Albaranes seleccionados</span>
+                                <div class="card-actions">
+                                    <ul>
+                                        <li><a href="#" class="handle"><i class="fa fa-bars"></i></a><input type="hidden" id="numAlbs" value="@Model.Model.numAlbs" /></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="card-block" role="tablist" aria-multiselectable="true">
+                                <div>
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th class="">Serie</th>
+                                                <th class="">Fecha</th>
+                                                <th class="w-25 text-right">Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (Model.Model.numAlbs > 0)
+                                            {
+                                                for (Int32 t = 0; t < Model.Model.numAlbs; t++)
+                                                {
+                                                    <tr>
+                                                        <td class=""><p><small>@Model.Model.Albs[t].datoS1</small></p></td>
+                                                        <td class=""><p><small>@Model.Model.Albs[t].datoS2</small></p></td>
+                                                        <td class="text-right"><p><small>@Model.Model.Albs[t].datoS4</small></p></td>
+                                                    </tr>
+                                                }
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    actualizarVencimientos();
+</script>

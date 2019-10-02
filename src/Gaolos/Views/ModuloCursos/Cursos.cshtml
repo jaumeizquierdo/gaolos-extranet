@@ -1,0 +1,449 @@
+﻿@model CursosLibrary.ModuloCursosCursosListadoViewModel
+
+@{
+    Layout = "~/Views/Shared/Modulo-Cursos/_Cursos.cshtml";
+    ViewData["Title"] = "Listado de cursos";
+    ViewData["Message"] = "Modulo de cursos - Gaolos App v2017";
+}
+
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+@if(Model.Model.Err.eserror)
+    {
+        ViewData["err"] = Model.Model.Err.mensaje;
+        @Html.Partial("AccesoDenegado");
+    }
+    else
+    {
+
+                @* Buscar usuarios *@
+
+                <div class="card mb-3">
+                    <div class="card-header card-header-options">
+                        <span>Buscar curso</span>
+
+                        <div class="card-actions">
+                            <ul>
+                                <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-block p-0">
+
+                        <form action="@ViewData["Form"]" method="post">
+                            <div class="d-flex justify-content-center align-items-center">
+                                <div class="col-1  pb-2 pt-2">
+                                    <img src="~/flaticons/business/038-user-1.svg" style="width: 100%;">
+                                </div>
+                                <div class="col-11 box-border-left-light">
+
+                                    <div class="row p-0">
+                                        <div class="col-12 p-0">
+                                            <div class="container-fluid">
+                                                <div class="d-flex pt-3">
+                                                    <div class="input-group input-group-sm mb-0 mr-2">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text input-group-text-auto" id="">Buscar</span>
+                                                        </div>
+                                                        <input type="text" class="form-control" placeholder="Buscar por curso, nº de curso y código" name="buscar" value="@ViewData["buscar"]">
+                                                    </div>
+                                                    <div class="input-group input-group-sm mb-0 ml-2 mr-2">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text input-group-text-auto" id="">Agente</span>
+                                                        </div>
+                                                        <select class="custom-select" name="ID_Agente">
+                                                            @if (Model.Model.Agentes != null)
+                                                            {
+                                                                @for (Int32 t = 0; t < Model.Model.Agentes.Length; t++)
+                                                                {
+                                                                    @if (Model.Model.Agentes[t].id.ToString() == ViewData["ID_Agente"].ToString())
+                                                                    {
+                                                                        <option value="@Model.Model.Agentes[t].id" selected>@Model.Model.Agentes[t].det</option>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <option value="@Model.Model.Agentes[t].id">@Model.Model.Agentes[t].det</option>
+                                                                    }
+                                                                }
+                                                            }
+                                                        </select>
+                                                    </div>
+                                                    <div class="input-group input-group-sm mb-0 ml-2 mr-2">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text input-group-text-auto" id="Ubi">Ubicación</span>
+                                                        </div>
+                                                        <input type="text" class="form-control" placeholder="Ubicación" name="Ubi" value="@ViewData["Ubi"]">
+                                                    </div>
+                                                    <div class="input-group input-group-sm mb-0 ml-2 mr-2">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text input-group-text-auto" id="">Tipo</span>
+                                                        </div>
+                                                        <select class="custom-select" name="ID_TipoCurso">
+                                                            @if (Model.Model.Tipos != null)
+                                                            {
+                                                                @for (Int32 t = 0; t < Model.Model.Tipos.Length; t++)
+                                                                {
+                                                                    @if (Model.Model.Tipos[t].id.ToString() == ViewData["ID_TipoCurso"].ToString())
+                                                                    {
+                                                                        <option value="@Model.Model.Tipos[t].id" selected>@Model.Model.Tipos[t].det</option>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <option value="@Model.Model.Tipos[t].id">@Model.Model.Tipos[t].det</option>
+                                                                    }
+                                                                }
+                                                            }
+                                                        </select>
+                                                    </div>
+                                                    <div class="input-group input-group-sm mb-0 ml-2 mr-2">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text input-group-text-auto" id="">Desde</span>
+                                                        </div>
+                                                        <input type="text" class="form-control" placeholder="Desde" name="Fe_In" value="@ViewData["Fe_In"]">
+                                                    </div>
+                                                    <div class="input-group input-group-sm mb-0 ml-2 mr-2">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text input-group-text-auto" id="">Hasta</span>
+                                                        </div>
+                                                        <input type="text" class="form-control" placeholder="Hasta" name="Fe_Fi" value="@ViewData["Fe_Fi"]">
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            
+
+                                            <div class="d-flex mt-3 px-3">
+
+                                                <div class="d-flex align-items-center mr-3">
+                                                    <input name="ID_Tipo" type="radio" class="mr-2" value="1" @{ if (ViewData["ID_Tipo"].ToString() == "1") { @Html.Raw(" checked ")  } }>
+                                                    <span class="fw-5">Abiertos</span>
+                                                </div>
+
+                                                <div class="d-flex align-items-center mr-3">
+                                                    <input name="ID_Tipo" type="radio" class="mr-2" value="5" @{ if (ViewData["ID_Tipo"].ToString() == "5") { @Html.Raw(" checked ")  } }>
+                                                    <span class="fw-5">En web</span>
+                                                </div>
+
+                                                <div class="d-flex align-items-center mr-3">
+                                                    <input name="ID_Tipo" type="radio" class="mr-2" value="4" @{ if (ViewData["ID_Tipo"].ToString() == "4") { @Html.Raw(" checked ")  } }>
+                                                    <span class="fw-5">Por finalizar</span>
+                                                </div>
+
+                                                <div class="d-flex align-items-center mr-3">
+                                                    <input name="ID_Tipo" type="radio" class="mr-2" value="2" @{ if (ViewData["ID_Tipo"].ToString() == "2") { @Html.Raw(" checked ")  } }>
+                                                    <span class="fw-5">Finalizados</span>
+                                                </div>
+
+                                                <div class="d-flex align-items-center mr-3">
+                                                    <input name="ID_Tipo" type="radio" class="mr-2" value="3" @{ if (ViewData["ID_Tipo"].ToString() == "3") { @Html.Raw(" checked ")  } }>
+                                                    <span class="fw-5">Cerrados</span>
+                                                </div>
+
+                                                <div class="d-flex align-items-center mr-3">
+                                                    <input name="ID_Tipo" type="radio" class="mr-2" value="7" @{ if (ViewData["ID_Tipo"].ToString() == "7") { @Html.Raw(" checked ")  } }>
+                                                    <span class="fw-5">Anulados</span>
+                                                </div>
+
+                                                <div class="d-flex align-items-center">
+                                                    <input name="ID_Tipo" type="radio" class="mr-2" value="6" @{ if (ViewData["ID_Tipo"].ToString() == "6") { @Html.Raw(" checked ")  } }>
+                                                    <span class="fw-5">Todos</span>
+                                                </div>
+
+                                            </div>
+                                            <div class="d-flex justify-content-center box-guardar mt-2">
+                                                <button type="submit" class="btn btn-sm btn-primary">Buscar</button>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </form>
+
+                    </div>
+                </div>
+
+
+
+
+
+
+                                <div class="row">
+
+                                    <div class="col-7">
+                                        @* Listado de cursos *@
+                                        <div class="card card-table mb-3">
+                                            <div class="card-header card-header-options">
+                                                <span>@ViewData["Title"]</span>
+                                            </div>
+                                            <div class="card-block">
+
+                                                <table class="table table-striped">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Nº</th>
+                                                            <th>Inicio</th>
+                                                            <th>Curso</th>
+                                                            <th>Asistencia</th>
+                                                            <th class="text-center">Evaluación</th>
+                                                            <th class="text-center">Plazas</th>
+                                                            <th class="text-center">Ocupación</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @if (Model.Model.det != null)
+                    {
+                                    @for (Int32 t = 0; t < Model.Model.det.Length; t++)
+{
+                                    <tr>
+                                        <td class="text-center">
+                                            <p class="fw-5 mb-0"><a href="/modulo-cursos/cursos/curso-alumnos?ID_Curso2=@Model.Model.det[t].ID_Curso2" data-toggle="tooltip" data-placement="top" title="" data-original-title="Ir al curso" class="fw-5">@Model.Model.det[t].ID_Curso2</a></p>
+                                        </td>
+                                        <td>
+                                            <p class="fw-5 mb-0">
+                                                @if (Model.Model.det[t].Fe_In_Cur == "")
+            {
+                                    <i class="fa fa-exclamation-triangle mr-1 text-danger" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="No hay fecha de inicio definida"></i>
+}
+else
+{
+                                    @Model.Model.det[t].Fe_In_Cur
+}
+                                            </p>
+                                        </td>
+                                        <td>
+                                            <p class="fw-5 mb-0">@Model.Model.det[t].Curso</p>
+                                            <p class="fw-5 mb-0"><small>@Model.Model.det[t].Tipo</small></p>
+                                            <p class="fw-5 mb-0"><small>@Model.Model.det[t].Ubi</small></p>
+                                            @{
+            if (ViewData["ID_Tipo"].ToString() == "5")
+            {
+                string Timer = "timer" + t.ToString();
+                if (Model.Model.det[t].HayOfe)
+                {
+                                    <p class="fw-5 mb-0">Fin oferta: <small>@Model.Model.det[t].Fe_Fin_Ofe</small> - Dias oferta: <small>@Model.Model.det[t].DiasOfe</small> - <small id="@Timer" class="timer fw-5 text-danger"></small> - Precio: <small>@Model.Model.det[t].Precio</small></p>
+}
+else
+{
+                                    <p class="fw-5 mb-0">Precio: <small>@Model.Model.det[t].Precio</small></p>
+}
+}
+                                            }
+                                        </td>
+                                        <td class="text-center">
+                                            <p class="fw-5 mb-0">
+                                                @if (Model.Model.det[t].AsisCerr)
+    {
+                                            <i class="fa fa-check text-success"></i>
+}
+else
+{
+if (Model.Model.det[t].Asis)
+{
+                                            <a href="/modulo-cursos/cursos/curso-asistencia?ID_Curso2=@Model.Model.det[t].ID_Curso2"><i class="fa fa-hourglass-half" aria-hidden="true"></i></a>
+}
+else
+{
+                                            <a href="/modulo-cursos/cursos/curso-asistencia?ID_Curso2=@Model.Model.det[t].ID_Curso2">
+                                                <i class='fa fa-exclamation-circle text-danger'></i></a>
+                                                }
+                                                }
+</p>
+                                        </td>
+                                        <td class="text-center">
+                                            <p class="fw-5 mb-0">
+                                                @if (Model.Model.det[t].EvaCerr)
+    {
+                                            <i class="fa fa-check text-success"></i>
+}
+else
+{
+if (Model.Model.det[t].Eva)
+{
+                                            <a href="/modulo-cursos/cursos/curso-evaluacion?ID_Curso2=@Model.Model.det[t].ID_Curso2">
+                                                <i class="fa fa-hourglass-half" aria-hidden="true"></i></a>
+                                                }
+                                                else
+                                                {
+                                                <a href="/modulo-cursos/cursos/curso-evaluacion?ID_Curso2=@Model.Model.det[t].ID_Curso2">
+                                                    <i class='fa fa-exclamation-circle text-danger'></i>
+                                                </a>
+                                                }
+                                                }
+</p>
+                                        </td>
+                                        <td class="text-center">
+                                            <p class="fw-5 mb-0">@Model.Model.det[t].Plazas</p>
+                                        </td>
+                                        <td class="text-center">
+                                            <p class="fw-5 mb-0">
+                                                @if (Model.Model.det[t].PlazasOcu == "")
+            {
+                if ((Model.Model.det[t].Asis && Model.Model.det[t].Eva) || Model.Model.det[t].Cerr)
+                {
+                                    @Html.Raw("0")
+}
+else
+{
+                                    <i class="fa fa-thumbs-o-down" aria-hidden="true"></i>
+}
+}
+else
+{
+                                    @Html.Raw(Model.Model.det[t].PlazasOcu + " - <small>" + Model.Model.det[t].PlazasIns + " - " + @Model.Model.det[t].PlazasInt + "</small>")
+
+
+}
+                                            </p>
+                                        </td>
+                                    </tr>
+}
+
+}
+else
+{
+                                    <tr><td colspan="7"><p class='fw-5 text-danger mb-0'><i class='fa fa-exclamation-circle mr-1'></i> No hay resultados</p></td></tr>
+
+}
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            @Html.Raw(Model.Model.Paginador)
+                                        </div>
+                                        
+                                    </div>
+
+                                    <div class="col-5" id="sindatos">
+
+
+
+                                        @* Sin datos *@
+                                        <div class="card card-table mb-3">
+                                            <div class="card-header card-header-options">
+                                                <span>Información</span>
+                                                <div class="card-actions">
+                                                    <ul>
+                                                        <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="card-block" role="tablist" aria-multiselectable="true">
+                                                <div class="col-12 p-0">
+                                                    <div class="d-flex p-2">
+                                                        <div class="input-group input-group-sm mb-0 mr-2">
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text">Nombre, DNI</span>
+                                                            </div>
+                                                            <input type="text" class="form-control" placeholder="Nombre, DNI" id="buscarcob" value="@ViewData["buscarcob"]">
+                                                        </div>
+                                                        <div class="input-group input-group-sm mb-0">
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text">Importe</span>
+                                                            </div>
+                                                            <input type="text" class="form-control" placeholder="Importe" id="buscarimp" value="@ViewData["buscarimp"]">
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="d-flex justify-content-center box-border-top mdc-bg-blue-grey-50 justify-content-end pt-2 pb-2">
+                                                    <button type="button" class="btn btn-sm btn-primary buscar-alumnos-deben">Buscar</button>
+                                                </div>
+
+                                                <table class="table table-striped">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="text-center w-20">Fecha inicio</th>
+                                                            <th>Alumno</th>
+                                                            <th class="text-right">Debe</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="lis-det">
+                                                        <tr><td colspan='3'><p class='fw-5 text-danger mb-0'><i class='fa fa-exclamation-circle mr-1'></i> Aplique un filtro</p></td></tr>
+                                                    </tbody>
+
+                                                    @*<tbody>
+                <tr>
+                    <td class="text-center">
+                        <p class="fw-5 mb-0">
+                            25/12/17
+                        </p>
+                    </td>
+                    <td>
+                        <p class="fw-5 mb-0">Juan Perez</p>
+                    </td>
+
+                    <td class="text-right">
+                        <p class="fw-5 mb-0">90€</p>
+                    </td>
+                </tr>
+            </tbody>*@
+                                                </table>
+
+
+                                            </div>
+
+                                            <div id="lis-det-paginador" class="mb-0 py-2 px-2 box-border-top"></div>
+
+                                        </div>
+
+                                        @* Sin datos *@
+                                        <div class="card card-table mb-3">
+                                            <div class="card-header card-header-options">
+                                                <span>Información</span>
+                                                <div class="card-actions">
+                                                    <ul>
+                                                        <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="card-block" role="tablist" aria-multiselectable="true">
+                                                <div class="text-center mt-4 mb-4 p-5 bloque-sin-informacion">
+                                                    <img src="~/flaticons/chat.svg" style="width: 25%;">
+                                                    <p class="pt-4">Si clica encima del nº del curso, accederá a la inscripción</p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+    
+                                </div>
+                              
+
+
+}
+            </div>
+        </div>
+    </div>
+</div>
+
+@{
+    if (ViewData["ID_Tipo"].ToString() == "5" && Model.Model.det!=null)
+    {
+        <script>
+        @for (Int32 t = 0; t < Model.Model.det.Length; t++)
+        {
+            if (Model.Model.det[t].HayOfe)
+            {
+                @Html.Raw("var d = new Date('" + Model.Model.det[t].Fe_Fin_OfeT + "');")
+                @Html.Raw("$('#timer" + t.ToString() + "').tinyTimer({ to: d, format: '%d días, %h horas, %m minutos, %s segundos' });")
+            }
+        }
+        </script>
+    }
+}

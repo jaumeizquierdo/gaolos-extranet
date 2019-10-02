@@ -1,0 +1,24 @@
+﻿@* tabs *@
+
+@* btn-tab-active *@
+
+@{
+    string Clss = "mr-1 ml-1 btn btn-tab";
+    string ClssSel = "mr-1 ml-1 btn btn-tab btn-tab-active";
+    string ClssApli = "";
+}
+
+<div class="d-flex pt-3 pb-0 pl-0 mb-3 box-tab">
+    @if (ViewData["Form"].ToString() == "/modulo-mi-empresa/mi-empresa") { ClssApli = ClssSel; } else { ClssApli = Clss; }
+    <a href="/modulo-mi-empresa/mi-empresa" class="@Html.Raw(ClssApli)">Cliente</a>
+    @*@if (ViewData["Form"].ToString() == "/modulo-clientes/clientes/cliente/comercial") { ClssApli = ClssSel; } else { ClssApli = Clss; }
+    <a href="/modulo-clientes/clientes/cliente/comercial?ID_Cli2=@Model.Model.Cab.ID_Cli2" class="@Html.Raw(ClssApli)">Comercial</a>*@
+    @if (ViewData["Form"].ToString() == "/modulo-mi-empresa/mi-empresa/fiscal") { ClssApli = ClssSel; } else { ClssApli = Clss; }
+    <a href="/modulo-mi-empresa/mi-empresa/fiscal" class="@Html.Raw(ClssApli)">Fiscal</a>
+    @*
+        @if (ViewData["Form"].ToString() == "/modulo-clientes/clientes/cliente/contactos") { ClssApli = ClssSel; } else { ClssApli = Clss; }
+        <a href="/modulo-clientes/clientes/cliente/contactos?ID_Cli2=@Model.Model.Cab.ID_Cli2" class="@Html.Raw(ClssApli)">Contactos</a>
+    *@
+
+
+</div>

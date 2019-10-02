@@ -1,0 +1,275 @@
+﻿@model WebsLibrary.WebsDominiosListadoViewModel
+
+@{
+    //Layout = "~/Views/Shared/Webs/_Webs.cshtml";
+    Layout = "~/Views/Shared/Modulo-Web/_Modulo-Web.cshtml";
+    ViewData["Title"] = "Webs - Listado de dominios";
+}
+
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                @if (Model.Model.Err.eserror)
+                {
+                    ViewData["err"] = Model.Model.Err.mensaje;
+                    @Html.Partial("AccesoDenegado");
+                }
+                else
+                {
+
+                    @* Buscador de dominios *@
+
+                <div class="card mb-3">
+                    <div class="card-header card-header-options">
+                        <span>Buscar dominios</span>
+
+                        <div class="card-actions">
+                            <ul>
+                                <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="card-block p-0">
+                        <form action="@ViewData["Form"]" method="post">
+                            <div class="d-flex justify-content-center align-items-center">
+                                <div class="col-1 text-center box-border-right-light py-2">
+                                    <img src="~/flaticons/business/085-browser.svg" style="width: 100%;">
+                                </div>
+                                <div class="col-11">
+
+                                    <div class="row p-0">
+                                        <div class="col-12 p-0">
+                                            <div class="d-flex mb-0 px-3">
+
+                                                <div class="input-group card-search-box">
+                                                    <input type="text" class="form-control" placeholder="Buscar por..." name="buscar" value="@ViewData["buscar"]">
+                                                    <span class="input-group-append">
+                                                        <button class="btn btn-primary btn-sm" type="submit">BUSCAR</button>
+                                                    </span>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+
+                    @* Listado de dominios *@
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card card-table">
+                                <div class="card-header card-header-options">
+                                    <span>Dominios</span>
+                                    <button type="button" class="btn btn-primary btn-sm btn-sm-2x nuevo-dominio">Nuevo</button>
+                                </div>
+                                <div class="card-block">
+
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Dominio</th>
+                                                <th class="text-center">Creación</th>
+                                                <th class="text-center">Próxima renovación</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (Model.Model.det != null)
+                                            {
+                                                for (Int32 t = 0; t < Model.Model.det.Length; t++)
+                                                {
+                                                    string clss = "";
+                                                    if (Model.Model.det[t].ProxReno) { clss = "td-warning"; }
+                                                    <tr class="@Html.Raw(clss)">
+                                                        <td>
+                                                            <a href="#" class="sel-dom" id="dom_@Model.Model.det[t].ID_Dom"><strong>@Model.Model.det[t].Dominio</strong></a>
+                                                            @if (Model.Model.det[t].ProxReno)
+                                                            {
+                                                                <i class="fa fa-exclamation-circle" data-toggle="tooltip" data-placement="top" title="" data-original-title="Se acerca la renovación del dominio"></i>
+                                                            }
+                                                        </td>
+                                                        <td class="text-center"><strong>@Model.Model.det[t].Fe_Crea</strong></td>
+                                                        <td class="text-center"><strong>@Model.Model.det[t].Fe_Reno</strong></td>
+                                                    </tr>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <tr>
+                                                    <td colspan="3"><p class="mb-0 fw-5 py-2 px-1 text-danger"><i class="fa fa-times"></i> No hay resultados</p></td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+                            <div class="mb-3">@Html.Raw(Model.Model.Paginador)</div>
+                        </div>
+                        <div class="col-md-6">
+
+                            @* Sin datos *@
+                            <div class="card card-table mb-3" id="versininfo">
+                                <div class="card-header card-header-options">
+                                    <span>Información</span>
+                                    <div class="card-actions">
+                                        <ul>
+                                            <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="card-block" role="tablist" aria-multiselectable="true">
+                                    <div class="text-center mt-4 mb-4 p-5 bloque-sin-informacion">
+                                        <img src="~/flaticons/chat.svg" style="width: 25%;">
+                                        <p class="pt-4">Si clica encima del dominio, le aparecerán la lista de Urls definidas.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card card-table mb-3 animated fadeIn" id="verDom" style="display:none;">
+                                <div class="card-header card-header-options">
+                                    <span id="dom-titulo">Modificar</span>
+                                </div>
+                                <div class="card-block p-0">
+                                    <div class="d-flex flex-column p-2">
+
+                                        <div class="box-labels mb-1" id="dom-usu">
+                                            <div class="d-flex align-items-center align-self-stretch box-labels-divider">
+                                                <label class="m-0 box-label-label align-self-stretch input-group-text-auto mw-180">Alta</label>
+                                                <p class="mb-0 px-2" id="Fe_Al"></p>
+                                            </div>
+                                        </div>
+
+                                        <div class="input-group input-group-sm mb-1">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text input-group-text-auto mw-180">Dominio</span>
+                                            </div>
+                                            <input type="text" class="form-control" id="Dominio" aria-describedby="basic-addon3" placeholder="Dominio" maxlength="200">
+                                        </div>
+
+                                        <div class="input-group input-group-sm mb-1">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text input-group-text-auto mw-180">Fecha de creación</span>
+                                            </div>
+                                            <input type="text" class="form-control" id="Fe_Crea" aria-describedby="basic-addon3" placeholder="Fecha de creación" maxlength="10">
+                                        </div>
+
+                                        <div class="input-group input-group-sm mb-1">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text input-group-text-auto mw-180">Revovación (Años)</span>
+                                            </div>
+                                            <input type="text" class="form-control" id="AñosReno" aria-describedby="basic-addon3" placeholder="Periodo de renovación" maxlength="5">
+                                        </div>
+
+                                        <div class="input-group input-group-sm mb-1">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text input-group-text-auto mw-180">Fecha próxima renovación</span>
+                                            </div>
+                                            <input type="text" class="form-control" id="Fe_Reno" aria-describedby="basic-addon3" placeholder="Próxima renovación" maxlength="10">
+                                        </div>
+
+                                        <div class="input-group input-group-sm mb-1">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text input-group-text-auto mw-180">Referencia</span>
+                                            </div>
+                                            <input type="text" class="form-control" id="Ref" aria-describedby="basic-addon3" placeholder="Referencia" maxlength="50">
+                                        </div>
+
+                                        <div class="input-group input-group-sm">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text input-group-text-auto mw-180">Observaciones</span>
+                                            </div>
+                                            <input type="text" class="form-control" id="ObsDom" aria-describedby="basic-addon3" placeholder="Observaciones" maxlength="200">
+                                        </div>
+
+                                    </div>
+                                    <div class="d-flex justify-content-center box-border-top p-2 mdc-bg-blue-grey-50">
+                                        <a href="#" class="btn btn-sm btn-primary gua-dom">Guardar</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card card-table mb-3" id="verurls" style="display:none;">
+                                <div class="card-header card-header-options">
+                                    <span>URLs</span>
+                                    <input type="hidden" id="ID_Dom" value="0">
+                                    <div class="input-group input-group-sm col-7 mr-0 pr-0">
+                                        <input type="text" class="form-control form-control-sm" id="nuevaURL" placeholder="Nueva URL" autocomplete="off" maxlength="200">
+                                        <input type="text" class="form-control form-control-sm" id="rediurl" placeholder="Redirigir a" autocomplete="off" maxlength="200">
+                                        <input type="hidden" id="vrediurl" name="vrediurl" value="" />
+                                        <input type="hidden" id="trediurl" name="trediurl" value="" />
+                                        <span class="input-group-append">
+                                            <button type="button" class="btn btn-primary btn-sm nueva-url">Nueva</button>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="card-block">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-left">Url</th>
+                                                <th class="text-left">Redirección</th>
+                                                <th class="text-center w-5"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="content"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="card card-table mb-3" id="actdom" style="display:none;">
+                                <div class="card-header card-header-options">
+                                    <span id="tit-act">Activar dominio</span>
+                                </div>
+                                <div class="card-block p-3">
+                                    <div class="d-flex justify-content-center">
+                                        <button type="button" id="btn-act" class="btn btn-sm btn-primary">Activar</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card card-table mb-5" id="elidom" style="display:none;">
+                                <div class="card-header card-header-options">
+                                    <span>Eliminar dominio</span>
+                                </div>
+                                <div class="card-block p-0">
+                                    <div class="d-flex flex-column p-2">
+                                        <div class="form-group mb-0">
+                                            <textarea class="form-control" rows="3" placeholder="Motivo" id="Motivo"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-center box-guardar">
+                                        <button type="button" class="btn btn-sm btn-danger">Eliminar dominio</button>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    
+
+                    
+                }
+            </div>
+        </div>
+    </div>
+</div>

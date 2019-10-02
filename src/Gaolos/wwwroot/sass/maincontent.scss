@@ -1,0 +1,12 @@
+﻿/* Main Content */
+
+@import "variables.scss";
+@import "materialdesign.scss";
+
+.layout__content .main-content {
+
+    //background: $main-content-bg;
+    padding: $main-content-padding;
+    margin: $main-content-margin;
+
+} //main-content

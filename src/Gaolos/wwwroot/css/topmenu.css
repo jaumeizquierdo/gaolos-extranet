@@ -1,0 +1,75 @@
+/* Top Menu */
+/* Mixins */
+/* Skin v4.6 - White / Dark / Blue */
+.top-menu {
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+  display: inline-flex;
+  justify-content: space-between; }
+  .top-menu li {
+    display: flex; }
+    .top-menu li a .material-icons {
+      font-size: 21px;
+      color: rgba(255, 255, 255, 0.8); }
+    .top-menu li a:hover .material-icons {
+      color: white; }
+  .top-menu a {
+    color: #fff;
+    padding: 0.5em;
+    font-weight: 500;
+    font-size: 0.9em; }
+    .top-menu a i {
+      margin: 0 0.3rem; }
+  .top-menu .dropdown-menu {
+    margin: 0.5rem; }
+    .top-menu .dropdown-menu a:hover {
+      color: #2196f3;
+      padding-left: 25px;
+      transition: all ease-in-out .3s;
+      /*&:before {
+                    content: "\f054";
+                    font-family: 'FontAwesome';
+                    display: inline-block;
+                    color: $md-blue-grey-500;
+                    font-size: 1em;
+                    padding-right: 0.2rem;
+                }*/ }
+
+#MenuUsuarioComponent {
+  z-index: 9999 !important; }
+
+.top-menu-right {
+  display: flex;
+  justify-content: space-between;
+  align-items: center; }
+  .top-menu-right ul li {
+    margin: 0; }
+    .top-menu-right ul li a {
+      font-weight: 500; }
+    .top-menu-right ul li ul li {
+      margin: 0; }
+      .top-menu-right ul li ul li a {
+        padding: 0.5rem 1rem; }
+  .top-menu-right .dropdown-menu {
+    min-width: 15rem; }
+
+.top-menu-left {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-left: 1rem; }
+  .top-menu-left ul li {
+    border-bottom: 1px solid #263238; }
+    .top-menu-left ul li a {
+      font-weight: 500;
+      padding: 0.5rem 1rem; }
+  .top-menu-left ul li:last-child {
+    border-bottom: none; }
+
+#btnlogout {
+  cursor: pointer; }

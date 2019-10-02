@@ -1,0 +1,24 @@
+/* Bootbox Modal */
+/* Mixins */
+/* Skin v4.6 - White / Dark / Blue */
+.bootbox .modal-content {
+  box-shadow: none; }
+
+.bootbox .bootbox-body p {
+  margin: 1em 0; }
+
+.bootbox .bootbox-body .message-ok {
+  background: #1bcc87;
+  color: #fff;
+  padding: 1em;
+  border-radius: 3px; }
+  .bootbox .bootbox-body .message-ok i {
+    color: #fff; }
+
+.bootbox .bootbox-body .message-ko {
+  background: #f05f5c;
+  color: #fff;
+  padding: 1em;
+  border-radius: 3px; }
+  .bootbox .bootbox-body .message-ko i {
+    color: #fff; }

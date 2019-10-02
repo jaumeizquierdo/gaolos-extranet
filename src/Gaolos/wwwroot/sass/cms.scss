@@ -1,0 +1,79 @@
+﻿/* Dropdown menus */
+
+@import "variables.scss";
+@import "materialdesign.scss";
+
+.gaolos-cms {
+    //background: #fff;
+}
+
+.is-container {
+    margin: 3em auto;
+    box-sizing: border-box;
+    //margin: 90px auto; max-width: 1050px; width:100%; padding:0 35px; box-sizing:border-box;
+}
+
+.card-cms {
+    border-radius: 3px;
+    .card-cms-options {
+        background: $md-light-blue-a700;
+        border-top-left-radius: 4px;
+        border-bottom-left-radius: 4px;
+        a {
+            color: $md-blue-grey-800;
+            &:hover {
+                color: #fff;
+            }
+        }
+    }
+    .card-cms-content {
+        background: $md-grey-100;
+        padding: 1rem 2rem;
+        border-top-right-radius: 4px;
+        border-bottom-right-radius: 4px;
+        .card-cms-row {
+            margin-bottom: 1rem;
+            .card-cms-row-options {
+                background: $md-teal-a700;
+                padding: 1rem;
+                border-top-left-radius: 4px;
+                border-bottom-left-radius: 4px;
+                a {
+                    color: $md-blue-grey-800;
+                    &:hover {
+                        color: #fff;
+                    }
+                }
+            }
+            .card-cms-row-content {
+                background: #fff;
+                padding: 1rem;
+                border-top-right-radius: 4px;
+                border-bottom-right-radius: 4px;    
+            }
+        }
+    }
+}
+
+// Cms Layouts
+
+.cms-layout {
+    .layout-col {
+        border: 2px solid #fff;
+        border-radius: 4px;
+        padding: 2rem 0;
+    }
+    .layout-row {
+        padding: 0.5rem;
+    }
+    a {
+        .layout-col {
+            background: $md-light-blue-200;
+        }
+        &:hover {
+            .layout-col {
+                background: $md-blue-500;
+            }
+        }
+    }
+}

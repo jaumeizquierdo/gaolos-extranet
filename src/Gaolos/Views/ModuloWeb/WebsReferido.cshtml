@@ -1,0 +1,110 @@
+﻿@model WebsLibrary.WebsReferidosViewModel
+
+@{
+    Layout = "~/Views/Shared/Webs/_Webs.cshtml";
+    ViewData["Title"] = "Webs - Listado de referios";
+    ViewData["Title-Bloque-1"] = "Dominios";
+    ViewData["Message"] = "CMS - Gaolos App v2017";
+}
+
+<div class="main-content">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                @if (Model.Model.Err.eserror)
+                {
+                    ViewData["err"] = Model.Model.Err.mensaje;
+                    @Html.Partial("AccesoDenegado");
+                }
+                else
+                {
+
+                }
+
+                @* Editar referido *@
+
+                <div class="card mb-3">
+                    <div class="card-header card-header-options">
+                        <span>Editar referido</span>
+
+                        <div class="card-actions">
+                            <ul>
+                                <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-block">
+
+                        <div class="row">
+                            <div class="col-2 text-center">
+                                <img src="~/flaticons/pencils.svg" style="width: 50%">
+                            </div>
+                            <div class="col-9">
+                                <div class="d-flex justify-content-between align-content-center mb-2">
+                                    <p class="fw-5 mb-1"><span class="text-blue">Título:</span> título del referido</p>
+                                    <a href="#" class="fw-5" id="editar-titulo"><i class="fa fa-pencil-square-o"></i> Editar título</a>
+                                </div>
+                                <div class="form-group mb-3" style="display: none;" id="edicion-titulo">
+                                    <input type="text" id="Titulo" class="form-control form-control mt-3" placeholder="Editar título" value="Editar título">
+                                    <button type="button" class="btn btn-primary btn-sm mt-2 blog-entrada-guardar-titulo">Editar</button>
+                                </div>
+                                <div class="d-flex justify-content-between align-content-center mb-2">
+                                    <p class="fw-5 mb-1"><span class="text-blue">Exposición:</span> exposición del referido</p>
+                                    <a href="#" class="fw-5" id="editar-exposicion"><i class="fa fa-pencil-square-o"></i> Editar exposición</a>
+                                </div>
+                                <div class="form-group mb-3" style="display: none;" id="edicion-exposicion">
+                                    <input type="text" id="Expo" class="form-control form-control mt-3" placeholder="Editar exposición" value="Editar exposición">
+                                    <button type="button" class="btn btn-primary btn-sm mt-2">Editar</button>
+                                </div>
+                                <div class="d-flex justify-content-between align-content-center mb-2">
+                                    <p class="fw-5 mb-1"><span class="text-blue">url:</span> <span>https://www.previfoc.com/servicios</span></p>
+                                    <a href="#" target="_blank" class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o"></i> Ir a url</a>
+                                </div>
+                                <div class="d-flex justify-content-between align-content-center mb-2">
+                                    <p class="fw-5 mb-1"><span class="text-blue">referencia:</span> <span>Referencia</span></p>
+                                    <a href="#" target="_blank" class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o"></i> Ir a url</a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <div class="card mb-3">
+                    <div class="card-header card-header-options">
+                        <span>Situación usuarios</span>
+
+                        <div class="card-actions">
+                            <ul>
+                                <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-block">
+
+                        <div class="row">
+                            <div class="col-2 text-center">
+                                <img src="/flaticons/business/101-presentation.svg" style="width: 50%">
+                            </div>
+                            <div class="col-9">
+                                <h5 class="fw-5">Seleccione fecha de inicio y final</h5>
+                                <form method="post" action="/situacion/usuarios" class="sel-dates d-inline-flex mt-2">
+                                    <div class="input-group seldate date mr-2">
+                                        <input type="text" class="form-control" placeholder="Fecha Inicio" value="09/05/2017" name="Fe_In" data-toggle="tooltip" data-placement="top" title="" data-original-title="Fecha de inicio">
+                                    </div>
+                                    <div class="input-group seldate date">
+                                        <input type="text" class="form-control" placeholder="Fecha Fin" value="24/06/2017" name="Fe_Fi" data-toggle="tooltip" data-placement="top" title="" data-original-title="Fecha final">
+                                    </div>
+                                    <button type="submit" class="btn btn-primary ml-2">Buscar</button>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

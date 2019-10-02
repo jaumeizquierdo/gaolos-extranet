@@ -1,0 +1,104 @@
+﻿@model MenuUsuarioLibrary.MenuUsuarioViewModel
+@if (Model != null)
+{
+
+<div class="top-menu">
+
+    <ul class="top-menu-right d-none d-md-inline-flex">
+        @* Expandir / Contraer Sidebars *@
+        <li><a href="#" id="show-menu-desktop" class="d-flex align-items-center"><i class="material-icons">menu</i> Ver menu</a></li>
+        <li class="d-none d-xl-block">
+            <a href="#" class="toggle-expandir-sidebars d-flex align-items-center">
+                <i class="material-icons">keyboard_arrow_left</i>
+            </a>
+        </li>
+    </ul>
+
+    <ul class="top-menu-right d-none d-md-inline-flex">
+
+        @* Inicio *@
+        <li class="d-none d-lg-flex">
+            <a asp-area="" asp-controller="Inicio" asp-action="Inicio" class="d-flex align-items-center">
+                <i class="material-icons">home</i>
+                <span class="d-none d-xl-inline-flex">Inicio</span>
+            </a>
+        </li>
+
+        @* Calendario *@
+        <li>
+            <a href="/calendario" data-toggle="tooltip" data-placement="bottom" title="Calendario" class="d-flex align-items-center">
+                <i class="material-icons">calendar_today</i>
+                <span class="d-none d-xl-inline-flex">Calendario</span>
+                <span class="counter-class badge badge-danger mr-1 ml-2" id="idC_16_148" style="display: none;"></span>
+            </a>
+        </li>
+
+        @* Bandeja de entrada *@
+        <li id="idC_16_45_li" style="display:none;">
+            <a href="/bandeja-de-entrada" data-toggle="tooltip" data-placement="bottom" title="Bandeja de entrada" class="d-flex align-items-center">
+                <i class="material-icons">mail_outline</i>
+                <span class="d-none d-xl-inline-flex">Bandeja de entrada</span>
+                <span class="counter-class badge badge-danger mr-1 ml-2" id="idC_16_45" style="display: none;"></span>
+            </a>
+        </li>
+
+        @* Tareas pendientes *@
+        <li>
+            <a href="/tareas-pendientes" data-toggle="tooltip" data-placement="bottom" title="Tareas pendientes" class="d-flex align-items-center">
+                <i class="material-icons">assignment</i>
+                <span class="d-none d-xl-inline-flex">Tareas pendientes</span>
+                <span class="counter-class badge badge-danger mr-1 ml-2" id="idC_16_46" style="display: none;"></span>
+            </a>
+        </li>
+
+        @* Soporte Técnico *@
+        <li>
+            <a href="/soporte" data-toggle="tooltip" data-placement="bottom" title="Soporte técnico" class="d-flex align-items-center">
+                <i class="material-icons">settings</i>
+                <span class="d-none d-xl-inline-flex">Soporte Técnico</span>
+            </a>
+        </li>
+
+        @* Filtros de Menu *@
+
+        @if (Model.Menu != null)
+        {
+            @if (Model.Menu.num > 0)
+            {
+                <li>
+                    <ul>
+                        <li class="dropdown">
+                            <a href="#" class="d-flex align-items-center" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                <i class="material-icons">tune</i>
+                                <span>@ViewData["accesoRapidoTxt"] Filtros @ViewData["sinFiltroTxt"]</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                @foreach (var s in Model.Menu._menus)
+                                {
+                                    var filtro = "filtro" + s.id.ToString();
+                                    <li><a href="#" class="filtro" id="@filtro"><small class="fw-5">@s.titulo</small></a></li>
+                                }
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            }
+        }
+
+        @* Menu Usuario *@
+
+        @await Component.InvokeAsync(nameof(MenuUsuarioOpcionesLibrary.MenuUsuarioOpcionesComponent))
+
+        @* Cerrar Sesión *@
+        <li>
+            <a id="btnlogout" data-toggle="tooltip" data-placement="bottom" title="Cerrar Sesión" class="d-flex align-items-center ml-3">
+                <i class="material-icons">power_settings_new</i>
+                <span>@ViewData["cerrarSesionBtn"]</span>
+            </a>
+        </li>
+
+    </ul>
+
+</div>
+    
+}

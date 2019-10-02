@@ -1,0 +1,20 @@
+﻿@* tabs *@
+
+@* btn-tab-active *@
+
+@{
+    string Clss = "mr-1 ml-1 btn btn-tab";
+    string ClssSel = "mr-1 ml-1 btn btn-tab btn-tab-active";
+    string ClssApli = "";
+}
+
+<div class="d-flex pt-3 pb-0 pl-0 mb-3 box-tab">
+    @if (ViewData["Form"].ToString() == "/modulo-web/webs/web") { ClssApli = ClssSel; } else { ClssApli = Clss; }
+    <a href="/modulo-web/webs/web" class="@Html.Raw(ClssApli)">General</a>
+    @if (ViewData["Form"].ToString() == "/modulo-web/webs/web/comunicacion/registro") { ClssApli = ClssSel; } else { ClssApli = Clss; }
+    <a href="/modulo-web/webs/web/comunicacion/registro" class="@Html.Raw(ClssApli)">Comunicación</a>
+    @if (ViewData["Form"].ToString() == "/modulo-web/webs/web/articulos") { ClssApli = ClssSel; } else { ClssApli = Clss; }
+    <a href="/modulo-web/webs/web/articulos" class="@Html.Raw(ClssApli)">Artículos</a>
+    @if (ViewData["Form"].ToString() == "/modulo-web/webs/web/condiciones") { ClssApli = ClssSel; } else { ClssApli = Clss; }
+    <a href="/modulo-web/webs/web/condiciones" class="@Html.Raw(ClssApli)">Condiciones</a>
+</div>

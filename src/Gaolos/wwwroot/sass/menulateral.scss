@@ -1,0 +1,207 @@
+﻿/* Menu Lateral */
+
+@import "variables.scss";
+@import "materialdesign.scss";
+
+.menu {
+    ul {
+        //margin: 2em 0;
+        li {
+            a {
+                padding: 0.5em 1em;
+                @include flex;
+                color: $menu-lateral-url;
+                //border-bottom: none;
+                //background: lighten($md-blue-grey-900, 5%);
+                font-size: 0.9em;
+                font-weight: 500;
+
+
+                &:hover,
+                &:focus,
+                &:active {
+                    color: #fff;
+                    //text-decoration: underline;
+                }
+
+                i {
+                    &:hover,
+                    &:focus,
+                    &:active {
+                        color: #fff;
+                        text-decoration: none;
+                    }
+                }
+
+                .material-icons {
+                    font-size: 21px;
+                }
+
+                .ico {
+                }
+            }
+
+            li:last-child {
+                border-bottom: none;
+            }
+
+            @include fade-link;
+            //border-bottom: 1px solid $menu-lateral-url-divider;
+            border-bottom: 1px solid #404854;
+
+            &:hover, &:focus, &:active {
+                //background: /*$menu-lateral-url-hover*/ $md-blue-500;
+                background: rgba(255,255,255,.08) !important;
+                color: /*$menu-lateral-url*/ #fff;
+                text-decoration: none;
+                outline: 0;
+                cursor: pointer;
+            }
+
+            ul {
+                margin: 0;
+                //padding: 0.5em 0;
+                border-left: 1px solid $md-blue-500;
+                border-top: 1px solid $menu-lateral-url-divider;
+                background: #19212b;
+
+                li {
+                    border-bottom: none !important;
+
+                    a {
+                        padding: 0.4em 0.5em 0.4em 3.1em !important;
+                        //background: $md-blue-grey-900;
+                        //background: lighten($md-blue-grey-900, 5%);
+                        background: #19212b;
+                        border-bottom: none !important;
+
+                        span {
+                            background: $md-blue-500;
+                            color: #fff;
+                            font-weight: 500;
+                            font-size: 0.9em;
+                            padding: 0.2em 0.5em;
+                            border-radius: 2px;
+                        }
+
+                        &:hover {
+                            //background: rgba(255,255,255,.03) !important;
+                            span {
+                                background: $md-red-a400;
+                            }
+
+                            padding-left: 3.5em !important;
+                            //color: $md-blue-500;
+                        }
+                    }
+                }
+
+                /*li:first-child {
+                    padding-top: 0.5em;
+                }
+
+                li:last-child {
+                    padding-bottom: 0.5em;
+                }*/
+            }
+        }
+    }
+}
+
+.link-open {
+    background: $menu-lateral-url-seleccionado;
+}
+
+.collapsed-sidebar {
+    //margin-left: -10rem;
+    //@include fade-link;
+    width: 3rem;
+}
+
+.expanded-sidebar {
+    margin-left: 0;
+    @include fade-link;
+}
+
+.collapsed-aside {
+    margin-right: -15rem;
+    @include fade-link;
+}
+
+.expanded-aside {
+    margin-right: 0;
+    @include fade-link;
+}
+
+.toggle-menu,
+.toggle-notificaciones {
+    font-size: 0.9em;
+    box-shadow: none;
+    position: absolute;
+    border-radius: 0;
+    top: 0.5rem;
+}
+
+.toggle-menu {
+    background: $md-blue-grey-900;
+    right: -1.2rem;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    padding: 0.7rem 0.5rem 0.7rem 0.4rem;
+    display: none;
+    &:hover,
+    &:active,
+    &:focus {
+        box-shadow: none;
+        background: $md-blue-grey-900;
+    }
+    &:hover {
+        background: $md-blue-grey-800;
+    }
+}
+
+.toggle-notificaciones {
+    background: $md-blue-grey-100;
+    left: -1.2rem;
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+    padding: 0.7rem 0.4rem 0.7rem 0.5rem;
+    display: none;
+
+    &:hover,
+    &:active,
+    &:focus {
+        box-shadow: none;
+        background: $md-blue-grey-100;
+    }
+
+    &:hover {
+        background: $md-blue-grey-200;
+    }
+}
+
+.menu-divider {
+    border-bottom: 1px solid $menu-lateral-url-divider;
+    height: 1px;
+    width: 100%;
+}
+
+.collapse-menu {
+    bottom: 0;
+    position: fixed;
+    display: flex;
+    background: darken($md-blue-grey-900, 5%);
+    height: 3vh;
+    a {
+        color: #fff;
+    }
+}
+
+#accordion {
+    margin-bottom: 5em;
+}
+
+.copyright {
+    color: #697586;
+    border-top: 1px solid #404854;
+}

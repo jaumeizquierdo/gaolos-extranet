@@ -1,0 +1,169 @@
+﻿@model DashBoardLibrary.DashBoardViewModel
+@{
+    Layout = "~/Views/Shared/Modulo-Clientes/_Modulo-Clientes-Configuracion.cshtml";
+    ViewData["Title"] = "Preferencias";
+}
+
+<div class="main-content m-0" id="widget-area">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+
+                @if (Model.Model.Err.eserror)
+                {
+                    ViewData["err"] = Model.Model.Err.mensaje;
+                @Html.Partial("AccesoDenegado");
+                }
+                else
+                {
+
+                <div class="card mb-3">
+                    <div class="card-block card-info-header card-info-header-modulo p-0">
+                        <div class="d-flex justify-content-center align-items-center">
+                            <div class="col-1 pb-2 pt-2 d-flex justify-content-center align-items-center">
+                                <img src="~/flaticons/business/038-user-1.svg" style="width: 64px;">
+                            </div>
+                            <div class="col-11 pt-2 pb-2 box-border-left-light">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="card-info-desc d-flex flex-column py-3">
+                                        <h5 class="fw-5 title-section">Preferencias</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-8">
+                        <div class="card mb-3">
+
+                            <div class="card-header card-header-options">
+                                <span>Duplicidad</span>
+                            </div>
+
+                            <div class="card-block p-0">
+
+                                <div class="p-2">
+                                    <div class="box-labels mb-1">
+                                        <div class="d-flex align-items-center align-self-stretch">
+                                            <label class="m-0 box-label-label align-self-stretch" style="min-width: 160px;">Evitar duplicar NIF</label>
+                                            <input type="checkbox" class="mx-3" id="nuevoCliFacViaMail" checked="">
+                                        </div>
+                                    </div>
+                                    <div class="box-labels">
+                                        <div class="d-flex align-items-center align-self-stretch">
+                                            <label class="m-0 box-label-label align-self-stretch" style="min-width: 160px;">Permitir NIF en blanco</label>
+                                            <input type="checkbox" class="mx-3" id="nuevoCliFacViaMail" checked="">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="d-flex justify-content-center box-border-top p-2 mdc-bg-blue-grey-50">
+                                    <a href="#" class="btn btn-sm btn-primary config-recibos-guardar">Guardar</a>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="card mb-3">
+
+                            <div class="card-header card-header-options">
+                                <span>Contador</span>
+                            </div>
+
+                            <div class="card-block p-0">
+
+                                <div class="p-2">
+
+                                    <div class="input-group input-group-sm mb-1">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" style="min-width: 160px !important;">Último nº cliente</span>
+                                        </div>
+                                        <input type="text" class="form-control" id="" value="" placeholder="Último número cliente" disabled>
+                                        <div class="input-group-append">
+                                            <button type="button" class="btn btn-sm btn-primary">Cambiar</button>
+                                        </div>
+                                    </div>
+
+                                    <div class="input-group input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" style="min-width: 160px !important;">Fecha último cliente</span>
+                                        </div>
+                                        <input type="text" class="form-control" id="" value="" placeholder="Fecha último cliente">
+                                    </div>
+
+                                </div>
+
+                                <div class="d-flex justify-content-center box-border-top p-2 mdc-bg-blue-grey-50">
+                                    <a href="#" class="btn btn-sm btn-primary config-recibos-guardar">Guardar</a>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="card mb-3">
+
+                            <div class="card-header card-header-options">
+                                <span>Contabilidad</span>
+                            </div>
+
+                            <div class="card-block p-0">
+
+                                <div class="p-2">
+
+                                    <div class="input-group input-group-sm mb-1">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" style="min-width: 210px !important;">Nº dígitos cuenta contable</span>
+                                        </div>
+                                        <input type="text" class="form-control" id="" value="" placeholder="Nº dígitos cuenta contable">
+                                    </div>
+
+                                    <div class="box-labels mb-1">
+                                        <div class="d-flex align-items-center align-self-stretch">
+                                            <label class="m-0 box-label-label align-self-stretch" style="min-width: 210px !important;">Autogenerar nº cuenta contable</label>
+                                            <input type="checkbox" class="mx-3" id="nuevoCliFacViaMail" checked="">
+                                        </div>
+                                    </div>
+
+                                    <div class="input-group input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" style="min-width: 210px !important;">Prefijos nº cuenta contable</span>
+                                        </div>
+                                        <input type="text" class="form-control" id="" value="" placeholder="Prefijos nº cuenta contable">
+                                    </div>
+                                </div>
+
+                                <div class="d-flex justify-content-center box-border-top p-2 mdc-bg-blue-grey-50">
+                                    <a href="#" class="btn btn-sm btn-primary config-recibos-guardar">Guardar</a>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="col-4">
+
+                    </div>
+
+                </div>
+
+                }
+
+            </div>
+        </div>
+
+    </div>
+
+</div>

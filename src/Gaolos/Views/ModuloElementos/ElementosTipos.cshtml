@@ -1,0 +1,100 @@
+﻿@model ModuloElementosLibrary.ElementosPlantillasListadoViewModel
+@{
+    Layout = "~/Views/Shared/Modulo-Elementos/_Modulo-Elementos.cshtml";
+    ViewData["Title"] = "Tipos";
+    ViewData["SubTitle"] = "Tipo";
+    ViewData["PlantillasMantenimiento"] = "Módulo Elementos";
+}
+
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+
+                @if (Model.Model.Err.eserror)
+    {
+        ViewData["err"] = Model.Model.Err.mensaje;
+                @Html.Partial("AccesoDenegado");
+    }
+    else
+    {
+
+                <div class="row">
+                    <div class="col-12">
+
+                        @* Resultado Búsqueda *@
+
+                        <div class="card card-table mb-3">
+                            <div class="card-header card-header-options">
+                                <span>@ViewData["Title"]</span>
+                                <div class="input-group input-group-sm col-2 mr-0 pr-0">
+                                    <input type="text" class="form-control form-control-sm" id="nuevotipo" placeholder="Nuevo tipo de elemento" maxlength="100">
+                                    <span class="input-group-append">
+                                        <button type="button" class="btn btn-primary btn-sm tipo-nuevo">Nuevo</button>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="card-block p-0">
+                                <div class="d-flex flex-column">
+                                    <table class="table table-small table-striped border-top-none">
+                                        <thead>
+                                            <tr>
+                                                <th>@ViewData["SubTitle"]</th>
+                                                <th class="w-10 text-center">Fecha</th>
+                                                <th class="w-10 text-center">Usuario</th>
+                                                <th class="w-10 text-center">Nº de columnas de características en el informe</th>
+                                                <th class="w-10 text-center">Nº de columnas de preguntas en el informe</th>
+                                                <th class="w-10 text-center">Nº de servicios</th>
+                                                <th class="w-5 text-center"><i class="fa fa-times"></i></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (Model.Model.dat != null)
+                                            {
+                                                for (Int32 t = 0; t < Model.Model.dat.Length; t++)
+                                                {
+                                            <tr>
+                                                <td><a href="/modulo-elementos/tipos/tipo?ID_Tipo2=@Model.Model.dat[t].datoI" class="fw-5">@Model.Model.dat[t].datoS3</a></td>
+                                                <td class="text-center">@Model.Model.dat[t].datoS1</td>
+                                                <td class="text-center">@Model.Model.dat[t].datoS2</td>
+                                                <td class="text-center">@Model.Model.dat[t].datoS4</td>
+                                                <td class="text-center">@Model.Model.dat[t].datoS5</td>
+                                                <td class="text-center">@Model.Model.dat[t].datoD</td>
+                                                <td class="text-center"><a href="#" data-toggle="tooltip" data-placement="top" title="" class="text-danger" data-original-title="Eliminar marca"><i class="fa fa-times"></i></a></td>
+                                            </tr>
+                                                }
+                                            } else
+                                            {
+                                                    <tr>
+                                                        <td colspan="7" class="p-0"><p class="mb-0 fw-5 p-2 text-danger"><i class="fa fa-times"></i> No hay resultados</p></td>
+                                                    </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        @* Resultado Búsqueda Paginador *@
+
+                        <nav aria-label="Búsqueda Listado" class="mb-3">
+                            @Html.Raw(Model.Model.Paginador)
+                        </nav>
+
+                    </div>
+                </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

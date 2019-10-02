@@ -1,0 +1,477 @@
+﻿@model DashBoardLibrary.DashBoardViewModel
+@{
+    Layout = "~/Views/Shared/Modulo-Web/_Modulo-Web-Web.cshtml";
+    ViewData["Title"] = Model.Model.Modulo;
+}
+
+<div class="main-content m-0" id="widget-area">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+
+                @if (Model.Model.Err.eserror)
+                {
+                    ViewData["err"] = Model.Model.Err.mensaje;
+                @Html.Partial("AccesoDenegado");
+                }
+                else
+                {
+
+                @Html.Partial("WebsCabecera")
+
+                @* tabs *@
+
+                @Html.Partial("Web-Tabs")
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-block">
+                                @Html.Partial("Web-Tabs-Comunicacion")
+
+                                <div class="row">
+                                    <div class="col-12">
+
+                                        <div class="card">
+                                            <div class="card-header card-header-options">
+                                                <span>Registro</span>
+                                            </div>
+                                            <div class="card-block p-0">
+
+                                                <div class="d-flex p-2">
+
+                                                    <div class="input-group input-group-sm mr-3 w-85">
+                                                        <div class="input-group-prepend">
+                                                            <label class="input-group-text mw-140" for="">Mail</label>
+                                                        </div>
+                                                        <select class="custom-select" id="">
+                                                            <option value="1" selected="">Mail</option>
+                                                        </select>
+                                                        <div class="input-group-append">
+                                                            <button type="button" class="btn btn-primary btn-sm">Guardar</button>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="box-labels mr-3 w-25">
+                                                        <div class="d-flex align-items-center align-self-stretch">
+                                                            <label class="m-0 box-label-label align-self-stretch">Requerir copia NIF</label>
+                                                            <input type="checkbox" class="mx-3" id="" name="">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="box-labels w-25">
+                                                        <div class="d-flex align-items-center align-self-stretch">
+                                                            <label class="m-0 box-label-label align-self-stretch">Requerir IAE</label>
+                                                            <input type="checkbox" class="mx-3" id="" name="">
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                                <div class="d-flex justify-content-center box-border-top p-2 mdc-bg-blue-grey-50">
+                                                    <a href="#" class="btn btn-sm btn-primary guardar-abono-facturas">Guardar</a>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h5 class="my-4">Mensaje registro</h5>
+                                    </div>
+                                </div>
+
+                                @* MENSAJE REGISTRO *@
+
+                                <div class="row">
+
+                                    @* MENSAJE REGISTRO MAIL *@
+
+                                    <div class="col-6">
+
+                                        <div class="card">
+                                            <div class="card-header card-header-options">
+                                                <span>Mensaje registro mail</span>
+                                            </div>
+
+                                            <div class="card-block p-0">
+
+                                                <div class="d-flex p-3">
+                                                    <div class="input-group input-group-sm mb-1">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text" id="">Asunto</span>
+                                                        </div>
+                                                        <input type="text" class="form-control" id="" aria-describedby="" value="">
+                                                    </div>
+                                                </div>
+
+                                                <hr class="mt-0 mb-0" />
+
+                                                <div class="row mb-1 pt-3 px-3 pb-0">
+                                                    <div class="col-12">
+                                                        <div class="form-group mb-2">
+                                                            <label>Mensaje</label>
+                                                            <textarea name="mensaje-registro-mail" id="mensaje-registro-mail" class="form-control" rows="8"></textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <hr class="mt-0 mb-0" />
+
+                                                <div class="d-flex p-3">
+                                                    <div class="input-group input-group-sm">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text" id="">Nodo</span>
+                                                        </div>
+                                                        <input type="text" class="form-control" id="" aria-describedby="" value="" placeholder="Guardar">
+                                                        <div class="input-group-append">
+                                                            <button type="button" class="btn btn-primary btn-sm">Actualizar</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="d-flex justify-content-center box-border-top p-2 mdc-bg-blue-grey-50">
+                                                    <a href="#" class="btn btn-sm btn-primary">Guardar</a>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                    @* MENSAJE REGISTRO WEB *@
+
+                                    <div class="col-6">
+
+                                        <div class="card">
+                                            <div class="card-header card-header-options">
+                                                <span>Mensaje registro web</span>
+                                            </div>
+
+                                            <div class="card-block p-0">
+
+                                                <div class="d-flex p-3">
+                                                    <div class="input-group input-group-sm mb-1">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text" id="">Asunto</span>
+                                                        </div>
+                                                        <input type="text" class="form-control" id="" aria-describedby="" value="">
+                                                    </div>
+                                                </div>
+
+                                                <hr class="mt-0 mb-0" />
+
+                                                <div class="row mb-1 pt-3 px-3 pb-0">
+                                                    <div class="col-12">
+                                                        <div class="form-group mb-2">
+                                                            <label>Mensaje</label>
+                                                            <textarea name="mensaje-registro-web" id="mensaje-registro-web" class="form-control" rows="8"></textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="d-flex justify-content-center box-border-top p-2 mdc-bg-blue-grey-50">
+                                                    <a href="#" class="btn btn-sm btn-primary">Guardar</a>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h5 class="my-4">Validación</h5>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <div class="col-12">
+                                        <div class="card">
+                                            <div class="d-flex p-3">
+                                                <div class="input-group input-group-sm">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text" id="">URL</span>
+                                                    </div>
+                                                    <input type="text" class="form-control" id="" aria-describedby="" value="" placeholder="URL">
+                                                    <div class="input-group-append">
+                                                        <button type="button" class="btn btn-primary btn-sm">Guardar</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+
+                                    @* MENSAJE *@
+
+                                    <div class="col-6">
+                                        <div class="card">
+                                            <div class="card-header card-header-options">
+                                                <span>Mensaje</span>
+                                            </div>
+
+                                            <div class="card-block p-0">
+
+                                                <div class="d-flex p-3">
+                                                    <div class="input-group input-group-sm mb-1">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text" id="">Asunto</span>
+                                                        </div>
+                                                        <input type="text" class="form-control" id="" aria-describedby="" value="">
+                                                    </div>
+                                                </div>
+
+                                                <hr class="mt-0 mb-0" />
+
+                                                <div class="row mb-1 pt-3 px-3 pb-0">
+                                                    <div class="col-12">
+                                                        <div class="form-group mb-2">
+                                                            <label>Mensaje</label>
+                                                            <textarea name="mensaje-validacion-1" id="mensaje-validacion-1" class="form-control" rows="8"></textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <hr class="mt-0 mb-0" />
+
+                                                <div class="d-flex p-3">
+                                                    <div class="input-group input-group-sm">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text" id="">Nodo</span>
+                                                        </div>
+                                                        <input type="text" class="form-control" id="" aria-describedby="" value="" placeholder="Actualizar nodo">
+                                                        <div class="input-group-append">
+                                                            <button type="button" class="btn btn-primary btn-sm">Actualizar</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="d-flex justify-content-center box-border-top p-2 mdc-bg-blue-grey-50">
+                                                    <a href="#" class="btn btn-sm btn-primary">Guardar</a>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    @* MENSAJE *@
+
+                                    <div class="col-6">
+
+                                        <div class="card">
+                                            <div class="card-header card-header-options">
+                                                <span>Mensaje</span>
+                                            </div>
+
+                                            <div class="card-block p-0">
+
+                                                <div class="d-flex p-3">
+                                                    <div class="input-group input-group-sm mb-1">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text" id="">Asunto</span>
+                                                        </div>
+                                                        <input type="text" class="form-control" id="" aria-describedby="" value="">
+                                                    </div>
+                                                </div>
+
+                                                <hr class="mt-0 mb-0" />
+
+                                                <div class="row mb-1 pt-3 px-3 pb-0">
+                                                    <div class="col-12">
+                                                        <div class="form-group mb-2">
+                                                            <label>Mensaje</label>
+                                                            <textarea name="mensaje-validacion-2" id="mensaje-validacion-2" class="form-control" rows="8"></textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <hr class="mt-0 mb-0" />
+
+                                                <div class="d-flex p-3">
+                                                    <div class="input-group input-group-sm">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text" id="">Nodo</span>
+                                                        </div>
+                                                        <input type="text" class="form-control" id="" aria-describedby="" value="" placeholder="Actualizar nodo">
+                                                        <div class="input-group-append">
+                                                            <button type="button" class="btn btn-primary btn-sm">Actualizar</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="d-flex justify-content-center box-border-top p-2 mdc-bg-blue-grey-50">
+                                                    <a href="#" class="btn btn-sm btn-primary">Guardar</a>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                @* CONTROL DE ALTA USUARIOS *@
+
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h5 class="my-4">Control alta usuarios</h5>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <div class="col-12">
+                                        <div class="card">
+                                            <div class="d-flex align-items-center p-3">
+                                                <input type="checkbox" class="mr-2" id="" checked="">
+                                                <span class="fw-5">Activar control de usuarios</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+
+                                    @* ALTA ACEPTADA *@
+
+                                    <div class="col-6">
+                                        <div class="card">
+                                            <div class="card-header card-header-options">
+                                                <span>Alta aceptada</span>
+                                            </div>
+
+                                            <div class="card-block p-0">
+
+                                                <div class="d-flex p-3">
+                                                    <div class="input-group input-group-sm mb-1">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text" id="">Asunto</span>
+                                                        </div>
+                                                        <input type="text" class="form-control" id="" aria-describedby="" value="">
+                                                    </div>
+                                                </div>
+
+                                                <hr class="mt-0 mb-0" />
+
+                                                <div class="row mb-1 pt-3 px-3 pb-0">
+                                                    <div class="col-12">
+                                                        <div class="form-group mb-2">
+                                                            <label>Mensaje</label>
+                                                            <textarea name="mensaje-control-alta-usuarios-1" id="mensaje-control-alta-usuarios-1" class="form-control" rows="8"></textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <hr class="mt-0 mb-0" />
+
+                                                <div class="d-flex p-3">
+                                                    <div class="input-group input-group-sm">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text" id="">Nodo</span>
+                                                        </div>
+                                                        <input type="text" class="form-control" id="" aria-describedby="" value="" placeholder="Actualizar nodo">
+                                                        <div class="input-group-append">
+                                                            <button type="button" class="btn btn-primary btn-sm">Actualizar</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="d-flex justify-content-center box-border-top p-2 mdc-bg-blue-grey-50">
+                                                    <a href="#" class="btn btn-sm btn-primary">Guardar</a>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    @* ALTA DENEGADA *@
+
+                                    <div class="col-6">
+
+                                        <div class="card">
+                                            <div class="card-header card-header-options">
+                                                <span>Alta denegada</span>
+                                            </div>
+
+                                            <div class="card-block p-0">
+
+                                                <div class="d-flex p-3">
+                                                    <div class="input-group input-group-sm mb-1">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text" id="">Asunto</span>
+                                                        </div>
+                                                        <input type="text" class="form-control" id="" aria-describedby="" value="">
+                                                    </div>
+                                                </div>
+
+                                                <hr class="mt-0 mb-0" />
+
+                                                <div class="row mb-1 pt-3 px-3 pb-0">
+                                                    <div class="col-12">
+                                                        <div class="form-group mb-2">
+                                                            <label>Mensaje</label>
+                                                            <textarea name="mensaje-control-alta-usuarios-2" id="mensaje-control-alta-usuarios-2" class="form-control" rows="8"></textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <hr class="mt-0 mb-0" />
+
+                                                <div class="d-flex p-3">
+                                                    <div class="input-group input-group-sm">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text" id="">Nodo</span>
+                                                        </div>
+                                                        <input type="text" class="form-control" id="" aria-describedby="" value="" placeholder="Actualizar nodo">
+                                                        <div class="input-group-append">
+                                                            <button type="button" class="btn btn-primary btn-sm">Actualizar</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="d-flex justify-content-center box-border-top p-2 mdc-bg-blue-grey-50">
+                                                    <a href="#" class="btn btn-sm btn-primary">Guardar</a>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                }
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+@Html.Partial("DashboardScripts")

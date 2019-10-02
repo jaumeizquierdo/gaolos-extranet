@@ -1,0 +1,137 @@
+﻿@model ModuloProduccionLibrary.ProduccionOrdenesEstadoOperariosDetallesViewModel
+
+@{
+    ViewData["Title"] = "Órdenes de producción";
+    ViewData["TitleOrdenesProduccionAbiertas"] = "Listado estado operarios";
+    Layout = "~/Views/Shared/Modulo-Produccion/_ProduccionOrdenes.cshtml";
+}
+<div class="main-content m-0" id="widget-area">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                @if (Model.Model.Err.eserror)
+                {
+                    ViewData["err"] = Model.Model.Err.mensaje;
+                    @Html.Partial("AccesoDenegado");
+                }
+                else
+                {
+
+
+                    @* Buscador *@
+
+                    <div class="card mb-3">
+                        <div class="card-header card-header-options">
+                            <span>Estado trabajadores</span>
+
+                            <div class="card-actions">
+                                <ul>
+                                    <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="card-block p-0">
+
+                            <form action="@ViewData["Form"]" method="post" class="">
+                                <div class="d-flex justify-content-center align-items-center">
+                                    <div class="col-1 pb-2 pt-2">
+                                        <img src="https://image.flaticon.com/icons/svg/427/427132.svg" style="width: 100%;">
+                                    </div>
+                                    <div class="col-11 box-border-left-light">
+
+                                        <div class="row p-0">
+                                            <div class="col-12 p-0">
+                                                <div class="d-flex mb-0 px-3 pt-3 mb-2">
+                                                    <div class="form-group mb-2 mr-2 col-12 p-0">
+                                                        <label>Buscar</label>
+                                                        <input type="text" class="form-control" placeholder="Buscar ..." name="buscar" value="@ViewData["buscar"]">
+                                                    </div>
+                                                </div>
+
+                                                <div class="d-flex justify-content-center mt-2 box-border-top mdc-bg-blue-grey-50 pt-2 pb-2">
+                                                    <button type="submit" class="btn btn-sm btn-primary">Buscar</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </form>
+
+                        </div>
+
+
+                    </div>
+
+
+                    @* Listado de órdenes de producción *@
+
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card card-table mb-3">
+                                <div class="card-header card-header-options">
+                                    <span>@ViewData["TitleOrdenesProduccionAbiertas"]</span>
+                                </div>
+                                <div class="card-block">
+
+                                    <table class="table table-striped table-select">
+
+                                        <thead>
+                                            <tr>
+                                                <th class="w-20">Operario</th>
+                                                <th>Nº Ped.</th>
+                                                <th>Nº Orden</th>
+                                                <th>Producción</th>
+                                                <th>Inicio</th>
+                                                <th>Cliente</th>
+                                                <th>Exposición</th>
+                                                <th>Estado</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (Model.Model.det != null)
+                                            {
+                                                for (Int32 t = 0; t < Model.Model.det.Length; t++)
+                                                {
+                                            <tr>
+                                                <td class="fw-5">@Model.Model.det[t].Usu</td>
+                                                <td>@Model.Model.det[t].ID_PedP2</td>
+                                                <td>@Model.Model.det[t].ID_Ord2</td>
+                                                <td>@Model.Model.det[t].Fe_Al_Prod</td>
+                                                <td>@Model.Model.det[t].Fe_Ini</td>
+                                                <td class="fw-5">@Model.Model.det[t].Emp</td>
+                                                <td>@Model.Model.det[t].Expo</td>
+                                                <td>@Model.Model.det[t].Estado</td>
+                                            </tr>
+                                                }
+                                            }
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="mb-3">
+                        @Html.Raw(Model.Model.Paginador)
+                    </div>
+
+                }
+            </div>
+        </div>
+
+    </div>
+
+</div>

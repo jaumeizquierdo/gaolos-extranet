@@ -1,0 +1,220 @@
+﻿@model ModuloClientesLibrary.ModuloClientesClienteFiscalViewModel
+@{
+    Layout = "~/Views/Shared/Modulo-Contactos/_Modulo-Contactos-Contacto.cshtml";
+    ViewData["Title"] = "Situación";
+    ViewData["Message"] = "Modulo de Contactos - Gaolos App v2017";
+}
+
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+                @if (Model.Model.Err.eserror)
+                {
+                    ViewData["err"] = Model.Model.Err.mensaje;
+                @Html.Partial("AccesoDenegado");
+                }
+                else
+                {
+
+                @* cabecera cliente *@
+
+                @Html.Partial("Contacto-Cabecera")
+
+                @* tabs *@
+
+                @Html.Partial("Contacto-Tabs")
+
+                @* Listado de direcciones *@
+
+                <div class="card">
+                    <div class="card-block">
+
+                        @* tabs *@
+
+                        @Html.Partial("Contacto-Situacion-Tabs")
+
+                        <div class="row">
+                            <div class="col-6">
+
+                                <div class="card card-table mb-3">
+                                    <div class="card-header card-header-options">
+                                        <span>Situación</span>
+                                        <a href="#" class="btn btn-sm btn-primary" style="display:none;">Exportar</a>
+                                    </div>
+                                    <div class="card-block">
+
+                                        <script type="text/javascript">
+                                            google.charts.load('current', { 'packages': ['corechart'] });
+                                            google.charts.setOnLoadCallback(drawChart);
+
+                                            function drawChart() {
+
+                                                var data = google.visualization.arrayToDataTable([
+                                                    ['Task', 'Hours per Day'],
+                                                    ['Work', 11],
+                                                    ['Eat', 2],
+                                                    ['Commute', 2],
+                                                    ['Watch TV', 2],
+                                                    ['Sleep', 7]
+                                                ]);
+
+                                                var options = {
+                                                    title: 'Promedio de tiempo en cerrar solicitudes por horas (en horas)'
+                                                };
+
+                                                var chart = new google.visualization.PieChart(document.getElementById('situacion-chart-1'));
+
+                                                chart.draw(data, options);
+                                            }
+                                        </script>
+                                        <div class="d-flex justify-content-center">
+                                            <div id="situacion-chart-1" style="width: 700px; height: 500px;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card card-table mb-0">
+                                    <div class="card-header card-header-options">
+                                        <span>Solicitudes cerradas por día</span>
+                                        <a href="#" class="btn btn-sm btn-primary" style="display:none;">Exportar</a>
+                                    </div>
+                                    <div class="card-block">
+
+                                        <script type="text/javascript">
+                                            google.charts.load('current', { 'packages': ['corechart'] });
+                                            google.charts.setOnLoadCallback(drawChart);
+
+                                            function drawChart() {
+
+                                                var data = google.visualization.arrayToDataTable([
+                                                    ['Task', 'Hours per Day'],
+                                                    ['Work', 11],
+                                                    ['Eat', 2],
+                                                    ['Commute', 2],
+                                                    ['Watch TV', 2],
+                                                    ['Sleep', 7]
+                                                ]);
+
+                                                var options = {
+                                                    title: 'Promedio de tiempo en cerrar solicitudes por horas (en horas)'
+                                                };
+
+                                                var chart = new google.visualization.PieChart(document.getElementById('situacion-chart-2'));
+
+                                                chart.draw(data, options);
+                                            }
+                                        </script>
+                                        <div class="d-flex justify-content-center">
+                                            <div id="situacion-chart-2" style="width: 700px; height: 500px;"></div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="col-6">
+
+                                <div class="card card-table mb-3">
+                                    <div class="card-header card-header-options">
+                                        <span>Carga de trabajo por usuario</span>
+                                        <a href="#" class="btn btn-sm btn-primary" style="display:none;">Exportar</a>
+                                    </div>
+                                    <div class="card-block">
+
+                                        <script type="text/javascript">
+                                            google.charts.load('current', { 'packages': ['bar'] });
+                                            google.charts.setOnLoadCallback(drawChart);
+
+                                            function drawChart() {
+                                                var data = google.visualization.arrayToDataTable([
+                                                    ['Year', 'Sales', 'Expenses', 'Profit'],
+                                                    ['2014', 1000, 400, 200],
+                                                    ['2015', 1170, 460, 250],
+                                                    ['2016', 660, 1120, 300],
+                                                    ['2017', 1030, 540, 350]
+                                                ]);
+
+                                                var options = {
+                                                    chart: {
+                                                        title: 'Solicitudes cerradas por día',
+                                                        subtitle: 'Sales, Expenses, and Profit: 2014-2017',
+                                                    }
+                                                };
+
+                                                var chart = new google.charts.Bar(document.getElementById('situacion-chart-3'));
+
+                                                chart.draw(data, google.charts.Bar.convertOptions(options));
+                                            }
+                                        </script>
+                                        <div class="d-flex justify-content-center">
+                                            <div id="situacion-chart-3" style="width: 700px; height: 500px;"></div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="card card-table mb-0">
+                                    <div class="card-header card-header-options">
+                                        <span>Carga de trabajo por usuario</span>
+                                        <a href="#" class="btn btn-sm btn-primary" style="display:none;">Exportar</a>
+                                    </div>
+                                    <div class="card-block">
+
+                                        <script type="text/javascript">
+                                            google.charts.load('current', { 'packages': ['corechart'] });
+                                            google.charts.setOnLoadCallback(drawChart);
+
+                                            function drawChart() {
+
+                                                var data = google.visualization.arrayToDataTable([
+                                                    ['Task', 'Hours per Day'],
+                                                    ['Work', 11],
+                                                    ['Eat', 2],
+                                                    ['Commute', 2],
+                                                    ['Watch TV', 2],
+                                                    ['Sleep', 7]
+                                                ]);
+
+                                                var options = {
+                                                    title: 'Promedio de tiempo en cerrar solicitudes por horas (en horas)'
+                                                };
+
+                                                var chart = new google.visualization.PieChart(document.getElementById('situacion-chart-4'));
+
+                                                chart.draw(data, options);
+                                            }
+                                        </script>
+                                        <div class="d-flex justify-content-center">
+                                            <div id="situacion-chart-4" style="width: 700px; height: 500px;"></div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+

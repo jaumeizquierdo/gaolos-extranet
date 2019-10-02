@@ -1,0 +1,82 @@
+﻿@model DashBoardLibrary.DashBoardViewModel
+@{
+    Layout = "~/Views/Shared/Modulo-Articulos/_Modulo-Articulos-Configuracion.cshtml";
+    ViewData["Title"] = "Artículos - Configuración";
+}
+
+<div class="main-content m-0" id="widget-area">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+
+                @if (Model.Model.Err.eserror)
+                {
+                    ViewData["err"] = Model.Model.Err.mensaje;
+                @Html.Partial("AccesoDenegado");
+                }
+                else
+                {
+
+                <div class="card mb-3">
+                    <div class="card-header card-header-options">
+                        <span>@ViewData["Title"]</span>
+                    </div>
+                    <div class="card-block p-5">
+
+                        <div class="row mb-4">
+                            <div class="col-3 text-center col-conf">
+                                <figure>
+                                    <a href="/modulo-articulos/configuracion/categorias">
+                                        <img src="~/flaticons/pie-chart-1.svg" style="width: 64px">
+                                        <h5 class="fs-1-1 mt-2">Categorías</h5>
+                                    </a>
+                                </figure>
+                            </div>
+                            <div class="col-3 text-center col-conf">
+                                <figure>
+                                    <a href="/modulo-articulos/configuracion/familias">
+                                        <img src="~/flaticons/pie-chart-1.svg" style="width: 64px">
+                                        <h5 class="fs-1-1 mt-2">Familias</h5>
+                                    </a>
+                                </figure>
+                            </div>
+                            <div class="col-3 text-center col-conf">
+                                <figure>
+                                    <a href="/modulo-articulos/configuracion/fabricantes">
+                                        <img src="~/flaticons/pie-chart-1.svg" style="width: 64px">
+                                        <h5 class="fs-1-1 mt-2">Fabricantes</h5>
+                                    </a>
+                                </figure>
+                            </div>
+                            <div class="col-3 text-center col-conf">
+                                <figure>
+                                    <a href="/modulo-articulos/configuracion/referencia-1">
+                                        <img src="~/flaticons/pie-chart-1.svg" style="width: 64px">
+                                        <h5 class="fs-1-1 mt-2">Referencia 1</h5>
+                                    </a>
+                                </figure>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+
+                }
+
+            </div>
+        </div>
+
+    </div>
+
+</div>

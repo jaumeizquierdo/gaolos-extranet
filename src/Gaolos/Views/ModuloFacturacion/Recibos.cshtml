@@ -1,0 +1,407 @@
+﻿@model ModuloFacturacionLibrary.ModuloFacturacionFacturacionRecibosInicioViewModel
+
+@{
+    Layout = "~/Views/Shared/Modulo-Facturacion/_Facturacion-Recibos.cshtml";
+    ViewData["Title"] = "Listado de recibos";
+    ViewData["TitleBuscar"] = "Buscar ";
+    ViewData["Message"] = "Facturación - Gaolos App v2017";
+}
+
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                
+    @if (Model.Model.Err.eserror)
+    {
+        ViewData["err"] = Model.Model.Err.mensaje;
+        @Html.Partial("AccesoDenegado");
+    }
+    else
+    {
+
+        @* Generar recibos *@
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card mb-3">
+                    <div class="card-header card-header-options">
+                        <span>Generar recibos</span>
+                    </div>
+                    <div class="card-block p-0">
+                        <form method="post" action="/modulo-facturacion/facturas" class="sel-dates">
+
+                            <div class="p-2 d-flex flex-column">
+                                <div class="d-flex mb-0">
+
+                                    <div class="input-group mb-0 mr-2 w-50">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text input-group-text-auto">Cuenta presentación</span>
+                                        </div>
+                                        <select class="custom-select" id="ID_Cue">
+                                            @if (Model.Model.Cues != null)
+                                            {
+                                                for (Int32 t = 0; t < Model.Model.Cues.Length; t++)
+                                                {
+                                                    if (Model.Model.ID_Cue == Model.Model.Cues[t].id)
+                                                    {
+                                            <option selected value="@Model.Model.Cues[t].id">@Model.Model.Cues[t].det</option>
+                                                    }
+                                                    else
+                                                    {
+                                            <option value="@Model.Model.Cues[t].id">@Model.Model.Cues[t].det</option>
+                                                    }
+                                                }
+                                            }
+                                        </select>
+                                    </div>
+
+                                    <div class="input-group mb-0 mr-2 w-25">
+                                        <div class="input-group-prepend input-group-text-auto">
+                                            <span class="input-group-text input-group-text-auto">Norma</span>
+                                        </div>
+                                        <select class="custom-select" id="ID_Tipo">
+                                            @if (Model.Model.Tipos != null)
+                                            {
+                                                for (Int32 t = 0; t < Model.Model.Tipos.Length; t++)
+                                                {
+                                                    if (Model.Model.ID_Tipo == Model.Model.Tipos[t].id)
+                                                    {
+                                                        <option selected value="@Model.Model.Tipos[t].id">@Model.Model.Tipos[t].det</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@Model.Model.Tipos[t].id">@Model.Model.Tipos[t].det</option>
+                                                    }
+                                                }
+                                            }
+                                        </select>
+                                    </div>
+
+                                    <div class="input-group mb-0 mr-2 w-25">
+                                        <div class="input-group-prepend input-group-text-auto">
+                                            <span class="input-group-text input-group-text-auto">Tipo</span>
+                                        </div>
+                                        <select class="custom-select" id="ID_Norma">
+                                            @if (Model.Model.Normas != null)
+                                            {
+                                                for (Int32 t = 0; t < Model.Model.Normas.Length; t++)
+                                                {
+                                                    if (Model.Model.ID_Norma == Model.Model.Normas[t].id)
+                                                    {
+                                                        <option selected value="@Model.Model.Normas[t].id">@Model.Model.Normas[t].det</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@Model.Model.Normas[t].id">@Model.Model.Normas[t].det</option>
+                                                    }
+                                                }
+                                            }
+                                        </select>
+                                    </div>
+
+                                    <div class="input-group input-group-sm mb-0 p-0 mr-2 w-25">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text input-group-text-auto">Fecha presentación</span>
+                                        </div>
+                                        <input type="text" class="form-control" id="Fe_Pres" value="@Model.Model.Fe_Pres" placeholder="Fecha presentación">
+                                    </div>
+
+                                    <div class="d-flex justify-content-center">
+                                        <button type="button" class="btn btn-sm btn-primary generar-remesa">Generar remesa</button>
+                                    </div>
+
+                                </div>
+                            </div>
+                                    
+                            
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+
+                <div class="card card-table mb-3">
+                    <div class="card-header card-header-options">
+                        <span>Historial de remesas de hoy generadas por mí</span>
+                    </div>
+                    <div class="card-block p-0">
+
+                        <div class="box-border-top-light">
+                            <div class="d-flex p-0">
+                                <table class="table table-small table-striped border-top-none">
+                                    <thead>
+                                        <tr>
+                                            <th class="w-7 text-center">Nº Remesa</th>
+                                            <th class="w-10 text-center">Presentación</th>
+                                            <th class="text-left">Cuenta</th>
+                                            <th class="w-10 text-center">Norma</th>
+                                            <th class="w-10 text-center">Nº recibos</th>
+                                            <th class="w-10 text-right">Total</th>
+                                            <th class="w-5 text-center">Anular</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="resumen-hoy">
+                                        <tr>
+                                            <td colspan="7" class="text-center">
+                                                <div class="d-flex align-items-center py-2">
+                                                    <i class="fa fa-cog fa-spin fa-2x fa-fw text-success"></i> <span class="text-success fs-1-1">Cargando historial de mis remesas de hoy</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+                    
+            <div class="col-6">
+
+                @* Buscador recibos seleccionados *@
+
+                <h5 class="fw-5 title-section mb-3">Recibos seleccionados</h5>
+
+                <div class="card card-table mb-3" style="display:block;" id="verMarcarCob">
+                    <div class="card-header card-header-options">
+                        <span>Buscador</span>
+                    </div>
+                    <div class="card-block" role="tablist" aria-multiselectable="true">
+                        <div class="d-flex p-2">
+                            <div class="input-group input-group-sm mb-0 p-0 mr-2">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text input-group-text-auto">Cliente</span>
+                                </div>
+                                <input type="text" class="form-control" id="ID_Cli2sel" value="" placeholder="Buscar cliente">
+                                <input type="hidden" id="vID_Cli2sel" name="vID_Cli2sel" value="" />
+                                <input type="hidden" id="tID_Cli2sel" name="tID_Cli2sel" value="" />
+                            </div>
+                            <div class="input-group input-group-sm mb-0 p-0">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text input-group-text-auto">Nº Factura</span>
+                                </div>
+                                <input type="text" class="form-control" id="Facsel" value="" placeholder="Nº Factura">
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-center box-guardar">
+                            <button type="button" class="btn btn-sm btn-primary mr-3 buscar-rec-sel">Buscar</button>
+                            <button type="button" class="btn btn-sm btn-danger mr-3 quitar-recibos">Quitar recibos seleccionados</button>
+                        </div>
+                    </div>
+                </div>
+
+                @* Resumen recibos seleccionados *@
+
+                <div class="card card-table mb-3">
+                    <div class="card-header card-header-options">
+                        <span>Resumen</span>
+                        <span id="resumen-totales"></span>
+                        <a href="#" class="btn btn-sm btn-primary" style="display:none;">Exportar</a>
+                    </div>
+                    <div class="card-block">
+                        <table class="table table-striped table-small">
+                            <thead>
+                                <tr>
+                                    <th class="text-center w-20">Fecha vencimiento</th>
+                                    <th class="text-center w-15">Nº de recibos</th>
+                                    <th class="text-right">Importe</th>
+                                    <th class="w-5 text-center"></th>
+                                </tr>
+                            </thead>
+                            <tbody id="resrecsel">
+                                <tr>
+                                    <td colspan="4" class="text-center">
+                                        <div class="d-flex align-items-center py-2">
+                                            <i class="fa fa-cog fa-spin fa-2x fa-fw text-success"></i> <span class="text-success fs-1-1">Cargando resumen de recibos seleccionados</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                @* Paginador *@
+                <div class="mb-3" id="resrecsel-paginador"></div>
+
+
+                @* Recibos seleccionados *@
+
+                <div class="card card-table mb-3">
+                    <div class="card-header card-header-options">
+                        <span>Detalle</span>
+                        <a href="#" class="btn btn-sm btn-primary" style="display:none;">Exportar</a>
+                    </div>
+                    <div class="card-block">
+                        <table class="table table-striped table-small">
+                            <thead>
+                                <tr>
+                                    <th class="w-10 text-center">Fecha vencimiento</th>
+                                    <th class="w-10 text-center">Nº de factura</th>
+                                    <th class="w-30">Cliente</th>
+                                    <th class="text-right w-10">Importe</th>
+                                    <th class="text-center w-5"></th>
+                                </tr>
+                            </thead>
+                            <tbody id="recsel">
+                                <tr>
+                                    <td colspan="5" class="text-center">
+                                        <div class="d-flex align-items-center py-2">
+                                            <i class="fa fa-cog fa-spin fa-2x fa-fw text-success"></i> <span class="text-success fs-1-1">Cargando recibos seleccionados</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                @* Paginador *@
+
+                <div class="mb-3" id="recsel-paginador">
+                </div>
+
+            </div>
+
+            <div class="col-6">
+
+                @* Recibos disponibles con errores *@
+
+                @* Buscador recibos disponibles *@
+
+                <h5 class="fw-5 title-section mb-3">Recibos disponibles</h5>
+
+                <div class="card card-table mb-3">
+                    <div class="card-header card-header-options">
+                        <span>Buscador</span>
+
+                    </div>
+                    <div class="card-block" role="tablist" aria-multiselectable="true">
+
+                        <div class="d-flex p-2">
+                            <div class="input-group input-group-sm mb-0 p-0 mr-2">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text input-group-text-auto">Cliente</span>
+                                </div>
+                                <input type="text" class="form-control" id="ID_Cli2disp" value="" placeholder="Buscar cliente">
+                                <input type="hidden" id="vID_Cli2disp" name="vID_Cli2disp" value="" />
+                                <input type="hidden" id="tID_Cli2disp" name="tID_Cli2disp" value="" />
+                            </div>
+                            <div class="input-group input-group-sm mb-0 p-0">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text input-group-text-auto">Nº Factura</span>
+                                </div>
+                                <input type="text" class="form-control" id="Facdisp" value="" placeholder="Nº Factura">
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-center box-guardar">
+                            <button type="button" class="btn btn-sm btn-primary mr-3 buscar-rec-dis">Buscar</button>
+                        </div>
+
+                    </div>
+                </div>
+
+                @* Resumen total recibos disponibles por vencimiento *@
+
+                <div class="card card-table mb-3">
+                    <div class="card-header card-header-options">
+                        <span>Resumen de recibos disponibles por fecha de vencimiento</span>
+                        <a href="#" class="btn btn-sm btn-primary" style="display:none;">Exportar</a>
+                    </div>
+                    <div class="card-block">
+                        <table class="table table-striped table-small">
+                            <thead>
+                                <tr>
+                                    <th class="w-5 text-center"></th>
+                                    <th class="text-center w-20">Fecha vencimiento</th>
+                                    <th class="text-center w-20">Nº de recibos</th>
+                                    <th class="text-right">Importe</th>
+
+                                </tr>
+                            </thead>
+                            <tbody id="resrecdisp">
+                                <tr>
+                                    <td colspan="4" class="text-center">
+                                        <div class="d-flex align-items-center py-2">
+                                            <i class="fa fa-cog fa-spin fa-2x fa-fw text-success"></i> <span class="text-success fs-1-1">Cargando resumen de recibos disponibles</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                @* Paginador *@
+                <div class="mb-3" id="resrecdisp-paginador"></div>
+
+
+                @* Recibos disponibles *@
+
+                <div class="card card-table mb-3">
+                    <div class="card-header card-header-options">
+                        <span>Listado de recibos disponibles</span>
+                        <a href="#" class="btn btn-sm btn-primary" style="display:none;">Exportar</a>
+                    </div>
+                    <div class="card-block">
+
+                        <table class="table table-striped table-small">
+                            <thead>
+                                <tr>
+                                    <th class="w-5 text-center"></th>
+                                    <th class="w-10 text-center">Fecha vencimiento</th>
+                                    <th class="w-10 text-center">Nº de factura</th>
+                                    <th class="w-30">Cliente</th>
+                                    <th class="text-right w-10">Importe</th>
+                                </tr>
+                            </thead>
+                            <tbody id="recdisp">
+                                <tr>
+                                    <td colspan="5" class="text-center">
+                                        <div class="d-flex align-items-center py-2">
+                                            <i class="fa fa-cog fa-spin fa-2x fa-fw text-success"></i> <span class="text-success fs-1-1">Cargando recibos disponibles</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                @* Paginador *@
+                <div class="mb-3" id="recdisp-paginador">
+                </div>
+
+            </div>
+        </div>
+                
+    }
+                
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    ActualizarTodo();
+</script>

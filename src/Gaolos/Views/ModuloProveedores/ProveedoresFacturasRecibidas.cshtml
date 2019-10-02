@@ -1,0 +1,330 @@
+﻿@model ModuloProveedoresLibrary.ModuloProveedoresProveedoresFacturasListadoViewModel
+@{
+    Layout = "~/Views/Shared/Modulo-Proveedores/_Modulo-Proveedores.cshtml";
+    ViewData["Title"] = "Facturas recibidas";
+}
+
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+                @if(Model.Model.Err.eserror)
+    {
+        ViewData["err"] = Model.Model.Err.mensaje;
+                @Html.Partial("AccesoDenegado");
+    }
+    else
+    {
+
+                @* Buscar usuarios *@
+
+                <div class="card mb-3">
+                    <div class="card-header card-header-options">
+                        <span>Buscar factura recibida</span>
+                    </div>
+                    <div class="card-block p-0">
+
+
+                        <div class="d-flex justify-content-center align-items-center">
+                            <div class="col-1 pb-2 pt-2">
+                                <img src="~/flaticons/business/038-user-1.svg" style="width: 100%;">
+                            </div>
+                            <div class="col-11 pt-2 pb-2 box-border-left-light">
+                                <form method="post" action="@ViewData["form"]" class="">
+                                    <div class="d-flex justify-content-center align-items-center mb-2 w-100">
+
+                                        <div class="input-group input-group-sm mb-0 mr-2">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text input-group-text-auto mw-80">Buscar</span>
+                                            </div>
+                                            <input type="text" class="form-control ui-autocomplete-input" id="busfacrecprov" value="@ViewData["Prov"]" placeholder="Buscar por nombre, NIF, CC y nº" autocomplete="off">
+                                            <input type="hidden" id="vbusfacrecprov" name="vbusfacrecprov" value="@ViewData["ID_Prov2"]"><input type="hidden" id="tbusfacrecprov" value="@ViewData["Prov"]">
+                                            <span class="input-group-append">
+                                                <button type="submit" class="btn btn-primary btn-sm form-buscar"><i class="fa fa-search"></i></button>
+                                            </span>
+                                        </div>
+
+                                        <div class="input-group input-group-sm mb-0 mr-2">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text input-group-text-auto mw-85">Año</span>
+                                            </div>
+                                            <select class="custom-select" name="Año">
+                                                @if (Model.Model.Años != null)
+            {
+                for (Int32 t = 0; t < Model.Model.Años.Length; t++)
+                {
+                    if (Model.Model.Años[t].id.ToString() == ViewData["Año"].ToString())
+                    {
+            <option value="@Model.Model.Años[t].id" selected>@Model.Model.Años[t].det</option>
+                    }
+                    else
+                    {
+            <option value="@Model.Model.Años[t].id">@Model.Model.Años[t].det</option>
+                    }
+                }
+            }
+                                            </select>
+                                            <span class="input-group-append">
+                                                <button type="submit" class="btn btn-primary btn-sm form-buscar"><i class="fa fa-search"></i></button>
+                                            </span>
+                                        </div>
+
+                                        <div class="input-group input-group-sm mb-0 mr-2">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text input-group-text-auto mw-115">Mes</span>
+                                            </div>
+                                            <select class="custom-select" name="Mes">
+                                                @if (Model.Model.Meses != null)
+            {
+                for (Int32 t = 0; t < Model.Model.Meses.Length; t++)
+                {
+                    if (Model.Model.Meses[t].id.ToString() == ViewData["Mes"].ToString())
+                    {
+            <option value="@Model.Model.Meses[t].id" selected>@Model.Model.Meses[t].det</option>
+                    }
+                    else
+                    {
+            <option value="@Model.Model.Meses[t].id">@Model.Model.Meses[t].det</option>
+                    }
+                }
+            }
+                                            </select>
+                                            <span class="input-group-append">
+                                                <button type="submit" class="btn btn-primary btn-sm form-buscar"><i class="fa fa-search"></i></button>
+                                            </span>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="d-flex justify-content-center align-items-center w-100">
+
+                                        <div class="input-group input-group-sm mb-0 mr-2">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text input-group-text-auto mw-80" id="">Mail</span>
+                                            </div>
+                                            <input type="text" class="form-control" name="Mail" placeholder="Buscar por mail" value="@ViewData["Mail"]">
+                                            <span class="input-group-append">
+                                                <button type="submit" class="btn btn-primary btn-sm form-buscar"><i class="fa fa-search"></i></button>
+                                            </span>
+                                        </div>
+
+                                        <div class="input-group input-group-sm mb-0 mr-2">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text input-group-text-auto mw-85" id="">Teléfono</span>
+                                            </div>
+                                            <input type="text" class="form-control" name="Tel" placeholder="Buscar por teléfono" value="@ViewData["Tel"]">
+                                            <span class="input-group-append">
+                                                <button type="submit" class="btn btn-primary btn-sm form-buscar"><i class="fa fa-search"></i></button>
+                                            </span>
+                                        </div>
+
+                                        <div class="input-group input-group-sm mb-0 mr-2">
+                                            @*<div class="input-group-prepend">
+                                                <span class="input-group-text input-group-text-auto mw-115" id="">Tipo de cliente</span>
+                                            </div>
+                                            <select class="custom-select" name="ID_Tipo">
+                                                @if (Model.Model.TiposCli != null)
+                                                {
+                                                    for (Int32 t = 0; t < Model.Model.TiposCli.Length; t++)
+                                                    {
+                                                        if (Model.Model.TiposCli[t].id.ToString() == ViewData["ID_Tipo"].ToString())
+                                                        {
+                                                <option value="@Model.Model.TiposCli[t].id" selected>@Model.Model.TiposCli[t].det</option>
+                                                        }
+                                                        else
+                                                        {
+                                                <option value="@Model.Model.TiposCli[t].id">@Model.Model.TiposCli[t].det</option>
+                                                        }
+                                                    }
+                                                }
+                                            </select>
+                                            <span class="input-group-append">
+                                                <button type="submit" class="btn btn-primary btn-sm form-buscar"><i class="fa fa-search"></i></button>
+                                            </span>*@
+                                        </div>
+
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+
+                        @*
+
+                        *@
+
+                    </div>
+                </div>
+
+                @* Listado de usuarios *@
+
+                <div class="row">
+                    <div class="col-md-9">
+
+                        <div class="card card-table mb-3">
+                            <div class="card-header card-header-options">
+                                <span>@ViewData["Title"]</span>
+                            </div>
+                            <div class="card-block">
+
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center w-5">Fecha</th>
+                                            <th class="text-center w-10">Nº factura</th>
+                                            <th>Proveedor</th>
+                                            <th class="text-center w-7">NIF</th>
+                                            <th class="text-center w-7">Cuenta</th>
+                                            <th class="text-center w-5"><i class="fa fa-file-pdf-o" data-toggle="tooltip" data-placement="top" title="" data-original-title="Documento digitalizado"></i></th>
+                                            <th class="text-center w-5"><i class="fa fa-link" data-toggle="tooltip" data-placement="top" title="" data-original-title="Exportado a la contabilidad"></i></th>
+                                            <th class="text-right w-7">Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (Model.Model.det != null)
+                                        {
+                                            @for (Int32 t = 0; t < Model.Model.det.Length; t++)
+                                            {
+                                                <tr>
+                                                    <td class="text-center">@Model.Model.det[t].Fe_Fa</td>
+                                                    <td class="text-center"><a href="#" id="fac-rec_@Model.Model.det[t].ID_FacRec2" class="sel-fac-rec" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="Ver detalles de la factura">@Model.Model.det[t].NumFac</a></td>
+                                                    <td>@Model.Model.det[t].Emp (<a target="_blank" href="/modulo-proveedores/proveedores/proveedor?ID_Prov2=@Model.Model.det[t].ID_Prov2" class="fw-5" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="Ir a la ficha del proveedor">@Model.Model.det[t].ID_Prov2</a>)</td>
+                                                    <td class="text-center">@Model.Model.det[t].NIF</td>
+                                                    <td class="text-center">@Model.Model.det[t].CCProv</td>
+                                                    <td class="text-center">
+                                                        @if (Model.Model.det[t].ID_Doc != "")
+                                                        {
+                                                            <a target="_blank" href="/modulo-proveedores/facturas-recibidas/descargar?ID_Doc=@Model.Model.det[t].ID_Doc" class="fw-5" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="Ver factura"><i class="fa fa-file-pdf-o"></i></a>
+                                                        }
+                                                    </td>
+                                                    <td class="text-center">
+                                                        @if (Model.Model.det[t].Conta)
+                                                        {
+                                                            <i class="fa fa-check text-success"></i>
+                                                        }
+                                                    </td>
+                                                    <td class="text-right">@Model.Model.det[t].Total</td>
+                                                </tr>
+                                            }
+
+                                        }
+                                        else
+                                        {
+                                            <tr>
+                                                <td colspan="5"><p class="mb-0 fw-5 py-2 px-1 text-danger"><i class="fa fa-times"></i> No hay resultados</p></td>
+                                            </tr>
+
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-md-3">
+
+                        <div class="card card-table mb-3" style="display:none;" id="opciones">
+                            <div class="card-header card-header-options">
+                                <span>Factura nº <label id="lFac">A-4058</label></span>
+                                <input type="hidden" id="ID_Fac" value="253025">
+                                <div class="card-actions">
+                                    <ul>
+                                        <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="card-block" role="tablist" aria-multiselectable="true">
+                                <div class="p-3 mb-0">
+                                    <p class="mb-0"><small><span class="fw-5 mr-1">Creada:</span> </small><small id="Fe_Al">25/07/19  11:21</small></p>
+                                    <p class="mb-0"><small><span class="fw-5 mr-1">Usuario:</span> </small><small id="Usu">Jordi Latorre</small></p>
+                                    <hr class="mb-1 mt-1">
+                                    <p class="mb-0"><small><span class="fw-5 mr-1">Nº factura:</span> </small><small id="Fac">A-4058</small></p>
+                                    <p class="mb-0"><small><span class="fw-5 mr-1">Fecha:</span> </small><small id="Fe_Fa">25/07/19</small></p>
+                                    <p class="mb-0"><small><span class="fw-5 mr-1">Cliente:</span> </small><small id="Emp">Antonio Puig s.a.</small></p>
+                                    <p class="mb-0"><small><span class="fw-5 mr-1">NIF:</span> </small><small id="NIF">A08158289</small></p>
+                                    <p class="mb-0"><small><span class="fw-5 mr-1">Nº Cliente:</span> </small><small><a href="/modulo-clientes/clientes/cliente?ID_Cli2=1771" target="_blank" id="ID_Cli2">1771</a></small></p>
+                                    <p class="mb-0"><small><span class="fw-5 mr-1">Nº contable:</span> </small><small id="CCCli">43000001</small></p>
+                                    <p class="mb-0"><small><span class="fw-5 mr-1">Dirección:</span> </small><small id="Dir">Plaza Europa, 46-48 - HOSPITALET DE LLOBREGAT, L' - 08902 - BARCELONA</small></p>
+                                    <p class="mb-0"><small><span class="fw-5 mr-1">Total:</span> </small><small id="Total">520,30 €</small></p>
+                                    <p class="mb-0" id="verObsFac" style="display: none;"><small><span class="fw-5 mr-1">Observaciones factura:</span> </small><small id="ObsFac"></small></p>
+                                    <p class="mb-0"><small><span class="fw-5 mr-1">Estado cobro:</span> </small><small id="EstadoCobro">Pendiente</small></p>
+                                    <p class="mb-0" id="SiConta" style="display: block;"><small><span class="fw-5 mr-1 text-succes">Factura traspasada a la contabilidad</span></small></p>
+                                    <p class="mb-0 badge badge-success" id="verSiEmpRel" style="display: none;"><a href="#datosemprel">Ver empresa relacionada</a></p>
+                                    <p class="mb-0" id="verTipoCli" style="display: none;"><small><span class="fw-5 mr-1">Tipo cliente:</span> </small><small id="TipoCli"></small></p>
+                                    <div class="box-scroll">
+                                        <p class="mb-0" id="verObsCli" style="display: none;"><small><span class="fw-5 mr-1">Observaciones cliente:</span> </small><small id="ObsCli"></small></p>
+                                    </div>
+                                    <hr class="mb-1 mt-1">
+                                    <p class="mb-0" id="NoEnMail" style="display: none;"><small><span class="fw-5 mr-1 text-danger">Opción enviar por mail no disponible en este cliente</span></small></p>
+                                    <p class="mb-0" id="SiEnMail" style="display: block;"><small><span class="fw-5 mr-1" id="lisMails">Mails envío factura: jordilatorre@tecmegara.com</span></small></p>
+                                    <p class="mb-0" id="verEnvMail" style="display: block;"><small><span class="fw-5 mr-1">Enviar factura por mail:</span> </small><small id="link_env"><a href="#" class="facturacion-enviar-mail-factura" id="env_253025_no">Enviar</a></small></p>
+                                    <p class="mb-0" id="verEnMiNombre" style="display: block;"><small><span class="fw-5 mr-1">Enviar factura por mail en mí nombre:</span> </small><small id="link_env_mi"><a href="#" class="facturacion-enviar-mail-factura" id="env_253025_si">Enviar</a></small></p>
+                                    <p class="mb-0" id="verEnvOk" style="display: block;"><small><span class="fw-5 mr-1">Total envíos correctos:</span> </small><small id="EnvOk">1</small></p>
+                                    <p class="mb-0" id="verEnvKo" style="display: none;"><small><span class="fw-5 mr-1">Total envíos incorrectos:</span> </small><small id="EnvKo" class="text-danger"></small></p>
+                                    <hr class="mb-1 mt-1">
+                                    <p class="mb-0" id="Recibos"><ul><li><small><span class="fw-5 mr-1">Recibo 1 de 1</span></small> <a href="/modulo-facturacion/informacion-factura/recibo/descargar?ID_Fac=253025&amp;Tipo=html&amp;ID_Fra=270282" target="_blank" data-toggle="tooltip" data-placement="top" title="" data-original-title="Ver recibo"><i class="fa fa-file-text-o"></i></a></li><li><small><span class="fw-5 mr-1">Vencimiento:</span> </small><small id="Fe_Ve">25/09/19</small></li><li><small><span class="fw-5 mr-1">Forma:</span> </small><small id="For">Confirming</small></li><li><small><span class="fw-5 mr-1">Cuenta:</span> </small><small id="Cue"></small></li><li><small><span class="fw-5 mr-1">Importe:</span> </small><small id="Imp">520,30 €</small></li></ul></p>
+                                    <hr class="mb-1 mt-1">
+
+                                    <div class="form-group mb-2">
+                                        <label>Observaciones de la factura</label>
+                                        <textarea class="form-control form-control-sm" rows="5" id="ObsFacGua" placeholder="Observaciones de la factura"></textarea>
+                                    </div>
+                                    <div class="row justify-content-center">
+                                        <button type="button" class="btn btn-primary btn-sm facturacion-cambiar-obs-factura">Guardar observaciones</button>
+                                    </div>
+
+                                    <div id="verDivEmpRel" style="display:none">
+                                        <hr class="mb-2 mt-4"><a name="datosemprel"></a>
+                                        <p class="mb-0"><small><span class="fw-5 mr-1">Cliente relacionado:</span> </small><small id="EmpRel"></small></p>
+                                        <p class="mb-0"><small><span class="fw-5 mr-1">Tipo cliente:</span> </small><small id="TipoCliRel"></small></p>
+                                        <p class="mb-0"><small><span class="fw-5 mr-1">Nº Cliente:</span> </small><small><a href="#" target="_blank" id="ID_Cli2Rel"></a></small></p>
+                                        <p class="mb-0" id="verDtoRel"><small><span class="fw-5 mr-1">Dto.:</span> </small><small id="DtoRel"></small></p>
+                                        <div class="box-scroll">
+                                            <p class="mb-0" id="verObsRel"><small><span class="fw-5 mr-1">Observaciones:</span> </small><small id="ObsRel"></small></p>
+                                        </div>
+                                    </div>
+
+                                    <hr class="mb-1 mt-1">
+
+
+                                    <div class="mb-1 d-flex align-items-center" id="verPlan" style="display: block;">
+                                        <small class="fw-5 mr-2">Plantilla</small>
+                                        <select id="Plan" class="custom-select form-control-sm obtener-plantilla-mail"><option value="0">- plantillas -</option></select>
+                                    </div>
+                                    <div class="mb-2 d-flex align-items-center">
+                                        <small class="fw-5 mr-2">Asunto</small>
+                                        <input type="text" id="MailAsunto" value="" class="form-control form-control-sm">
+                                    </div>
+                                    <div class="form-group mb-2">
+                                        <label>Mensaje</label>
+                                        <textarea class="form-control form-control-sm" rows="5" id="MailTexto" placeholder="Cuerpo del mensaje"></textarea>
+                                    </div>
+                                    <div class="row justify-content-center">
+                                        <button type="button" id="btnsnd" class="btn btn-primary btn-sm facturacion-enviar-mail-factura-personalizado">Enviar mail personalizado</button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    @Html.Raw(Model.Model.Paginador)
+                </div>
+}
+            </div>
+        </div>
+    </div>
+</div>

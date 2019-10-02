@@ -1,0 +1,341 @@
+﻿@model ModuloAsistenciasLibrary.ModuloAsisnteicasAsistenciasNuevaAsistenciaViewModel
+
+@{
+    Layout = "~/Views/Shared/Modulo-Asistencias/_Modulo-Asistencias.cshtml";
+    ViewData["Title"] = "Nueva asistencia";
+    ViewData["Message"] = "Modulo de Asistencias - Gaolos App v2018";
+}
+
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+                @if (Model.Model.Err.eserror)
+    {
+        ViewData["err"] = Model.Model.Err.mensaje;
+            @Html.Partial("AccesoDenegado");
+}
+else
+{
+
+            <div class="row">
+
+                <div class="col-8">
+                    @* Listado de mantenimientos *@
+                    <div class="card mb-3">
+                        <div class="card-header card-header-options">
+                            <span>Datos cliente</span>
+                            <div class="card-actions">
+                                <ul>
+                                    <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card-block p-0">
+
+                            <div class="p-2">
+
+                                <div class="d-flex mb-1">
+                                    <div class="input-group input-group-sm mb-0">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Cliente</span>
+                                        </div>
+                                        <input type="text" class="form-control" id="Cliente" value="" placeholder="Cliente">
+                                        <input type="hidden" id="vCliente" value=""><input type="hidden" id="tCliente" value="">
+                                    </div>
+                                </div>
+
+                                <div class="d-flex mb-1">
+
+                                    <div class="input-group input-group-sm mb-0 mr-2">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Solicitado por</span>
+                                        </div>
+                                        <input type="text" class="form-control" id="SoliPor" value="" placeholder="Solicitado por" maxlength="50">
+                                    </div>
+
+                                    <div class="input-group input-group-sm mb-0">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Teléfono</span>
+                                        </div>
+                                        <input type="text" class="form-control" id="TelCli" value="" placeholder="Teléfono" list="Tels" maxlength="15">
+                                        <datalist id="Tels" />
+                                    </div>
+
+                                </div>
+
+                                <div class="d-flex mb-1">
+                                    <div class="input-group input-group-sm mb-0 mr-2">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Mail</span>
+                                        </div>
+                                        <input type="text" class="form-control" id="MailCli" value="" placeholder="Mail" list="Mails" maxlength="200">
+                                        <datalist id="Mails" />
+                                    </div>
+
+                                    <div class="input-group input-group-sm mb-0">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Referencia cliente</span>
+                                        </div>
+                                        <input type="text" class="form-control" id="RefCli" value="" placeholder="Referencia cliente" maxlength="50">
+                                    </div>
+                                </div>
+
+                                <div class="d-flex mb-1">
+
+                                    <div class="input-group input-group-sm mb-0 mr-3 col-8 p-0">
+                                        <div class="input-group-prepend">
+                                            <label class="input-group-text">Tipo</label>
+                                        </div>
+                                        <select class="custom-select" id="ID_Tipo2">
+                                            @if (Model.Model.Tipos != null)
+                        {
+                            @for (Int32 t = 0; t < Model.Model.Tipos.Length; t++)
+        {
+                    <option value="@Model.Model.Tipos[t].id">@Model.Model.Tipos[t].det</option>
+}
+
+    }
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group mb-0 mt-0 p-0 pr-3">
+                                        <div class="form-group mb-0">
+                                            <div class="custom-control custom-checkbox mt-1">
+                                                <input type="checkbox" class="custom-control-input" id="Urg">
+                                                <label class="custom-control-label" for="Urg">Urgente</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group mb-0 mt-0 col-2 p-0 pr-3">
+                                        <div class="form-group mb-0">
+                                            <div class="custom-control custom-checkbox mt-1">
+                                                <input type="checkbox" class="custom-control-input" id="CliParado">
+                                                <label class="custom-control-label" for="CliParado">Cliente parado</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div id="ver-centro" style="display:none;">
+                                    <div class="d-flex mb-1">
+                                        <div class="input-group-prepend">
+                                            <label class="input-group-text">Centro de coste</label>
+                                        </div>
+                                        <select class="custom-select" id="ID_Centro"></select>
+                                    </div>
+                                </div>
+
+                                <div class="d-flex mb-1">
+                                    <div class="input-group input-group-sm mb-0">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Breve</span>
+                                        </div>
+                                        <input type="text" class="form-control" id="Breve" value="" placeholder="Breve" maxlength="50">
+                                    </div>
+                                </div>
+
+                                <div class="d-flex mb-1">
+                                    <div class="input-group input-group-sm mb-0">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Solicitud</span>
+                                        </div>
+                                        <textarea class="form-control" aria-label="With textarea" placeholder="Solicitud" id="Expo"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="d-flex mb-1">
+                                    <div class="input-group input-group-sm mb-0">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Observaciones privadas</span>
+                                        </div>
+                                        <textarea class="form-control" aria-label="With textarea" placeholder="Observaciones privadas" id="ObsInt"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="card-header card-header-options mt-2 mb-2">
+                                    <span>Ubicación</span>
+                                </div>
+
+                                <div class="d-flex mb-1">
+                                    <div class="input-group input-group-sm mb-0">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Empresa</span>
+                                        </div>
+                                        <input type="text" class="form-control" id="Emp" value="" placeholder="Empresa" maxlength="100">
+                                    </div>
+                                </div>
+
+                                <div class="d-flex mb-1">
+                                    <div class="input-group input-group-sm mb-0">
+                                        <div class="input-group-prepend">
+                                            <label class="input-group-text">Dirección</label>
+                                        </div>
+                                        <select class="custom-select asistencia-direccion" id="ID_Dir" disabled></select>
+                                    </div>
+                                </div>
+
+                                <div class="d-flex mb-1">
+                                    <div class="input-group input-group-sm mb-0 mr-2">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Contacto</span>
+                                        </div>
+                                        <input type="text" class="form-control" id="UbiCont" value="" placeholder="Contacto" maxlength="50">
+                                    </div>
+
+                                    <div class="input-group input-group-sm mb-0">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Teléfono</span>
+                                        </div>
+                                        <input type="text" class="form-control" id="UbiTel" value="" placeholder="Teléfono del contacto" list="UbiTels" maxlength="50">
+                                        <datalist id="UbiTels" />
+                                    </div>
+                                </div>
+
+                                <div class="d-flex mb-1">
+                                    <div class="input-group input-group-sm mb-0 mr-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Horario</span>
+                                        </div>
+                                        <input type="text" class="form-control" id="Horario" value="" placeholder="Horario" maxlength="50">
+                                    </div>
+                                    <div class="form-group mb-1 mt-1 col-2 p-0 pr-3">
+                                        <div class="form-group mb-0">
+                                            <div class="custom-control custom-checkbox mt-1">
+                                                <input type="checkbox" class="custom-control-input" id="GuardarHor">
+                                                <label class="custom-control-label" for="GuardarHor">Guardar horario</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="d-flex">
+                                    <div class="input-group input-group-sm mb-0">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Observaciones</span>
+                                        </div>
+                                        <textarea class="form-control" aria-label="With textarea" placeholder="Observaciones" id="UbiObs"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="card-header card-header-options mt-2 mb-2">
+                                    <span>Asignación asistencia (opcional)</span>
+                                </div>
+
+                                <div class="d-flex mb-1">
+                                    <div class="input-group input-group-sm mb-0">
+                                        <div class="input-group-prepend">
+                                            <label class="input-group-text" for="">Asignar a</label>
+                                        </div>
+                                        <input type="text" class="form-control" id="Usuario" value="" placeholder="Usuario">
+                                        <input type="hidden" id="vUsuario" value=""><input type="hidden" id="tUsuario" value="">
+                                    </div>
+                                </div>
+
+                                <div class="card-header card-header-options mt-2 mb-2">
+                                    <span>Planificación (opcional)</span>
+                                </div>
+
+                                <div class="d-flex mb-1">
+                                    <div class="input-group input-group-sm mb-0 mr-2">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="">Día</span>
+                                        </div>
+                                        <input type="text" class="form-control" id="Dia" value="" placeholder="Día">
+                                    </div>
+
+                                    <div class="input-group input-group-sm mb-0">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="">Hora</span>
+                                        </div>
+                                        <input type="text" class="form-control" id="Hora" value="" placeholder="Hora">
+                                    </div>
+                                </div>
+
+                                <div class="d-flex">
+                                    <div class="input-group input-group-sm mb-0">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="">Comentarios</span>
+                                        </div>
+                                        <textarea class="form-control" aria-label="With textarea" placeholder="Comentarios" id="Comen"></textarea>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <form id="prn" action="/modulo-asistencias/nueva-asistencia/imprimir" method="post" target="_blank">
+                            <input id="prne" name="ID_Asis2" value="" type="hidden" />
+                            <div class="d-flex justify-content-center box-border-top p-2 mdc-bg-blue-grey-50">
+                                <button type="submit" class="btn btn-sm btn-primary asistencia-nueva">Guardar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="col-4">
+
+                    @* Sin datos *@
+                    <div class="card-info-wrapper w-100" id="sindatos">
+                        <div class="card-info">
+                            <div class="d-flex justify-content-center align-items-center">
+                                <img src="https://image.flaticon.com/icons/svg/609/609998.svg" style="width: 20%;">
+                                <p class="mb-2 ml-3">Seleccione un cliente para crear una nueva asistencia</p>
+                            </div>
+                        </div>
+                        <svg class="card-info-triangle">
+                            <polygon points="0,0 200,0 0,200" fill="currentColor"></polygon>
+                        </svg>
+                    </div>
+
+
+                    @* Asistencias abiertas *@
+                    <div class="card card-table mb-3" id="ver-asis" style="display:none">
+                        <div class="card-header card-header-options">
+                            <span>Asistencias abiertas del cliente</span>
+                            <div class="card-actions">
+                                <ul>
+                                    <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card-block">
+
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center w-5">Asis.</th>
+                                        <th class="text-center w-10">Fecha</th>
+                                        <th class="">Solicitado por</th>
+                                        <th class="">Breve</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="Asis"></tbody>
+                            </table>
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+}
+
+            </div>
+        </div>
+    </div>
+</div>

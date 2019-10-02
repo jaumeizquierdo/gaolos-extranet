@@ -1,0 +1,173 @@
+﻿@model BlogsLibrary.BlogsEntradasBlogListadoViewModel
+
+@{
+    ViewData["Title"] = "Listado de entradas";
+    ViewData["TitleAñadirEntrada"] = "Añadir nueva entrada";
+    Layout = "~/Views/Shared/Modulo-Blogs/_Blogs.cshtml";
+}
+
+@*
+    <div class="card mb-3">
+        <div class="card-header card-header-options">
+            <span>@ViewData["Title"]</span>
+            @Html.Partial("PanelActions")
+        </div>
+        <div class="card-block">
+
+            <div class="input-group card-search-box mb-3">
+                <input type="text" class="form-control" placeholder="Buscar por...">
+                <span class="input-group-append">
+                    <button class="btn btn-secondary" type="button">Buscar</button>
+                </span>
+            </div>
+
+        </div>
+    </div>
+*@
+
+<div class="main-content m-0" id="widget-area">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+
+                @if (Model.Model.Err.eserror)
+                {
+                    ViewData["err"] = Model.Model.Err.mensaje;
+                    @Html.Partial("AccesoDenegado");
+                }
+                else
+                {
+
+                    @* Crear nueva entrada *@
+
+                    <div class="card mb-3">
+                        <div class="card-header card-header-options">
+                            <span>@ViewData["TitleAñadirEntrada"]</span>
+                            @Html.Partial("PanelActions")
+                        </div>
+                        <div class="card-block">
+
+                            <div class="row">
+                                <div class="col-2 text-center">
+                                    <img src="~/flaticons/contract-2.svg" style="width: 50%" />
+                                </div>
+                                <div class="col-9">
+                                    <h5>@ViewData["TitleAñadirEntrada"]</h5>
+                                    <p class="mb-0">Introduzca el título para su <strong>nueva entrada</strong>.</p>
+
+                                    <input type="text" id="blog-nueva-entrada" class="form-control form-control mt-3" placeholder="Título nueva entrada" />
+                                    <input type="hidden" id="blog-nueva-entrada-id-blog" value="@ViewData["ID_Blog"]" />
+                                    <button type="button" class="blog-nueva-entrada btn btn-primary btn-sm mt-2">Añadir</button>
+                                    <input type="hidden" id="ID_Idi" value="@ViewData["ID_Idi"]" />
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    @* Listado de entradas *@
+
+                    <div class="card">
+                        <div class="card-header card-header-options">
+                            <span>@ViewData["Title"]</span>
+                            @Html.Partial("PanelActions")
+                        </div>
+                        <div class="card-block">
+                            <form action="/blogs/entradas" method="post">
+                                <div class="form-inline justify-content-center mb-3">
+                                    <select class="custom-select mr-1" id="">
+                                        <option value="" selected="">Mes</option>
+                                        <option value="01">Enero</option>
+                                        <option value="02">Febrero</option>
+                                        <option value="03">Marzo</option>
+                                        <option value="04">Abril</option>
+                                        <option value="05">Mayo</option>
+                                        <option value="06">Junio</option>
+                                        <option value="07">Julio</option>
+                                        <option value="08">Agosto</option>
+                                        <option value="09">Septiembre</option>
+                                        <option value="10">Octubre</option>
+                                        <option value="11">Noviembre</option>
+                                        <option value="12">Diciembre</option>
+                                    </select>
+                                    <select class="custom-select mr-3" id="">
+                                        <option value="" selected="">Año</option>
+                                        <option value="2017">2017</option>
+                                        <option value="2016">2016</option>
+                                        <option value="2015">2015</option>
+                                        <option value="2014">2014</option>
+                                    </select>
+                                    <div class="input-group card-search-box col-8 m-0">
+                                        <input type="hidden" name="ID_Blog" value="@ViewData["ID_Blog"]">
+                                        <input type="hidden" name="ID_Idi" value="@ViewData["ID_Idi"]">
+                                        <input type="text" class="form-control" placeholder="Buscar entradas" name="buscar" value="@ViewData["buscar"]">
+                                        <span class="input-group-append">
+                                            <button class="btn btn-primary" type="submit">Buscar</button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </form>
+                            <div class="card card-table">
+                                <div class="card-header card-header-options">
+                                    <span>Entradas</span>
+                                </div>
+                                <div class="card-block">
+
+                                    <table class="table table-striped table-select">
+
+                                        <thead>
+                                            <tr>
+                                                <th class="w-25">Título</th>
+                                                <th>Categoría</th>
+                                                <th>Autor</th>
+                                                <th>Tags</th>
+                                                <th>Fecha</th>
+                                                <th>Keyword</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (Model.Model.det != null)
+                                            {
+                                                @for (Int32 t = 0; t < Model.Model.det.Length; t++)
+                                                {
+                                                    <tr>
+                                                        <td>
+
+                                                            <p class="fw-5 mb-0"><a href="/blogs/entradas/entrada?ID_Ent=@Model.Model.det[t].ID_Ent&ID_Blog=@ViewData["ID_Blog"]&ID_Idi=@ViewData["ID_Idi"]">@Model.Model.det[t].Titulo</a></p>
+                                                            <p class="mb-0"><small>@Model.Model.det[t].Breve</small></p>
+                                                        </td>
+                                                        <td></td>
+                                                        <td><p class="mb-0 fw-5">@Model.Model.det[t].Autor</p></td>
+                                                        <td></td>
+                                                        <td><p class="mb-0 fw-5">@Model.Model.det[t].Fe_Al</p></td>
+                                                        <td><p class="mb-0 fw-5"><i class="fa fa-key"></i> @Model.Model.det[t].Keyword</p></td>
+                                                    </tr>
+                                                }
+                                            }
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    @* Paginador *@
+                    @Html.Raw(Model.Model.Paginador)
+
+                }
+            </div>
+        </div>
+
+    </div>
+
+</div>

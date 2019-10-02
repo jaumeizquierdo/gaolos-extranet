@@ -1,0 +1,461 @@
+﻿@model ModuloAsistenciasLibrary.ModuloAsisnteicasAsistenciasZonasListadoViewModel
+
+@{
+    Layout = "~/Views/Shared/Modulo-Asistencias/_Modulo-Asistencias.cshtml";
+    ViewData["Title"] = "Zonas y sub-zonas";
+    ViewData["Message"] = "Modulo de Asistencias - Gaolos App v2018";
+}
+
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+                @if (Model.Model.Err.eserror)
+    {
+        ViewData["err"] = Model.Model.Err.mensaje;
+                @Html.Partial("AccesoDenegado");
+}
+else
+{
+
+                @* Buscar usuarios *@
+
+                <div class="card mb-3">
+                    <div class="card-header card-header-options">
+                        <span>Zonas y sub-zonas</span>
+
+                        <div class="card-actions">
+                            <ul>
+                                <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-block p-0">
+
+                        <form action="@ViewData["Form"]" method="post">
+                            <div class="d-flex justify-content-center align-items-center">
+
+                                <div class="col-1 pb-2 pt-2 box-border-right-light">
+                                    <img src="https://image.flaticon.com/icons/svg/321/321843.svg" style="width: 100%;">
+                                </div>
+
+                                <div class="col-11 p-0">
+                                    <div class="p-3">
+                                        <div class="box-grey-bg mr-3 col-4">
+                                            <p class="mb-0"><small class="fw-5"><span class="mr-1">Nº de zonas:</span> <span class="text-danger">@Model.Model.numZonas</span></small></p>
+                                            <p class="mb-0"><small class="fw-5"><span class="mr-1">Nº de sub-zonas:</span> <span class="text-danger">@Model.Model.numSubZonas</span></small></p>
+                                            <p class="mb-0"><small class="fw-5"><span class="mr-1">Nº de códigos postales:</span> <span class="text-danger">@Model.Model.numCPs</span></small></p>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+
+                @* ZONAS *@
+
+                <div class="row mb-4">
+
+                    <div class="col-9">
+                        @* Listado *@
+                        <div class="card card-table">
+                            <div class="card-header card-header-options">
+                                <span>Listado de zonas disponibles</span>
+                                <div class="input-group input-group-sm col-3 mr-0 pr-0">
+                                    <input type="text" class="form-control form-control-sm" id="nuevaZona" placeholder="Nueva zona" autocomplete="off">
+                                    <span class="input-group-append">
+                                        <button type="button" class="btn btn-primary btn-sm zona-nueva">Nueva</button>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="card-block">
+
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-left">Alta</th>
+                                            <th class="text-left">Zona</th>
+                                            <th class="text-left">Observaciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (Model.Model.Zonas != null)
+    {
+                                    @for (Int32 t = 0; t < Model.Model.Zonas.Length; t++)
+{
+                                        <tr>
+                                            <td class="text-left">
+                                                <small>@Model.Model.Zonas[t].datoS1 - @Model.Model.Zonas[t].datoS2</small>
+                                            </td>
+                                            <td class="text-left">
+                                                <a href="#" id="sel_@Model.Model.Zonas[t].datoI" data-toggle="tooltip" data-placement="top" title="" data-original-title="Modificar zona" class="fw-5 zona-detalles">@Model.Model.Zonas[t].datoS3</a>
+                                            </td>
+                                            <td class="text-left">
+                                                <small>@Model.Model.Zonas[t].datoS4</small>
+                                            </td>
+                                        </tr>
+}
+
+}
+else
+{
+                                    <tr><td colspan="3"><p class='fw-5 text-danger mb-0'><i class='fa fa-exclamation-circle mr-1'></i> No hay resultados</p></td></tr>
+}
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="col-3">
+                        @* Sin datos *@
+                        <div class="card card-table mb-3" id="sindatos">
+                            <div class="card-header card-header-options">
+                                <span>Información</span>
+                                <div class="card-actions">
+                                    <ul>
+                                        <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="card-block" role="tablist" aria-multiselectable="true">
+                                <div class="text-center mt-4 mb-4 p-5 bloque-sin-informacion">
+                                    <img src="~/flaticons/chat.svg" style="width: 25%;">
+                                    <p class="pt-4 fw-5">Seleccione una zona para modificarla</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card card-table mb-3">
+                            <div class="card-header card-header-options">
+                                <span>Buscar códigos postales</span>
+                                <button type="button" class="btn btn-primary btn-sm">Buscar</button>
+                            </div>
+                            <div class="card-block">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-left">Código postal</th>
+                                            <th class="text-center w-5"><i class="fa fa-times text-danger"></i></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="content2"><tr><td class="text-left">00000</td><td class="text-center"><a href="#" class="" id=""><i class="fa fa-times text-danger"></i></a></td></tr></tbody>
+                                </table>
+                            </div>
+                        </div>
+
+
+                        <div id="mod-zona" style="display:none">
+                            <div class="card card-table mb-3">
+                                <div class="card-header card-header-options">
+                                    <span>Modificar zonas</span>
+                                </div>
+                                <div class="card-block p-0">
+                                    <div class="d-flex flex-column p-2">
+                                        <div class="input-group input-group-sm mb-1">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Zona</span>
+                                            </div>
+                                            <input type="text" class="form-control" id="mZona" value="" placeholder="Zona" maxlength="100">
+                                        </div>
+                                        <div class="input-group input-group-sm mb-0">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Observaciones</span>
+                                            </div>
+                                            <input type="text" class="form-control" id="mObs" value="" placeholder="Observaciones">
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-center box-border-top p-2 mdc-bg-blue-grey-50">
+                                        <button type="button" class="btn btn-sm btn-primary zona-guardar">Guardar</button>
+                                        <input type="hidden" id="mID_Zona" value="" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card card-table">
+                                <div class="card-header card-header-options">
+                                    <span>Eliminar zona</span>
+                                </div>
+                                <div class="card-block p-3">
+                                    <div class="d-flex justify-content-center">
+                                        <button type="button" class="btn btn-sm btn-danger zona-eliminar">Eliminar zona</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <hr class="" />
+
+                @* SUBZONAS *@
+
+                @* Buscador sub-zonas *@
+
+                <div class="card mb-3">
+                    <div class="card-header card-header-options">
+                        <span>Buscador sub-zonas</span>
+
+                        <div class="card-actions">
+                            <ul>
+                                <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-block p-0">
+
+                        <form action="@ViewData["Form"]" method="post">
+                            <div class="d-flex justify-content-center align-items-center">
+
+                                <div class="col-1 pb-2 pt-2 box-border-right-light">
+                                    <img src="https://image.flaticon.com/icons/svg/321/321843.svg" style="width: 100%;">
+                                </div>
+
+                                <div class="col-11 p-0">
+
+                                    <div class="p-2">
+                                        <div class="d-flex mb-1">
+
+                                            <div class="input-group input-group-sm mb-0 mr-2">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">Buscar</span>
+                                                </div>
+                                                <input type="text" class="form-control" placeholder="Buscar" name="buscar" value="@ViewData["buscar"]">
+                                            </div>
+
+                                            <div class="input-group input-group-sm mb-0 mr-2">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">Código Postal</span>
+                                                </div>
+                                                <input type="text" class="form-control" placeholder="Código Postal" name="cps" value="@ViewData["cps"]">
+                                            </div>
+
+                                            <div class="input-group input-group-sm mb-0">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">Zona</span>
+                                                </div>
+
+                                                <select class="custom-select" name="ID_Zona">
+                                                    @if (Model.Model.Zonas != null)
+            {
+                                        <option value="0">- Todas -</option>
+
+                                        @for (Int32 t = 0; t < Model.Model.Zonas.Length; t++)
+{
+    if (ViewData["ID_Zona"].ToString() == Model.Model.Zonas[t].datoI.ToString())
+    {
+                                        <option selected value="@Model.Model.Zonas[t].datoI">@Model.Model.Zonas[t].datoS3</option>
+}
+else
+{
+                                        <option value="@Model.Model.Zonas[t].datoI">@Model.Model.Zonas[t].datoS3</option>
+}
+}
+}
+                                                </select>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex justify-content-center">
+                                        <button type="submit" class="btn btn-sm btn-primary">Buscar</button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+
+                <div class="row mt-4 mb-3">
+
+                    <div class="col-9">
+                        @* Listado *@
+                        <div class="card card-table mb-3">
+                            <div class="card-header card-header-options">
+                                <span>Listado de sub-zonas disponibles</span>
+                                <div class="input-group input-group-sm col-3 mr-0 pr-0">
+                                    <input type="text" class="form-control form-control-sm" id="nuevasubZona" placeholder="Nueva subzona" autocomplete="off">
+                                    <span class="input-group-append">
+                                        <button type="button" class="btn btn-primary btn-sm subzona-nueva">Nueva</button>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="card-block">
+
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-left">Alta</th>
+                                            <th class="text-left">Zona</th>
+                                            <th class="text-left">SubZona</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (Model.Model.SubZonas != null)
+    {
+                                    @for (Int32 t = 0; t < Model.Model.SubZonas.Length; t++)
+{
+                                        <tr>
+                                            <td class="text-left">
+                                                <small>@Model.Model.SubZonas[t].datoS1 - @Model.Model.SubZonas[t].datoS2</small>
+                                            </td>
+                                            <td class="text-left">
+                                                <small>@Model.Model.SubZonas[t].datoS3</small>
+                                            </td>
+                                            <td class="text-left">
+                                                <a href="#" id="sel_@Model.Model.SubZonas[t].datoI" data-toggle="tooltip" data-placement="top" title="" data-original-title="Modificar subzona" class="fw-5 subzona-detalles">@Model.Model.SubZonas[t].datoS4</a>
+                                            </td>
+                                        </tr>
+}
+
+}
+else
+{
+                                    <tr><td colspan="3"><p class='fw-5 text-danger mb-0'><i class='fa fa-exclamation-circle mr-1'></i> No hay resultados</p></td></tr>
+}
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-3">
+
+                        @* Sin datos *@
+                        <div class="card card-table mb-3" id="sindatos2">
+                            <div class="card-header card-header-options">
+                                <span>Información</span>
+                                <div class="card-actions">
+                                    <ul>
+                                        <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="card-block" role="tablist" aria-multiselectable="true">
+                                <div class="text-center mt-4 mb-4 p-5 bloque-sin-informacion">
+                                    <img src="~/flaticons/chat.svg" style="width: 25%;">
+                                    <p class="pt-4 fw-5">Seleccione una zona para modificarla</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="mod-subzona" style="display:none">
+                            <div class="card card-table mb-3">
+                                <div class="card-header card-header-options">
+                                    <span>Modificar sub-zonas</span>
+                                </div>
+                                <div class="card-block p-0">
+
+                                    <div class="d-flex flex-column p-2">
+                                        <div class="input-group input-group-sm mb-1">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Sub-zona</span>
+                                            </div>
+                                            <input type="text" class="form-control" id="mSubZona" value="" placeholder="Sub-zona" maxlength="100">
+                                            <input type="hidden" id="mID_SubZona" value="" />
+                                        </div>
+
+                                        <div class="input-group input-group-sm mb-0 col-12 p-0">
+
+                                            <div class="input-group-prepend">
+                                                <label class="input-group-text">Zona</label>
+                                            </div>
+
+                                            <select class="custom-select" id="sID_Zona">
+                                                @if (Model.Model.Zonas != null)
+                                                {
+                                                    <option value="0">- seleccione zona -</option>
+
+                                                    @for (Int32 t = 0; t < Model.Model.Zonas.Length; t++)
+                                                    {
+                                                        if (ViewData["ID_Zona"].ToString() == Model.Model.Zonas[t].datoI.ToString())
+                                                        {
+                                                            <option selected value="@Model.Model.Zonas[t].datoI">@Model.Model.Zonas[t].datoS3</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="@Model.Model.Zonas[t].datoI">@Model.Model.Zonas[t].datoS3</option>
+                                                        }
+                                                    }
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex justify-content-center box-border-top p-2 mdc-bg-blue-grey-50">
+                                        <button type="button" class="btn btn-sm btn-primary subzona-guardar">Guardar</button>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="card card-table mb-3">
+                                <div class="card-header card-header-options">
+                                    <span>Códigos postales <i class="fa fa-info-circle" data-toggle="tooltip" data-placement="top" title="" data-original-title="Para añadir varios códigos postales, solo es necesario separarlos por comas (,)"></i></span>
+                                    <div class="input-group input-group-sm col-7 mr-0 pr-0">
+                                        <input type="text" class="form-control form-control-sm" id="cps" placeholder="Nuevo CP" autocomplete="off">
+                                        <span class="input-group-append">
+                                            <button type="button" class="btn btn-primary btn-sm subzona-add-cps">Nuevo CP</button>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="card-block">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-left">Código postal</th>
+                                                <th class="text-center w-5"><i class="fa fa-times text-danger"></i></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="content">
+<tr><td class="text-left"><a href="#" class="fw-5">08013</a>
+</td><td class="text-center"><a href="#"><i class="fa fa-times text-danger"></i></a></td></tr>
+                                            <tr><td colspan="2"><p class="fw-5 text-danger mb-0"><i class="fa fa-exclamation-circle mr-1"></i> No hay resultados</p></td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="card card-table">
+                                <div class="card-header card-header-options">
+                                    <span>Eliminar sub-zona</span>
+                                </div>
+                                <div class="card-block p-3">
+                                    <div class="d-flex justify-content-center">
+                                        <button type="button" class="btn btn-sm btn-danger subzona-eliminar">Eliminar sub-zona</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+}
+            </div>
+        </div>
+    </div>
+</div>

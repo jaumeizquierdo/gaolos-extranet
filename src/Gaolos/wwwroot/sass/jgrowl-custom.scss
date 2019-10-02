@@ -1,0 +1,142 @@
+﻿/* jGrowl custom estilos */
+
+@import "variables.scss";
+@import "materialdesign.scss";
+
+.jGrowl-notification {
+    //background-color: #000000;
+    opacity: 0.9;
+    opacity: 1;
+    zoom: 0;
+    width: 350px;
+    padding: 10px;
+    margin: 10px;
+    text-align: left;
+    display: none;
+    border-radius: 3px;
+    min-height: 0;
+
+
+    .jGrowl-close {
+        display: flex;
+        justify-content: flex-end;
+        text-align: right;
+        padding: 0;
+        position: absolute;
+        right: 10px;
+        top: 0;
+    }
+
+    .jGrowl-message {
+        text-align: center;
+        display: block;
+        margin: 10px auto;
+    }
+
+    .jGrowl-header {
+        font-size: 1em !important;
+    }
+
+    .jGrowl-close {
+        font-size: 1.3em !important;
+    }
+}
+
+.bg-success-jgrowl {
+    //border: 2px solid $md-teal-a700 !important;
+    border: none;
+    background: #fff;
+    color: $md-teal-a700;
+    font-weight: 500;
+    font-size: 1.2em;
+    box-shadow: 0 0 100px $md-blue-grey-500;
+
+    .jGrowl-message {
+        text-align: center;
+        display: block;
+        margin: 20px auto;
+    }
+
+    .jGrowl-header {
+    }
+}
+
+.bg-danger-jgrowl {
+    //border: 2px solid $md-red-a400 !important;
+    border: none;
+    background: #fff;
+    color: $md-red-a400;
+    font-size: 1.2em;
+    box-shadow: 0 0 100px $md-blue-grey-500;
+
+    .jGrowl-message {
+        text-align: center;
+        display: block;
+        margin: 20px auto;
+    }
+
+    .jGrowl-header {
+    }
+}
+
+.path {
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 0;
+
+    &.circle {
+        -webkit-animation: dash .9s ease-in-out;
+        animation: dash .9s ease-in-out;
+    }
+
+    &.line {
+        stroke-dashoffset: 1000;
+        -webkit-animation: dash .9s .35s ease-in-out forwards;
+        animation: dash .9s .35s ease-in-out forwards;
+    }
+
+    &.check {
+        stroke-dashoffset: -100;
+        -webkit-animation: dash-check .9s .35s ease-in-out forwards;
+        animation: dash-check .9s .35s ease-in-out forwards;
+    }
+}
+
+@-webkit-keyframes dash {
+    0% {
+        stroke-dashoffset: 1000;
+    }
+
+    100% {
+        stroke-dashoffset: 0;
+    }
+}
+
+@keyframes dash {
+    0% {
+        stroke-dashoffset: 1000;
+    }
+
+    100% {
+        stroke-dashoffset: 0;
+    }
+}
+
+@-webkit-keyframes dash-check {
+    0% {
+        stroke-dashoffset: -100;
+    }
+
+    100% {
+        stroke-dashoffset: 900;
+    }
+}
+
+@keyframes dash-check {
+    0% {
+        stroke-dashoffset: -100;
+    }
+
+    100% {
+        stroke-dashoffset: 900;
+    }
+}

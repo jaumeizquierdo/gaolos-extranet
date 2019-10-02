@@ -1,0 +1,411 @@
+﻿@model ModuloSolicitudesLibrary.ModuloSolicitudesDashBoardInicioViewModel
+
+@{
+    Layout = "~/Views/Shared/Modulo-Solicitudes/_SolicitudesDashboard.cshtml";
+    ViewData["Title"] = "Solicitudes";
+}
+
+@if (!Model.Model.Err.eserror)
+{
+<script type="text/javascript">
+    google.charts.load("current", { packages: ["corechart", "line"] });
+    google.charts.setOnLoadCallback(AltaSolicitudesPorUsuario);
+
+    function AltaSolicitudesPorUsuario(arr,tit) {
+
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Usuario');
+        data.addColumn('number', 'Nº Solicitudes');
+        data.addRows(arr);
+
+        var options = {
+            title: tit,
+            width: 600,
+            height: 350,
+            //curveType: 'function',
+            'chartArea': { 'width': '100%', 'height': '80%' },
+            fontName: 'Roboto'
+            //sliceVisibilityThreshold: .03
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('AltaSolicitudesPorUsuario_Grafica'));
+        chart.draw(data, options);
+    }
+
+
+    function AltaSolicitudesPorDia(arr, tit) {
+
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Usuario');
+        data.addColumn('number', 'Nº Solicitudes');
+        data.addRows(arr);
+
+        var options = {
+            title: tit,
+            width: 600,
+            height: 350,
+            //curveType: 'function',
+            'chartArea': { 'width': '100%', 'height': '80%' },
+            fontName: 'Roboto'
+            //sliceVisibilityThreshold: .03
+        };
+
+        var chart = new google.visualization.ColumnChart(document.getElementById('AltaSolicitudesPorDia_Grafica'));
+        chart.draw(data, options);
+    }
+
+    function CargaDeTrabajoPorUsuario(arr, tit) {
+
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Usuario');
+        data.addColumn('number', 'Horas');
+        data.addRows(arr);
+
+        var options = {
+            title: tit,
+            width: 600,
+            height: 350,
+            //curveType: 'function',
+            'chartArea': { 'width': '100%', 'height': '80%' },
+            fontName: 'Roboto'
+            //sliceVisibilityThreshold: .03
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('CargaDeTrabajoPorUsuario_Grafica'));
+        chart.draw(data, options);
+    }
+
+    function PromedioPorUsuario(arr, tit) {
+
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Usuario');
+        data.addColumn('number', 'Horas');
+        data.addRows(arr);
+
+        var options = {
+            title: tit,
+            width: 600,
+            height: 350,
+            //curveType: 'function',
+            'chartArea': { 'width': '100%', 'height': '80%' },
+            fontName: 'Roboto'
+            //sliceVisibilityThreshold: .03
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('PromedioPorUsuario_Grafica'));
+        chart.draw(data, options);
+    }
+
+    function CierreSolicitudesPorUsuario(arr, tit) {
+
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Usuario');
+        data.addColumn('number', 'Nº Solicitudes');
+        data.addRows(arr);
+
+        var options = {
+            title: tit,
+            width: 600,
+            height: 350,
+            //curveType: 'function',
+            'chartArea': { 'width': '100%', 'height': '80%' },
+            fontName: 'Roboto'
+            //sliceVisibilityThreshold: .03
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('CierreSolicitudesPorUsuario_Grafica'));
+        chart.draw(data, options);
+    }
+
+    function CierreSolicitudesPorDia(arr, tit) {
+
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Usuario');
+        data.addColumn('number', 'Nº Solicitudes');
+        data.addRows(arr);
+
+        var options = {
+            title: tit,
+            width: 600,
+            height: 350,
+            //curveType: 'function',
+            'chartArea': { 'width': '100%', 'height': '80%' },
+            fontName: 'Roboto'
+            //sliceVisibilityThreshold: .03
+        };
+
+        var chart = new google.visualization.ColumnChart(document.getElementById('CierreSolicitudesPorDia_Grafica'));
+        chart.draw(data, options);
+    }
+
+</script>
+
+}
+
+<div class="main-content m-0" id="widget-area">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                @if (Model.Model.Err.eserror)
+    {
+        ViewData["err"] = Model.Model.Err.mensaje;
+            @Html.Partial("AccesoDenegado");
+}
+else
+{
+
+            @* Buscar *@
+
+                <div class="card mb-3">
+                    <div class="card-header card-header-options">
+                        <span>Situación usuarios</span>
+
+                        <div class="card-actions">
+                            <ul>
+                                <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="card-block p-0">
+                        <form action="@ViewData["Form"]" method="post" class="sel-dates">
+                            <div class="d-flex justify-content-center align-items-center">
+                                <div class="col-1 text-center box-border-right-light py-2">
+                                    <img src="~/flaticons/business/101-presentation.svg" style="width: 100%;">
+                                </div>
+                                <div class="col-11">
+
+                                    <div class="row p-0">
+                                        <div class="col-12 p-0">
+                                            <div class="d-flex mb-0 px-3">
+
+                                                <div class="input-group input-group-sm mr-3 seldate date">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text" id="basic-addon3">Fecha de inicio</span>
+                                                    </div>
+                                                    <input type="text" class="form-control" aria-describedby="basic-addon3" placeholder="Fecha Inicio" value="@Model.Model.Fe_In" id="Fe_In">
+                                                </div>
+
+                                                <div class="input-group input-group-sm seldate date">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text" id="basic-addon3">Fecha final</span>
+                                                    </div>
+                                                    <input type="text" class="form-control" aria-describedby="basic-addon3" placeholder="Fecha Inicio" value="@Model.Model.Fe_Fi" id="Fe_Fi">
+                                                </div>
+
+                                                <button type="button" class="btn btn-primary ml-2 cargargraficasbloque1 btn-sm btn-sm-2x">ACTUALIZAR</button>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            @*
+            <div class="row">
+                <div class="col-6">
+                    <div class="card mb-3">
+                        <div class="card-header card-header-options">
+                            <span>Pulse aquí para cargar</span>
+                            @Html.Partial("PanelActions")
+                        </div>
+                        <div class="card-block p-0">
+
+                            <div class="row">
+                                <div class="col-12" style="min-height: 25rem;">
+                                    <div class="googlechart">
+                                        <div id=""></div>
+                                    </div>
+                                    <div class="p-5">
+                                        <img src="https://image.flaticon.com/icons/svg/138/138345.svg" style="max-height: 15em;" />
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-6">
+                    <div class="card mb-3">
+                        <div class="card-header card-header-options">
+                            <span>Cargando</span>
+                            @Html.Partial("PanelActions")
+                        </div>
+                        <div class="card-block p-0">
+
+                            <div class="row">
+                                <div class="col-12" style="min-height: 25rem;">
+                                    <div class="googlechart">
+                                        <div id=""></div>
+                                    </div>
+                                    <div class="p-5 text-center">
+                                        <img src="~/images/bars.svg" style="max-height: 15em;" />
+                                    </div>
+                                    
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+                *@
+
+            <div class="row">
+                <div class="col-6">
+                    <div class="card mb-3">
+                        <div class="card-header card-header-options">
+                            <span>Nuevas solicitudes por usuario</span>
+                            @Html.Partial("PanelActions")
+                        </div>
+                        <div class="card-block p-0">
+
+                            <div class="row">
+                                <div class="col-12" style="min-height: 25rem;">
+                                    <div class="googlechart">
+                                        <div id="AltaSolicitudesPorUsuario_Grafica"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-6">
+                    <div class="card mb-3">
+                        <div class="card-header card-header-options">
+                            <span>Nuevas solicitudes por dia</span>
+                            @Html.Partial("PanelActions")
+                        </div>
+                        <div class="card-block p-0">
+
+                            <div class="row">
+                                <div class="col-12" style="min-height: 25rem;">
+                                    <div class="googlechart">
+                                        <div id="AltaSolicitudesPorDia_Grafica"></div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="row">
+                <div class="col-6">
+                    <div class="card mb-3">
+                        <div class="card-header card-header-options">
+                            <span>Carga de trabajo por usuario</span>
+                            @Html.Partial("PanelActions")
+                        </div>
+                        <div class="card-block p-0">
+
+                            <div class="row">
+                                <div class="col-12" style="min-height: 25rem;">
+                                    <div class="googlechart">
+                                        <div id="CargaDeTrabajoPorUsuario_Grafica"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-6">
+                    <div class="card mb-3">
+                        <div class="card-header card-header-options">
+                            <span>Promedio de tiempo en cerrar una solicitud por usuario (en horas)</span>
+                            @Html.Partial("PanelActions")
+                        </div>
+                        <div class="card-block p-0">
+
+                            <div class="row">
+                                <div class="col-12" style="min-height: 25rem;">
+                                    <div class="googlechart">
+                                        <div id="PromedioPorUsuario_Grafica"></div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="row">
+                <div class="col-6">
+                    <div class="card mb-3">
+                        <div class="card-header card-header-options">
+                            <span>Solicitudes cerradas por usuario</span>
+                            @Html.Partial("PanelActions")
+                        </div>
+                        <div class="card-block p-0">
+
+                            <div class="row">
+                                <div class="col-12" style="min-height: 25rem;">
+                                    <div class="googlechart">
+                                        <div id="CierreSolicitudesPorUsuario_Grafica"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-6">
+                    <div class="card mb-3">
+                        <div class="card-header card-header-options">
+                            <span>Solicitudes cerradas por dia</span>
+                            @Html.Partial("PanelActions")
+                        </div>
+                        <div class="card-block p-0">
+
+                            <div class="row">
+                                <div class="col-12" style="min-height: 25rem;">
+                                    <div class="googlechart">
+                                        <div id="CierreSolicitudesPorDia_Grafica"></div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+}
+
+            </div>
+        </div>
+
+    </div>
+
+</div>

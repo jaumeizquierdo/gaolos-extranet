@@ -1,0 +1,48 @@
+﻿@* Scripts para los Dashboards *@
+
+@if (!Model.Model.Err.eserror)
+{
+<script>
+
+    @for (Int32 t = 0; t < Model.Model.det.Length; t++)
+    {
+        var observaciones = (Model.Model.det[t].Obs).Replace("\n", "");
+
+        @Html.Raw("$(document).ready(function () {")
+
+        //@Html.Raw("var iconoEditar='<a href=\"#\"><i class=\"material-icons animated fadeIn\">edit</i></a>';")
+
+        @Html.Raw("$('#trigger-asistencias-" + t + "').on('mouseenter', function () {")
+            @Html.Raw("$('#dashboard-info-wrapper').removeClass('d-none');")
+            @Html.Raw("$('#dashboard-info-wrapper').removeClass('animation-delay-200 animated fadeOut');")
+            @Html.Raw("$('#dashboard-info-wrapper').addClass('animated fadeIn');")
+            @Html.Raw("$('#dashboard-info h2').addClass('animation-delay-200 animated fadeIn');")
+            @Html.Raw("$('#dashboard-info p').addClass('animation-delay-400 animated fadeInUp');")
+            @Html.Raw("$('#dashboard-info h2').html('" + Model.Model.det[t].Apartado +  "');")
+            @Html.Raw("$('#dashboard-info p').html('" + observaciones + "');")
+            @Html.Raw("$('#dashboard-video').removeClass('animated fadeOut');")
+            @Html.Raw("$('#dashboard-video').addClass('animation-delay-700 animated fadeIn');")
+            @Html.Raw("$('#dashboard-video').html();")
+
+            @Html.Raw("$(this).parents().eq(0).find('.edit-apartado').removeClass('d-none').addClass('animated fadeInUp');")
+
+        @Html.Raw("});")
+
+        @Html.Raw("$('#trigger-asistencias-" + t + "').on('mouseleave', function () {")
+            @Html.Raw("$('#dashboard-info h2').removeClass('animation-delay-200 animated fadeIn');")
+            @Html.Raw("$('#dashboard-info p').removeClass('animation-delay-400 animated fadeInUp');")
+            @Html.Raw("$('#dashboard-info-wrapper').removeClass('animated fadeIn');")
+            @Html.Raw("$('#dashboard-video').removeClass('animation-delay-700 animated fadeIn');")
+            @Html.Raw("$('#dashboard-video').addClass('animated fadeOut');")
+            @Html.Raw("$('#dashboard-info-wrapper').addClass('animation-delay-200 animated fadeOut');")
+
+            @Html.Raw("$('.edit-apartado').addClass('d-none');")
+
+        @Html.Raw("});")
+
+    @Html.Raw("});")
+
+    }
+
+</script>
+}

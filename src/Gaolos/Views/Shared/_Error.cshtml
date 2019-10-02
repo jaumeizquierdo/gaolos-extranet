@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Gaolos</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/css/botones.css" />
+    <link rel="stylesheet" href="~/css/dropdown.css" />
+    <link rel="stylesheet" href="~/css/estilosbasicos.css" />
+    <link rel="stylesheet" href="~/css/footer.css" />
+    <link rel="stylesheet" href="~/css/header.css" />
+    <link rel="stylesheet" href="~/css/holygrail.css" />
+    <link rel="stylesheet" href="~/css/scrollbar.css" />
+    <link rel="stylesheet" href="~/css/errorpage.css" />
+
+    <script src="~/lib/jquery/dist/jquery.js" asp-append-version="true"></script>
+
+</head>
+<body class="bg-error">
+
+    <header>
+        <h1>Gaolos version 2017 Development Edition test ERROR</h1>
+    </header>
+
+    <div class="layout__body">
+
+        <main class="layout__content">
+            @RenderBody()
+        </main>
+
+    </div>
+
+    <footer>
+        @Html.Partial("Footer")
+    </footer>
+
+    @Html.Partial("Scripts")
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>

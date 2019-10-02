@@ -1,0 +1,327 @@
+﻿@model CursosLibrary.ModuloCursosCursoDetallesEditar_EvaluacionViewModel
+@{
+    Layout = "~/Views/Shared/Modulo-Cursos/_Cursos-Curso.cshtml";
+    ViewData["Title"] = "Curso";
+    ViewData["Message"] = "Modulo de cursos - Gaolos App v2017";
+}
+
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section mb-0">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+                @if (Model.Model.Err.eserror)
+    {
+        ViewData["err"] = Model.Model.Err.mensaje;
+            @Html.Partial("AccesoDenegado");
+}
+else
+{
+            @* tabs *@
+
+            @Html.Partial("Curso-Tabs")
+
+            @* cabecera *@
+
+            @Html.Partial("Curso-Cabecera")
+
+            <div class="row mb-3">
+                <div class="col-12">
+                    <div class="card card-table">
+                        <div class="card-header card-header-options">
+                            <span>Listado control evaluación</span>
+                            <div class="card-actions">
+                                <ul>
+                                    <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card-block">
+                            <table class="table" id="content">
+                                <thead>
+                                    <tr>
+                                        <th class="">Nombre</th>
+                                        <th class="">Asignatura</th>
+                                        <th class="text-center w-5">Apto</th>
+                                        <th class="text-center w-5">No apto</th>
+                                        <th class="text-center w-5">Confirmar</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    @if (Model.Model.det != null)
+                                    {
+                                        string classcol = "tr-grey";
+                                        Int32 ID_Ocu2t = 0;
+                                        @for (Int32 t = 0; t < Model.Model.det.Length; t++)
+                                        {
+
+                                            if (Model.Model.det[t].ID_Ocu2 != ID_Ocu2t)
+                                            {
+                                                if (classcol!="")
+                                                {
+                                                    classcol = "";
+                                                } else
+                                                {
+                                                    classcol = "tr-grey";
+                                                }
+                                            }
+
+                                        <tr class="@Html.Raw(classcol)">
+                                            <td>
+                                            @if (Model.Model.det[t].ID_Ocu2 != ID_Ocu2t) {
+                                                <p class="mb-0 fw-5">
+                                                @if (Model.Model.det[t].ID_Cli2 != "")
+                                                {
+                                                    <a href="/modulo-clientes/clientes/cliente?ID_Cli2=@Model.Model.det[t].ID_Cli2" target="_blank" class="fw-5">@Model.Model.det[t].Nom</a>
+                                                }
+                                                else
+                                                {
+                                                <a href="http://extranet.gaolos.net/crmContacto.aspx?ID_Cont2=@Model.Model.det[t].ID_Cont2" target="_blank" class="fw-5">@Model.Model.det[t].Nom</a>
+                                                }
+                                                @if (Model.Model.det[t].NIF != "")
+                                                {@Html.Raw(" - " + Model.Model.det[t].NIF)}
+                                                @if (Model.Model.det[t].Grupo != "")
+                                                {@Html.Raw(" - " + Model.Model.det[t].Grupo)}
+                                                </p>
+                                                @*<p class="mb-0 mt-2"><a href="#"><small class="fw-5">Quinar evaluación</small></a> - <a href="#" class="fw-5"><small class="fw-5">No asiste</small></a></p>*@
+                                            }
+                                            </td>
+                                            <td>
+                                                <p class="mb-0">@Model.Model.det[t].Asignatura</p>
+                                            </td>
+                                            @if (!Model.Model.det[t].EvalSoloLec)
+                                            {
+                                                <td class="text-center">
+                                                    <p class="mb-0">
+                                                        <label class="custom-control custom-radio mb-0 mr-0">
+                                                        @{
+                                                        string check = "";
+                                                        if (Model.Model.det[t].EvalSi) { check = "checked"; }
+                                                        }
+                                                        <input id="@Html.Raw("a"+Model.Model.det[t].ID_Ocu2+"_"+Model.Model.det[t].ID_Asig)" name="@Html.Raw("r"+Model.Model.det[t].ID_Ocu2+"_"+Model.Model.det[t].ID_Asig)" type="radio" class="" value="SI" @Html.Raw(check)>
+                                                        </label>
+                                                    </p>
+                                                </td>
+                                                <td class="text-center">
+                                                    <p class="mb-0">
+                                                        <label class="custom-control custom-radio mb-0 mr-0">
+                                                        @{
+                                                        check = "";
+                                                        if (!Model.Model.det[t].EvalSi) { check = "checked"; }
+                                                        }
+                                                        <input id="@Html.Raw("n"+Model.Model.det[t].ID_Ocu2+"_"+Model.Model.det[t].ID_Asig)" name="@Html.Raw("r"+Model.Model.det[t].ID_Ocu2+"_"+Model.Model.det[t].ID_Asig)" type="radio" class="" value="SI" @Html.Raw(check)>
+                                            
+                                                        </label>
+                                                    </p>
+                                                </td>
+                                                <td class="text-center">
+                                                    @if (Model.Model.det[t].ID_Ocu2 != ID_Ocu2t)
+                                                    {
+                                                    ID_Ocu2t = Model.Model.det[t].ID_Ocu2;
+                                                    <label class="custom-control custom-checkbox mb-0 mr-0">
+                                                    <input id="@Html.Raw("c"+Model.Model.det[t].ID_Ocu2)" type="checkbox" class="" value="SI" checked name="">
+                                    
+                                                    </label>
+                                                    }
+                                                </td>
+                                                }
+                                                else
+                                                {
+                                                <td class="text-center">
+                                                    @if (Model.Model.det[t].EvalSi)
+                                                    {
+                                                    <i class="fa fa-check text-success"></i>
+                                                    }
+                                                </td>
+                                                <td class="text-center">
+                                                    @if (!Model.Model.det[t].EvalSi)
+                                                    {
+                                                    <i class="fa fa-check text-danger"></i>
+                                                    }
+                                                </td>
+                                                <td class="text-center">
+
+                                                    @if (Model.Model.det[t].ID_Ocu2 != ID_Ocu2t)
+                                                    {
+                                                        @if (Model.Model.det[t].EvalSoloLec)
+                                                        {
+                                                    <a href="#" class="control-evaluacion-eliminar" id="elieva_@Model.Model.det[t].ID_Ocu2"><i class="fa fa-times text-danger" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Eliminar evaluación"></i></a>
+                                                        }
+                                                        ID_Ocu2t = Model.Model.det[t].ID_Ocu2;
+                                                    }
+                                                </td>
+                                            }
+
+                                        </tr>
+
+}
+
+                                @if (!Model.Model.SoloLectura)
+{
+    if (Model.Model.noEval > 0)
+    {
+                                <tr>
+                                    <td colspan="4" class="text-center mdc-bg-white"></td>
+                                    <td class="mdc-bg-blue-grey-50 text-center" style="border-left: 1px solid #cfd8dc;">
+                                        <a href="#" class="btn btn-sm btn-primary control-evaluacion-guardar">Confirmar evaluación</a>
+                                    </td>
+                                </tr>
+}
+else
+{
+                                <tr>
+                                    <td colspan="9" class="text-center">
+                                        <div class="d-flex align-items-center justify-content-center py-1">
+                                            <p class="fw-5 mb-0"><i class='fa fa-ban'></i> No hay alumanos a evaluar</p>
+                                        </div>
+                                    </td>
+                                </tr>
+}
+}
+else
+{
+                                <tr>
+                                    <td colspan="9" class="mdc-bg-red-700 text-center">
+                                        <div class="d-flex align-items-center justify-content-center py-1">
+                                            <p style="color: #fff;" class="fw-5 mb-0"><i class='fa fa-ban'></i> Evaluación cerrada</p>
+                                        </div>
+                                    </td>
+                                </tr>
+}
+
+}
+else
+{
+                                <tr>
+                                    <td colspan="2">
+                                        <p class='fw-5 text-danger mb-0'><i class='fa fa-exclamation-circle mr-1'></i> No hay resultados</p>
+                                    </td>
+                                </tr>
+}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            @if (!Model.Model.SoloLectura)
+{
+
+
+            <div class="card mt-3 card-table mb-3">
+                <div class="card-header card-header-options">
+                    <span>Cerrar evaluación</span>
+                </div>
+                <div class="card-block">
+                    <div class="row px-3 py-2">
+                        <div class="col-2">
+                            <div class="form-group">
+                                <label>Interesados</label>
+                                <p class="text-danger fw-5">@Model.Model.numInteresados</p>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            @if (Model.Model.numInteresados > 0)
+                {
+                    <div class="form-group">
+                        <label>Interesados enviar al curso</label>
+                        <input type="text" class="form-control form-control-sm" placeholder="Interesados enviar al curso" id="" value="">
+                    </div>
+    }
+                        </div>
+                        @*<div class="col-4">
+                            @if (Model.Model.numInteresados > 0)
+                {
+                            <div class="form-group">
+                                <label>Fecha replanififación</label>
+                                <input type="text" class="form-control form-control-sm" placeholder="Fecha replanififación" id="" value="">
+                            </div>
+    }
+                        </div>
+                        <div class="col-2 text-center">
+                            @if (Model.Model.numInteresados > 0)
+                {
+                            <div class="form-group">
+                                <label></label>
+                                <button type="button" class="btn btn-sm btn-primary" style="margin-top: 30px;">Mover interesados</button>
+                            </div>
+    }
+                        </div>*@
+                    </div>
+                    <div class="d-flex justify-content-center box-border-top p-2 mdc-bg-blue-grey-50">
+                        <button type="button" class="btn btn-sm btn-primary control-evaluacion-cerrar">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+}
+
+
+            <div class="row mb-3">
+                <div class="col-12">
+                    <div class="card card-table">
+                        <div class="card-header card-header-options">
+                            <span>Listado titulaciones obtenidas</span>
+                            <div class="card-actions">
+                                <ul>
+                                    <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card-block">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th class="">Nombre</th>
+                                        <th class="">Titulación</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (Model.Model.Tit != null)
+    {
+                                @for (Int32 t = 0; t < Model.Model.Tit.Length; t++)
+{
+                                <tr>
+                                    <td>
+                                        <p class="mb-0">@Model.Model.Tit[t].datoS1</p>
+                                    </td>
+                                    <td>
+                                        <p class="mb-0">@Model.Model.Tit[t].datoS2</p>
+                                    </td>
+                                </tr>
+}
+
+}
+else
+{
+                                <tr>
+                                    <td colspan="2">
+                                        <p class='fw-5 text-danger mb-0'><i class='fa fa-exclamation-circle mr-1'></i> No hay resultados</p>
+                                    </td>
+                                </tr>
+}
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+}
+            </div>
+        </div>
+    </div>
+</div>

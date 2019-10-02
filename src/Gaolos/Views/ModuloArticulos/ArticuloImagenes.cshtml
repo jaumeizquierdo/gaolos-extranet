@@ -1,0 +1,133 @@
+﻿@model DashBoardLibrary.DashBoardViewModel
+@{
+    Layout = "~/Views/Shared/Modulo-Articulos/_Modulo-Articulos.cshtml";
+    ViewData["Title"] = "Listado de artículos";
+    ViewData["Message"] = "Modulo de Clientes - Gaolos App v2017";
+}
+
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+                @if (Model.Model.Err.eserror)
+                {
+                    ViewData["err"] = Model.Model.Err.mensaje;
+                    @Html.Partial("AccesoDenegado");
+                }
+                else
+                {
+
+                    @* Artículos Cabecera *@
+
+                    @Html.Partial("Articulo-Cabecera")
+
+                    @* Artículos Tabs *@
+
+                    @Html.Partial("Articulo-Tabs")
+
+                    @* Listado de usuarios *@
+
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="card card-table mb-3">
+                                <div class="card-header card-header-options">
+                                    <span>Listado de imágenes</span>
+                                </div>
+                                <div class="card-block p-0">
+
+                                    <table class="table table-striped w-100">
+                                        <thead>
+                                            <tr>
+                                                <th class="w-75">Título</th>
+                                                <th class="w-25">Imagen</th>
+                                                <th class="w-25 text-center">Galería</th>
+                                                <th class="w-25 text-center">A</th>
+                                                <th class="w-25 text-center">B</th>
+                                                <th class="w-5 text-center"><i class="fa fa-times text-danger"></i></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @for (Int32 i = 0; i < 10; i++)
+                                            {
+                                                <tr>
+                                                    <td>
+                                                        <a href="https://public.gaolos.com/cdn/public/extranet/img/gaolos-login-bg-2.jpg" class="fw-5">https://public.gaolos.com/cdn/public/extranet/img/gaolos-login-bg-2.jpg</a>
+                                                        <p class="mb-0 fs-0-7"><span class="fw-5">Medidas en pixels:</span> 79 (Alto) x 300 (Ancho)</p>
+                                                        <p class="mb-0 fs-0-7"><span class="fw-5">Fichero original:</span> gaolos-login-bg-2.jpg</p>
+                                                    </td>
+                                                    <td><a href="#" data-toggle="modal" data-target="#galleryModal"><img src="https://public.gaolos.com/cdn/public/extranet/img/gaolos-login-bg-2.jpg" class="mw-100 gallery-thumb" /></a></td>
+                                                    <td class="text-center"><a href="#" class="btn btn-submit btn-sm btn-sm-2x">Sel.</a></td>
+                                                    <td class="text-center"><a href="#" class="btn btn-submit btn-sm btn-sm-2x">Sel.</a></td>
+                                                    <td class="text-center"><a href="#" class="btn btn-submit btn-sm btn-sm-2x">Sel.</a></td>
+                                                    <td class="text-center"><a href="#"><i class="fa fa-times text-danger"></i></a></td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="card-info-wrapper w-100" id="sindatos" style="">
+                                <div class="card-info">
+                                    <div class="d-flex justify-content-center align-items-center">
+
+                                        <div class="d-flex flex-column">
+                                            <p class="pb-2"><img src="https://image.flaticon.com/icons/svg/609/609998.svg" style="width: 20%;"></p>
+                                            <p class="pb-2">En esta pantalla podrá modificar o añadir información básica de su cliente</p>
+                                            <p class="pb-2 mt-2 fs-0-8">Las opciones disponibles son:</p>
+                                            <p class="fs-0-8"><i class="fa fa-check mr-1 text-danger"></i> Modificar o crear una nueva dirección</p>
+                                            <p class="fs-0-8"><i class="fa fa-check mr-1 text-danger"></i> Modificar o añadir un nuevo teléfono</p>
+                                            <p class="fs-0-8"><i class="fa fa-check mr-1 text-danger"></i> Modificar o añadir un nuevo email</p>
+                                            <p class="fs-0-8"><i class="fa fa-check mr-1 text-danger"></i> Modificar o añadir un nuevo centro de coste</p>
+                                            <p class="fs-0-8"><i class="fa fa-check mr-1 text-danger"></i> Modificar o añadir una nueva web corporativa</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <svg class="card-info-triangle">
+                                    <polygon points="0,0 200,0 0,200" fill="currentColor"></polygon>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    @* Modal Nº de envíos *@
+
+                    <div id="galleryModal" tabindex="-1" role="dialog" aria-labelledby="" class="modal fade" aria-hidden="true">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="fs-1 mb-0" id="hisenvnum">
+                                        Imágenes para Flex circuit serv sun x4200
+                                    </h4>
+                                    <a href="#" data-dismiss="modal" aria-label="Cerrar"><i class="fa fa-times"></i></a>
+                                </div>
+                                <div class="modal-body p-2">
+                                    <img src="https://public.gaolos.com/cdn/public/extranet/img/gaolos-login-bg-2.jpg" class="mw-100" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="mb-3">
+                        @* @Html.Raw(Model.Model.Paginador) *@
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

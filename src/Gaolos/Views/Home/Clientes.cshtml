@@ -1,0 +1,72 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Clientes";
+    ViewData["Message"] = "Página de Clientes - Gaolos App v2017";
+}
+
+<div class="main-content">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel">
+                    <div class="panel-header">
+                        <h3>@ViewData["Title"]</h3>
+                        @Html.Partial("PanelActions")
+                    </div>
+                    <div class="panel-body">
+
+                        <form id="" name="" action="" method="post" class="form-buscador">
+                            <input type="text" class="form-control" name="username" id="username" placeholder="Buscar por cliente / razón / nif o código de cliente" required="" value="">
+                        </form>
+
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Cliente</th>
+                                    <th>Población</th>
+                                    <th>Teléfono</th>
+                                    <th>NIF</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @for (int i = 0; i < 40; i++)
+            {
+                                    <tr>
+                                        <th scope="row">3</th>
+                                        <td><a href="#">Gaolos Global Project</a></td>
+                                        <td>Barcelona</td>
+                                        <td>902 024 665</td>
+                                        <td>902 024 665</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <ul class="pagination">
+                <li>
+                    <a href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li><a href="#">1</a></li>
+                <li class="active"><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">4</a></li>
+                <li><a href="#">5</a></li>
+                <li>
+                    <a href="#" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

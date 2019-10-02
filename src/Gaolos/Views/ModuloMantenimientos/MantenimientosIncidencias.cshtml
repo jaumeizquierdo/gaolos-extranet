@@ -1,0 +1,170 @@
+﻿@model ModuloMantenimientosLibrary.ModuloMantenimientosListadoViewModel
+
+@{
+    Layout = "~/Views/Shared/Modulo-Mantenimientos/_Modulo-Mantenimientos.cshtml";
+    ViewData["Title"] = "Listado de incidencias de los mantenimientos";
+}
+
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+                @if(Model.Model.Err.eserror)
+    {
+        ViewData["err"] = Model.Model.Err.mensaje;
+                @Html.Partial("AccesoDenegado");
+    }
+    else
+    {
+
+                @* Buscar usuarios *@
+
+                <div class="card mb-3">
+                    <div class="card-header card-header-options">
+                        <span>Buscar</span>
+
+                        <div class="card-actions">
+                            <ul>
+                                <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-block p-0">
+
+
+                        <div class="d-flex justify-content-center align-items-center">
+                            <div class="col-1 pb-2 pt-2">
+                                <img src="~/flaticons/business/038-user-1.svg" style="width: 100%;">
+                            </div>
+                            <div class="col-11 pt-2 pb-2 box-border-left-light">
+                                <form method="post" action="@ViewData["form"]" class="">
+                                    <div class="d-flex justify-content-center align-items-center mb-2 w-100">
+
+                                        @*<div class="input-group input-group-sm mb-0 mr-2">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text input-group-text-auto mw-80">Buscar</span>
+                                                </div>
+                                                <input type="text" class="form-control" name="buscar" placeholder="Buscar por cliente, NIF, CC y nº" value="@ViewData["buscar"]">
+                                                <span class="input-group-append">
+                                                    <button type="submit" class="btn btn-primary btn-sm form-buscar"><i class="fa fa-search"></i></button>
+                                                </span>
+                                            </div>*@
+
+                                        @*<div class="input-group input-group-sm mb-0 mr-2">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text input-group-text-auto mw-85">Dirección</span>
+                                                </div>
+                                                <input type="text" class="form-control" name="Dir" placeholder="Buscar por dirección" value="@ViewData["Dir"]">
+                                                <span class="input-group-append">
+                                                    <button type="submit" class="btn btn-primary btn-sm form-buscar"><i class="fa fa-search"></i></button>
+                                                </span>
+                                            </div>
+
+                                            <div class="input-group input-group-sm mb-0 mr-2">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text input-group-text-auto mw-85">Población</span>
+                                                </div>
+                                                <input type="text" class="form-control" name="Pob" placeholder="Buscar por población" value="@ViewData["Pob"]">
+                                                <span class="input-group-append">
+                                                    <button type="submit" class="btn btn-primary btn-sm form-buscar"><i class="fa fa-search"></i></button>
+                                                </span>
+                                            </div>
+
+                                            <div class="input-group input-group-sm mb-0 mr-2">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text input-group-text-auto mw-115">Provincia</span>
+                                                </div>
+                                                <input type="text" class="form-control" name="Pro" placeholder="Buscar por provincia" value="@ViewData["Pro"]">
+                                                <span class="input-group-append">
+                                                    <button type="submit" class="btn btn-primary btn-sm form-buscar"><i class="fa fa-search"></i></button>
+                                                </span>
+                                            </div>*@
+
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+
+                        @*
+
+                        *@
+
+                    </div>
+                </div>
+
+                @* Listado de usuarios *@
+
+                <div class="card card-table mb-3">
+                    <div class="card-header card-header-options">
+                        <span>@ViewData["Title"]</span>
+                    </div>
+                    <div class="card-block">
+
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th class="text-center w-5">Nº</th>
+                                    <th class="text-center w-5">Fecha</th>
+                                    <th class="w-20">Cliente</th>
+                                    <th class="">Dirección</th>
+                                    <th class="">Incidencia</th>
+                                    <th class="text-center w-5">Revisada</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model.Model.det != null)
+{
+                                @for (Int32 t = 0; t < Model.Model.det.Length; t++)
+{
+                                <tr>
+                                    <td class="text-center"><a href="/modulo-mantenimientos/mantenimientos/mantenimiento?ID_Man2=@Model.Model.det[t].ID_Man2" class="fw-5" target="_blank" data-toggle="tooltip" data-placement="top" title="" data-original-title="Ir al mantenimiento">@Model.Model.det[t].ID_Man2</a></td>
+                                    <td class="text-center">
+                                        <p class="fw-5 mb-0">@Model.Model.det[t].Fe_Al</p>
+                                    </td>
+                                    <td>
+                                        <p class="fw-5 mb-0">@Model.Model.det[t].Emp</p>
+                                    </td>
+                                    <td>
+                                        <p class="fw-5 mb-0"><small><b>@Model.Model.det[t].Dir</b></small></p>
+                                        <p class="fw-5 mb-0"><small>@Model.Model.det[t].Pob  - @Model.Model.det[t].CP</small></p>
+                                    </td>
+                                    <td>
+                                        <p class="fw-5 mb-0">@Model.Model.det[t].Pro</p>
+                                    </td>
+                                    <td><button id="inci_@Model.Model.det[t].RefCli" class="btn btn-sm btn-primary ManInciRev">Revisada</button></td>
+                                </tr>
+}
+
+}
+else
+{
+                                <tr>
+                                    <td colspan="6"><p class="mb-0 fw-5 py-2 px-1 text-danger"><i class="fa fa-times"></i> No hay resultados</p></td>
+                                </tr>
+
+}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    @Html.Raw(Model.Model.Paginador)
+                </div>
+}
+            </div>
+        </div>
+    </div>
+</div>

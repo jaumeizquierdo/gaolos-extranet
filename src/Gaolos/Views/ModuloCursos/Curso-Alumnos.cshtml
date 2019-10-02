@@ -1,0 +1,792 @@
+﻿@model CursosLibrary.ModuloCursosCursoDetallesEditar_AlumnosViewModel
+@{
+    Layout = "~/Views/Shared/Modulo-Cursos/_Cursos-curso.cshtml";
+    ViewData["Title"] = "Curso";
+    ViewData["Message"] = "Modulo de cursos - Gaolos App v2017";
+}
+
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section mb-0">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+                @if (Model.Model.Err.eserror)
+                {
+                    ViewData["err"] = Model.Model.Err.mensaje;
+                    @Html.Partial("AccesoDenegado");
+                }
+                else
+                {
+                    @* tabs *@
+
+                    @Html.Partial("Curso-Tabs")
+
+                    @* cabecera *@
+
+                    @Html.Partial("Curso-Cabecera")
+
+
+
+                    <div class="row mb-3">
+                        <div class="col-8">
+                            <div class="card mb-3">
+                                <div class="card-header card-header-options">
+                                    <span>Buscador</span>
+                                </div>
+                                <div class="card-block p-0">
+                                    <form method="post" action="@ViewData["Form"]" name="buscar">
+                                        <div class="d-flex align-items-center p-2">
+                                            <div class="d-flex mr-3 col-6 p-0">
+                                                <div class="input-group input-group-sm mr-2">
+                                                    <div class="input-group-prepend">
+                                                        <label class="input-group-text input-group-text-auto">Tipo</label>
+                                                    </div>
+                                                    <select class="custom-select" name="ID_Estado" id="ID_Estado">
+                                                        @if (Model.Model.Estados != null)
+                                                        {
+                                                            for (Int32 t = 0; t < Model.Model.Estados.Length; t++)
+                                                            {
+                                                                @if (Model.Model.Estados[t].id.ToString() == ViewData["ID_Estado"].ToString())
+                                                                {
+                                                                    <option selected value="@Model.Model.Estados[t].id">@Model.Model.Estados[t].det</option>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <option value="@Model.Model.Estados[t].id">@Model.Model.Estados[t].det</option>
+                                                                }
+                                                            }
+                                                        }
+                                                    </select>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="d-flex align-items-center mr-3">
+                                                <input type="checkbox" class="mr-2" id="Plaza" name="Plaza" @if (ViewData["Plaza"].ToString() != "") { @Html.Raw(" checked ") }>
+                                                <span class="fw-5">Plaza</span>
+                                            </div>
+                                            <div class="d-flex align-items-center">
+                                                <input type="checkbox" class="mr-2" id="Cob" name="Cob" @if (ViewData["Cob"].ToString() != "") { @Html.Raw(" checked ") }>
+                                                <span class="fw-5">Cobros pendientes</span>
+                                            </div>
+
+                                        </div>
+                                        <div class="d-flex justify-content-center box-guardar">
+                                            <input type="hidden" name="ID_Curso2" value="@Model.Model.ID_Curso2" /> <button type="submit" class="btn btn-sm btn-primary">Buscar</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="card card-table">
+                                <div class="card-header card-header-options">
+                                    @{
+                                        Int32 numAlu = 0;
+                                        if (Model.Model.det != null)
+                                        {
+                                            numAlu = Model.Model.det.Length;
+                                        }
+                                    }
+                                    <span>Alumnos (<b>@numAlu</b>)</span>
+                                    <div class="card-actions">
+                                        <ul>
+                                            <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="card-block">
+                                    <table class="table table-striped table-select" id="table-alumnos">
+                                        <thead>
+                                            <tr>
+                                                <th class="">Nº</th>
+                                                <th class="w-10 text-center">Fecha</th>
+                                                <th class="text-center">Estado</th>
+                                                <th class="text-center">Plaza</th>
+                                                <th class="w-50">Nombre</th>
+                                                <th class="text-center"><i class="fa fa-file-text" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="Indica que tiene una solicitud vinculada"></i></th>
+                                                <th class="w-10 text-center">Grupo</th>
+                                                <th class="w-5 text-center">Foto</th>
+                                                <th class="text-right w-8">Debe</th>
+                                                <th class="text-right w-8">Total</th>
+                                                <th class="w-5 text-center"><a class="sel-alu fw-5" href="#">Sel.</a></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (Model.Model.det != null)
+                                            {
+                                                for (Int32 t = 0; t < Model.Model.det.Length; t++)
+                                                {
+                                                    <tr id="tr_@Model.Model.det[t].ID_Ocu2" class="findtr">
+                                                        <td class="text-center"><small>@Model.Model.det[t].ID_Ocu2</small><a name="jmp_@Model.Model.det[t].ID_Ocu2"></a></td>
+                                                        <td class="w-10 text-center"><small>@Model.Model.det[t].Fe_Al</small></td>
+                                                        <td class="text-center">
+                                                            <small>@Model.Model.det[t].Estado</small>
+                                                            @{
+                                                                if (Model.Model.det[t].ID_Cli2 == "" && Model.Model.det[t].ID_Cont2 == "" && Model.Model.det[t].Plaza)
+                                                                {
+                                                                    <i class="fa fa-exclamation-triangle mr-1 text-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="Error insccripción"></i>
+
+                                                                }
+                                                            }
+
+                                                        </td>
+                                                        <td class="text-center">
+                                                            @if (Model.Model.det[t].Plaza)
+                                                            {@Html.Raw("SI")
+                                                        }
+                                                    </td>
+                                                    <td>
+                                                        <p class="mb-0"><a href="#" class="sel-ocu fw-5" id="alu_@Model.Model.det[t].ID_Ocu2">@Model.Model.det[t].Nom</a></p>
+                                                        @if (Model.Model.det[t].Obs != "")
+                                                        {
+                                                            <hr class="mb-1 mt-1" />
+                                                            <p class="mb-0"><small><span class="fw-5">Observaciones:</span> @Model.Model.det[t].Obs</small></p>
+                                                        }
+                                                        @if (Model.Model.det[t].SoliExpo != "")
+                                                        {
+                                                            <hr class="mb-1 mt-1" />
+                                                            <p class="mb-0"><small><span class="fw-5">Solicitud:</span> @Model.Model.det[t].SoliExpo</small></p>
+                                                        }
+                                                    </td>
+                                                    <td>
+                                                        @if (Model.Model.det[t].ID_Soli2 > 0)
+                                                        {
+                                                            @if (!Model.Model.det[t].Cerr)
+                                                            {
+                                                                <a href="/tareas-pendientes/tarea-pendiente?ID_Soli2=@Model.Model.det[t].ID_Soli2" target="_blank" class="text-danger"><i class="fa fa-file-text" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="Solicitud abierta. Ir a la solicitud nº @Model.Model.det[t].ID_Soli2 "></i></a>
+                                                            }
+                                                            else
+                                                            {
+                                                                <a href="/tareas-pendientes/tarea-pendiente?ID_Soli2=@Model.Model.det[t].ID_Soli2" target="_blank" class="text-muted"><i class="fa fa-file-text" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="Solicitud cerrada. Ir a la solicitud nº @Model.Model.det[t].ID_Soli2 "></i></a>
+                                                            }
+                                                        }
+                                                    </td>
+                                                    <td>@Model.Model.det[t].Grupo</td>
+                                                    <td class="text-center">
+                                                        @if (Model.Model.det[t].ReqFoto && !Model.Model.det[t].HayFoto)
+                                                        {
+                                                            <i class="fa fa-exclamation-triangle mr-1 text-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="Falta fotografía del alumno"></i>
+                                                        }
+                                                        else if (Model.Model.det[t].HayFoto)
+                                                        {
+                                                            <div>
+                                                                <a href="#" data-toggle="modal" data-target="@Html.Raw("#fotoModal" + t)" class="foto-carnet"><img src="data:image/jpg;base64,@Model.Model.det[t].Contenido" /></a>
+                                                            </div>
+                                                            @* Foto Modal *@
+                                                            <div class="modal fade" id="@Html.Raw("fotoModal" + t)" tabindex="-1" role="dialog" aria-labelledby="fotoModalLabel" aria-hidden="true">
+                                                                <div class="modal-dialog" role="document">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header py-2 px-3">
+                                                                            <h5 class="modal-title fs-0-9 fw-5" id="fotoModalLabel">@Model.Model.det[t].Nom</h5>
+                                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                                <span aria-hidden="true">&times;</span>
+                                                                            </button>
+                                                                        </div>
+                                                                        <div class="modal-body">
+                                                                            <img src="data:image/jpg;base64,@Model.Model.det[t].Contenido" style="max-width: 100%;" />
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                            <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">Cerrar</button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        }
+                                                    </td>
+                                                    <td class="text-right text-danger fw-5">@Model.Model.det[t].Debe</td>
+                                                    <td class="text-right fw-5">@Model.Model.det[t].Total</td>
+                                                    <td class="text-center">
+                                                        <input type="checkbox" class="sel-check" id="sel_@Model.Model.det[t].ID_Ocu2" name="">
+                                                    </td>
+                                                </tr>
+                                            }
+
+                                        }
+                                        else
+                                        {
+                                            <tr><td colspan="11"><p class='fw-5 text-danger mb-0'><i class='fa fa-exclamation-circle mr-1'></i> No hay resultados</p></td></tr>
+                                        }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="card card-table mb-3 mt-3">
+                                <div class="card-header card-header-options">
+                                    <span>Estado</span>
+                                </div>
+                                <div class="card-block p-0">
+                                    <div class="row">
+                                        <div class="col-12">
+
+                                            <div class="d-flex flex-column p-2">
+                                                <div class="box-labels">
+                                                    <div class="d-flex align-items-center align-self-stretch box-labels-divider">
+                                                        <label class="m-0 box-label-label align-self-stretch py-2 col-3">@*<i class="material-icons mdc-text-blue-grey-300 mr-1">delete_forever</i>*@Eliminar ocupación (<span id="num-sel-eli">0</span>)</label>
+                                                        <div class="input-group input-group-sm mb-0 mr-3 ml-2 p-0">
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text">Motivo</span>
+                                                            </div>
+                                                            <input type="text" class="form-control" placeholder="Indicar el motivo" id="MotEli">
+                                                        </div>
+                                                        <div class="d-check d-flex align-items-center mr-3">
+                                                            <input type="checkbox" class="mr-2" id="CerrSoliEli" name="CerrarSolicitud">
+                                                            <span class="fw-5">Cerrar solicitud</span>
+                                                        </div>
+                                                        <a href="#" class="btn btn-sm btn-danger eliminar-inscripciones mr-2"><i class="fa fa-times mr-1"></i> Eliminar</a>
+                                                    </div>
+                                                    <div class="d-flex align-items-center align-self-stretch box-labels-divider">
+                                                        <label class="m-0 box-label-label align-self-stretch col-3 py-2">@*<i class="material-icons mdc-text-blue-grey-300 pr-2">delete_forever</i>*@Importar CSV</label>
+
+                                                        <div class="jfilestyle jfilestyle-corner ml-2">
+                                                            <input type="file" class="jfilestyle" data-buttonText="Buscar" data-size="sm" id="UploadFormFile" />
+                                                            <a href="#" class="btn btn-primary btn-sm btn-aux mr-2 ml-2 inscripcion-importar-csv" id="uploadButton"> Importar CSV</a>
+                                                        </div>
+
+                                                        @*<div class="input-group input-group-sm">
+                                                                <div class="custom-file">
+                                                                    <input type="file" class="custom-file-input" id="UploadFormFile">
+                                                                    <label class="custom-file-label" for="inputGroupFile04">Choose file</label>
+                                                                </div>
+                                                            </div>*@
+
+                                                    </div>
+                                                    <div class="d-flex align-items-center align-self-stretch box-labels-divider">
+                                                        <label class="m-0 box-label-label align-self-stretch col-3 py-2">@*<i class="material-icons mdc-text-blue-grey-300 pr-2">launch</i>*@Exportar listado alumnos</label>
+                                                        <a href="/modulo-cursos/cursos/curso/listado-alumnos?ID_Curso2=@Model.Model.ID_Curso2" class="btn btn-sm btn-primary btn-aux ml-2">Exportar alumnos</a>
+                                                    </div>
+                                                    <div class="d-flex align-items-center align-self-stretch">
+                                                        <label class="m-0 box-label-label align-self-stretch py-2 col-3">@*<i class="material-icons mdc-text-blue-grey-300 pr-2">av_timer</i>*@Inscripción rápida</label>
+                                                        <div class="input-group input-group-sm mb-0 mr-2 ml-2">
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text">Número alumnos</span>
+                                                            </div>
+                                                            <input type="text" class="form-control" placeholder="Número alumnos" id="NumAlu">
+                                                        </div>
+                                                        <div class="input-group input-group-sm mb-0 mr-2">
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text">Comentarios</span>
+                                                            </div>
+                                                            <input type="text" class="form-control" placeholder="Comentarios" id="Come">
+                                                        </div>
+                                                        <a href="#" class="btn btn-sm btn-primary btn-aux inscripcion-rapida mr-2">Inscribir</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-4" id="divsubir">
+
+                            @* Sin datos *@
+                            <div class="card-info-wrapper w-100" id="versininfo">
+                                <div class="card-info">
+                                    <div class="d-flex justify-content-center align-items-center">
+                                        <img src="https://image.flaticon.com/icons/svg/609/609998.svg" style="width: 20%;">
+                                        <p class="mb-2 ml-3">Si clica encima de un alumno, le aparecerán todas las propiedades para consultar y/o modificar</p>
+                                    </div>
+                                </div>
+                                <svg class="card-info-triangle">
+                                    <polygon points="0,0 200,0 0,200" fill="currentColor"></polygon>
+                                </svg>
+                            </div>
+
+                            @* Información alumno - labels *@
+                            <a name="ocupacion"></a>
+                            <div class="card card-table mb-3" id="verocu" style="display:none;">
+                                <div class="card-header card-header-options">
+                                    <span>Información inscripción</span>
+                                    <a href="#" class="lnk_volver btn btn-primary btn-sm">Volver</a>
+                                    <input type="hidden" id="goto" value="" />
+                                    <input type="hidden" id="ID_Ocu2" value="0" />
+                                </div>
+                                <div class="card-block p-0">
+                                    <div class="d-flex flex-column p-2">
+
+                                        <div class="box-labels">
+
+                                            <div class="d-flex align-items-center align-self-stretch box-labels-divider">
+                                                <label class="m-0 box-label-label align-self-stretch">Fecha</label>
+                                                <p class="mb-0 px-2" id="Fe_Al"></p>
+                                            </div>
+
+                                            <div class="d-flex align-items-center align-self-stretch box-labels-divider">
+                                                <label class="m-0 box-label-label align-self-stretch">Nº ocupación</label>
+                                                <p class="mb-0 px-2" id="ID_Ocu2Info"></p>
+                                            </div>
+
+                                            <div class="d-flex align-items-center align-self-stretch box-labels-divider">
+                                                <label class="m-0 box-label-label align-self-stretch">Nombre</label>
+                                                <p class="mb-0 px-2" id="NomInfo"></p>
+                                            </div>
+
+                                            <div class="d-flex align-items-center align-self-stretch box-labels-divider">
+                                                <label class="m-0 box-label-label align-self-stretch">Web</label>
+                                                <p class="mb-0 px-2" id="WebInfo"></p>
+                                            </div>
+
+                                            <div class="d-flex align-items-center align-self-stretch box-labels-divider">
+                                                <label class="m-0 box-label-label align-self-stretch">Forma</label>
+                                                <p class="mb-0 px-2" id="FormaInfo"></p>
+                                            </div>
+
+                                            <div class="d-flex align-items-center align-self-stretch box-labels-divider">
+                                                <label class="m-0 box-label-label align-self-stretch">Fotografía</label>
+                                                <div class="d-flex px-2" id="reqfoto">
+                                                    <p class="mb-0">Requiere foto</p>
+                                                </div>
+                                            </div>
+
+                                            <div class="d-flex align-items-center align-self-stretch box-labels-divider">
+                                                <label class="m-0 box-label-label align-self-stretch">DNI</label>
+                                                <p class="mb-0 px-2" id="NifInfo"></p>
+                                            </div>
+
+                                            <div class="d-flex align-items-center align-self-stretch box-labels-divider">
+                                                <label class="m-0 box-label-label align-self-stretch">Teléfonos</label>
+                                                <p class="mb-0 px-2" id="TelsInfo"></p>
+                                            </div>
+
+                                            <div class="d-flex align-items-center align-self-stretch box-labels-divider">
+                                                <label class="m-0 box-label-label align-self-stretch">Mails</label>
+                                                <p class="mb-0 px-2" id="MailsInfo"></p>
+                                            </div>
+
+                                            <div class="d-flex align-items-center">
+                                                <label class="m-0 box-label-label align-self-stretch">NIC</label>
+                                                <p class="mb-0 px-2" id="NICInfo"></p>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div id="verficha" style="display:none;">
+                                        <div class="d-flex justify-content-center box-guardar">
+                                            <a href="#" target="_blank" class="btn btn-sm btn-primary" id="IrA">Ir a la ficha</a>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            @* Información alumno - inputs *@
+                            <div class="card card-table mb-3" id="verocudat" style="display:none;">
+                                <div class="card-header card-header-options">
+                                    <span>Información alumno</span>
+                                </div>
+                                <div class="card-block p-0">
+                                    <div class="d-flex flex-column p-2">
+
+                                        <div class="d-flex mb-1">
+                                            <div class="input-group input-group-sm mb-0">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">Nombre</span>
+                                                </div>
+                                                <input type="text" class="form-control" placeholder="Nombre" maxlength="100" id="Nom">
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex mb-1">
+                                            <div class="input-group input-group-sm mb-0">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">DNI</span>
+                                                </div>
+                                                <input type="text" class="form-control" placeholder="DNI" maxlength="15" id="NIF">
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex mb-1">
+                                            <div class="input-group input-group-sm mb-0">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">Mail</span>
+                                                </div>
+                                                <input type="text" class="form-control" placeholder="Mail" maxlength="100" id="Mail">
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex mb-1">
+                                            <div class="input-group input-group-sm mb-0">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">Teléfono</span>
+                                                </div>
+                                                <input type="text" class="form-control" placeholder="Teléfono" maxlength="15" id="Tel">
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex mb-1">
+                                            <div class="input-group input-group-sm mb-0">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">Fecha nac.</span>
+                                                </div>
+                                                <input type="text" class="form-control" placeholder="Fecha nacimiento" maxlength="15" id="Fe_Na">
+                                            </div>
+                                        </div>
+
+                                        <div class="box-labels mb-1">
+                                            <div class="d-flex align-items-center align-self-stretch">
+                                                <label class="m-0 box-label-label align-self-stretch">Sexo</label>
+                                                <div class="d-flex align-items-center mr-3 ml-2">
+                                                    <input type="radio" class="mr-2" name="Sexo" id="sh">
+                                                    <span class="fw-5">Hombre</span>
+                                                </div>
+                                                <div class="d-flex align-items-center">
+                                                    <input type="radio" class="mr-2" name="Sexo" id="sm">
+                                                    <span class="fw-5">Mujer</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex mb-1">
+                                            <div class="input-group input-group-sm mb-0">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">Dirección</span>
+                                                </div>
+                                                <input type="text" class="form-control" placeholder="Dirección" maxlength="100" id="Dir">
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex mb-1">
+                                            <div class="input-group input-group-sm">
+                                                <div class="input-group-prepend">
+                                                    <label class="input-group-text">País</label>
+                                                </div>
+                                                <select class="custom-select cambio-pais" id="UbiPai_1"></select>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex mb-1">
+                                            <div class="input-group input-group-sm">
+                                                <div class="input-group-prepend">
+                                                    <label class="input-group-text">Provincia</label>
+                                                </div>
+                                                <select class="custom-select cambio-provincia" id="UbiPro_1"></select>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex mb-1">
+                                            <div class="input-group input-group-sm">
+                                                <div class="input-group-prepend">
+                                                    <label class="input-group-text">Código Postal</label>
+                                                </div>
+                                                <select class="custom-select cambio-cp" id="UbiCP_1"></select>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex mb-1">
+                                            <div class="input-group input-group-sm">
+                                                <div class="input-group-prepend">
+                                                    <label class="input-group-text">Población</label>
+                                                </div>
+                                                <select class="custom-select cambio-poblacion" id="UbiPob_1"></select>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="d-flex justify-content-center box-guardar">
+                                        <a href="#" class="btn btn-sm btn-primary inscripcion-contacto-guardar">Guardar</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            @* Inscripción *@
+                            <div class="card card-table mb-3" id="ver-inscripcion" style="display:none;">
+                                <div class="card-header card-header-options">
+                                    <span>Inscripción</span>
+                                </div>
+                                <div class="card-block">
+                                    <div class="d-flex flex-column p-2">
+
+                                        <div class="input-group input-group-sm mb-1">
+                                            <div class="input-group-prepend">
+                                                <label class="input-group-text">Tarifa</label>
+                                            </div>
+                                            <select class="custom-select" id="ID_PrecioIns"></select>
+                                        </div>
+
+                                        <div class="input-group input-group-sm mb-1">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Precio</span>
+                                            </div>
+                                            <input type="text" class="form-control" placeholder="Precio (Opcional)" id="PrecioIns">
+                                        </div>
+
+                                        <div class="input-group input-group-sm mb-1">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">NIC</span>
+                                            </div>
+                                            <input type="text" class="form-control" placeholder="NIC (Opcional)" id="NICIns">
+                                        </div>
+
+                                        <div class="box-labels mb-1">
+                                            <div class="d-flex align-items-center align-self-stretch">
+                                                <label class="m-0 box-label-label align-self-stretch">Enviar notific.</label>
+                                                <div class="d-flex align-items-center ml-2">
+                                                    <input type="checkbox" class="" id="EnvIns">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="input-group input-group-sm mb-1" id="info-repla">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Replanificar</span>
+                                            </div>
+                                            <input type="text" class="form-control" placeholder="Replanificar" id="Fe_Repla">
+                                        </div>
+
+                                    </div>
+                                    <div class="d-flex justify-content-center box-guardar">
+                                        <a href="#" class="btn btn-sm btn-primary inscripcion-nueva">Inscribir</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            @* Observaciones *@
+                            <div class="card card-table mb-3" id="verobs" style="display:none;">
+                                <div class="card-header card-header-options">
+                                    <span>Observaciones</span>
+                                </div>
+                                <div class="card-block">
+                                    <div class="row p-2">
+                                        <div class="col-12">
+
+                                            <div class="input-group input-group-sm mb-1">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">Observaciones</span>
+                                                </div>
+                                                <textarea class="form-control" placeholder="Observaciones" rows="3" maxlength="100" id="Obs"></textarea>
+                                            </div>
+
+                                            <div class="input-group input-group-sm mb-0">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">Delegación</span>
+                                                </div>
+                                                <textarea class="form-control" placeholder="Delegación" rows="1" maxlength="100" id="Obs2"></textarea>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-center box-guardar">
+                                        <a href="#" class="btn btn-sm btn-primary inscripcion-obs-guardar">Guardar</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            @* Enviar comunicación *@
+                            <div class="card card-table mb-3" id="enviarcom" style="display:none;">
+                                <div class="card-header card-header-options">
+                                    <span>Enviar Comunicación</span>
+                                </div>
+                                <div class="card-block">
+                                    <div class="row p-2">
+                                        <div class="col-12">
+
+                                            <div class="d-flex justify-content-center">
+                                                <a href="#" class="btn btn-sm btn-primary enviar-comunicacion">Enviar</a>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            @* Grupo *@
+                            <div class="card card-table mb-3" id="vergrupo" style="display:none;">
+                                <div class="card-header card-header-options">
+                                    <span>Grupo</span>
+                                </div>
+                                <div class="card-block">
+
+                                    <div class="row p-2">
+                                        <div class="col-12">
+                                            <div class="input-group input-group-sm">
+                                                <div class="input-group-prepend">
+                                                    <label class="input-group-text">Cambiar grupo</label>
+                                                </div>
+                                                <select class="custom-select" id="Grupos"></select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex justify-content-center box-guardar">
+                                        <a href="#" class="btn btn-sm btn-primary inscripcion-cambiar-grupo">Cambiar</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            @* Estado *@
+                            <div class="card card-table mb-3" id="verestado" style="display:none;">
+                                <div class="card-header card-header-options">
+                                    <span>Estado</span>
+                                </div>
+                                <div class="card-block">
+
+                                    <div class="d-flex flex-column px-2 pt-2 mb-1">
+                                        <div class="box-labels">
+                                            <div class="d-flex align-items-center align-self-stretch box-labels-divider">
+                                                <label class="m-0 box-label-label align-self-stretch">Nº ocupación</label>
+                                                <a href="#" class="btn btn-sm btn-primary btn-aux inscripcion-cambiar-estado ml-2">Pasar a interesado</a>
+                                            </div>
+                                            <div class="d-flex align-items-center align-self-stretch" id="quitar-inscrito" style="display:none;">
+                                                <label class="m-0 box-label-label align-self-stretch">Plaza</label>
+                                                <span class="mb-0 px-2 fw-5" id="HayPlaza">SI</span> <a href="#" class="btn btn-sm btn-primary btn-aux inscripcion-cambiar-plaza ml-2" id="plazaaccion">Quitar</a>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="d-flex flex-column px-2 pb-2">
+
+                                        <div class="input-group input-group-sm mb-1">
+                                            <div class="input-group-prepend">
+                                                <label class="input-group-text">Tarifa</label>
+                                            </div>
+                                            <select class="custom-select" id="ID_Precio"></select>
+                                            <a href="#" class="btn btn-sm btn-primary btn-aux inscripcion-cambiar-tarifa ml-2">Cambiar</a>
+                                        </div>
+
+                                        <div class="input-group input-group-sm mb-0">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Precio</span>
+                                            </div>
+                                            <input type="text" class="form-control" placeholder="Precio" id="Precio">
+                                            <a href="#" class="btn btn-sm btn-primary btn-aux inscripcion-cambiar-precio ml-2">Cambiar</a>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            @* Cobro *@
+                            <a name="iracobro"></a>
+                            <div class="card card-table mb-3" id="vercobro" style="display:none;">
+                                <div class="card-header card-header-options">
+                                    <span id="txtCobro">Cobro</span>
+                                </div>
+                                <div class="card-block">
+                                    <div class="d-flex flex-column p-2">
+
+                                        <div class="d-flex mb-1">
+                                            <div class="input-group input-group-sm mb-0">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">Fecha</span>
+                                                </div>
+                                                <input type="text" class="form-control" placeholder="Fecha cobro" id="Fe_Cob">
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex mb-1">
+                                            <div class="input-group input-group-sm mb-0">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">Importe</span>
+                                                </div>
+                                                <input type="text" class="form-control" placeholder="Importe" id="Imp">
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex mb-1">
+                                            <div class="input-group input-group-sm mb-0">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">Cuenta</span>
+                                                </div>
+                                                <select class="custom-select" id="ID_CueNeg"></select>
+                                            </div>
+                                        </div>
+
+                                        <div class="box-labels mb-1">
+                                            <div class="d-flex align-items-center align-self-stretch">
+                                                <label class="m-0 box-label-label align-self-stretch">Enviar notific.</label>
+                                                <div class="d-flex align-items-center ml-2">
+                                                    <input type="checkbox" class="" id="envNoti" name="">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="d-flex justify-content-center box-guardar">
+                                        <a href="#" class="btn btn-sm btn-primary inscripcion-marcar-cobro">Marcar como cobrado</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            @* Mover al curso *@
+                            <div class="card card-table mb-3" id="vermover" style="display:none;">
+                                <div class="card-header card-header-options">
+                                    <span>Mover al curso</span>
+                                </div>
+                                <div class="card-block">
+                                    <div class="d-flex flex-column p-2">
+
+                                        <div class="d-flex mb-1">
+                                            <div class="input-group input-group-sm mb-0">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">Curso destino</span>
+                                                </div>
+                                                <input type="text" class="form-control" value="" placeholder="Buscar por nº curso, fecha inicio, ubicación y curso" id="findcurso" name="findcurso">
+                                                <input id="vfindcurso" name="vfindcurso" type="hidden" value="" /><input id="tfindcurso" name="tfindcurso" type="hidden" value="" />
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex mb-1">
+                                            <div class="input-group input-group-sm mb-0">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">Tarifa</span>
+                                                </div>
+                                                <select class="custom-select" id="ID_PrecioDes">
+                                                    <option value="0">- seleccione un curso -</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="box-labels mb-1">
+                                            <div class="d-flex align-items-center align-self-stretch">
+                                                <label class="m-0 box-label-label align-self-stretch">Ir al curso</label>
+                                                <div class="d-flex align-items-center ml-2">
+                                                    <input type="checkbox" class="" id="IrACurDes" name="">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="d-flex justify-content-center box-guardar">
+                                        <a href="#" class="btn btn-sm btn-primary inscripcion-cambiar-curso">Cambiar</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (ViewData["ID_Ocu2"].ToString() != "")
+{
+    <script>
+    ActualizarOcupacion(@Model.Model.ID_Curso2, @ViewData["ID_Ocu2"]);
+    </script>
+
+
+
+}
+    <script>
+
+    @*<p class="mb-0"><a href="#" class="sel-ocu fw-5" id="alu_@Model.Model.det[t].ID_Ocu2">@Model.Model.det[t].Nom</a></p> *@
+
+
+
+    </script>

@@ -1,0 +1,324 @@
+﻿@{
+    ViewData["Title"] = "Nuevo pedido de producción";
+    ViewData["TitleOrdenesProduccion"] = "Órdenes de producción";
+    ViewData["OrdenDeTrabajo"] = "Órden de trabajo de";
+    ViewData["ModificarTextoOrden"] = "Modificar texto órdenes";
+
+Layout = "~/Views/Shared/Modulo-Produccion/_ProduccionPedidos.cshtml";
+}
+<div class="main-content m-0" id="widget-area">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-8">
+                @* Nuevo pedido de producción *@
+                <div class="card mb-3">
+                    <div class="card-header card-header-options">
+                        <span>@ViewData["Title"]</span>
+                        <div class="d-flex justify-content-between align-items-center">                        
+                            <label class="custom-control custom-checkbox mb-0">
+                                <input type="checkbox" class="custom-control-input">
+                                
+                                <span class="custom-control-label fw-5">Proyecto interno</span>
+                            </label>
+                            <a href="#" class="btn btn-secondary btn-sm fw-5 ml-3" data-container="body" data-toggle="popover" data-placement="left" data-content="Seleccionar si se trata de un proyecto interno. Deshabilita los apartados Mantenimiento y Presupuesto vinculado." data-original-title="" title=""><i class="fa fa-question"></i></a>
+                        </div>
+                    </div>
+                    <div class="card-block">
+                        <div class="form-group">
+                            <label for="cliente">Cliente</label>
+                            <input type="text" class="form-control" id="clientes" placeholder="Cliente">
+                            <input id="vclientes" name="vclientes" type="hidden" value="" /><input id="tclientes" name="tclientes" type="hidden" value="" />
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="">Presupuesto o mantenimiento vinculado</label>
+                                    <select class="form-control custom-select" id="ID_ManDet">
+                                        <option selected value="">Seleccionar un cliente</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group text-center mb-0">
+                            <button type="button" class="btn btn-primary btn-sm prod-ped-nuevo-ped-prod">Ver</button>
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="exposicion">Exposición</label>
+                                    <textarea class="form-control" id="Expo" rows="3" placeholder="Exposición"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="observaciones">Observaciones</label>
+                                    <textarea class="form-control" id="Obs" rows="3" placeholder="Observaciones"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="refcliente">Ref. Cliente</label>
+                                    <input type="text" class="form-control" id="RefCli" placeholder="Ref. Cliente">
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group mb-4" id="fechafin">
+                                    <label for="refcliente">Fecha fin prevista</label>
+                                    <div class="input-group input-group date">
+                                        <input type="text" class="form-control" placeholder="Selecciona Fecha" id="Fecha">
+                                        <span class="input-group-append">
+                                            <button class="btn btn-secondary" type="button"><i class="fa fa-calendar"></i></button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group text-center mb-0">
+                            <button type="button" class="btn btn-primary btn-sm prod-ped-nuevo-ped-prod">Generar nuevo pedido</button>
+                        </div>
+                    </div>
+                </div>
+                @* Listado de órdenes de producción *@
+                <div class="card card-table mb-3">
+                    <div class="card-header card-header-options">
+                        <span>@ViewData["TitleOrdenesProduccion"]</span>
+                        <div class="input-group input-group-sm col-6 mr-0 pr-0">
+                            <input type="text" class="form-control form-control-sm" id="" placeholder="Nueva orden de producción">
+                            <span class="input-group-append">
+                                <button type="button" class="btn btn-primary btn-sm elem-plan-nueva">Nueva</button>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="card-block">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Orden producción</th>
+                                    <th class="w-10 text-center">Eliminar</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @* Orden *@
+                                <tr>
+                                    <td>
+                                        <a href="#" class="fw-5">Análisis web</a>
+                                    </td>
+                                    <td class="text-center">
+                                        <a href="#" class="text-danger"><i class="fa fa-times" aria-hidden="true"></i></a>
+                                    </td>
+                                </tr>
+                                @* Fases *@
+                                <tr>
+                                    <td colspan="2" class="p-0">
+                                        <table class="table table-striped">
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <span class="pl-4"><i class="fa fa-chevron-right text-info"></i> <a href="#" class="fw-5">órden de trabajo 1</a></span>
+                                                    </td>
+                                                    <td class="text-center w-10">
+                                                        <a href="#" class="text-danger"><i class="fa fa-times" aria-hidden="true"></i></a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <span class="pl-4"><i class="fa fa-chevron-right text-info"></i> <a href="#" class="fw-5">órden de trabajo 1</a></span>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <a href="#" class="text-danger"><i class="fa fa-times" aria-hidden="true"></i></a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <span class="pl-4"><i class="fa fa-chevron-right text-info"></i> <a href="#" class="fw-5">órden de trabajo 1</a></span>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <a href="#" class="text-danger"><i class="fa fa-times" aria-hidden="true"></i></a>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                                @* Orden *@
+                                <tr>
+                                    <td>
+                                        <a href="#" class="fw-5">Análisis web</a>
+                                    </td>
+                                    <td class="text-center">
+                                        <a href="#" class="text-danger"><i class="fa fa-times" aria-hidden="true"></i></a>
+                                    </td>
+                                </tr>
+                                @* Fases *@
+                                <tr>
+                                    <td colspan="2" class="p-0">
+                                        <table class="table table-striped">
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <span class="pl-4"><i class="fa fa-chevron-right text-info"></i> <a href="#" class="fw-5">órden de trabajo 1</a></span>
+                                                    </td>
+                                                    <td class="text-center w-10">
+                                                        <a href="#" class="text-danger"><i class="fa fa-times" aria-hidden="true"></i></a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <span class="pl-4"><i class="fa fa-chevron-right text-info"></i> <a href="#" class="fw-5">órden de trabajo 1</a></span>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <a href="#" class="text-danger"><i class="fa fa-times" aria-hidden="true"></i></a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <span class="pl-4"><i class="fa fa-chevron-right text-info"></i> <a href="#" class="fw-5">órden de trabajo 1</a></span>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <a href="#" class="text-danger"><i class="fa fa-times" aria-hidden="true"></i></a>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-4">
+                @* Orden de trabajo *@
+                <div class="card mb-3">
+                    <div class="card-header card-header-options">
+                        <span>@ViewData["OrdenDeTrabajo"] ORDEN</span>
+                    </div>
+                    <div class="card-block">
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="">Operario</label>
+                                    <select class="form-control custom-select" id="">
+                                        <option selected="">Operario</option>
+                                        <option value="1">Jaume Izquierdo</option>
+                                        <option value="2">Roger Pujol</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="">Tipo</label>
+                                    <select class="form-control custom-select" id="">
+                                        <option selected="">Tipo</option>
+                                        <option value="1"></option>
+                                        <option value="2"></option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <div class="form-group">
+                                        <label for="observaciones">Exposición trabajo</label>
+                                        <textarea class="form-control" id="Obs" rows="3" placeholder="Exposición trabajo"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <label for="">Horas</label>
+                                    <input type="text" class="form-control" id="" placeholder="Horas">
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <label for="">Coste</label>
+                                    <input type="text" class="form-control" id="" placeholder="Coste">
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <label for="">Precio</label>
+                                    <input type="text" class="form-control" id="" placeholder="Precio">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group text-center mb-0 mt-2">
+                            <button type="button" class="btn btn-primary btn-sm prod-ped-nuevo-ped-prod">Generar nueva orden</button>
+                        </div>
+                    </div>
+                </div>
+                @* Modificar texto órdenes *@
+                <div class="card mb-3">
+                    <div class="card-header card-header-options">
+                        <span>@ViewData["ModificarTextoOrden"] ORDEN</span>
+                    </div>
+                    <div class="card-block">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <div class="form-group">
+                                        <label for="observaciones">Modificar orden de trabajo</label>
+                                        <textarea class="form-control" id="Obs" rows="3" placeholder="Modificar orden de trabajo"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group text-center mb-0 mt-2">
+                            <button type="button" class="btn btn-primary btn-sm prod-ped-nuevo-ped-prod">Modificar</button>
+                        </div>
+                    </div>
+                </div>
+                @* Histórico órdenes de producción*@
+                <div class="card card-table mb-3">
+                    <div class="card-header card-header-options">
+                        <span>Historial del cliente</span>
+                    </div>
+                    <div class="card-block">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Orden producción</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @* Orden *@
+                                <tr>
+                                    <td>
+                                        <a href="#" class="fw-5">Análisis web</a>
+                                    </td>
+                                </tr>
+                                @* Orden *@
+                                <tr>
+                                    <td>
+                                        <a href="#" class="fw-5">Análisis web</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+
+    </div>
+
+</div>

@@ -1,0 +1,126 @@
+﻿@model ModuloServiciosLibrary.ModuloServiciosServicioNuevoViewModel
+@{
+    Layout = "~/Views/Shared/Modulo-Servicios/_Servicio-Nuevo.cshtml";
+    ViewData["Title"] = "Nuevo Servicio";
+}
+
+<div class="main-content m-0" id="widget-area">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+
+                @if (Model.Model.Err.eserror)
+                {
+                    ViewData["err"] = Model.Model.Err.mensaje;
+                @Html.Partial("AccesoDenegado");
+                }
+                else
+                {
+
+                <div class="card mb-3">
+                    <div class="card-block card-info-header card-info-header-modulo p-0">
+                        <div class="d-flex justify-content-center align-items-center">
+                            <div class="col-1 pb-2 pt-2 d-flex justify-content-center align-items-center box-border-right-light">
+                                <img src="https://image.flaticon.com/icons/svg/431/431985.svg" style="width: 100%">
+                            </div>
+                            <div class="col-11 pt-2 pb-2">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="card-info-desc d-flex flex-column py-3">
+                                        <h5 class="fw-5 title-section">@ViewData["Title"]</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+
+                    <div class="col-8">
+                        @* Listado de mantenimientos *@
+                        <div class="card mb-3">
+                            <div class="card-header card-header-options">
+                                <span>@ViewData["Title"]</span>
+                            </div>
+                            <div class="card-block p-0">
+
+                                <div class="p-2">
+
+                                    <div class="d-flex mb-1">
+
+                                        <div class="input-group input-group-sm mb-0">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Servicio</span>
+                                            </div>
+                                            <input type="text" class="form-control" id="Serv" value="" placeholder="Servicio">
+                                        </div>
+
+                                    </div>
+
+                                    <div class="d-flex mb-1">
+
+                                        <div class="input-group input-group-sm mb-0">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Categoría</span>
+                                            </div>
+                                            <select class="custom-select" id="ID_Cat2">
+                                                @if (Model.Model.det != null)
+                                                {
+                                                    for (Int32 t = 0; t < Model.Model.det.Length; t++)
+                                                    {
+                                                        <option value="@Model.Model.det[t].id">@Model.Model.det[t].det</option>
+                                                    }
+                                                }
+                                            </select>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <div class="d-flex justify-content-center box-border-top p-2 mdc-bg-blue-grey-50">
+                                <a href="#" class="btn btn-sm btn-primary generar-servicio">Crear nuevo servicio</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-4">
+
+                        @* Sin datos *@
+                        <div class="card-info-wrapper w-100" id="sindatos" style="display: none;">
+                            <div class="card-info">
+                                <div class="d-flex align-items-center">
+                                    <img src="https://image.flaticon.com/icons/svg/609/609998.svg" style="width: 20%;">
+                                    <div class="d-flex flex-column ml-3">
+                                        <p class="mb-2 ">En esta pantalla podrá crear un nuevo servicio</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <svg class="card-info-triangle">
+                                <polygon points="0,0 200,0 0,200" fill="currentColor"></polygon>
+                            </svg>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                }
+
+            </div>
+        </div>
+
+    </div>
+
+</div>

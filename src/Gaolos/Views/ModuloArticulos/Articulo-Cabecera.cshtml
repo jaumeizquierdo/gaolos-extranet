@@ -1,0 +1,26 @@
+﻿@* cabecera artículo *@
+
+<div class="card">
+    <div class="card-header card-header-options">
+        <span>Artículo</span>
+    </div>
+    <div class="card-block p-0">
+        <div class="d-flex justify-content-center align-items-center">
+            <div class="col-1 pb-2 pt-2">
+                <img src="https://image.flaticon.com/icons/svg/306/306033.svg" style="width: 100%">
+                <input type="hidden" id="ID_Art2" value="@Model.Model.Cab.ID_Art2" />
+            </div>
+            <div class="col-11 pt-2 pb-2 box-border-left-light">
+                <h5 class="fw-5 title-section">@Model.Model.Cab.Art</h5>
+                <div class="d-flex">
+                    <div class="box-grey-bg">
+                        <p class="mb-0"><small class="fw-5"><span class="mr-1">Codigo:</span> <span class="text-danger">@Model.Model.Cab.Codigo</span></small></p>
+                        <p class="mb-0"><small class="fw-5"><span class="mr-1">Nº:</span> <span class="text-danger">@Model.Model.Cab.ID_Art2</span></small></p>
+                        <p class="mb-0"><small class="fw-5"><span class="mr-1">Alta:</span> <span class="text-danger">@Model.Model.Cab.Fe_Al</span></small></p>
+                        <p class="mb-0"><small class="fw-5"><span class="mr-1">Usuario:</span> <span class="text-danger">@Model.Model.Cab.Usu</span></small></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,220 @@
+﻿@model ModuloPedidosProveedoresLibrary.ModuloPedidosProveedoresComprasListadoViewModel
+
+@{
+    Layout = "~/Views/Shared/Modulo-Pedidos-Proveedores/_Modulo-Pedidos-Proveedores-Compras.cshtml";
+    ViewData["Title"] = "Listado de artículos por comprar";
+}
+
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+                @if (Model.Model.Err.eserror)
+    {
+        ViewData["err"] = Model.Model.Err.mensaje;
+                @Html.Partial("AccesoDenegado");
+}
+else
+{
+
+                @* Buscar usuarios *@
+
+                <div class="card mb-3">
+                    <div class="card-header card-header-options">
+                        <span>Buscar</span>
+
+                        <div class="card-actions">
+                            <ul>
+                                <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-block p-0">
+
+                        <div class="d-flex justify-content-center align-items-center">
+
+                            <div class="col-1  pb-2 pt-2">
+                                <img src="https://image.flaticon.com/icons/svg/321/321863.svg" style="width: 100%;">
+                            </div>
+
+
+                            <div class="col-11 box-border-left-light">
+                                @*<form action="@ViewData["Form"]" method="post">
+
+
+                                    <div class="d-flex py-3">
+
+                                        <div class="input-group input-group-sm mb-0 mr-2">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="">Buscar</span>
+                                            </div>
+                                            <input type="text" class="form-control form-control-sm" placeholder="Buscar por nombre, dirección, población y nº asistencia" id="buscar" name="buscar" value="@ViewData["buscar"]">
+                                        </div>
+
+                                        <div class="input-group input-group-sm mb-0 ml-2">
+                                            <div class="input-group-prepend">
+                                                <label class="input-group-text" for="ID_Tipo2">Tipos</label>
+                                            </div>
+                                            <select class="custom-select" id="ID_Tipo2" name="ID_Tipo2"></select>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="d-flex">
+                                        <div class="p-0">
+                                            <label class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" id="Man" name="Man">
+                                                <span class="custom-control-label p-0">Mantenimiento</span>
+                                            </label>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="d-flex justify-content-center box-border-top col-12 p-2 mdc-bg-blue-grey-50">
+                                            <button type="submit" class="btn btn-sm btn-primary">Buscar</button>
+                                        </div>
+                                    </div>
+
+                                </form>*@
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="row">
+
+                    <div class="col-8">
+                        @* Listado *@
+                        <div class="card card-table mb-3">
+                            <div class="card-header card-header-options">
+                                <span>@ViewData["Title"]</span>
+                            </div>
+                            <div class="card-block">
+
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center">Codigo</th>
+                                            <th class="text-left">Artículo</th>
+                                            <th class="text-center w-5">Disponible</th>
+                                            <th class="text-center w-5">Stock min.</th>
+                                            <th class="text-center w-5">Ped.Cli.</th>
+                                            <th class="text-center w-5">Ped.Prov.</th>
+                                            <th class="text-center w-5">Faltan</th>
+                                            <th class="text-center w-10">Pedir</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="content">
+
+
+                                        @if (Model.Model.det != null)
+                    {
+                                        @for (Int32 t = 0; t < Model.Model.det.Length; t++)
+        {
+                                        <tr>
+                                            <td class="text-center">
+                                                <p><small>@Model.Model.det[t].Codigo</small></p>
+                                            </td>
+                                            <td class="text-left">
+                                                @Model.Model.det[t].Articulo (<a target="_blank" href="/modulo-articulos/articulos/articulo?ID_Art2=@Model.Model.det[t].ID_Art2" data-toggle="tooltip" data-placement="top" title="" data-original-title="Ir al artículo" class="fw-5">@Model.Model.det[t].ID_Art2</a>)
+                                            </td>
+                                            <td class="text-center">@Model.Model.det[t].Disp</td>
+                                            <td class="text-center">@Model.Model.det[t].Min</td>
+                                            <td class="text-center">@Model.Model.det[t].PedCli</td>
+                                            <td class="text-center">@Model.Model.det[t].PedProv</td>
+                                            <td class="text-center">@Model.Model.det[t].Faltan</td>
+                                            <td class="text-center"><input type="text" /></td>
+                                        </tr>
+}
+    }
+    else
+    {
+                                        <tr><td colspan="8"><p class='fw-5 text-danger mb-0'><i class='fa fa-exclamation-circle mr-1'></i> No hay resultados</p></td></tr>
+}
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            @Html.Raw(Model.Model.Paginador)
+                        </div>
+
+                    </div>
+
+                    <div class="col-4">
+
+                        <div class="card card-table mb-3 animated fadeIn" >
+                            <div class="card-header card-header-options">
+                                <span id="dir-titulo">Pedido a proveedor</span>
+                            </div>
+                            <div class="card-block p-0">
+                                <div class="d-flex flex-column p-2">
+
+                                    <div class="input-group input-group-sm mb-1">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Proveedor</span>
+                                        </div>
+                                        <input type="text" class="form-control" id="Prov" name="Prov" aria-describedby="" value="" placeholder="Buscar proveedor">
+                                        <input type="hidden" name="vProv" id="vProv" value="" />
+                                        <input type="hidden" name="tProv" id="tProv" value="" />
+                                    </div>
+
+                                    <div class="input-group input-group-sm mb-1">
+                                        <div class="input-group-prepend">
+                                            <label class="input-group-text">A la att.</label>
+                                        </div>
+                                        <input type="text" class="form-control" id="Att" aria-describedby="" value="" placeholder="A la atención de ..." maxlength="200">
+                                    </div>
+
+                                    <div class="d-flex mb-1">
+                                        <div class="input-group input-group-sm mb-0 p-0">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text text-left">Observaciones<br />pedido</span>
+                                            </div>
+                                            <textarea class="form-control form-control-sm" rows="4" placeholder="Observaciones pedido" value="" id="Obs"></textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex mb-1">
+                                        <div class="input-group input-group-sm mb-0 p-0">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text text-left">Observaciones<br />almacén</span>
+                                            </div>
+                                            <textarea class="form-control form-control-sm" rows="4" placeholder="Observaciones almacén" value="" id="ObsAlm"></textarea>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="d-flex justify-content-center box-border-top p-2 mdc-bg-blue-grey-50">
+                                    <button type="button" class="btn btn-sm btn-primary mr-1 guardar-compra">Confirmar pedido</button> <button type="button" class="btn btn-sm btn-primary guardar-compra">Modificar pedido</button>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+}
+
+            </div>
+        </div>
+    </div>
+</div>

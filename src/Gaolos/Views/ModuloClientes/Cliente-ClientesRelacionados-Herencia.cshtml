@@ -1,0 +1,149 @@
+﻿@model ModuloClientesLibrary.ModuloClientesClienteClientesRelacionadosHerenciaViewModel
+@{
+    Layout = "~/Views/Shared/Modulo-Clientes/_Modulo-Clientes-Cliente.cshtml";
+    ViewData["Title"] = "Cliente";
+    ViewData["Message"] = "Modulo de Clientes - Gaolos App v2017";
+}
+
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section mb-0">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 mt-3">
+
+                @if (Model.Model.Err.eserror)
+    {
+        ViewData["err"] = Model.Model.Err.mensaje;
+            @Html.Partial("AccesoDenegado");
+}
+else
+{
+
+            @* cabecera cliente *@
+
+            @Html.Partial("Cliente-Cabecera")
+
+            @* tabs *@
+
+            @Html.Partial("Cliente-Tabs")
+
+            <div class="card">
+                <div class="card-block">
+
+                    @* tabs *@
+
+                    @Html.Partial("Cliente-ClientesRelacionados-Tabs")
+
+                    <div class="row">
+
+                        <div class="col-12">
+                            <div class="card card-table mb-3">
+                                <div class="card-header card-header-options">
+                                    <span>Herencia</span>
+                                </div>
+
+                                <div class="card-block">
+
+                                    <div class="d-flex flex-column p-0">
+
+                                        <label class="p-2 mb-0 box-border-bottom-light mb-0">Opciones</label>
+
+                                        <div class="d-flex flex-column px-3 py-2">
+
+                                            <div class="d-flex align-items-center mb-1">
+                                                @if (Model.Model.EnvFac)
+                                                {
+                                                    <input type="checkbox" class="mr-2" id="EnvFac" checked>
+                                                }
+                                                else
+                                                {
+                                                    <input type="checkbox" class="mr-2" id="EnvFac">
+                                                }
+                                                <span class="fw-5">Enviar factura</span>
+                                            </div>
+                                            <div class="d-flex align-items-center mb-1">
+                                                @if (Model.Model.ForPag)
+                                                {
+                                                    <input type="checkbox" class="mr-2" id="ForPag" checked>
+                                                }
+                                                else
+                                                {
+                                                    <input type="checkbox" class="mr-2" id="ForPag">
+                                                }
+                                                <span class="fw-5">Forma de pago: Heredada</span>
+                                            </div>
+                                            <div class="d-flex align-items-center mb-1">
+                                                @if (Model.Model.CobEnEspera)
+                                                {
+                                                    <input type="checkbox" class="mr-2" id="CobEnEspera" checked>
+                                                }
+                                                else
+                                                {
+                                                    <input type="checkbox" class="mr-2" id="CobEnEspera">
+                                                }
+                                                <span class="fw-5">Cobro a negociar</span>
+                                            </div>
+                                            <div class="d-flex align-items-center mb-1">
+                                                @if (Model.Model.Precios)
+                                                {
+                                                    <input type="checkbox" class="mr-2" id="Precios" checked>
+                                                }
+                                                else
+                                                {
+                                                    <input type="checkbox" class="mr-2" id="Precios">
+                                                }
+                                                <span class="fw-5">Heredar precios</span>
+                                            </div>
+                                            <div class="d-flex align-items-center mb-1">
+                                                @if (Model.Model.Facturar)
+                                                {
+                                                    <input type="checkbox" class="mr-2" id="Facturar" checked>
+                                                }
+                                                else
+                                                {
+                                                    <input type="checkbox" class="mr-2" id="Facturar">
+                                                }
+                                                <span class="fw-5">Facturar a empresa relacionada</span>
+                                            </div>
+                                            <div class="d-flex align-items-center mb-1">
+                                                @if (Model.Model.Tags)
+                                                {
+                                                    <input type="checkbox" class="mr-2" id="Tags" checked>
+                                                }
+                                                else
+                                                {
+                                                    <input type="checkbox" class="mr-2" id="Tags">
+                                                }
+                                                <span class="fw-5">Heredar Tags</span>
+                                            </div>
+                                            <div class="form-group my-2">
+                                                <button type="button" id="btn_0" class="btn btn-primary btn-sm mr-2 herencia-guardar">Guardar</button>
+                                                <button type="button" id="btn_1" class="btn btn-primary btn-sm herencia-guardar">Guardar y propagar</button>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+}
+            </div>
+        </div>
+    </div>
+</div>

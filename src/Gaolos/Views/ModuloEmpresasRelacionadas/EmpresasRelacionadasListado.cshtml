@@ -1,0 +1,184 @@
+﻿@model ModuloEmpresasRelacionadasLibrary.ModuloEmpresasRelacionadasListadoViewModel
+@{
+    Layout = "~/Views/Shared/Modulo-Empresas-Relacionadas/_Modulo-Empresas-Relacionadas.cshtml";
+    ViewData["Title"] = "Empresas Relacionadas";
+    ViewData["Message"] = "Empresas Relacionadas - Gaolos App v2017";
+}
+
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+@if(Model.Model.Err.eserror)
+{
+    ViewData["err"] = Model.Model.Err.mensaje;
+    @Html.Partial("AccesoDenegado");
+}
+else
+{
+
+                @* Buscar usuarios *@
+
+                <div class="card mb-3">
+                    <div class="card-header card-header-options">
+                        <span>Buscar empresa relacionada</span>
+
+                        <div class="card-actions">
+                            <ul>
+                                <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-block">
+
+                        <div class="row">
+                            <div class="col-2 text-center">
+                                <img src="~/flaticons/business/038-user-1.svg" style="width: 50%">
+                            </div>
+                            <div class="col-9">
+                                <form action="@ViewData["form"]" method="post" class="mt-4">
+                                    <div class="input-group card-search-box mb-3">
+                                        <input type="text" class="form-control" placeholder="Buscar por..." name="buscar" value="@ViewData["buscar"]">
+                                        <span class="input-group-append">
+                                            <button class="btn btn-primary" type="submit">Buscar</button>
+                                        </span>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                @* Listado de empresas relacionadas *@
+
+                <div class="card card-table">
+                    <div class="card-header card-header-options">
+                        <span>@ViewData["Title"]</span>
+                    </div>
+                    <div class="card-block">
+
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Nº</th>
+                                    <th>Empresa</th>
+                                    <th class="text-center">Provincia</th>
+                                    <th class="text-center">Población</th>
+                                    <th class="text-center">Agente</th>
+                                    <th class="text-center">Nº de clientes</th>
+                                    <th class="text-center">Visitas pendientes</th>
+                                    <th class="text-center">Visitas realizadas</th>
+                                    <th class="text-center">Nº precios especiales</th>
+                                    <th class="text-center">Solicitud</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model.Model.det != null)
+                                {
+                                    for (int i = 0; i < Model.Model.det.Length; i++)
+                                    {
+                                        <tr>
+                                            <td>@Model.Model.det[i].ID_Cli2</td>
+                                            <td><a href="#" class="fw-5">@Model.Model.det[i].Emp</a></td>
+                                            <td class="text-center">
+                                                @{
+                                                    if (Model.Model.det[i].Pro=="") { @Html.Raw("<i class='fa fa-exclamation-triangle mr-1 text-danger' aria-hidden='true'></i> ");
+                                                    }
+                                                    else
+                                                    { @Model.Model.det[i].Pro }
+                                                } 
+                                            </td>
+                                            <td class="text-center">
+                                                @{
+                                                    if (Model.Model.det[i].Pob == "")
+                                                    { @Html.Raw("<i class='fa fa-exclamation-triangle mr-1 text-danger' aria-hidden='true'></i> ");
+                                                    }
+                                                    else
+                                                    { @Model.Model.det[i].Pob }
+                                                }
+                                            </td>
+                                            <td class="text-center">
+                                                @{
+                                                    if (Model.Model.det[i].Agente == "")
+                                                    { @Html.Raw("<i class='fa fa-exclamation-triangle mr-1 text-danger' aria-hidden='true'></i> ");
+                                                    }
+                                                    else
+                                                    { @Model.Model.det[i].Agente }
+                                                }
+                                            </td>
+                                            <td class="text-center">
+                                                @{
+                                                    if (Model.Model.det[i].NumCli == "")
+                                                    { @Html.Raw("<i class='fa fa-exclamation-triangle mr-1 text-danger' aria-hidden='true'></i> ");
+                                                    }
+                                                    else
+                                                    { @Model.Model.det[i].NumCli }
+                                                }
+                                            </td>
+                                            <td class="text-center">
+                                                @{
+                                                    if (Model.Model.det[i].VisPend == "" && Model.Model.det[i].VisRea == "")
+                                                    { @Html.Raw("<i class='fa fa-exclamation-triangle mr-1 text-danger' aria-hidden='true'></i> ");
+                                                    }
+                                                    else
+                                                    {
+                                                        if (Model.Model.det[i].NumCli == "")
+                                                        { @Html.Raw("0") }
+                                                        else
+                                                        {
+
+                                                        @Model.Model.det[i].NumCli }
+                                                        }
+                                                }
+                                            </td>
+                                            <td class="text-center">
+                                                @{
+                                                    if (Model.Model.det[i].VisRea == "")
+                                                    { @Html.Raw("<i class='fa fa-exclamation-triangle mr-1 text-danger' aria-hidden='true'></i> ");
+                                                    }
+                                                    else
+                                                    { @Model.Model.det[i].VisRea }
+                                                }
+                                            </td>
+                                            <td class="text-center">
+                                                @{
+                                                    if (Model.Model.det[i].NumPrecios == "")
+                                                    { @Html.Raw("<i class='fa fa-exclamation-triangle mr-1 text-danger' aria-hidden='true'></i> ");
+                                                    }
+                                                    else
+                                                    { @Model.Model.det[i].NumPrecios }
+                                                }
+                                            </td>
+                                            <td class="text-center">
+                                                <a href="#" class="btn btn-sm btn-primary">Nueva</a>
+                                            </td>
+    
+                                    </tr>
+                                                }
+                                            }
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    @Html.Raw(Model.Model.Paginador)
+                </div>
+                                                    }
+            </div>
+        </div>
+    </div>
+</div>

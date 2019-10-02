@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 21.0.2, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#ACB3BA;}
+	.st1{fill:#40596B;}
+	.st2{fill:#9AA7B2;}
+	.st3{fill:#6F1C12;}
+	.st4{fill:#6D531B;}
+	.st5{fill:#00F262;}
+	.st6{fill:#75291D;}
+	.st7{fill:#6C4814;}
+	.st8{fill:#43A047;}
+	.st9{opacity:0.6;enable-background:new    ;}
+</style>
+<g>
+	<polygon class="st0" points="129.1,132.3 49.1,75.7 49.1,48 129.1,48 	"/>
+	<polygon class="st0" points="129.1,274.1 49.1,217.6 49.1,189.9 129.1,189.9 	"/>
+	<polygon class="st0" points="129.1,414.9 49.1,358.4 49.1,330.7 129.1,330.7 	"/>
+	<polygon class="st0" points="382.9,132.3 462.9,75.7 462.9,48 382.9,48 	"/>
+	<polygon class="st0" points="382.9,274.1 462.9,217.6 462.9,189.9 382.9,189.9 	"/>
+	<polygon class="st0" points="382.9,414.9 462.9,358.4 462.9,330.7 382.9,330.7 	"/>
+</g>
+<path class="st1" d="M361.6,464H150.4c-11.7,0-21.3-9.6-21.3-21.3V21.3c0-11.7,9.6-21.3,21.3-21.3h211.2c11.7,0,21.3,9.6,21.3,21.3
+	v421.3C382.9,454.4,373.3,464,361.6,464z"/>
+<rect x="194.1" y="464" class="st0" width="123.7" height="48"/>
+<rect x="194.1" y="464" class="st2" width="123.7" height="17.1"/>
+<circle class="st3" cx="256" cy="90.7" r="62.9"/>
+<circle class="st4" cx="256" cy="231.5" r="62.9"/>
+<circle class="st5" cx="256" cy="373.3" r="62.9"/>
+<path class="st6" d="M256,48c-30.9,0-56.5,22.4-61.9,52.3c5.3,29.9,30.9,52.3,61.9,52.3s56.5-22.4,61.9-52.3
+	C312.5,70.4,286.9,48,256,48z"/>
+<path class="st7" d="M256,189.9c30.9,0,56.5,22.4,61.9,52.3c1.1-3.2,1.1-6.4,1.1-10.7c0-34.1-27.7-62.9-62.9-62.9
+	s-62.9,27.7-62.9,62.9c0,3.2,0,6.4,1.1,10.7C199.5,212.3,225.1,189.9,256,189.9z"/>
+<path class="st8" d="M256,330.7c30.9,0,56.5,22.4,61.9,52.3c1.1-3.2,1.1-6.4,1.1-10.7c0-34.1-27.7-62.9-62.9-62.9
+	s-62.9,27.7-62.9,62.9c0,3.2,0,6.4,1.1,10.7C199.5,354.1,225.1,330.7,256,330.7z"/>
+<circle class="st9" cx="919" cy="282.6" r="63.8"/>
+</svg>

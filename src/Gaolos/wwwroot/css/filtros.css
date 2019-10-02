@@ -1,0 +1,29 @@
+/* Filtros */
+/* Mixins */
+/* Skin v4.6 - White / Dark / Blue */
+.filtros {
+  font-size: 0.9em;
+  font-weight: 600;
+  color: #fff;
+  border: none;
+  background: #fb8c00;
+  box-shadow: 0 2px #e65100;
+  border-radius: 4px;
+  padding: 0.5em 0.7em;
+  margin: 2em auto 0 auto;
+  width: 90%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all ease-in-out .3s; }
+  .filtros:hover, .filtros:active, .filtros:focus {
+    color: #fff;
+    border: none !important;
+    background: #546e7a;
+    box-shadow: 0 2px #37474f;
+    outline: 0;
+    text-decoration: none; }
+  .filtros p {
+    margin: 0; }
+  .filtros a i {
+    color: #fff; }

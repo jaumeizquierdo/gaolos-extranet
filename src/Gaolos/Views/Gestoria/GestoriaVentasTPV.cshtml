@@ -1,0 +1,116 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "~/Views/Shared/Cms/_Cms.cshtml";
+    ViewData["Title"] = "Gestoria - Ventas TPV";
+    ViewData["Title-Bloque-1"] = "Listado de ventas";
+}
+
+<div class="main-content">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+                <div class="card mb-3">
+                    <div class="card-header card-header-options">
+                        <span>@ViewData["Title"]</span>
+                        @Html.Partial("PanelActions")
+                    </div>
+                    <div class="card-block">
+
+                        <div class="form-inline justify-content-center mb-3">
+                            <select class="custom-select mr-1" id="hora_8848">
+                                <option value="" selected="">Mes</option>
+                                <option value="01">Enero</option>
+                                <option value="02">Febrero</option>
+                                <option value="03">Marzo</option>
+                                <option value="04">Abril</option>
+                                <option value="05">Mayo</option>
+                                <option value="06">Junio</option>
+                                <option value="07">Julio</option>
+                                <option value="08">Agosto</option>
+                                <option value="09">Septiembre</option>
+                                <option value="10">Octubre</option>
+                                <option value="11">Noviembre</option>
+                                <option value="12">Diciembre</option>
+                            </select>
+                            <select class="custom-select mr-3" id="min_8848">
+                                <option value="" selected="">Año</option>
+                                <option value="2017">2017</option>
+                                <option value="2016">2016</option>
+                                <option value="2015">2015</option>
+                                <option value="2014">2014</option>
+                            </select>
+                            <div class="input-group card-search-box col-8
+                                 m-0">
+                                <input type="text" class="form-control" placeholder="Nombre, número o NIF del cliente...">
+                                <span class="input-group-append">
+                                    <button class="btn btn-secondary" type="button">Buscar</button>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="card card-table">
+                            <div class="card-header card-header-options">
+                                <span>@ViewData["Title-Bloque-1"]</span>
+                            </div>
+                            <div class="card-block">
+
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Nº Factura</th>
+                                            <th>Fecha</th>
+                                            <th>Contabilizado</th>
+                                            <th class="text-right">Base</th>
+                                            <th class="text-center">Tipo</th>
+                                            <th class="text-right">Importe</th>
+                                            <th class="text-right">Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @for (int i = 0; i < 10; i++)
+                                        {
+                                            <tr>
+                                                <td><a href="#" class="fw-5">A-2449</a></td>
+                                                <td class="fw-5">10/01/17</td>
+                                                <td>
+                                                    <span class="fw-5">PRODUCTOS NATURALES, S.L. B08217036 (Nº 1784)</span><br />
+                                                    <span>CCC 43000071</span>
+                                                </td>
+                                                <td class="fw-5 text-right">217,50€</td>
+                                                <td class="text-center">
+                                                    <span>IVA 21%</span>
+                                                </td>
+                                                <td class="fw-5 text-right">
+                                                    <span>217,50€</span>
+                                                </td>
+                                                <td class="fw-5 text-right">263,18€</td>
+                                            </tr>
+                                        }
+                                        <tr>
+                                            <td colspan="6" class="text-right fw-5"><span class="mr-3">Total:</span> <span class="text-blue">736,76 €</span></td>
+                                            <td colspan="7" class="text-right fw-5"><span class="text-blue">736,76 €</span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <hr class="mt-0" />
+                                <div class="text-center mt-3 mb-3">
+                                    <button type="button" class="btn btn-primary btn-sm">Exportar listado</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        @*
+                            @Html.Raw(Model.CmsWebLis.Paginador)
+                        *@
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

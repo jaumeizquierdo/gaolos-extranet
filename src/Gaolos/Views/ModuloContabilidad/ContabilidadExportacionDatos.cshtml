@@ -1,0 +1,324 @@
+﻿@model ModuloContabilidadLibrary.ModuloContabilidadExportarDatosInicioViewModel
+@{
+    Layout = "~/Views/Shared/Modulo-Contabilidad/_Modulo-Contabilidad-Exportar-Datos.cshtml";
+    ViewData["Title"] = "Módulo Contabilidad - Exportacion";
+    ViewData["Title-Bloque-1"] = "Webs";
+    ViewData["Message"] = "CMS - Gaolos App v2017";
+}
+
+
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section mb-0">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        @if (Model.Model.Err.eserror)
+        {
+            ViewData["err"] = Model.Model.Err.mensaje;
+            @Html.Partial("AccesoDenegado");
+        }
+        else
+        {
+
+            @* Exportación facturación simple *@
+            <div class="row mt-3">
+                <div class="col-6">
+
+                    <div class="card card-table mb-3">
+                        <div class="card-header card-header-options">
+                            <span>Exportar listado de facturas en formato simplificado</span>
+                        </div>
+                        <div class="card-block">
+
+                            <div class="row mb-2 mt-2">
+                                <div class="col-12">
+                                    <div class="form-group mb-0 col-12">
+                                        <label>Cliente</label>
+                                        <input type="text" class="form-control form-control-sm col-12 w-100 desactivar-exp-fac-simp" placeholder="Exposición" name="empfacsimp" id="empfacsimp" value="">
+                                        <input type="hidden" name="vempfacsimp" id="vempfacsimp" value="" /><input type="hidden" name="tempfacsimp" id="tempfacsimp" value="" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-2 mt-2">
+                                <div class="col-6">
+                                    <div class="form-group mb-0 col-12">
+                                        <label>Año</label>
+                                        <select class="custom-select form-control-sm col-12 desactivar-exp-fac-simp" id="fac-simp-año">
+                                            @if (Model.Model.Años != null)
+                                            {
+                                                for (Int32 t = 0; t < Model.Model.Años.Length; t++)
+                                                {
+                                                    <option value="@Model.Model.Años[t].id">@Model.Model.Años[t].det</option>
+                                                }
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group mb-0 col-12">
+                                        <label>Mes</label>
+                                        <select class="custom-select form-control-sm col-12 desactivar-exp-fac-simp" id="fac-simp-mes">
+                                            @if (Model.Model.Meses != null)
+                                            {
+                                                for (Int32 t = 0; t < Model.Model.Meses.Length; t++)
+                                                {
+                                                    <option value="@Model.Model.Meses[t].id">@Model.Model.Meses[t].det</option>
+                                                }
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-2 mt-2">
+                                <div class="col-12">
+                                    <div class="form-group mb-0 col-12">
+                                        <label>Serie</label>
+                                        <select class="custom-select form-control-sm col-12 desactivar-exp-fac-simp" id="fac-simp-id-serie">
+                                            @if (Model.Model.Series != null)
+                                            {
+                                                for (Int32 t = 0; t < Model.Model.Series.Length; t++)
+                                                {
+                                                    <option value="@Model.Model.Series[t].id">@Model.Model.Series[t].det</option>
+                                                }
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3 mt-2">
+                                <div class="col-6">
+                                    <div class="form-group mb-0 col-12">
+                                        <label>Fecha de</label>
+                                        <input type="text" class="form-control form-control-sm col-12 desactivar-exp-fac-simp" placeholder="Fecha de" id="fac-simp-fe-in" value="">
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group mb-0 col-12">
+                                        <label>a</label>
+                                        <input type="text" class="form-control form-control-sm col-12 desactivar-exp-fac-simp" placeholder="a" id="fac-simp-fe-fi" value="">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="d-flex justify-content-center box-border-top p-2 mdc-bg-blue-grey-50">
+                                <button type="button" class="btn btn-sm btn-primary buscar-fac-simp-num">Buscar</button>
+                            </div>
+
+                            <div class="d-flex justify-content-between align-items-center box-border-top p-2 px-3 mdc-bg-blue-grey-100" style="border-top: 1px solid #b0bec5;">
+                                <span class="fw-5"><i class="fa fa-file-text-o mr-2"></i> [<span id="buscar-fac-simp-num">0</span> facturas localizadas]</span>
+                                <button type="button" class="btn btn-sm btn-primary" disabled id="buscar-fac-simp-num-exp">Exportar</button>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="card card-table">
+                        <div class="card-header card-header-options">
+                            <span>Exportación descargas </span>
+                            <div class="card-actions">
+                                <span>[10 exportaciones localizadas]</span>
+                            </div>
+                        </div>
+                        <div class="card-block">
+                            <form>
+                                <table class="table table-striped table-select table-condensed" id="">
+                                    <thead>
+                                        <tr>
+                                            <th class="">Tipo exportación</th>
+                                            <th class="text-center">Solicitada</th>
+                                            <th class="text-center">Usuario</th>
+                                            <th class="text-center">Estado</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="cuenta-movimientos">
+                                        @*
+                                            <tr>
+                                                <td colspan='8'><p class='fw-5 text-danger mb-0'><i class='fa fa-exclamation-circle mr-1'></i> Seleccione una fecha</p></td>
+                                            </tr>
+                                        *@
+                                        @for (Int32 t = 0; t < 10; t++)
+                                        {
+
+                                            <tr>
+                                                <td class="">
+                                                    <p class="fw-5 mb-0">Exportación estadística ventas 00002</p>
+                                                </td>
+                                                <td class="text-center">
+                                                    <p class="fw-5 mb-0">26/04/2018 10:30:00</p>
+                                                </td>
+                                                <td class="text-center">
+                                                    <p class="fw-5 mb-0">Adrián Coya</p>
+                                                </td>
+                                                <td class="text-center">
+                                                    <a href="#" class="fw-5">Disponible</a>
+                                                </td>
+                                            </tr>
+                                        }
+
+                                    </tbody>
+                                </table>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div id="movimientos-cuenta-paginador" class="mb-3"></div>
+
+                </div>
+
+                @* Exportación facturación *@
+
+                <div class="col-6">
+
+                    <div class="card card-table mb-3">
+                        <div class="card-header card-header-options">
+                            <span>Exportar listado de facturas con detalle de IVA, IRPF y REQ</span>
+                        </div>
+                        <div class="card-block">
+
+                            <div class="row mb-2 mt-2">
+                                <div class="col-12">
+                                    <div class="form-group mb-0 col-12">
+                                        <label>Cliente</label>
+                                        <input type="text" class="form-control form-control-sm col-12 w-100 desactivar-exp-fac" placeholder="Exposición" name="empfac" id="empfac" value="">
+                                        <input type="hidden" name="vempfac" id="vempfac" value="" /><input type="hidden" name="tempfac" id="tempfac" value="" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-2 mt-2">
+                                <div class="col-6">
+                                    <div class="form-group mb-0 col-12">
+                                        <label>Año</label>
+                                        <select class="custom-select form-control-sm col-12 desactivar-exp-fac" id="fac-año">
+                                            @if (Model.Model.Años != null)
+        {
+            for (Int32 t = 0; t < Model.Model.Años.Length; t++)
+            {
+                                    <option value="@Model.Model.Años[t].id">@Model.Model.Años[t].det</option>
+}
+}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group mb-0 col-12">
+                                        <label>Mes</label>
+                                        <select class="custom-select form-control-sm col-12 desactivar-exp-fac" id="fac-mes">
+                                            @if (Model.Model.Meses != null)
+        {
+            for (Int32 t = 0; t < Model.Model.Meses.Length; t++)
+            {
+                                    <option value="@Model.Model.Meses[t].id">@Model.Model.Meses[t].det</option>
+}
+}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-2 mt-2">
+                                <div class="col-12">
+                                    <div class="form-group mb-0 col-12">
+                                        <label>Serie</label>
+                                        <select class="custom-select form-control-sm col-12 desactivar-exp-fac" id="fac-id-serie">
+                                            @if (Model.Model.Series != null)
+        {
+            for (Int32 t = 0; t < Model.Model.Series.Length; t++)
+            {
+                                    <option value="@Model.Model.Series[t].id">@Model.Model.Series[t].det</option>
+}
+}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3 mt-2">
+                                <div class="col-6">
+                                    <div class="form-group mb-0 col-12">
+                                        <label>Fecha de</label>
+                                        <input type="text" class="form-control form-control-sm col-12 desactivar-exp-fac" placeholder="Fecha de" id="fac-fe-in" value="">
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group mb-0 col-12">
+                                        <label>a</label>
+                                        <input type="text" class="form-control form-control-sm col-12 desactivar-exp-fac" placeholder="a" id="fac-fe-fi" value="">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="d-flex justify-content-center box-border-top p-2 mdc-bg-blue-grey-50">
+                                <button type="submit" class="btn btn-sm btn-primary buscar-fac-num">Buscar</button>
+                            </div>
+
+                            <div class="d-flex justify-content-between align-items-center box-border-top p-2 px-3 mdc-bg-blue-grey-100" style="border-top: 1px solid #b0bec5;">
+                                <span class="fw-5"><i class="fa fa-file-text-o mr-2"></i> [<span id="buscar-fac-num">0</span> facturas localizadas]</span>
+                                <button type="submit" class="btn btn-sm btn-primary exportar-facturas" id="buscar-fac-num-exp" disabled>Exportar</button>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="card card-table">
+                        <div class="card-header card-header-options">
+                            <span>Exportación descargas </span>
+                            <div class="card-actions">
+                                <span>[10 exportaciones localizadas]</span>
+                            </div>
+                        </div>
+                        <div class="card-block">
+                            <form>
+                                <table class="table table-striped table-select table-condensed" id="">
+                                    <thead>
+                                        <tr>
+                                            <th class="">Tipo exportación</th>
+                                            <th class="text-center">Solicitada</th>
+                                            <th class="text-center">Usuario</th>
+                                            <th class="text-center">Estado</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="cuenta-movimientos">
+                                        @*
+                                            <tr>
+                                                <td colspan='8'><p class='fw-5 text-danger mb-0'><i class='fa fa-exclamation-circle mr-1'></i> Seleccione una fecha</p></td>
+                                            </tr>
+                                        *@
+                                        @for (Int32 t = 0; t < 10; t++)
+                                        {
+
+                                            <tr>
+                                                <td class="">
+                                                    <p class="fw-5 mb-0">Exportación estadística ventas 00002</p>
+                                                </td>
+                                                <td class="text-center">
+                                                    <p class="fw-5 mb-0">26/04/2018 10:30:00</p>
+                                                </td>
+                                                <td class="text-center">
+                                                    <p class="fw-5 mb-0">Adrián Coya</p>
+                                                </td>
+                                                <td class="text-center">
+                                                    <a href="#" class="fw-5">Disponible</a>
+                                                </td>
+                                            </tr>
+                                        }
+
+                                    </tbody>
+                                </table>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div id="movimientos-cuenta-paginador" class="mb-3"></div>
+
+                </div>
+
+            </div>
+        }
+    </div>
+</div>
+

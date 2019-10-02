@@ -1,0 +1,239 @@
+﻿@model ModuloSoporteLibrary.ModuloSoporteSolicitudesAbiertasListadoViewModel
+@{
+    Layout = "~/Views/Shared/Modulo-Soporte/_Soporte.cshtml";
+    ViewData["Title"] = "Pedidos Producción - Órdenes disponibles";
+    ViewData["Message"] = "Soporte - Gaolos App v2017";
+}
+
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                @*
+    @if(Model.Model.Err.eserror)
+    {
+        ViewData["err"] = Model.Model.Err.mensaje;
+        @Html.Partial("AccesoDenegado");
+    }
+    else
+    {
+                *@      
+                <div class="card mb-3">
+                    <div class="card-header card-header-options">
+                        <span>Buscar tareas</span>
+
+                        <div class="card-actions">
+                            <ul>
+                                <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-block">
+
+                        <div class="row">
+                            <div class="col-2 text-center">
+                                <img src="~/flaticons/notepad-2.svg" style="width: 50%">
+                            </div>
+                            <div class="col-9">
+                                <form class="form-inline mt-3">
+                                    <input type="email" class="form-control mr-4 col-6" id="exposicion" aria-describedby="emailHelp" placeholder="Exposición" value="@ViewData["buscar"]">
+                                    <label class="mr-2" for="asignado">Asignado por</label>
+                                    <select class="custom-select mr-2 mb-0" id="asignado">
+                                        <option selected="">Asignado por...</option>
+                                        <option value="1">Jaume Izquierdo</option>
+                                        <option value="2">Marta Esteller</option>
+                                        <option value="3">Roger Pujol</option>
+                                    </select>
+                                    <label class="mr-2 ml-3" for="estado">Clientes</label>
+                                    <select class="custom-select mb-0" id="estado">
+                                        <option selected="">Clientes</option>
+                                        <option value="1">Gaolos</option>
+                                        <option value="2">Previfoc</option>
+                                        <option value="3">Elosco</option>
+                                    </select>
+                                </form>
+                                <div class="row">
+                                    <div class="col-12 text-center mt-3">
+                                        <button type="button" class="btn btn-primary btn-sm">Buscar</button>
+                                    </div>
+                                </div>
+                            </div>                            
+                        </div>
+                    </div>
+                </div>
+
+                @* Listado de tareas pendientes *@
+
+                <div class="row">
+                    <div class="col-6">
+                        <div class="card card-table mb-0">
+                            <div class="card-header card-header-options">
+                                <span>Trabajos realizados y en curso</span>
+                            </div>
+                            <div class="card-block">
+
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th class="w-10 text-center">Fecha</th>
+                                            <th>Trabajo / Exposición</th>
+                                            <th class="text-center w-20">Cliente</th>
+                                            <th class="text-center">Duración</th>
+                                            <th class="text-center">Estado</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="tr-priority">
+                                            <td class="fw-5 text-center">
+                                                <span class="text-info">20/10/17</span>
+                                                <small class="fw-5">08:45</small>
+                                            </td>
+                                            <td>
+                                                <div class="priority">
+                                                    <a href="#?ID_Soli2=14" class="fw-5">Web Previfoc</a>
+                                                    <p class="mb-0 fw-5">Maquetar sección Prevención de Incendios</p>
+                                                    <p class="mb-0"><small class="fw-5">Web Previfoc</small></p>
+                                                </div>
+                                            </td>
+                                            <td class="text-center fw-5">Adrian Coya<br><small>Previfoc</small></td>
+                                            <td class="text-center fw-5">0,9</td>
+                                            <td class="text-center"> <i class="material-icons text-danger">query_builder</i> </td>
+                                        </tr>
+                                        <tr class="tr-priority">
+                                            <td class="fw-5 text-center">
+                                                <span class="text-info">20/10/17</span>
+                                                <small class="fw-5">08:45</small>
+                                            </td>
+                                            <td>
+                                                <div class="priority">
+                                                    <a href="#?ID_Soli2=14" class="fw-5">Gaolos Extranet</a>
+                                                    <p class="mb-0 fw-5">Poner breadcrumbs en todas las secciones</p>
+                                                    <p class="mb-0"><small class="fw-5">Ref. 2541</small></p>
+                                                </div>
+                                            </td>
+                                            <td class="text-center fw-5">Roger Pujol<br><small>Gaolos</small></td>
+                                            <td class="text-center fw-5">3</td>
+                                            <td class="text-center"> <i class="material-icons text-danger">query_builder</i> </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        @*
+    @Html.Raw(Model.Model.Paginador)
+                        *@
+                    </div>
+
+                    @* Info solicitud *@
+                    <div class="col-6">
+                        <div class="card card-table mb-3" id="" style="display: block;">
+                            <div class="card-header card-header-options">
+                                <span>Listado órdenes disponibles</span>
+                                <div class="card-actions">
+                                    <ul>
+                                        <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="card-block card-table">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th class="w-10 text-center">Fecha</th>
+                                            <th>Trabajo / Exposición</th>
+                                            <th class="text-center w-20">Cliente</th>
+                                            <th class="text-center">Previsión</th>
+                                            <th class="text-center">Asignado</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="tr-priority">
+                                            <td class="fw-5 text-center">
+                                                <span class="text-info">20/10/17</span>
+                                                <small class="fw-5">08:45</small>
+                                            </td>
+                                            <td>
+                                                <div class="priority">
+                                                    <a href="#?ID_Soli2=14" class="fw-5">Web Previfoc</a>
+                                                    <p class="mb-0 fw-5">Maquetar sección Prevención de Incendios</p>
+                                                    <p class="mb-0"><small class="fw-5">Web Previfoc</small></p>
+                                                </div>
+                                            </td>
+                                            <td class="text-center fw-5">Adrian Coya<br><small>Previfoc</small></td>
+                                            <td class="text-center fw-5">03/12/2017</td>
+                                            <td class="text-center"><small class="fw-5">Jaume Izquierdo</small></td>
+                                        </tr>
+                                        <tr class="tr-priority">
+                                            <td class="fw-5 text-center">
+                                                <span class="text-info">20/10/17</span>
+                                                <small class="fw-5">08:45</small>
+                                            </td>
+                                            <td>
+                                                <div class="priority">
+                                                    <a href="#?ID_Soli2=14" class="fw-5">Gaolos Extranet</a>
+                                                    <p class="mb-0 fw-5">Poner breadcrumbs en todas las secciones</p>
+                                                    <p class="mb-0"><small class="fw-5">Ref. 2541</small></p>
+                                                </div>
+                                            </td>
+                                            <td class="text-center fw-5">Roger Pujol<br><small>Gaolos</small></td>
+                                            <td class="text-center fw-5">3</td>
+                                            <td class="text-center"><small class="fw-5">Roger Pujol</small></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="card mb-3" id="" style="display: block;">
+                            <div class="card-header card-header-options">
+                                <span>Trabajo realizado</span>
+                                <div class="card-actions">
+                                    <ul>
+                                        <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="card-block" role="tablist" aria-multiselectable="true">
+                                <form class="p-1 mb-0">
+                                    <div class="form-group mb-2">
+                                        <textarea class="form-control form-control-sm" rows="5" id="Expo" placeholder="Exposición"></textarea>
+                                    </div>
+                                    <div class="form-inline justify-content-between">
+                                        <label class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" id="CtrlLec">
+                                            
+                                            <span class="custom-control-label">Continuar</span>
+                                        </label>
+                                        <label class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" id="CtrlFin">
+                                            
+                                            <span class="custom-control-label">Cerrar orden</span>
+                                        </label>
+                                    </div>
+                                    <div class="row justify-content-center">
+                                        <button type="button" class="btn btn-primary btn-sm nueva-tarea">Trabajo realizado</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @*
+    }
+                *@
+            </div>
+        </div>
+    </div>
+</div>
+

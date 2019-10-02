@@ -1,0 +1,64 @@
+﻿@model MyGaolosLibrary.MyGaolosCalendarioInicioViewModel
+
+@{
+    Layout = "~/Views/Shared/MyGaolos/_MyGaolos.cshtml";
+    ViewData["Title"] = "Calendario";
+}
+
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+                @if (Model.Model.Err.eserror)
+    {
+        ViewData["err"] = Model.Model.Err.mensaje;
+                @Html.Partial("AccesoDenegado");
+}
+else
+{
+
+                <div class="row" id="semana" style="display:none">
+
+                    <div class="col-12">
+                        <div class="card mb-3 mr-2">
+                            <div class="d-flex justify-content-between align-items-center px-3 py-2">
+                                <button type="button" id="" name="prev" class="btn btn-sm btn-primary btn-calendario-mes" value=""><i class="fa fa-chevron-left"></i></button>
+                                <span class="fw-5" id="nombre_mes"></span>
+                                <button type="button" id="" name="sig" class="btn btn-sm btn-primary btn-calendario-mes" value=""><i class="fa fa-chevron-right"></i></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        @* Listado *@
+
+                        @*<h3 class="fs-1-1 mb-3" id="titulo"></h3>*@
+
+                        <div class="d-flex" id="content">
+                        </div>
+
+                    </div>
+
+                </div>
+
+                }
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    CalendarioMensual(@ViewData["mes"], @ViewData["año"]);
+</script>

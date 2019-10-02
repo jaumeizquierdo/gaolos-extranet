@@ -1,0 +1,165 @@
+﻿@model DashBoardLibrary.DashBoardViewModel
+@{
+    Layout = "~/Views/Shared/Modulo-Articulos/_Modulo-Articulos.cshtml";
+    ViewData["Title"] = "Listado de artículos";
+    ViewData["Message"] = "Modulo de Clientes - Gaolos App v2017";
+}
+
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+                @if (Model.Model.Err.eserror)
+                {
+                    ViewData["err"] = Model.Model.Err.mensaje;
+                @Html.Partial("AccesoDenegado");
+                }
+                else
+                {
+
+                @* Artículos Cabecera *@
+
+                @Html.Partial("Articulo-Cabecera")
+
+                @* Artículos Tabs *@
+
+                @Html.Partial("Articulo-Tabs")
+
+                @* Listado de usuarios *@
+
+                <div class="row">
+                    <div class="col-8">
+                        <div class="card mb-3">
+                            <div class="card-header card-header-options">
+                                <span>Comercial</span>
+                            </div>
+                            <div class="card-block p-0">
+
+                                <div class="d-flex flex-column p-2">
+
+                                    <div class="d-flex mb-1">
+
+                                        <div class="input-group input-group-sm mr-2">
+                                            <div class="input-group-prepend">
+                                                <label class="input-group-text" for="">Peso (Kg)</label>
+                                            </div>
+                                            <input type="text" class="form-control" id="" aria-describedby="" value="" placeholder="Peso (Kg)">
+                                        </div>
+
+                                        <div class="input-group input-group-sm">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Ancho (cm)</span>
+                                            </div>
+                                            <input type="text" class="form-control" id="" aria-describedby="" value="" placeholder="Ancho (cm)">
+                                        </div>
+
+                                    </div>
+
+                                    <div class="d-flex mb-1">
+
+                                        <div class="input-group input-group-sm mr-2">
+                                            <div class="input-group-prepend">
+                                                <label class="input-group-text" for="">Alto (cm)</label>
+                                            </div>
+                                            <input type="text" class="form-control" id="" aria-describedby="" value="" placeholder="Alto (cm)">
+                                        </div>
+
+                                        <div class="input-group input-group-sm">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Profundo (cm)</span>
+                                            </div>
+                                            <input type="text" class="form-control" id="" aria-describedby="" value="" placeholder="Profundo (cm)">
+                                        </div>
+
+                                    </div>
+
+                                    <hr class="my-2 w-100" />
+
+                                    <div class="d-flex mb-0 justify-content-between">
+
+                                        <div class="d-flex">
+                                            <div class="input-group input-group-sm mw-auto mr-2">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text input-group-text-auto">Frágil</span>
+                                                </div>
+                                                <div class="box-label-check">
+                                                    <input type="checkbox" class="" id="" name="">
+                                                </div>
+                                            </div>
+
+                                            <div class="input-group input-group-sm mw-auto mr-2">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text input-group-text-auto">ADR</span>
+                                                </div>
+                                                <div class="box-label-check">
+                                                    <input type="checkbox" class="" id="" name="">
+                                                </div>
+                                            </div>
+
+                                            <div class="input-group input-group-sm mw-auto mr-2">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text input-group-text-auto">No permitir portes gratis</span>
+                                                </div>
+                                                <div class="box-label-check">
+                                                    <input type="checkbox" class="" id="" name="">
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="d-flex justify-content-center box-border-top p-2 mdc-bg-blue-grey-50">
+                                    <a href="#" class="btn btn-sm btn-primary cliente-comercial-guardar">Guardar</a>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="card-info-wrapper w-100" id="sindatos" style="">
+                            <div class="card-info">
+                                <div class="d-flex justify-content-center align-items-center">
+
+                                    <div class="d-flex flex-column">
+                                        <p class="pb-2"><img src="https://image.flaticon.com/icons/svg/609/609998.svg" style="width: 20%;"></p>
+                                        <p class="pb-2">En esta pantalla podrá modificar o añadir información básica de su cliente</p>
+                                        <p class="pb-2 mt-2 fs-0-8">Las opciones disponibles son:</p>
+                                        <p class="fs-0-8"><i class="fa fa-check mr-1 text-danger"></i> Modificar o crear una nueva dirección</p>
+                                        <p class="fs-0-8"><i class="fa fa-check mr-1 text-danger"></i> Modificar o añadir un nuevo teléfono</p>
+                                        <p class="fs-0-8"><i class="fa fa-check mr-1 text-danger"></i> Modificar o añadir un nuevo email</p>
+                                        <p class="fs-0-8"><i class="fa fa-check mr-1 text-danger"></i> Modificar o añadir un nuevo centro de coste</p>
+                                        <p class="fs-0-8"><i class="fa fa-check mr-1 text-danger"></i> Modificar o añadir una nueva web corporativa</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <svg class="card-info-triangle">
+                                <polygon points="0,0 200,0 0,200" fill="currentColor"></polygon>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="mb-3">
+                    @* @Html.Raw(Model.Model.Paginador) *@
+                </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

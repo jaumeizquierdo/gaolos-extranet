@@ -1,0 +1,650 @@
+﻿@model ModuloAsistenciasLibrary.ModuloAsisnteicasAsistenciasPorFacturarFacturarViewModel
+@{
+    Layout = "~/Views/Shared/Modulo-Asistencias/_Modulo-Asistencias-Facturar.cshtml";
+    ViewData["Title"] = "Facturar asistencia";
+    ViewData["Message"] = "Modulo de Asistencias";
+}
+
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+                @if (Model.Model.Err.eserror)
+                {
+                    ViewData["err"] = Model.Model.Err.mensaje;
+                    @Html.Partial("AccesoDenegado");
+                }
+                else
+                {
+
+                    @* Cabecera *@
+
+                    <div class="card mb-3">
+                        <div class="card-header card-header-options">
+                            <span>Asistencia nº @Model.Model.ID_Asis2</span>
+                        </div>
+                        <div class="card-block p-0">
+                            <div class="d-flex justify-content-center align-items-center">
+                                <div class="col-1 pb-2 pt-2">
+                                    <img src="https://image.flaticon.com/icons/svg/321/321863.svg" style="width: 100%">
+                                </div>
+                                <div class="col-11 pt-2 pb-2 box-border-left-light">
+
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <h5 class="fw-5 title-section mb-0">
+                                            @Model.Model.Emp
+                                        </h5>
+                                    </div>
+
+                                    <hr class="mb-2 mt-2">
+                                    <div class="d-flex justify-content-between">
+
+                                        <div class="d-flex">
+                                            <div class="box-grey-bg mr-2 mdc-bg-white">
+                                                <p class="mb-1 fs-0-8 fw-5"><span class="mr-1">Nº cliente:</span> <a href="/modulo-clientes/clientes/cliente/situacion/asistencias?ID_Cli2=@Model.Model.ID_Cli2">@Model.Model.ID_Cli2</a></p>
+                                                <p class="mb-1 fs-0-8 fw-5"><span class="mr-1">Tipo:</span> @Model.Model.EmpTipo</p>
+                                                <p class="mb-1 fs-0-8 fw-5"><span class="mr-1">Cerrada:</span> <span class="text-danger">@Model.Model.UsuFin</span></p>
+                                                <p class="mb-1 fs-0-8 fw-5"><span class="mr-1">Fecha:</span> <span class="text-danger">@Model.Model.Fe_Fin</span></p>
+                                                <input type="hidden" value="@Model.Model.ID_Asis2" id="ID_Asis2">
+                                                <input type="hidden" value="@Model.Model.ID_Cli2" id="ID_Cli2">
+                                                <input type="hidden" value="@Model.Model.ID_Cli2Rel" id="ID_Cli2Rel">
+                                            </div>
+
+                                            <div class="box-grey-bg mr-2 mdc-bg-white">
+                                                <p class="mb-1 fs-0-8 fw-5"><span class="mr-1">Dirección:</span> <span class="text-danger">@Model.Model.Dir</span></p>
+                                                <p class="mb-1 fs-0-8 fw-5"><span class="mr-1">Pob / Prov:</span> <span class="text-danger">@Model.Model.Pob - @Model.Model.Pro</span></p>
+                                                @if (Model.Model.CliNuevo)
+                                                {
+                                                    <span class="badge badge-pill badge-danger py-1 px-2 mb-1 text-white">Cliente nuevo</span>
+                                                }
+                                                @if (Model.Model.ObsDir != "")
+                                                {
+                                                    <p class="mb-0 fs-0-8"><span class="fw-5">Observaciones asistencia:</span> <span class="text-danger fw-5">@Model.Model.ObsDir</span></p>
+                                                }
+                                                <hr />
+                                                @if (Model.Model.PreciosCli > 0)
+                                                {
+                                                    <p class="mb-1 fs-0-8 fw-5"><span class="text-danger fw-5"><a href="/modulo-clientes/clientes/cliente/precios-especiales?ID_Cli2=@Model.Model.ID_Cli2" class="fw-5" target="_blank">El cliente tiene precios especials (@Model.Model.PreciosCli)</a></span></p>
+                                                }
+                                                @*@if (Model.Model.HayEmpObs)
+                                        {
+                                            <p class="mb-1 fs-0-8 fw-5"><span class="text-danger fw-5"><a href="/modulo-clientes/clientes/cliente/comercial?ID_Cli2=@Model.Model.ID_Cli2" class="fw-5" target="_blank">Ver observaciones cliente</a></span></p>
+                                        }*@
+                                                <div class="form-group mb-2">
+                                                    <label><small>Observaciones del cliente</small></label>
+                                                    <textarea class="form-control form-control-sm" rows="5" id="ObsCli" placeholder="Observaciones del cliente">@Model.Model.ObsCli</textarea>
+                                                    <div class="d-flex justify-content-center box-border-top p-2 mdc-bg-blue-grey-50">
+                                                        <button type="button" class="btn btn-sm btn-primary guardar-obscli">Guardar</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            @if (Model.Model.EmpRel != "")
+                                            {
+                                                <div class="box-grey-bg mr-2 mdc-bg-white">
+                                                    <p class="mb-1 fs-0-8 fw-5">
+                                                        <span class="mr-1">@Model.Model.EmpRelTipo:</span>
+                                                        <span class="text-danger">@Model.Model.EmpRel <a href="/modulo-clientes/clientes/cliente?ID_Cli2=@Model.Model.ID_Cli2Rel" class="fw-5" target="_blank">(@Model.Model.ID_Cli2Rel)</a></span>
+                                                    </p>
+                                                    @if (Model.Model.PreciosCliRel > 0)
+                                                    {
+                                                        <p class="mb-1 fs-0-8 fw-5"><span class="text-danger fw-5"><a href="/modulo-clientes/clientes/cliente/precios-especiales?ID_Cli2=@Model.Model.ID_Cli2Rel" class="fw-5" target="_blank">El cliente tiene precios especials (@Model.Model.PreciosCliRel)</a></span></p>
+                                                    }
+                                                    @*@if (Model.Model.HayEmpRelObs)
+                                            {
+                                                <p class="mb-1 fs-0-8 fw-5"><span class="text-danger fw-5"><a href="/modulo-clientes/clientes/cliente/comercial?ID_Cli2=@Model.Model.ID_Cli2Rel" class="fw-5" target="_blank">Ver observaciones @Model.Model.EmpRelTipo</a></span></p>
+                                            }*@
+                                                    <div class="form-group mb-2">
+                                                        <label><small>Observaciones del @Model.Model.EmpRelTipo</small></label>
+                                                        <textarea class="form-control form-control-sm" rows="5" id="ObsCliRel" placeholder="Observaciones del @Model.Model.EmpRelTipo">@Model.Model.ObsCliRel</textarea>
+                                                        <div class="d-flex justify-content-center box-border-top p-2 mdc-bg-blue-grey-50">
+                                                            <button type="button" class="btn btn-sm btn-primary guardar-obsclirel">Guardar</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+
+                                            @if (Model.Model.ID_Man2 != "")
+                                            {
+                                                <div class="box-grey-bg mr-2 mdc-bg-white">
+                                                    <p class="mb-1 fs-0-8 fw-5">
+                                                        <span class="mr-1">Nº Mantenimiento:</span>
+                                                        <span class="text-danger"><a href="/modulo-mantenimientos/mantenimientos/mantenimiento?ID_Man2=@Model.Model.ID_Man2" class="fw-5" target="_blank">@Model.Model.ID_Man2</a></span>
+                                                    </p>
+                                                    <p class="mb-1 fs-0-8 fw-5"><span class="mr-1">Tipo:</span> <span class="text-danger">@Model.Model.ManPeri</span></p>
+                                                    <p class="mb-1 fs-0-8 fw-5"><span class="mr-1">Visita:</span> <span class="text-danger">@Model.Model.ManVis</span></p>
+                                                    <p class="mb-1 fs-0-8 fw-5"><span class="mr-1">Realizado:</span> <span class="text-danger">@Model.Model.ManUsu - @Model.Model.ManFe_Fin</span></p>
+                                                    @if (Model.Model.ManObsTec != "")
+                                                    {
+                                                        <p class="mb-1 fs-0-8 fw-5"><span class="mr-1">Obs.Técnico:</span> @Model.Model.ManObsTec</p>
+                                                    }
+                                                </div>
+                                            }
+
+                                            @if (Model.Model.ID_Pres2 != "")
+                                            {
+                                                <div class="box-grey-bg mr-2 mdc-bg-white">
+                                                    <p class="mb-1 fs-0-8 fw-5">
+                                                        <span class="mr-1">Nº presupuesto:</span>
+                                                        <span class="text-danger"><a href="/modulo-presupuestos/presupuestos/presupuesto?ID_Pres2=@Model.Model.ID_Pres2" class="fw-5" target="_blank">@Model.Model.ID_Pres2</a></span>
+                                                    </p>
+                                                    <p class="mb-1 fs-0-8 fw-5"><span class="mr-1">Realizado:</span> <span class="text-danger">@Model.Model.PresUsu - @Model.Model.PresFe_Al</span></p>
+                                                    <p class="mb-1 fs-0-8 fw-5"><span class="mr-1">Breve:</span> @Model.Model.Breve</p>
+                                                </div>
+                                            }
+
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    @* Asistencias por facturar - revisar *@
+
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="card card-table mb-3">
+                                <div class="card-header card-header-options">
+                                    <span>Detalles asistencia por revisar</span>
+                                    <div class="d-flex">
+                                        @*<a href="#" class="btn btn-sm btn-primary mr-1 ver-rapido"><i class="fa fa-cube mr-1" style="font-size: 14px !important;"></i> Añadir rápido</a>*@
+                                        @*<a href="#" class="btn btn-sm btn-primary mr-1 ver-articulo" style="display: none;"><i class="fa fa-cubes mr-1" style="font-size: 14px !important;"></i> Añadir artículo</a>*@
+                                        <a href="#" class="btn btn-sm btn-primary ver-servicio"><i class="fa fa-cogs mr-1" style="font-size: 14px !important;"></i> Añadir servicio</a>
+                                    </div>
+                                </div>
+                                <div class="card-block">
+                                    <table class="table table-striped border-top-none">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-center w-5">Cantidad</th>
+                                                <th class="text-center w-10">Código</th>
+                                                <th>Detalle</th>
+                                                <th class="text-center">Nº Parte</th>
+                                                <th class="text-center"><a href="#" class="mod-no-facturar-todo">No fact.</a></th>
+                                                <th class="text-center">Revisado</th>
+                                                <th class="text-center"><a href="#" class="sel-todo">Sel.</a></th>
+                                                <th class="text-right">Precio</th>
+                                                <th class="text-right">Subtotal</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="actualizarPresupuesto">
+                                            <tr>
+                                                <td colspan="9" class="text-center">
+                                                    <div class="d-flex align-items-center py-2">
+                                                        <i class="fa fa-cog fa-spin fa-2x fa-fw text-success"></i> <span class="text-success fs-1-1">Cargando detalles de la asistencia</span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <div id="Totales" style="display:none;">
+                                        <div class="d-flex justify-content-between align-items-center box-border-top pt-2 pb-2">
+                                            <div class="col-6">
+                                                <div class="d-flex">
+                                                    <p class="fw-5 mb-0">Opciones:</p>
+                                                </div>
+                                                <div class="d-flex align-items-center">
+                                                    <small class="fw-5 mr-2">Albarán con fecha del parte</small>
+                                                    <input type="checkbox" class="" id="Fe_Alb" />
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="d-flex justify-content-end">
+                                                    <p class="fw-5 mb-0 mr-2">Total:</p>
+                                                    <p class="fw-5 mb-0" id="Total"></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex justify-content-center box-border-top p-2 mdc-bg-blue-grey-50">
+                                            <button type="button" class="btn btn-sm btn-primary procesar-detalles" id="btnprocesar">Procesar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card card-table mb-3">
+                                <div class="card-header card-header-options">
+                                    <span>Partes / Servicios</span>
+                                </div>
+                                <div class="card-block">
+                                    <table class="table table-striped border-top-none">
+                                        <thead>
+                                            <tr>
+                                                <th>Operación</th>
+                                                <th>Precio</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (Model.Model.partes != null)
+                                            {
+                                                <tr>
+                                                    <td>@Html.Raw(Model.Model.partes.datoS1)</td>
+                                                    <td>@Html.Raw(Model.Model.partes.datoS2)</td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            @if (Model.Model.ID_Pres2 != "")
+                            {
+                                <div class="card card-table mb-3">
+                                    <div class="card-header card-header-options">
+                                        <span>Detalles del presupuesto</span>
+                                    </div>
+                                    <div class="card-block">
+                                        <table class="table table-striped border-top-none">
+                                            <thead>
+                                                <tr>
+                                                    <th>Cna. x Servicio</th>
+                                                    <th>Dto</th>
+                                                    <th>Precio/u</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @for (Int32 t = 0; t < Model.Model.detPres.Length; t++)
+                                                {
+                                                    <tr>
+                                                        <td>@Html.Raw(Model.Model.detPres[t].datoS1)</td>
+                                                        <td>@Html.Raw(Model.Model.detPres[t].datoS2)</td>
+                                                        <td>@Html.Raw(Model.Model.detPres[t].datoS3)</td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                            }
+
+
+                        </div>
+
+                        <div class="col-4">
+
+                            <div class="card mb-3" id="datosInformados" style="display: none;">
+                                <div class="card-header card-header-options">
+                                    <span>Datos informados</span>
+                                </div>
+                                <div class="card-block p-0">
+
+                                    <div class="d-flex flex-column p-2 pb-0">
+
+                                        <div class="d-flex mb-1">
+                                            <div class="input-group input-group-sm mb-0 p-0">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">Servicio</span>
+                                                </div>
+                                                <textarea class="form-control" id="ServOri" disabled></textarea>
+                                                <input type="hidden" id="ID_Parte2" value="">
+                                                <input type="hidden" id="ID_De_Pa" value="">
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex mb-1">
+                                            <div class="input-group input-group-sm mb-0 p-0 mr-2">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">Cantidad</span>
+                                                </div>
+                                                <input type="text" class="form-control" id="CanOri" disabled>
+                                            </div>
+                                            <div class="input-group input-group-sm mb-0 p-0">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">Código</span>
+                                                </div>
+                                                <input type="text" class="form-control" id="CodigoOri" disabled>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex mb-1">
+                                            <div class="input-group input-group-sm mb-0 p-0 mr-2">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">Precio/u</span>
+                                                </div>
+                                                <input type="text" class="form-control" id="PVPOri" disabled>
+                                            </div>
+                                            <div class="input-group input-group-sm mb-0 p-0">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">Total</span>
+                                                </div>
+                                                <input type="text" class="form-control" id="PVPFOri" disabled>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                                <div class="card-header card-header-options">
+                                    <span>Datos a facturar</span>
+                                </div>
+                                <div class="card-block p-0">
+                                    <div class="d-flex flex-column p-2 pb-0">
+
+                                        <div class="d-flex mb-1">
+                                            <div class="input-group input-group-sm mb-0 p-0">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">Servicio</span>
+                                                </div>
+                                                <textarea class="form-control" id="Serv" placeholder="Servicio"></textarea>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex mb-1">
+                                            <div class="input-group input-group-sm mb-0 p-0 mr-2">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">Cantidad</span>
+                                                </div>
+                                                <input type="text" class="form-control" id="Can" placeholder="Cantidad" value="">
+                                            </div>
+                                            <div class="input-group input-group-sm mb-0 p-0">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">Código</span>
+                                                </div>
+                                                <input type="text" class="form-control" id="Codigo" placeholder="Código" value="" maxlength="30">
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex mb-1">
+                                            <div class="input-group input-group-sm mb-0 p-0">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">Precio/u</span>
+                                                </div>
+                                                <input type="text" class="form-control" id="PVP" placeholder="Precio/u" value="">
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex align-items-center">
+                                            <input type="checkbox" class="mr-2" id="NoFac">
+                                            <span class="fw-5">No facturar</span>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-center box-border-top p-2 mdc-bg-blue-grey-50">
+                                    <button type="button" class="btn btn-sm btn-primary mod-guardar-detalle">Guardar</button>
+                                </div>
+                            </div>
+
+                            @*<div class="card card-table mb-3" id="verRapido" style="display: none;">
+            <div class="card-header card-header-options">
+                <span id="tel-titulo">Añadir servicio libre</span>
+            </div>
+            <div class="card-block p-0">
+                <div class="d-flex flex-column p-2">
+
+                    <div class="input-group input-group-sm mb-1">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text mw-100">Exposición</span>
+                        </div>
+                        <input type="text" class="form-control" id="rapExpo" aria-describedby="" placeholder="Exposición" maxlength="50">
+                    </div>
+
+                    <div class="input-group input-group-sm mb-1">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text mw-100">Código</span>
+                        </div>
+                        <input type="text" class="form-control" id="rapCodigo" aria-describedby="" placeholder="Código" maxlength="50">
+                    </div>
+
+                    <div class="input-group input-group-sm mb-1">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text mw-100">Cantidad</span>
+                        </div>
+                        <input type="text" class="form-control" id="rapCan" aria-describedby="" placeholder="Cantidad" maxlength="50">
+                    </div>
+
+                    <div class="input-group input-group-sm mb-1">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text mw-100">Coste</span>
+                        </div>
+                        <input type="text" class="form-control" id="rapCoste" aria-describedby="" placeholder="Coste" maxlength="50">
+                        <div class="input-group-append">
+                            <span class="input-group-text mw-35">€</span>
+                        </div>
+                    </div>
+
+                    <div class="input-group input-group-sm mb-1">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text mw-100">Precio</span>
+                        </div>
+                        <input type="text" class="form-control" id="rapPVP" aria-describedby="" placeholder="Precio" maxlength="50">
+                        <div class="input-group-append">
+                            <span class="input-group-text mw-35">€</span>
+                        </div>
+                    </div>
+
+
+                    <div class="input-group input-group-sm">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text mw-100">Descuento</span>
+                        </div>
+                        <input type="text" class="form-control" id="rapDto" aria-describedby="" placeholder="Descuento" maxlength="50">
+                        <div class="input-group-append">
+                            <span class="input-group-text mw-35">€</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-center box-border-top p-2 mdc-bg-blue-grey-50">
+                    <a href="#" class="btn btn-sm btn-primary add-servicio-libre">Añadir</a>
+                </div>
+            </div>
+        </div>*@
+
+                            <div class="card card-table mb-3" id="verServicio" style="display: none;">
+                                <div class="card-header card-header-options">
+                                    <span>Añadir servicio</span>
+                                </div>
+                                <div class="card-block">
+                                    <div class="d-flex justify-content-center p-2">
+                                        <div class="input-group card-search-box">
+                                            <input type="text" class="form-control" placeholder="Añadir servicio" name="" id="buscarServicio">
+                                            <span class="input-group-append">
+                                                <button class="btn btn-primary buscar-serv" type="submit">Buscar</button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Servicio</th>
+                                                <th class="w-10 text-center">Precio</th>
+                                                <th class="w-10 text-center">Cantidad</th>
+                                                <th class="w-10 text-center">Añadir</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="actualizarServicio">
+                                            <tr>
+                                                <td colspan="5">
+                                                    <p class="mb-0 py-2 fw-5 text-danger"><i class="fa fa-exclamation-triangle"></i> Introduzca el nombre del servicio a buscar</p>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            @* Facturas vinculadas *@
+                            <div class="card card-table mb-3">
+                                <div class="card-header card-header-options">
+                                    <span>Albaranes y factuas vinculados a la asistencia</span>
+                                    <div class="card-actions">
+                                        <ul>
+                                            <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="card-block" role="tablist" aria-multiselectable="true">
+                                    <div class="mb-0">
+                                        @if (Model.Model.Albs != null)
+                                        {
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="">Parte / Usuario</th>
+                                                        <th class="w-20 text-center">Albarán</th>
+                                                        <th class="w-20 text-center">Factura</th>
+                                                        <th class="w-20 text-right">Total</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @for (Int32 t = 0; t < Model.Model.Albs.Length; t++)
+                                                    {
+                                                        <tr>
+                                                            <td>
+                                                                <p><small>@Model.Model.Albs[t].datoI - @Model.Model.Albs[t].datoS1</small></p>
+                                                            </td>
+                                                            <td class="text-center">
+                                                                <p><small><a href="/modulo-albaranes/albaranes/albaran/imprimir?ID_Al=@Convert.ToInt32(Model.Model.Albs[t].datoD).ToString()" target="_blank">@Model.Model.Albs[t].datoS5</a></small></p>
+                                                            </td>
+                                                            <td class="text-center">
+                                                                <p><small><a href="/modulo-facturacion/informacion-factura/descargar?ID_Fac=@Model.Model.Albs[t].datoS2&Tipo=html" target="_blank">@Model.Model.Albs[t].datoS3</a></small></p>
+                                                            </td>
+                                                            <td class="text-right">
+                                                                <p><small>@Model.Model.Albs[t].datoS4</small></p>
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+
+                                        }
+                                        else
+                                        {
+                                            <p class="p-3 mb-0"><small><span class="fw-5 mr-1">No hay albaranes vinculados</span></small></p>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            @* Factuas vinculadas fin *@
+
+                            @* Cobros pendientes *@
+                            <div class="card card-table mb-3">
+                                <div class="card-header card-header-options">
+                                    <span>Cobros pendientes del cliente</span>
+                                    <div class="card-actions">
+                                        <ul>
+                                            <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="card-block" role="tablist" aria-multiselectable="true">
+                                    <div class="mb-0">
+                                        @if (Model.Model.Cobs != null)
+                                        {
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="w-20 text-center">Vencimiento</th>
+                                                        <th class="w-20 text-center">Factura</th>
+                                                        <th class="text-center">Devolución</th>
+                                                        <th class="w-20 text-right">Importe</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @for (Int32 t = 0; t < Model.Model.Cobs.Length; t++)
+                                                    {
+                                                        <tr>
+                                                            <td>
+                                                                <p><small>@Model.Model.Cobs[t].datoS1</small></p>
+                                                            </td>
+                                                            <td class="text-center">
+                                                                <p><small><a href="/modulo-facturacion/informacion-factura/descargar?ID_Fac=@Model.Model.Cobs[t].datoI&Tipo=html" target="_blank">@Model.Model.Cobs[t].datoS3</a></small></p>
+                                                            </td>
+                                                            <td class="text-center">
+                                                                <p><small>@Model.Model.Cobs[t].datoS4</small></p>
+                                                            </td>
+                                                            <td class="text-right">
+                                                                <p><small>@Model.Model.Cobs[t].datoS2</small></p>
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+
+                                        }
+                                        else
+                                        {
+                                            <p class="p-3 mb-0"><small><span class="fw-5 mr-1">No hay cobros pendientes</span></small></p>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            @* Cobros pendientes fin *@
+
+                            @* Top 10 facturas *@
+                            <div class="card card-table mb-3">
+                                <div class="card-header card-header-options">
+                                    <span>Top 10 facturas</span>
+                                    <div class="card-actions">
+                                        <ul>
+                                            <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="card-block" role="tablist" aria-multiselectable="true">
+                                    <div class="mb-0">
+                                        @if (Model.Model.Facs != null)
+                                        {
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="w-20 text-center">Fecha</th>
+                                                        <th class="">Factura</th>
+                                                        <th class="w-20 text-right">Importe</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @for (Int32 t = 0; t < Model.Model.Facs.Length; t++)
+                                                    {
+                                                        <tr>
+                                                            <td class="text-center">
+                                                                <p><small>@Model.Model.Facs[t].datoS2</small></p>
+                                                            </td>
+                                                            <td>
+                                                                <p><small><a href="/modulo-facturacion/informacion-factura/descargar?ID_Fac=@Model.Model.Facs[t].datoI&Tipo=html" target="_blank">@Model.Model.Facs[t].datoS1</a></small></p>
+                                                            </td>
+                                                            <td class="text-right">
+                                                                <p><small>@Model.Model.Facs[t].datoS3</small></p>
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+
+                                        }
+                                        else
+                                        {
+                                            <p class="p-3 mb-0"><small><span class="fw-5 mr-1">No tiene facturas</span></small></p>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            @* Top 10 facturas *@
+
+                        </div>
+                    </div>
+
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    actualizarAsisntecia(@Model.Model.ID_Asis2);
+</script>

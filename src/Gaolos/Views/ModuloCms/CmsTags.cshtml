@@ -1,0 +1,204 @@
+﻿@model CmsLibrary.CmsTagsWebsListadoViewModel
+
+@{
+    Layout = "~/Views/Shared/Modulo-Cms/_CmsTags.cshtml";
+    ViewData["Title"] = "CMS - Tags";
+    ViewData["BuscarTags"] = "Buscar tags";
+    ViewData["Title-Bloque-1"] = "Listado de Tags";
+    ViewData["Message"] = "CMS - Gaolos App v2017";
+}
+
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+                @if (Model.Model.Err.eserror)
+                {
+                    ViewData["err"] = Model.Model.Err.mensaje;
+                    @Html.Partial("AccesoDenegado");
+                }
+                else
+                {
+
+                    @* Buscar webs *@
+
+                <div class="card mb-3">
+                    <div class="card-header card-header-options">
+                        <span>@ViewData["BuscarTags"]</span>
+
+                        <div class="card-actions">
+                            <ul>
+                                <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+
+                    <div class="card-block p-0">
+                        <form action="@ViewData["Form"]" method="post">
+                            <div class="d-flex justify-content-center align-items-center">
+                                <div class="col-1 text-center box-border-right-light py-2">
+                                    <img src="~/flaticons/startup-1.svg" style="width: 100%;">
+                                </div>
+                                <div class="col-11">
+
+                                    <div class="row p-0">
+                                        <div class="col-12 p-0">
+                                            <div class="d-flex mb-0 px-3">
+
+                                                <div class="input-group card-search-box">
+                                                    <input type="text" class="form-control" placeholder="Buscar por..." name="buscar" value="@ViewData["buscar"]">
+                                                    <input type="hidden" id="ID_Idi" value="@ViewData["ID_Idi"]">
+                                                    <span class="input-group-append">
+                                                        <button class="btn btn-primary btn-sm" type="submit">BUSCAR</button>
+                                                    </span>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+
+                </div>
+
+                    @* Listado webs *@
+
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="card card-table">
+                                <div class="card-header card-header-options">
+                                    <span>@ViewData["Title-Bloque-1"]</span>
+                                </div>
+                                <div class="card-block">
+
+                                    <table class="table table-striped table-select">
+                                        <thead>
+                                            <tr>
+                                                <th>Tag</th>
+                                                <th>Descripción</th>
+                                                <th class="text-center">Eliminar</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (Model.Model.det != null)
+                                            {
+                                                @for (Int32 t = 0; t < Model.Model.det.Length; t++)
+                                                {
+                                                    string id = "tag_" + Model.Model.det[t].ID_Tag + "_" + ViewData["ID_Idi"];
+
+                                                    <tr class="tags-datos-tag" id="@id">
+                                                        <td>
+                                                            <p class="fw-5 mb-0">@Model.Model.det[t].Tag</p>
+                                                        </td>
+                                                        <td>
+                                                            <p class="m-0 fw-5">@Model.Model.det[t].Expo</p>
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <a href="#" class="fw-5 text-danger"><i class="fa fa-times"></i></a>
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <tr><td colspan="5" class="text-danger fw-5">No hay tags definidos</td></tr>
+                                            }
+
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+
+                            <div class="mb-3">@Html.Raw(Model.Model.Paginador)</div></div>
+
+
+                        <div class="col-4">
+
+                            @*Definir prefijo de los tags - listado*@
+
+                            <div class="card mb-3" id="resize-documento" style="display: block;">
+                                <div class="card-header card-header-options">
+                                    <span>Webs</span>
+                                    <div class="card-actions">
+                                        <ul>
+                                            <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="card-block">
+                                    <div id="cms-webs-editar-prefijo-listado">
+                                        <p class="text-blue">Cargando...</p>
+                                        @*<div class="d-flex justify-content-between mb-2">
+                                            <span class="fw-5">www.grupread.com / <span class="text-blue">tags</span></span>
+                                            <i class="fa fa-check text-success"></i>
+                                        </div>
+                                        <div class="d-flex justify-content-between mb-2">
+                                            <span class="fw-5">www.previco.es / <span class="text-blue">tags</span></span>
+                                            <i class="fa fa-check text-success"></i>
+                                        </div>
+                                        <div class="d-flex justify-content-between mb-2">
+                                            <span class="fw-5">www.previfoc.com / <span class="text-danger">?</span> <i class="fa fa-exclamation-triangle text-danger"></i></span>
+                                            <a href="#" class="btn btn-danger btn-sm">definir</a>
+                                        </div>*@
+                                    </div>
+                                </div>
+
+                                <div id="cms-webs-editar-prefijo" style="display:none;">
+                                    <div class="card-header card-header-options">
+                                        <span>Editar prefijo tag </span>
+                                    </div>
+                                    <div class="card-block">
+                                        <div id="">
+                                            <div class="d-flex mb-3">
+                                                <span class="fw-5 mr-2">Dominio:</span>
+                                                <span class="fw-5" id="cms-webs-editar-prefijo-web"></span><input type="hidden" value="" id="cms-webs-editar-prefijo-id" />
+                                            </div>
+                                            <div class="form-inline mb-2">
+                                                <label class="mr-2">Prefijo SEO:</label>
+                                                <input type="text" class="form-control form-control-sm col-8" id="cms-webs-editar-prefijo-prefijo" maxlength="50" placeholder="Editar prefijo para los TAGS" />
+                                            </div>
+                                        </div>
+                                        <div class="row justify-content-center mt-3">
+                                            <button type="button" class="btn btn-primary form-cms-webs-editar-prefijo-guardar btn-sm">Guardar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                        </div>
+
+
+                    </div>
+
+
+
+
+                }
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    TagPrefijos();
+</script>

@@ -1,0 +1,230 @@
+﻿/* Dashboard & Configuración Módulos */
+
+@import "variables.scss";
+@import "materialdesign.scss";
+
+@import url('https://fonts.googleapis.com/css?family=Barlow:500');
+
+/* Configuración */
+
+.col-conf {
+    figure {
+        border: 1px solid #fff;
+        //border-radius: 4px !important;
+        box-shadow: 0 0 30px $md-blue-grey-100;
+        margin: 0 auto;
+        display: flex;
+        justify-content: center;
+        text-align: center;
+        transition: width .3s cubic-bezier(0.4,0.0,0.2,1);
+        position: relative;
+
+        a {
+            padding: 1rem;
+            display: block;
+        }
+
+        img {
+            margin-bottom: 1em;
+        }
+
+        &:hover {
+            //border: 1px solid $md-blue-grey-100;
+            //box-shadow: 0 0 4px $md-blue-grey-300;
+            @include fade-link;
+            //transform: scale(1.2);
+        }
+
+        .edit-apartado {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            box-shadow: 0 0 30px $md-blue-grey-100;
+            background: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            @include fade-link;
+
+            a {
+                padding: 0;
+            }
+
+            &:hover {
+                //background: $md-blue-500;
+                background: #fff;
+
+                a {
+                    color: $md-red-a400;
+                }
+            }
+        }
+
+        
+    }
+}
+
+.ico-apartado {
+    fill: $md-blue-500 !important;
+}
+
+.ico-apartado path {
+    fill: $md-blue-500 !important;
+}
+
+.col-md-4 {
+    figure {
+        width: 60% !important;
+    }
+}
+
+/* Dashboard Info: Wrapper, triangulo */
+
+#dashboard-info-wrapper {
+    position: relative;
+    border: 1px solid $md-blue-grey-100;
+    border-radius: 5px;
+}
+
+.dashboard-info {
+    position: relative;
+    width: 100%;
+    min-height: 100%;
+    z-index: 1;
+    padding: 2em 3em;
+    background: rgba(255,255,255,0.9);
+    border-radius: 5px;
+
+    h2 {
+        font-size: 1.2em;
+        color: $md-blue-grey-900;
+        font-weight: 400;
+        margin-bottom: 0.8em;
+        transition: opacity .25s ease-in-out;
+
+        &:after {
+            content: '';
+            width: 80px;
+            height: 3px;
+            background-color: #ff1744;
+            display: block;
+            margin-top: 0.5rem;
+            border-radius: 3px;
+        }
+    }
+
+    p {
+        font-size: 1em;
+        color: $md-blue-grey-600;
+        transition: opacity .25s ease-in-out;
+    }
+
+    .btn-dashboard-info {
+        padding: 0.5em 1em;
+        border: 1px solid $md-blue-500;
+        background: #fff;
+        border-radius: 3px;
+        font-weight: 500;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+
+        &:hover {
+            border: 1px solid $md-red-a400;
+        }
+    }
+}
+
+.dashboard-triangle {
+    height: 30px;
+    width: 30px;
+    color: #fff;
+    border: 1px solid $md-blue-grey-100;
+    -webkit-filter: drop-shadow(1px 1px 1px $md-blue-grey-100);
+    filter: drop-shadow(-3px -3px 20px $md-blue-grey-100);
+    transform: rotate(-45deg);
+    position: absolute;
+    top: 40%;
+    z-index: 0;
+    left: -12px;
+}
+
+/* Background para layouts de dashboards */
+
+.modulo-asistencias-dashboard {
+    background: url("../images/bg-svg-modulo-01.svg") no-repeat bottom right;
+}
+
+/* Badges para dashboards */
+
+.badge-dashboard {
+    background: #fff;
+    //background: $md-grey-50;
+    border: 1px solid $md-blue-grey-100;
+
+    i {
+        color: $md-blue-500;
+        margin-right: 0.5em;
+        font-size: 24px;
+    }
+
+    p {
+        font-size: 1em;
+        font-weight: 500;
+        line-height: 1.5em;
+        //color: $md-blue-grey-800;
+    }
+
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    border-radius: 10px;
+    line-height: 2em;
+    box-shadow: 0 0 10px $md-blue-grey-100;
+    padding: 1em;
+}
+
+.badge-dashboard-center {
+    justify-content: center;
+}
+
+/* Badges con backgrounds */
+
+/* Colección iconos: flaticon.com/packs/commerce-and-marketing */
+
+.badge-dashboard-bg {
+    position: relative;
+    z-index: 2;
+    &:before {
+        content: ' ';
+        display: block;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        opacity: 0.6;
+        background-repeat: no-repeat;        
+        //background-size: cover;
+    }
+}
+
+.badge-dashboard-bg-euro {
+    &:before {
+        background-image: url('https://image.flaticon.com/icons/svg/231/231269.svg');
+        background-position: 110% 20px;
+        background-repeat: no-repeat;
+    }
+}
+
+.badge-dashboard-bg-receipt {
+    &:before {
+        background-image: url('https://image.flaticon.com/icons/svg/231/231347.svg');
+        background-position: 110% 20px;
+        background-repeat: no-repeat;
+    }
+}

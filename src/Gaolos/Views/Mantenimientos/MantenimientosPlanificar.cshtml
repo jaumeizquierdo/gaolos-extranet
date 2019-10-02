@@ -1,0 +1,316 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Mantenimiento - Planificar";
+    ViewData["MantenimientosTitle"] = "Mantenimientos - Planificar";
+    ViewData["MantenimientosTitleBuscador"] = "Buscar mantenimientos";
+    ViewData["MantenimientosTitleResumen"] = "Resumen por técnico";
+    ViewData["MantenimientosListado"] = "Resultados de la búsqueda";
+    ViewData["MantenimientosSeleccionadasTitle"] = "Mantenimientos seleccionados";
+}
+
+<div class="main-content">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+
+                <div class="card mb-3">
+                    <div class="card-header card-header-options">
+                        <span>@ViewData["MantenimientosTitle"]</span>
+                        @Html.Partial("PanelActions")
+                    </div>
+
+                    <div class="card-block">
+                        <div class="row">
+
+
+                            <div class="col-7">
+
+                                @* Buscador *@
+
+                                <div class="card mb-3">
+                                    <div class="card-header card-header-options">
+                                        <span>@ViewData["MantenimientosTitleBuscador"]</span>
+                                        @Html.Partial("PanelActions")
+                                    </div>
+
+                                    <div class="card-block">
+
+                                        <div class="row">
+
+                                            <div class="col-12">
+                                                <div class="form-group row">
+                                                    <label for="zonasSelect" class="col-sm-2 col-form-label">Zona</label>
+                                                    <div class="col-sm-10">
+                                                        <select class="form-control col-10" id="zonasSelect">
+                                                            <option>Zona 1</option>
+                                                            <option>Zona 2</option>
+                                                            <option>Zona 3</option>
+                                                            <option>Zona 4</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group mb-0 row">
+                                                    <label for="tiposSelect" class="col-sm-2 col-form-label">Tipos</label>
+                                                    <div class="col-sm-10">
+                                                        <select class="form-control col-10" id="tiposSelect">
+                                                            <option>Tipo 1</option>
+                                                            <option>Tipo 2</option>
+                                                            <option>Tipo 3</option>
+                                                            <option>Tipo 4</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                @* Resultado Búsqueda *@
+
+                                <div class="card card-table mb-3">
+                                    <div class="card-header card-header-options">
+                                        <span>@ViewData["MantenimientosListado"] <span>[10 resultados]</span></span>
+                                        <div class="form-group mb-0" id="rutas-calendario">
+                                            <div class="input-group input-group-sm date">
+                                                <input type="text" class="form-control" placeholder="Selecciona Fecha" />
+                                                <span class="input-group-append">
+                                                    <button class="btn btn-secondary" type="button"><i class="fa fa-calendar"></i></button>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        @Html.Partial("PanelActions")
+                                    </div>
+                                    <div class="card-block">
+
+                                        <form>
+                                            <table class="table table-striped permisos" id="tabla-permisos">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Dirección</th>
+                                                        <th>Población</th>
+                                                        <th>Administrador</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @for (int i = 0; i < 5; i++)
+                                                    {
+                                                        <tr>
+                                                            <th scope="row">Amargor, 18</th>
+                                                            <td>
+                                                                Barcelona
+                                                            </td>
+                                                            <td>
+                                                                Adrián Coya
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+
+                                            </table>
+
+                                        </form>
+
+                                    </div>
+                                </div>
+
+                                @* Resultado Búsqueda Paginador *@
+
+                                <nav aria-label="Búsqueda Listado" class="mb-3">
+                                    <ul class="pagination">
+                                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                        <li class="page-item"><a class="page-link" href="#"><i class="fa fa-chevron-right"></i></a></li>
+                                    </ul>
+                                </nav>
+
+                                @* Rutas Seleccionadas *@
+
+                                <div class="card card-table mb-3">
+                                    <div class="card-header card-header-options">
+                                        <span>@ViewData["MantenimientosSeleccionadasTitle"]</span>
+                                        @Html.Partial("PanelActions")
+                                    </div>
+                                    <div class="card-block">
+
+                                        <form>
+                                            <table class="table table-striped permisos" id="tabla-permisos">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Dirección</th>
+                                                        <th>Población</th>
+                                                        <th>Administrador</th>
+                                                        <th><i class="fa fa-times"></i></th>
+                                                        <th><i class="fa fa-check"></i></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @for (int i = 0; i < 3; i++)
+                                                    {
+                                                        <tr>
+                                                            <th scope="row">Amargor, 18</th>
+                                                            <td>
+                                                                Barcelona
+                                                            </td>
+                                                            <td>
+                                                                Adrián Coya
+                                                            </td>
+                                                            <td>
+                                                                <a href="#" class="text-danger"><i class="fa fa-times"></i></a>
+                                                            </td>
+                                                            <td>
+                                                                <div class="custom-control custom-checkbox">
+                                                                    <input type="checkbox" class="custom-control-input">
+                                                                    <label class="custom-control-label" for=""></label>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+
+                                            </table>
+
+                                            <hr class="mt-0" />
+
+                                            <p class="text-right px-4"><i class="fa fa-clock-o"></i> <strong>Total Durada: <span class="text-blue">80h</span></strong></p>
+
+                                            <hr class="mb-0" />
+
+                                            <div class="row p-3 mt-0">
+                                                <div class="col-8">
+                                                    <div class="form-group row">
+                                                        <label for="zonasSelect" class="col-sm-3 col-form-label"><strong>Asignar a</strong></label>
+                                                        <div class="col-sm-9">
+                                                            <select class="form-control" id="zonasSelect">
+                                                                <option>Técnico Previfoc 1</option>
+                                                                <option>Técnico Previfoc 1</option>
+                                                                <option>Técnico Previfoc 1</option>
+                                                                <option>Técnico Previfoc 1</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row mb-0">
+                                                        <label for="zonasSelect" class="col-sm-3 col-form-label"><strong>Confirmar por</strong></label>
+                                                        <div class="col-sm-9">
+                                                            <select class="form-control" id="zonasSelect">
+                                                                <option>Adrián Coya</option>
+                                                                <option>Adrián Coya</option>
+                                                                <option>Adrián Coya</option>
+                                                                <option>Adrián Coya</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-4 asignar-wrapper">
+                                                    <button class="btn btn-lg btn-submit">Asignar</button>
+                                                </div>
+                                            </div>
+
+
+
+                                        </form>
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="col-5">
+
+                                <div class="card card-table mb-3">
+                                    <div class="card-header card-header-options">
+                                        <span>@ViewData["MantenimientosSeleccionadasTitle"]</span>
+                                        @Html.Partial("PanelActions")
+                                    </div>
+                                    <div class="card-block">
+
+                                        <p class="text-left px-3 mt-3"><i class="fa fa-user-circle-o"></i> <strong>Técnico 1</strong></p>
+
+                                        <table class="table table-striped permisos" id="tabla-permisos">
+                                            <thead>
+                                                <tr>
+                                                    <th>Dirección</th>
+                                                    <th>Población</th>
+                                                    <th>Administrador</th>
+                                                    <th><i class="fa fa-times"></i></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @for (int i = 0; i < 3; i++)
+                                                {
+                                                    <tr>
+                                                        <th scope="row">Amargor, 18</th>
+                                                        <td>
+                                                            Barcelona
+                                                        </td>
+                                                        <td>
+                                                            Adrián Coya
+                                                        </td>
+                                                        <td>
+                                                            <a href="#" class="text-danger"><i class="fa fa-times"></i></a>
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+
+                                        </table>
+
+                                        <hr class="mt-0" />
+
+                                        <p class="text-right px-4"><i class="fa fa-clock-o"></i> <strong>Total Durada: <span class="text-blue">80h</span></strong></p>
+
+                                        <hr class="mt-0" />
+                                        
+                                        <p class="text-left px-3 mt-3"><i class="fa fa-user-circle-o"></i> <strong>Técnico 2</strong></p>
+
+                                        <table class="table table-striped permisos" id="tabla-permisos">
+                                            <thead>
+                                                <tr>
+                                                    <th>Dirección</th>
+                                                    <th>Población</th>
+                                                    <th>Administrador</th>
+                                                    <th><i class="fa fa-times"></i></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @for (int i = 0; i < 3; i++)
+                                                {
+                                                    <tr>
+                                                        <th scope="row">Amargor, 18</th>
+                                                        <td>
+                                                            Barcelona
+                                                        </td>
+                                                        <td>
+                                                            Adrián Coya
+                                                        </td>
+                                                        <td>
+                                                            <a href="#" class="text-danger"><i class="fa fa-times"></i></a>
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+
+                                        </table>
+
+                                        <hr class="mt-0" />
+
+                                        <p class="text-right px-4"><i class="fa fa-clock-o"></i> <strong>Total Durada: <span class="text-blue">80h</span></strong></p>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

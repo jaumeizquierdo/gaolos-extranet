@@ -1,0 +1,187 @@
+﻿@model ModuloClientesLibrary.ModuloClientesClienteClientesSituacionFacturasViewModel
+@{
+    Layout = "~/Views/Shared/Modulo-Clientes/_Modulo-Clientes.cshtml";
+    ViewData["Title"] = "Situación";
+    ViewData["Message"] = "Modulo de Clientes - Gaolos App v2017";
+}
+
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+@if(Model.Model.Err.eserror)
+{
+    ViewData["err"] = Model.Model.Err.mensaje;
+    @Html.Partial("AccesoDenegado");
+}
+else
+{
+
+                @* cabecera cliente *@
+
+                @Html.Partial("Cliente-Cabecera")
+
+                @* tabs *@
+
+                @Html.Partial("Cliente-Tabs")
+
+                @* Listado de direcciones *@
+
+                <div class="card">
+                    <div class="card-block">
+
+                        @* tabs *@
+
+                        @Html.Partial("Cliente-Situacion-Tabs")
+
+                        <div class="row">
+
+                            <div class="col-8">
+                                <div class="card card-table mb-0">
+                                    <div class="card-header card-header-options">
+                                        <span>Facturas</span>
+                                        <a href="#" class="btn btn-sm btn-primary" style="display:none;">Exportar</a>
+                                    </div>
+                                    <div class="card-block">
+
+                                        @{
+                                            Models.strFacturacionFacturasListadoDetalles[] det = Model.Model.lis.det;
+                                        }
+
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-center w-10">Nº de factura</th>
+                                                    <th class="text-center"><i class="fa fa-envelope-open-o"></i></th>
+                                                    <th class="text-center">Fecha</th>
+                                                    <th>Cliente</th>
+                                                    <th class="">Comentarios</th>
+                                                    <th class="text-center w-10">Ver</th>
+                                                    <th class="text-right w-10">Total</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @if (det != null)
+                                                {
+                                                    for (Int32 t = 0; t < det.Length; t++)
+                                                    {
+                                                        <tr>
+                                                            @{
+                                                                string txt = "";
+                                                                if (det[t].Negativa == true)
+                                                                {
+                                                                    txt = "text-danger";
+                                                                }
+                                                            }
+
+                                                            <td class="text-center"><a href="#" id="fac_@det[t].ID_Fac" class="fw-5 sel-fac @txt">@det[t].Fac</a></td>
+                                                            <td class="text-center">
+                                                                @if (!det[t].FacEMail)
+                                                                {<i class="fa fa-lock mr-1 text-danger" aria-hidden="true"></i>}
+                                                                @if (det[t].EnvFacOK > 0 || det[t].EnvFacKO > 0)
+                                                                {
+                                                                    if (det[t].EnvFacKO > 0)
+                                                                    {
+                                                                        <a href="#" data-toggle="tooltip" data-placement="top" title="" data-original-title="@det[t].EnvFacOK veces enviada por mail, @det[t].EnvFacKO con error" class="fw-5 text-danger">@det[t].EnvFacOK</a>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <a href="#" data-toggle="tooltip" data-placement="top" title="" data-original-title="Nº de veces enviada por mail" class="fw-5">@det[t].EnvFacOK</a>
+                                                                    }
+                                                                }
+                                                                else
+                                                                { <small>0</small>}
+                                                            </td>
+                                                            <td class="text-center"><small class="fw-5">@det[t].Fe_Fa</small></td>
+                                                            <td>
+                                                                <p class="fw-5 mb-0">
+                                                                    @det[t].Emp
+                                                                    @if (det[t].NIF != "")
+                                                                    {
+                                                                        <small>NIF: @det[t].NIF</small>
+                                                                    }
+                                                                    @if (det[t].CCCli != "")
+                                                                    {
+                                                                        <small>CC: @det[t].CCCli</small>
+                                                                    }
+
+                                                                </p>
+                                                                <p class="fw-5 mb-0">@det[t].Pob <small>@det[t].Dir</small></p>
+                                                                @if (@det[t].Obs != "")
+                                                                {
+                                                                    <p class="fw-5 mb-0"><small><b>Observaciones: @det[t].Obs</b></small></p>
+                                                                }
+                                                            </td>
+                                                            <td class="text-center">
+                                                                @if (det[t].ID_Soli2 > 0)
+                                                                {
+                                                                    <a href="/tareas-pendientes/tarea-pendiente?ID_Soli2=@det[t].ID_Soli2" target="_blank"><i class="fa fa-file-text" aria-hidden="true"></i></a>
+                                                                }
+                                                            </td>
+                                                            <td class="text-center">
+                                                                @if (det[t].SiConta)
+                                                                {
+                                                                    <a href="#" data-toggle="tooltip" data-placement="top" title="" data-original-title="Factura exportada a la contabilidad"><i class="fa fa-exclamation-triangle mr-1 text-danger"></i></a>
+                                                                }
+
+                                                                @if (det[t].Pdf)
+                                                                {<a href="/modulo-facturacion/informacion-factura/descargar?ID_Fac=@det[t].ID_Fac&Tipo=pdf" target="_blank" class="mr-1" data-toggle="tooltip" data-placement="top" title="" data-original-title="Ver factura en PDF"><i class="fa fa-file-pdf-o"></i></a>}
+                                                                <a href="/modulo-facturacion/informacion-factura/descargar?ID_Fac=@det[t].ID_Fac&Tipo=html" target="_blank" data-toggle="tooltip" data-placement="top" title="" data-original-title="Ver factura en HTML"><i class="fa fa-file-text-o"></i></a>
+                                                            </td>
+                                                            <td class="text-right @txt"><p class="mb-0 fw-5">@det[t].Total</p></td>
+                                                        </tr>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <tr><td colspan="7"><p class='fw-5 text-danger mb-0'><i class='fa fa-exclamation-circle mr-1'></i> No hay resultados</p></td></tr>
+
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    @Html.Raw(Model.Model.lis.Paginador)
+                                </div>
+
+                            </div>
+
+
+                            <div class="col-4">
+                                @* Sin datos *@
+                                <div class="card-info-wrapper w-100" id="sindatos" style="display: none;">
+                                    <div class="card-info">
+                                        <div class="d-flex justify-content-center align-items-center">
+                                            <img src="https://image.flaticon.com/icons/svg/609/609998.svg" style="width: 20%;">
+                                            <p class="mb-2 ml-3">Si clica encima del nº de factura, en este espacio le aparecerán los datos de la factura</p>
+                                        </div>
+                                    </div>
+                                    <svg class="card-info-triangle">
+                                        <polygon points="0,0 200,0 0,200" fill="currentColor"></polygon>
+                                    </svg>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+}
+</div>
+        </div>
+    </div>
+</div>
+

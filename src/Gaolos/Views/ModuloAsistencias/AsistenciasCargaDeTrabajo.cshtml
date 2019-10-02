@@ -1,0 +1,295 @@
+﻿@model ModuloAsistenciasLibrary.ModuloAsisnteicasAsistenciasCargaDeTrabajoInicioViewModel
+
+@{
+    Layout = "~/Views/Shared/Modulo-Asistencias/_Modulo-Asistencias.cshtml";
+    ViewData["Title"] = "Carga de trabajo";
+    ViewData["Message"] = "Modulo de Asistencias - Gaolos App v2018";
+}
+
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+                @if (Model.Model.Err.eserror)
+    {
+        ViewData["err"] = Model.Model.Err.mensaje;
+            @Html.Partial("AccesoDenegado");
+}
+else
+{
+
+            @* Buscar usuarios *@
+
+            <div class="card mb-3">
+                <div class="card-header card-header-options">
+                    <span>Buscar operario</span>
+
+                    <div class="card-actions">
+                        <ul>
+                            <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card-block p-0">
+
+                        <div class="d-flex justify-content-center align-items-center">
+                            <div class="col-1 text-center box-border-right-light py-2">
+                                <img src="https://image.flaticon.com/icons/svg/306/306059.svg" style="width: 100%;">
+                            </div>
+                            <div class="col-11">
+
+                                <div class="row p-0">
+                                    <div class="col-12 p-0">
+                                        <div class="d-flex mb-0 px-3">
+
+                                            <div class="input-group input-group-sm mb-0 mr-2">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text" id="">Buscar operario</span>
+                                                </div>
+                                                <input type="text" class="form-control form-control-sm ui-autocomplete-input" placeholder="Buscar operario" name="Operario2" id="Operario2" value="">
+                                                <input type="hidden" value="" name="vOperario2" id="vOperario2" />
+                                                <input type="hidden" value="" name="tOperario2" id="tOperario2" />
+                                                <input type="hidden" id="Fe_Ini" value="@Model.Model.datoS1" />
+                                                <span class="input-group-append">
+                                                    <button class="btn btn-primary btn-sm ver-carga" type="button">BUSCAR</button>
+                                                </span>
+                                            </div>
+
+                                            <div class="input-group input-group-sm mb-0 mr-2">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text" id="">Seleccionar fecha</span>
+                                                </div>
+                                                <input type="text" class="form-control form-control-sm" placeholder="Fecha" name="Fe_In" id="Fe_In" value="@Model.Model.datoS2">
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                </div>
+            </div>
+
+            <div class="row" id="sininfo">
+                <div class="col-12">
+                    <div class="card mb-3 mr-2">
+                        <div class="card-header card-header-options">
+                            <span>Información</span>
+                        </div>
+                        <div class="card-block">
+                            <p class="mb-0">Seleccione <strong>operario</strong> y fecha</p>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" id="semana" style="display:none">
+
+                <div class="col-8">
+                    @* Listado *@
+
+                    @*<h3 class="fs-1-1 mb-3" id="titulo"></h3>*@
+
+                    <div class="d-flex" id="content">
+                    </div>
+
+                    <div class="card mb-2" id="">
+                        <div class="card-header card-header-options">
+                            <span>Replanificar</span>
+                        </div>
+                        <div class="card-block p-0">
+                            <div class="d-flex">
+                                <div class="col-12 py-2">
+
+                                    <div class="d-flex mb-1">
+                                        <div class="input-group input-group-sm mb-0 mr-2">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Día</span>
+                                            </div>
+                                            <input type="text" class="form-control" id="rep-dia" value="" placeholder="Día" maxlength="15">
+                                        </div>
+
+                                        <div class="input-group input-group-sm mb-0">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Hora</span>
+                                            </div>
+                                            <input type="text" class="form-control" id="rep-hora" value="" placeholder="Hora" maxlength="5">
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex mb-1">
+                                        <div class="input-group input-group-sm mb-0">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Comentario</span>
+                                            </div>
+                                            <textarea class="form-control" aria-label="With textarea" placeholder="Comentario" id="rep-comen"></textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex">
+                                        <div class="input-group input-group-sm mb-0">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Operario</span>
+                                            </div>
+                                            <input type="text" class="form-control" id="rep-ope" value="" placeholder="Operario">
+                                            <input type="hidden" id="vrep-ope" name="vrep-ope" value="">
+                                            <input type="hidden" id="trep-ope" name="trep-ope" value="">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-center box-border-top p-2 mdc-bg-blue-grey-50">
+                                <button type="button" class="btn btn-sm btn-primary carga-asis-replanificar" id="btn_plan">Replanificar</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mb-2">
+                        <div class="col-6">
+                            <div class="card mt-3 card-table">
+                                <div class="card-header card-header-options">
+                                    <span>Eliminar asignación</span>
+                                </div>
+                                <div class="card-block">
+                                    <div class="d-flex p-3 justify-content-center">
+                                        <button type="button" class="btn btn-sm btn-primary">Eliminar asignación</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="card mt-3 card-table">
+                                <div class="card-header card-header-options">
+                                    <span>Eliminar planificación</span>
+                                </div>
+                                <div class="card-block">
+                                    <div class="d-flex p-3 justify-content-center">
+                                        <button type="button" class="btn btn-sm btn-primary">Eliminar planificación</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="col-4">
+
+                    <div class="card mb-3">
+                        <div class="card-header card-header-options">
+                            <span>Asistencias por planificar <span id="asis-num"></span></span>
+                        </div>
+                        <div class="card-block p-0">
+                            <div class="d-flex">
+                                <div class="col-12 py-2">
+                                    <div class="d-flex mb-1">
+                                        <div class="input-group input-group-sm mb-0 mr-2">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Población</span>
+                                            </div>
+                                            <input type="text" class="form-control" id="Pob" value="" placeholder="Población">
+                                        </div>
+
+                                        <div class="input-group input-group-sm mb-0">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Código postal</span>
+                                            </div>
+                                            <input type="text" class="form-control" id="CP" value="" placeholder="Código postal">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-center box-border-top p-2 mdc-bg-blue-grey-50">
+                                <button type="button" class="btn btn-sm btn-primary form-buscar-asistencias" id="btn_plan">Buscar</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card mb-3">
+                        <div class="card-header card-header-options">
+                            <span>Planificar</span>
+                        </div>
+                        <div class="card-block p-0">
+                            <div class="d-flex">
+                                <div class="col-12 py-2">
+
+                                    <div class="d-flex mb-1">
+                                        <div class="input-group input-group-sm mb-0 mr-2">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Fecha</span>
+                                            </div>
+                                            <input type="text" class="form-control" id="DiaPlan" value="" placeholder="Fecha" maxlength="15">
+                                        </div>
+
+                                        <div class="input-group input-group-sm mb-0">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Hora</span>
+                                            </div>
+                                            <input type="text" class="form-control" id="HoraPlan" value="" placeholder="Hora" maxlength="5">
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex">
+                                        <div class="input-group input-group-sm mb-0">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Comentario</span>
+                                            </div>
+                                            <textarea class="form-control" aria-label="With textarea" placeholder="Comentario" id="ComenPlan"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-center box-border-top p-2 mdc-bg-blue-grey-50">
+                                <button type="button" class="btn btn-sm btn-primary carga-asis-planificar" id="btn_plan">Planificar</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card mb-3">
+                        <div class="card-header card-header-options">
+                            <span id="">Listado de asistencias</span>
+                        </div>
+                        <div class="card-block card-table p-0">
+                            <div class="d-flex">
+                                <table class="table table-striped p-0 mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>Sel.</th>
+                                            <th class="w-5"><i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="Indica si es asistencia o mantenimiento. El * indica que la asistencia de mantenimiento es la anual."></i></th>
+                                            <th>Exposición</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="content-asis">
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div id="asistencias-paginador" class="mb-2"></div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </div>
+
+                }
+
+            </div>
+        </div>
+    </div>
+</div>

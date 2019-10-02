@@ -1,0 +1,103 @@
+﻿@model DashBoardLibrary.DashBoardViewModel
+@{
+    Layout = "~/Views/Shared/Modulo-Albaranes/_Modulo-Albaranes-Dashboard.cshtml";
+    ViewData["Title"] = Model.Model.Modulo;
+}
+
+<div class="main-content m-0" id="widget-area">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+
+                @if (Model.Model.Err.eserror)
+                {
+                    ViewData["err"] = Model.Model.Err.mensaje;
+                    @Html.Partial("AccesoDenegado");
+                }
+                else
+                {
+
+                    <div class="card mb-3">
+                        <div class="card-block card-info-header card-info-header-modulo p-0">
+                            <div class="d-flex justify-content-center align-items-center">
+                                <div class="col-1 pb-2 pt-2 d-flex justify-content-center align-items-center">
+                                    @Html.Raw(@Model.Model.IconoSvg)
+                                </div>
+                                <div class="col-11 pt-2 pb-2 box-border-left-light">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="card-info-desc d-flex flex-column py-3">
+                                            <h5 class="fw-5 title-section">@Model.Model.Modulo</h5>
+                                            @Html.Raw(@Model.Model.Obs)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="card mb-3">
+                                <div class="card-block p-0">
+                                    <div class="d-flex justify-content-center align-items-center">
+                                        <div class="col-12 p-4">
+                                            <h5 class="fw-5 title-section mb-4">Apartados disponibles</h5>
+                                            @if (Model.Model.det != null)
+                                            {
+                                                <div class="row">
+                                                    @for (Int32 t = 0; t < Model.Model.det.Length; t++)
+                                                    {
+                                                        <div class="col-conf mb-3 col-3">
+                                                            <figure>
+                                                                <a href="@Model.Model.det[t].Llamada" id="trigger-asistencias-@t">
+                                                                    @Html.Raw(@Model.Model.det[t].IconoSvg)
+                                                                    <h5 class="fs-0-9 fw-5  mt-2">@Model.Model.det[t].Apartado</h5>
+                                                                </a>
+                                                            </figure>
+                                                        </div>
+                                                    }
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-6">
+                            <div id="dashboard-info-wrapper" class="w-100 d-none">
+                                <div class="dashboard-info" id="dashboard-info">
+                                    <h2></h2>
+                                    <p class="mb-2"> </p>
+                                    <div class="d-flex justify-content-center">
+                                        <div id="dashboard-video"></div>
+                                    </div>
+                                </div>
+                                <svg class="dashboard-triangle">
+                                    <polygon points="0,0 200,0 0,200" fill="currentColor" />
+                                </svg>
+                            </div>
+                        </div>
+
+                    </div>
+
+                }
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+@Html.Partial("DashboardScripts")

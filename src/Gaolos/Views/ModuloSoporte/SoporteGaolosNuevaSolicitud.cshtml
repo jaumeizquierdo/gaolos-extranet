@@ -1,0 +1,139 @@
+﻿@*
+    @model TagsLibrary.TagsListadoViewModel
+*@
+@{
+    Layout = "~/Views/Shared/Modulo-Soporte/_Soporte-Gaolos.cshtml";
+    ViewData["Title"] = "Soporte - Nueva solicitud";
+    ViewData["Message"] = "Soporte - Gaolos App v2017";
+}
+
+<div class="main-content m-0" id="widget-area">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                
+    @*@if (Model.Model.Err.eserror)
+    {
+        ViewData["err"] = Model.Model.Err.mensaje;
+        @Html.Partial("AccesoDenegado");
+    }
+    else
+    {*@
+
+                    @* Solicitud *@
+
+                    <div class="row">
+                        <div class="col-5">
+                            <div class="card">
+                                <div class="card-header card-header-options">
+                                    <span>Nueva solicitud</span>
+                                </div>
+                                <div class="card-block">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <label for="">Titulo</label> *
+                                                <input type="text" class="form-control" id="Titulo" placeholder="Breve descripción" maxlength="200" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="">Exposición</label> *
+                                                <textarea class="form-control" rows="8" placeholder="Exposición" id="Expo" required></textarea>
+                                            </div>
+                                            <div class="form-group">
+                                                @*
+                                                <label for="">Urgente</label>
+                                                <input type="checkbox" id="Urg" />
+                                                *@
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <label class="custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0">
+                                                        <input type="checkbox" class="custom-control-input" id="Urg">
+                                                        
+                                                        <span class="custom-control-label">Urgente</span>
+                                                    </label>
+                                                </div>
+
+                                            </div>
+                                            <div class="form-group">
+                                                @*
+                                                <label for="">Privado</label>
+                                                <input type="checkbox" id="Priv" />
+                                                *@
+
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <label class="custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0">
+                                                        <input type="checkbox" class="custom-control-input" id="Priv">
+                                                        
+                                                        <span class="custom-control-label">Privado</span>
+                                                    </label>
+                                                </div>
+
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="">Referencia del cliente</label>
+                                                <input type="text" class="form-control" id="RefCli" placeholder="Su referencia" maxlength="50">
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="row mt-2">
+                                        <div class="col-12 text-center">
+                                            <div class="justify-content-center">
+                                                <button type="button" class="btn btn-primary form-soporte-gaolos-nueva-solicitud btn-sm">Enviar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-7">
+
+                            <div class="card card-table">
+
+                                <div class="card-header card-header-options">
+                                    <span>Solicitudes abiertas</span>
+                                    <label class="custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0">
+                                        <input type="checkbox" class="custom-control-input form-soporte-gaolos-solo-mias" id="SoloMias">
+                                        
+                                        <span class="custom-control-label">Mis solicitudes</span>
+                                    </label>
+                                </div>
+
+                                <div class="card-block" role="tablist" aria-multiselectable="true">
+                                    <table class="table table-striped table-select">
+                                        <thead>
+                                            <tr>
+                                                <th class="w-10 text-center">Alta</th>
+                                                <th class="w-10 text-center">Revisión</th>
+                                                <th class="w-15 text-center">Usuario</th>
+                                                <th>Título</th>
+                                                <th class="w-20 text-center">Estado</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="listado">
+                                            <tr><td colspan="5" class="text-azul mb-0 fw-5"><i class="fa fa-clock-o"></i> Actualizando datos ...</td></tr>
+                                        </tbody>
+                                    </table>
+                                    
+
+                                </div>
+                             </div>
+                            <div id="listado-paginador"></div>
+                        </div>
+                    </div>
+                
+    @*}*@
+                
+            </div>
+        </div>
+    </div>
+</div>
+<script>ActualizarListadoSoporte(1);</script>

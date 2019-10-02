@@ -1,0 +1,163 @@
+﻿/* Botones */
+
+@import "variables.scss";
+@import "materialdesign.scss";
+
+.btn {
+    font-family: $boton-family;
+    font-weight: 500;
+}
+
+.btn-submit {
+    width: auto;
+    font-size: $boton-size;
+    color: $boton-url;
+    border: none;
+    background: $boton-bg;
+    //box-shadow: $boton-box-weight $boton-box-shadow;
+    border-radius: $border-radius-boton;
+    padding: $boton-padding;
+    font-weight: $boton-weight;
+    margin: $boton-margin;
+    display: inline-flex;
+    @include fade-link;
+    cursor: pointer;
+    &:hover,
+    &:active,
+    &:focus {
+        color: $boton-url-hover;
+        border: none !important;
+        //background: $boton-bg-hover;
+        background: $md-red-a400;
+        //box-shadow: $boton-box-weight $boton-box-shadow-hover;
+        outline: 0;
+        text-decoration: none;
+    }
+}
+
+.btn-content {
+    @include flex;
+    i {
+        margin-right: 0.5rem;
+    }
+    span {
+        margin-left: 0.5rem;
+    }
+}
+
+.btn-primary {
+    background: $md-blue-500;
+    border: 1px solid $md-blue-500;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    &:hover,
+    &:active,
+    &:focus {
+        background: $md-red-a400;
+        border: 1px solid $md-red-a400;
+    }
+}
+
+.btn-secondary {
+    cursor: pointer !important;
+}
+
+.btn-question {
+    border: 1px solid $md-blue-grey-100;
+    display: block !important;
+    padding: 0 0.4rem;
+    display: inline;
+    height: 25px;
+    border-radius: 3px;
+    color: $md-blue-grey-700;
+    font-weight: 400;
+    margin-bottom: 0.33rem;
+    &:hover {
+        background: $md-blue-500;
+        border: 2px solid $md-blue-500;
+        color: #fff;
+    }
+}
+
+.btn-sm {
+    font-size: 0.8rem !important;
+    border-radius: 2px !important;
+}
+
+.btn-sm-2x {
+    padding: .10rem .5rem;
+}
+
+ .btn-success {
+     cursor: pointer;
+ }
+
+ .btn-danger {
+     cursor: pointer;
+     background: $md-red-a400 !important;
+ }
+
+.btn-aux {
+    padding: .1rem .3rem;
+    font-size: 0.8rem !important;
+    background: #fff;
+    color: $md-blue-500;
+    border: 1px solid $md-blue-500;
+}
+
+.input-group-btn {
+    .btn-primary {
+        font-size: 0.8rem;
+        //text-transform: uppercase;
+    }
+}
+
+// asistencias - wrapper btn
+.asignar-wrapper {
+    @include flex;
+    justify-content: center;
+    align-content: center;
+}
+
+// calendario
+
+.btn-calendario {
+    background: none;
+    border: none;
+    i {
+        color: $md-blue-500;
+    }
+    &:hover {
+        background: none;
+        border: none;
+        i {
+            color: $url-base-hover;
+        }
+    }
+}
+
+// filtros
+
+.btn-filter {
+    background: $md-blue-grey-500;
+    border: 1px solid $md-blue-grey-500;
+    a {
+        color: #fff;
+    }
+    &:hover {
+        background: $md-blue-500;
+        border: 1px solid $md-blue-500;
+    }
+}
+
+// boton disabled
+
+.btn-disabled {
+    cursor: no-drop;
+}
+
+button:disabled,
+button[disabled] {
+    cursor: no-drop;
+}

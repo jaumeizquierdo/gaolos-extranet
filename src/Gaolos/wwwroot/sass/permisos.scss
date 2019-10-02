@@ -1,0 +1,157 @@
+﻿/* Permisos */
+
+@import "variables.scss";
+@import "materialdesign.scss";
+
+.permisos {
+    .custom-control {
+        margin-right: 0;
+        min-height: 1rem;
+    }
+    .td-check {
+        width: 3em;
+    }
+}
+
+.permisos-iconos {
+    li {
+        i {
+            display: inline-flex;
+            min-height: 1rem;
+            padding-left: 1.5rem;
+            margin-right: 1rem;
+        }
+    }
+}
+
+.permisos-table {
+    thead {
+        tr {
+            th {
+                background: $md-blue-grey-700;
+                border: none;
+                padding: 0.5rem 0.9rem;
+                border-bottom: 1px solid $md-blue-grey-800 !important;
+                color: #fff;
+
+                i {
+                    color: #fff;
+                }
+            }
+        }
+    }
+
+    th {
+        //background: $md-grey-50;
+    }
+
+    tr {
+        th, td {
+            background: $md-blue-grey-100;
+            border-bottom: 1px solid $md-blue-grey-200 !important;
+            text-transform: uppercase;
+            font-size: 0.9em;
+        }
+    }
+
+    tr.submodulo,
+    .modules {
+        th, td {
+            background: #fff;
+            border-bottom: 1px solid $md-blue-grey-100 !important;
+            border-right: 1px solid $md-blue-grey-100 !important;
+            font-size: 0.9em;
+            text-transform: capitalize;
+
+
+            &:last-child {
+                border-right: none !important;
+            }
+
+            &:first-child {
+                padding-left: 1.2rem !important;
+            }
+        }
+    }
+
+    tr.submodulo {
+        th {
+            padding-left: 1.5rem;
+            text-transform: uppercase;
+        }
+
+        &:hover {
+            td {
+                background: $md-blue-grey-50 !important;
+            }
+        }
+    }
+
+    tfoot {
+        th {
+            background: #fff;
+        }
+    }
+}
+
+// Preview firma 
+
+#preview-firma {
+    background: #fff;
+    border: 1px solid $md-grey-200;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+}
+
+// Modulos Permisos
+
+.table-modulo-permisos {
+    border-radius: 2px;
+
+    tr {
+        th {
+            background: $md-blue-grey-600 !important;
+            color: #fff;
+            border-bottom: none !important;
+            border-top: none !important;
+        }
+    }
+
+    tr {
+        td {
+            border-bottom: 1px solid $md-blue-grey-100 !important;
+            border-left: 1px solid $md-blue-grey-100;
+            font-size: 0.9em;
+
+            &:first-child {
+                background: $md-blue-grey-50;
+            }
+        }
+
+        td.red {
+            background: $md-red-100;
+            border-bottom: 1px solid $md-red-200 !important;
+            border-left: 1px solid $md-red-200 !important;
+        }
+
+        td.teal {
+            background: $md-blue-100;
+            border-bottom: 1px solid $md-blue-200 !important;
+            border-left: 1px solid $md-blue-200 !important;
+        }
+
+        &:last-child {
+            td {
+                border-bottom: none !important;
+            }
+
+            td.red {
+                border-bottom: none !important;
+            }
+
+            td.teal {
+                border-bottom: none !important;
+            }
+        }
+    }
+}

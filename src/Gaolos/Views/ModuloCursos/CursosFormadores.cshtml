@@ -1,0 +1,182 @@
+﻿@{
+    Layout = "~/Views/Shared/Modulo-Cursos/_Cursos-curso.cshtml";
+    ViewData["Title"] = "Formadores";
+    ViewData["Message"] = "Modulo de cursos - Gaolos App v2017";
+}
+
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section mb-0">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+
+
+                @* cabecera *@
+
+                <div class="card mb-3 mt-3">
+                    <div class="card-header card-header-options">
+                        <span>Formadores</span>
+                        <div class="card-actions">
+                            <ul>
+                                <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-block p-0">
+                        <div class="d-flex justify-content-center align-items-center">
+                            <div class="col-1 pb-2 pt-2 box-border-right-light">
+                                <img src="https://image.flaticon.com/icons/svg/746/746981.svg" style="width: 100%;">
+                            </div>
+
+                            <div class="col-11 pt-2 pb-2">
+                                <label>Buscar tipos</label>
+                                <div class="input-group card-search-box mb-3">
+                                    <input type="text" class="form-control" placeholder="Buscar formador" name="buscar" value="">
+                                    <span class="input-group-append">
+                                        <button class="btn btn-primary" type="submit">Buscar</button>
+                                    </span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-8">
+                        <div class="card card-table">
+                            <div class="card-header card-header-options">
+                                <span>Listado de formadores [10 formadores localizadas]</span>
+                                <div class="input-group input-group-sm col-4 mr-0 pr-0">
+                                    <input type="text" class="form-control form-control-sm" id="" placeholder="Nuevo formador">
+                                    <span class="input-group-append">
+                                        <button type="button" class="btn btn-primary btn-sm">Nuevo</button>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="card-block">
+                                <table class="table table-striped table-select">
+                                    <thead>
+                                        <tr>
+                                            <th class="w-5 text-center">Nº</th>
+                                            <th class="w-10">Fecha</th>
+                                            <th class="">Formador</th>
+                                            <th class="">NIF</th>
+                                            <th class="">Tel</th>
+                                            <th class="">Mail</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @for(var i = 0; i < 10; i++) {
+                                        <tr>
+                                            <td class="text-center"><p class="mb-0"><a href="#" class="fw-5" id="">@i</a></p></td>
+                                            <td class="w-10"><p class="mb-0">22/01/2018</p></td>
+                                            <td><p class="mb-0 fw-5">Nombre</p></td>
+                                            <td><p class="mb-0">11223344A</p></td>
+                                            <td><p class="mb-0">666 11 22 33</p></td>
+                                            <td><p class="mb-0">pp@pp.com</p></td>
+                                        </tr>
+                                        }
+                                        <tr>
+                                            <td colspan="8">
+                                                <p class='fw-5 text-danger mb-0'><i class='fa fa-exclamation-circle mr-1'></i> No hay resultados</p>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4">
+
+                        @* Sin datos *@
+                        <div class="card card-table mb-3" id="versininfo">
+
+                            <div class="card-header card-header-options">
+                                <span>Detalles</span>
+                                <div class="card-actions">
+                                    <ul>
+                                        <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="card-block" role="tablist" aria-multiselectable="true">
+                                <div class="text-center mt-4 mb-4 p-5 bloque-sin-informacion">
+                                    <img src="~/flaticons/chat.svg" style="width: 25%;">
+                                    <p class="pt-4 fw-5">Si clica encima de la fecha del número inicio podrá modificar los datos.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card mb-3" id="ver-contenido" style="display:none;">
+                            <div class="card-header card-header-options">
+                                <span id="titulo-fecha">Detalles</span><input type="hidden" id="" value="0" />
+                                <div class="card-actions">
+                                    <ul>
+                                        <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="card-block p-0">
+
+                                <div class="box-grey-bg mt-3 mx-3 mb-2">
+                                    <p class="mb-0"><small class="fw-5"><span class="mr-1">Nº:</span> <span class="text-danger">108</span></small></p>
+                                    <p class="mb-0"><small class="fw-5"><span class="mr-1">Alta:</span> <span class="text-danger">Yolanda Gómez López - 26/02/18  12:44</span></small></p>
+                                </div>
+
+                                <div class="row pt-0 pb-2 px-3">
+                                    <div class="col-12">
+                                        <div class="form-group mb-2">
+                                            <label>Tipo titulaciones</label>
+                                            <input type="text" class="form-control form-control-sm" placeholder="Tipo titulaciones" id="">
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-group mb-2">
+                                            <label>Observaciones</label>
+                                            <textarea type="text" class="form-control form-control-sm" rows="3" placeholder="Observaciones" id=""></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-center box-border-top p-2 mdc-bg-blue-grey-50">
+                                    <button type="submit" class="btn btn-sm btn-primary">Guardar</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        @*Eliminar*@
+
+                        <div class="card mb-3" id="ver-contenido">
+                            <div class="card-header card-header-options">
+                                <span id="titulo-fecha">Eliminar</span><input type="hidden" id="ID_Cale" value="0" />
+                                <div class="card-actions">
+                                    <ul>
+                                        <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="card-block p-2">
+                                <div class="d-flex justify-content-center p-2">
+                                    <button type="submit" class="btn btn-sm btn-danger tema-guardar">Eliminar</button>
+                                    <input type="hidden" id="ID_Temario2" value="">
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

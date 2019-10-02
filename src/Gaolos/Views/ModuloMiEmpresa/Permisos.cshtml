@@ -1,0 +1,209 @@
+﻿@*
+    @model CmsLibrary.CmsWebViewModel
+*@
+@{
+    Layout = "~/Views/Shared/Modulo-Mi-Empresa/_Nodos.cshtml";
+    ViewData["Title"] = "Permisos de Usuario";
+    ViewData["Message"] = "CMS - Gaolos App v2017";
+}
+
+<div class="main-content">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+
+                <div class="card mb-3">
+                    <div class="card-header card-header-options">
+                        <span>@ViewData["Title"]</span>
+                        @Html.Partial("PanelActions")
+                    </div>
+                    <div class="card-block">
+
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-3 arbol-nodos" id="idraw">
+                                    @Html.Raw(ViewData["Html"])
+                                </div>
+                                <div class="col-9">
+
+                                    @*
+                                        <div class="card card-table mb-3">
+                                            <div class="card-header">
+                                                Módulos Heredados <strong>[nodo]</strong>
+                                            </div>
+                                            <div class="card-block">
+
+                                                <table class="table table-striped permisos" id="tabla-permisos">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Módulos</th>
+                                                            <th><i class="fa fa-times" data-toggle="tooltip" data-placement="top" title="Denegar"></i></th>
+                                                            <th><i class="fa fa-plus" data-toggle="tooltip" data-placement="top" title="Crear"></i></th>
+                                                            <th><i class="fa fa-search" data-toggle="tooltip" data-placement="top" title="Consultar"></i></th>
+                                                            <th><i class="fa fa-pencil" data-toggle="tooltip" data-placement="top" title="Modificar"></i></th>
+                                                            <th><i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="Eliminar"></i></th>
+                                                            <th><i class="fa fa-list" data-toggle="tooltip" data-placement="top" title="Listar"></i></th>
+                                                            <th><i class="fa fa-user-o" data-toggle="tooltip" data-placement="top" title="Autor"></i></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @for (int i = 0; i < 5; i++)
+                                                        {
+                                                            <tr>
+                                                                <th scope="row">Albaranes</th>
+                                                                <td>
+                                                                    <label class="custom-control custom-checkbox">
+                                                                        <input type="checkbox" class="custom-control-input">
+                                                                        
+                                                                    </label>
+                                                                </td>
+                                                                <td>
+                                                                    <label class="custom-control custom-checkbox">
+                                                                        <input type="checkbox" class="custom-control-input">
+                                                                        
+                                                                    </label>
+                                                                </td>
+                                                                <td>
+                                                                    <label class="custom-control custom-checkbox">
+                                                                        <input type="checkbox" class="custom-control-input">
+                                                                        
+                                                                    </label>
+                                                                </td>
+                                                                <td>
+                                                                    <label class="custom-control custom-checkbox">
+                                                                        <input type="checkbox" class="custom-control-input">
+                                                                        
+                                                                    </label>
+                                                                </td>
+                                                                <td>
+                                                                    <label class="custom-control custom-checkbox">
+                                                                        <input type="checkbox" class="custom-control-input">
+                                                                        
+                                                                    </label>
+                                                                </td>
+                                                                <td>
+                                                                    <label class="custom-control custom-checkbox">
+                                                                        <input type="checkbox" class="custom-control-input">
+                                                                        
+                                                                    </label>
+                                                                </td>
+                                                                <td>
+                                                                    <label class="custom-control custom-checkbox">
+                                                                        <input type="checkbox" class="custom-control-input">
+                                                                        
+                                                                    </label>
+                                                                </td>
+                                                            </tr>
+                                                        }
+                                                    </tbody>
+                                                </table>
+
+                                            </div>
+                                        </div>
+                                    *@
+
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="card mb-3 p-3 success-border">
+                                                <div class="d-inline-flex justify-content-between align-items-center">
+                                                    <span class="fw-5">Propagar permisos</span>
+                                                    <button type="button" class="guardar-permisos btn btn-success btn-sm">Propagar Permisos</button>
+                                                </div>
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-8">
+                                            <div class="card card-table mb-3">
+                                                <div class="card-header card-header-options">
+                                                    <span>Módulos seleccionados para este nodo</span>
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        @*
+                                                        <label class="custom-control custom-checkbox" data-toggle="tooltip" data-placement="top" title="Denegar todos">
+                                                            <input type="checkbox" class="custom-control-input" id="check-deniega-todo">
+                                                            <input type="hidden" value="" id="ID_Nodo" />
+                                                            <span class="custom-control-label" data-toggle="tooltip" data-placement="top" title="Denegar todos"></span>
+                                                        </label>
+                                                        *@
+                                                        <input type="hidden" value="" id="ID_Nodo" />
+                                                        <a href="#" class="btn btn-secondary btn-sm fw-5"><i class="fa fa-angle-right"></i></a>
+                                                    </div>
+                                                </div>
+                                                <div class="card-block">
+                                                    <table class="table permisos permisos-table" id="tabla-permisos">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Permisos</th>
+                                                                <th><i class="fa fa-plus" data-toggle="tooltip" data-placement="top" title="Crear"></i></th>
+                                                                <th><i class="fa fa-pencil" data-toggle="tooltip" data-placement="top" title="Modificar"></i></th>
+                                                                <th><i class="fa fa-search" data-toggle="tooltip" data-placement="top" title="Consultar"></i></th>
+                                                                <th><i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="Eliminar"></i></th>
+                                                                <th><i class="fa fa-list" data-toggle="tooltip" data-placement="top" title="Listar"></i></th>
+                                                                <th><i class="fa fa-user" data-toggle="tooltip" data-placement="top" title="Autor"></i></th>
+                                                                <th><i class="fa fa-ban" data-toggle="tooltip" data-placement="top" title="Denegar"></i></th>
+                                                                <th><i class="fa fa-times" data-toggle="tooltip" data-placement="top" title="Eliminar"></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="infosel">
+                                                            <tr class="modules">
+                                                                <th scope="row" colspan="9">Seleccione un nodo</th>
+                                                            </tr>
+                                                        </tbody>
+                                                        <tfoot>
+                                                            <tr>
+                                                                <th scope="row" colspan="9" class="text-center"><button type="button" class="guardar-permisos btn btn-primary btn-sm">Guardar</button></th>
+                                                            </tr>
+                                                        </tfoot>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="card card-table">
+                                                <div class="card-header card-header-options">
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <a href="#" class="btn btn-secondary btn-sm fw-5 mr-2 adddisp"><i class="fa fa-angle-left"></i></a>
+                                                        <label class="custom-control custom-checkbox" data-toggle="tooltip" data-placement="top" title="Denegar todos">
+                                                            <input type="checkbox" class="custom-control-input" id="check-asigna-todo">
+                                                            <span class="custom-control-label" data-toggle="tooltip" data-placement="top" title="Asignar todos"></span>
+                                                        </label>
+                                                        <span>Módulos Disponibles</span>
+                                                    </div>
+
+                                                </div>
+                                                <div class="card-block">
+
+                                                    <table class="table permisos permisos-table" id="tabla-permisos">
+                                                        <thead>
+                                                            <tr>
+                                                                <th><i class="fa fa-check" data-toggle="tooltip" data-placement="top" title="Asignar Módulo"></i></th>
+                                                                <th>Módulos</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="infodisp">
+                                                            <tr class="modules">
+                                                                <th scope="row" colspan="2">Seleccione un nodo</th>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

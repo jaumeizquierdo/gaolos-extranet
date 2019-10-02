@@ -1,0 +1,378 @@
+﻿@model ModuloArticulosLibrary.ModuloArticulosArticulo_GeneralViewModel
+@{
+    Layout = "~/Views/Shared/Modulo-Articulos/_Modulo-Articulos-Articulo.cshtml";
+    ViewData["Title"] = "Artículo";
+}
+
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+                @if (Model.Model.Err.eserror)
+                {
+                    ViewData["err"] = Model.Model.Err.mensaje;
+                @Html.Partial("AccesoDenegado");
+                }
+                else
+                {
+
+                @* Artículos Cabecera *@
+
+                @Html.Partial("Articulo-Cabecera")
+
+                @* Artículos Tabs *@
+
+                @Html.Partial("Articulo-Tabs")
+
+                @* Listado de usuarios *@
+
+                <div class="row">
+                    <div class="col-8">
+                        <div class="card mb-3">
+                            <div class="card-header card-header-options">
+                                <span>Detalles</span>
+                            </div>
+                            <div class="card-block p-0">
+
+                                <div class="d-flex flex-column p-2">
+
+                                    <div class="input-group input-group-sm mb-1">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Artículo</span>
+                                        </div>
+                                        <input type="text" class="form-control" id="Art" aria-describedby="" value="@Model.Model.Art" placeholder="Artículo" maxlength="200">
+                                    </div>
+
+                                    <div class="d-flex mb-1">
+                                        <div class="input-group input-group-sm mr-2">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Código</span>
+                                            </div>
+                                            <input type="text" class="form-control" id="Codigo" aria-describedby="" value="@Model.Model.Cab.Codigo" placeholder="Código" maxlength="25">
+                                        </div>
+                                        <div class="input-group input-group-sm">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Sub</span>
+                                            </div>
+                                            <input type="text" class="form-control" id="ArtSub" aria-describedby="" value="@Model.Model.Sub" placeholder="Sub" maxlength="100">
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex mb-1">
+                                        <div class="input-group input-group-sm mr-2">
+                                            <div class="input-group-prepend">
+                                                <label class="input-group-text" for="">Categoría</label>
+                                            </div>
+                                            @{ 
+                                                string strDisabled = "";
+                                                if (Model.Model.Cats.Length == 1) { strDisabled = " disabled"; }
+                                            }
+                                            <select class="custom-select" id="ID_Cat2" @Html.Raw(strDisabled)>
+                                                @for (Int32 t = 0; t < Model.Model.Cats.Length; t++)
+                                                {
+                                                    if (Model.Model.Cats[t].id == Model.Model.ID_Cat2)
+                                                    {
+                                                        <option value="@Model.Model.Cats[t].id" selected>@Model.Model.Cats[t].det</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@Model.Model.Cats[t].id">@Model.Model.Cats[t].det</option>
+                                                    }
+                                                }
+                                            </select>
+                                        </div>
+                                        <div class="input-group input-group-sm">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Sub2</span>
+                                            </div>
+                                            <input type="text" class="form-control" id="ArtSub2" aria-describedby="" value="@Model.Model.Sub2" placeholder="Sub2" maxlength="20">
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex mb-1">
+                                        <div class="input-group input-group-sm mr-2">
+                                            <div class="input-group-prepend">
+                                                <label class="input-group-text" for="">Fabricante</label>
+                                            </div>
+                                            @{
+                                                strDisabled = "";
+                                                if (Model.Model.Fabs.Length == 1) { strDisabled = " disabled"; }
+                                            }
+                                            <select class="custom-select" id="ID_Fab2" @Html.Raw(strDisabled)>
+                                                @for (Int32 t = 0; t < Model.Model.Fabs.Length; t++)
+                                                {
+                                                    if (Model.Model.Fabs[t].id == Model.Model.ID_Fab2)
+                                                    {
+                                                        <option value="@Model.Model.Fabs[t].id" selected>@Model.Model.Fabs[t].det</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@Model.Model.Fabs[t].id">@Model.Model.Fabs[t].det</option>
+                                                    }
+                                                }
+                                            </select>
+                                        </div>
+                                        <div class="input-group input-group-sm">
+                                            <div class="input-group-prepend">
+                                                <label class="input-group-text" for="">Referencia 1</label>
+                                            </div>
+                                            @{
+                                                strDisabled = "";
+                                                if (Model.Model.Refs.Length == 1) { strDisabled = " disabled"; }
+                                            }
+                                            <select class="custom-select" id="ID_Ref2" @Html.Raw(strDisabled)>
+                                                @for (Int32 t = 0; t < Model.Model.Refs.Length; t++)
+                                                {
+                                                    if (Model.Model.Refs[t].id == Model.Model.ID_Ref2)
+                                                    {
+                                                        <option value="@Model.Model.Refs[t].id" selected>@Model.Model.Refs[t].det</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@Model.Model.Refs[t].id">@Model.Model.Refs[t].det</option>
+                                                    }
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex mb-1">
+                                        <div class="input-group input-group-sm mr-2">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Cód. de barras</span>
+                                            </div>
+                                            <input type="text" class="form-control" id="Co_Ba" aria-describedby="" value="@Model.Model.Co_Ba" placeholder="Código de barras" maxlength="25">
+                                        </div>
+                                        <div class="input-group input-group-sm">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Unidades</span>
+                                            </div>
+                                            @{
+                                                strDisabled = "";
+                                                if (Model.Model.Unids.Length == 1) { strDisabled = " disabled"; }
+                                            }
+                                            <select class="custom-select" id="ID_Uni" @Html.Raw(strDisabled)>
+                                                @for (Int32 t = 0; t < Model.Model.Unids.Length; t++)
+                                                {
+                                                    if (Model.Model.Unids[t].id == Model.Model.ID_Uni)
+                                                    {
+                                                        <option value="@Model.Model.Unids[t].id" selected>@Model.Model.Unids[t].det</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@Model.Model.Unids[t].id">@Model.Model.Unids[t].det</option>
+                                                    }
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="d-flex justify-content-center box-border-top p-2 mdc-bg-blue-grey-50">
+                                    <button type="button" class="btn btn-sm btn-primary guardar-art-general">Guardar</button>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        @*<div class="card mb-3">
+                            <div class="card-header card-header-options">
+                                <span>IVA</span>
+                            </div>
+                            <div class="card-block p-0">
+
+                                <div class="d-flex flex-column p-2">
+
+
+                                    <div class="d-flex mb-1">
+                                        <div class="input-group input-group-sm mr-2">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Tipo IVA</span>
+                                            </div>
+                                            <input type="text" class="form-control" id="" aria-describedby="" value="" placeholder="Tipo IVA">
+                                        </div>
+                                        <div class="input-group input-group-sm">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">P.V.R.</span>
+                                            </div>
+                                            <input type="text" class="form-control" id="PVR" aria-describedby="" value="" placeholder="Precio de venta recomendado">
+                                        </div>
+
+                                    </div>
+
+                                    <div class="d-flex mb-1">
+                                        <div class="input-group input-group-sm mr-2">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Stock</span>
+                                            </div>
+                                            <input type="text" class="form-control" id="" aria-describedby="" value="" disabled>
+                                        </div>
+                                        <div class="input-group input-group-sm">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Disponible</span>
+                                            </div>
+                                            <input type="text" class="form-control" id="" aria-describedby="" value="" disabled>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex mb-1">
+                                        <div class="input-group input-group-sm mr-2">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Coste</span>
+                                            </div>
+                                            <input type="text" class="form-control" id="" aria-describedby="" value="" disabled>
+                                        </div>
+                                        <div class="input-group input-group-sm">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Garantia</span>
+                                            </div>
+                                            <input type="text" class="form-control" id="" aria-describedby="" value="" disabled>
+                                        </div>
+                                    </div>
+
+                                    <hr class="my-2 w-100" />
+
+        <div class="d-flex justify-content-between">
+
+            <div class="d-flex">
+                <div class="input-group input-group-sm mw-auto mr-2">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Predeterminado</span>
+                    </div>
+                    <div class="box-label-check">
+                        <input type="checkbox" class="" id="" name="">
+                    </div>
+                </div>
+                <div class="input-group input-group-sm mw-auto mr-2">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Vender sin stock</span>
+                    </div>
+                    <div class="box-label-check">
+                        <input type="checkbox" class="" id="" name="">
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex">
+                <div class="input-group input-group-sm mw-auto">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text input-group-text-auto">PVPR</span>
+                    </div>
+                    <input type="text" class="form-control" id="" aria-describedby="" value="" placeholder="PVPR">
+                </div>
+            </div>
+
+        </div>
+
+                                </div>
+
+                                <div class="d-flex justify-content-center box-border-top p-2 mdc-bg-blue-grey-50">
+                                    <a href="#" class="btn btn-sm btn-primary cliente-comercial-guardar">Guardar</a>
+                                </div>
+
+                            </div>
+                        </div>*@
+
+                        @*<div class="card mb-3">
+                            <div class="card-header card-header-options">
+                                <span>Control</span>
+                            </div>
+                            <div class="card-block p-0">
+                                <div class="d-flex mb-0 p-2 justify-content-between">
+
+                                    <div class="d-flex">
+                                        <div class="input-group input-group-sm mw-auto mr-2">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text input-group-text-auto">Número de serie</span>
+                                            </div>
+                                            <div class="box-label-check">
+                                                <input type="checkbox" class="" id="" name="">
+                                            </div>
+                                        </div>
+
+                                        <div class="input-group input-group-sm mw-auto mr-2">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text input-group-text-auto">Lote</span>
+                                            </div>
+                                            <div class="box-label-check">
+                                                <input type="checkbox" class="" id="" name="">
+                                            </div>
+                                        </div>
+
+                                        <div class="input-group input-group-sm mw-auto mr-2">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text input-group-text-auto">Compuesto</span>
+                                            </div>
+                                            <div class="box-label-check">
+                                                <input type="checkbox" class="" id="" name="">
+                                            </div>
+                                        </div>
+
+                                        <div class="input-group input-group-sm mw-auto mr-2">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text input-group-text-auto">Compuesto con stock</span>
+                                            </div>
+                                            <div class="box-label-check">
+                                                <input type="checkbox" class="" id="" name="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex">
+                                        <div class="input-group input-group-sm mw-auto">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text input-group-text-auto">Garantía días</span>
+                                            </div>
+                                            <input type="text" class="form-control" id="" aria-describedby="" value="" placeholder="Garantía días">
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="d-flex justify-content-center box-border-top p-2 mdc-bg-blue-grey-50">
+                                    <a href="#" class="btn btn-sm btn-primary">Guardar</a>
+                                </div>
+                            </div>
+                        </div>*@
+
+
+                    </div>
+                    <div class="col-4">
+
+                        <div class="card mb-3">
+                            <div class="card-header card-header-options">
+                                <span>Observaciones</span>
+                            </div>
+                            <div class="card-block p-0">
+                                <div class="d-flex mb-0 p-2">
+                                    <div class="input-group input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Observaciones</span>
+                                        </div>
+                                        <textarea rows="4" class="form-control" id="Obs" placeholder="Observaciones">@Model.Model.Obs</textarea>
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-center box-border-top p-2 mdc-bg-blue-grey-50">
+                                    <button type="button" class="btn btn-sm btn-primary guardar-obs-art-general">Guardar</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+                }
+            </div>
+        </div>
+    </div>
+</div>

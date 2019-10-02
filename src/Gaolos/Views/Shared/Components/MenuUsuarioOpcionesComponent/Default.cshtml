@@ -1,0 +1,28 @@
+﻿@model MenuUsuarioOpcionesLibrary.MenuUsuarioOpcionesViewModel
+@if (Model != null)
+{
+@if (Model.Menu != null)
+{
+    <ul>
+        <li class="dropdown">
+            <a href="#" class="d-flex align-items-center" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                <i class="material-icons">face</i>
+                <span class="hidden-md-down">@ViewData["sesUsuario"]</span>
+            </a>
+            <ul class="dropdown-menu">
+                @foreach (var s in Model.Menu._menus)
+                {
+                    @if (s.link == "")
+                    {
+                        <li role="separator" class="divider"></li>
+                    }
+                    else
+                    {
+                        <li><a href="@s.link">@s.Opcion</a></li>
+                    }
+                }
+            </ul>
+        </li>
+    </ul>
+}
+}

@@ -1,0 +1,140 @@
+﻿/* Nodos */
+
+@import "variables.scss";
+@import "materialdesign.scss";
+
+.arbol-nodos {
+    //padding: 2em;
+    width: 50%;
+    ul {
+        display: flex;
+        flex-direction: column;
+        li {
+            padding: 0;
+            flex-grow: 1;
+            i {
+                margin: 0 0.3em;
+                //color: $md-grey-400;
+                color: $md-blue-500;
+            }
+            ul {
+                margin: 0;
+            }
+        }
+    }
+    .nodo-acciones {
+        display: inline-flex;
+        align-items: center;
+        margin: 0 1em;
+        //border-bottom: 2px solid $md-grey-200;
+        //background: $md-grey-100;
+        a {
+            //margin: 0 0.5em;
+            i {
+                color: $md-grey-400;
+                &:hover {
+                    color: $md-grey-900;
+                }
+            }
+        }
+    }
+    .nodo-nivel {
+        margin-left: 1em;
+        font-weight: 500;
+    }
+    .nodo-fila {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        //border: 1px solid $md-grey-300;
+        margin-top: -1px;
+        padding: 0.4em 0 0.4em 1em;
+        //padding: 0 0 0 1em;
+        .nodo-acciones {
+            justify-content: flex-end;
+        }
+        .nodo-title {
+            a {
+                font-weight: 500;
+            }
+        }
+        &:hover {
+            background: $md-grey-200;
+            //border-left: 2px solid $border-main-hover;
+        }
+    }
+}
+
+/*
+ Tree structure using CSS:
+ http://stackoverflow.com/questions/14922247/how-to-get-a-tree-in-html-using-pure-css
+*/
+
+.tree, .tree ul {
+    //font: normal normal 14px/20px Helvetica, Arial, sans-serif;  
+    list-style-type: none;
+    margin: 0 0 0 10px !important;
+    padding: 0;
+    position: relative;   
+    overflow: hidden;    
+}
+
+.tree li {
+    margin: 0;
+    padding: 0 12px;  
+    position: relative;   
+}
+  
+.tree li::before, .tree li::after {
+    content: '';
+    position: absolute;
+    left: 0;
+}
+
+/* horizontal line on inner list items */
+.tree li::before {
+    border-top: 1px solid $md-blue-200;
+    top: 16px;
+    width: 10px;
+    height: 0;    
+}
+
+/* vertical line on list items */   
+.tree li:after {
+    border-left: 1px solid $md-blue-200;
+    height: 100%;
+    width: 0px;
+    top: 0; 
+}
+
+/* lower line on list items from the first level because they don't have parents */
+.tree > li::after {
+    top: 10px;
+}
+
+/* hide line from the last of the first level list items */
+.tree > li:last-child::after {
+    display: none;
+}
+
+/* Nodos relacionados (categorías) */
+
+#nodos-relacionados {
+    .nodo-title {
+        display: flex;
+        align-items: center;
+        .custom-control {
+            margin-bottom: 0;
+        }
+        i {
+            margin: 0 0.5rem 0 0;
+        }
+    }
+}
+
+/* disabled */
+
+.chevron-disabled {
+    color: $md-blue-grey-100 !important;
+    padding-top: 0.1em;
+}

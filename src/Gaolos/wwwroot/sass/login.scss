@@ -1,0 +1,307 @@
+﻿/* Login de ejemplo para Gaolos Extranet v2 */
+
+@import "variables.scss";
+@import "materialdesign.scss";
+
+.wrapper {
+    margin-top: 80px;
+    margin-bottom: 80px;
+}
+
+.bg-login {
+    background: linear-gradient(rgba(0,0,0,.2),rgba(0,0,0,.4)),url(https://public.gaolos.com/cdn/public/extranet/img/gaolos-login-bg-2.jpg);
+    //background-color: #2e4be0;
+    //background: $md-blue-grey-900;
+    //background: #fff;
+    background-position: bottom;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    header {
+        h1 {
+            font-size: 1.3em;
+            font-family: 'Inconsolata', monospace;
+        }
+
+        position: relative;
+        z-index: 1000;
+        text-align: center;
+    }
+}
+
+h2.form-signin-heading {
+    margin: 1.5em 0 0 0;
+    font-weight: 400;
+    font-size: 1.4em;
+}
+
+h3.form-signin-heading {
+    font-size: 1.1em;
+    margin: 0.5em 0 1.5em 0;
+}
+
+.form-login {
+    width: 35rem;
+    padding: 2.8em;
+    margin: 0 auto;
+    text-align: center;
+    border-radius: 7px;
+    background-color: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    position: relative;
+
+    .input-group-prepend {
+        .input-group-text {
+            width: 40px !important;
+            min-width: 0 !important;
+            justify-content: center;
+            background: $md-blue-grey-50;
+            color: $md-blue-grey-300;
+        }
+
+        .user-prepend {
+            border-bottom-left-radius: 0 !important;
+            border-bottom: none;
+        }
+
+        .password-prepend {
+            border-top-left-radius: 0 !important;
+            border-top: none !important;
+        }
+    }
+
+    .input-group {
+        input:-webkit-autofill {
+            -webkit-box-shadow: 0 0 0 30px white inset !important;
+        }
+
+        input {
+            font-size: 1.2em !important;
+        }
+    }
+}
+
+.meta-login {
+    margin: 0.5em 0 1em 0;
+    @include flex;
+    label {
+        margin: 0;
+    }
+    .checkbox {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-weight: normal;
+    }
+    .checkbox input[type="checkbox"] {
+        position: relative;
+        margin: 0 0.5em 0 0;
+    }
+    a {
+        font-weight: 500;
+    }
+}
+
+.form-signin,
+.form-buscador {
+    .form-control {
+        position: relative;
+        font-size: 16px;
+        height: auto;
+        padding: 10px;
+        box-sizing: border-box;
+        &:focus {
+            z-index: 2;
+            box-shadow: none;
+            border: 1px solid #2196F3;
+        }
+    }
+    input[type="text"] {
+        margin-bottom: -1px;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+    input[type="password"] {
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+    }
+} 
+
+.form-buscador {
+    margin: 1em 0 2em 0;
+}
+
+.form-signin input[type="text"] {
+    border-radius: 2px;
+}
+
+.footer-login {
+    position: fixed;
+}
+
+/* Slideshow Login -- Codrops */
+
+.cb-slideshow,
+.cb-slideshow:after {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    left: 0px;
+    z-index: 0;
+}
+
+.cb-slideshow:after {
+    content: '';
+    //background: transparent url(../images/pattern.png) repeat top left;
+}
+
+.cb-slideshow li span {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    color: transparent;
+    background-size: cover;
+    background-position: 50% 50%;
+    background-repeat: none;
+    opacity: 0;
+    z-index: 0;
+    animation: imageAnimation 36s linear infinite 0s;
+}
+
+.cb-slideshow li div {
+    z-index: 1000;
+    position: absolute;
+    bottom: 30px;
+    left: 0px;
+    width: 100%;
+    text-align: center;
+    opacity: 0;
+    color: #fff;
+    animation: titleAnimation 36s linear infinite 0s;
+}
+
+.cb-slideshow li div h3 {
+    font-family: 'BebasNeueRegular', 'Arial Narrow', Arial, sans-serif;
+    font-size: 240px;
+    padding: 0;
+    line-height: 200px;
+}
+
+
+.cb-slideshow li:nth-child(1) span {
+    background: linear-gradient(rgba(0,0,0,.2),rgba(0,0,0,.4)), url("https://public.gaolos.com/cdn/public/extranet/img/gaolos-login-bg-2.jpg");
+    background-position: top;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.cb-slideshow li:nth-child(2) span {
+    background: linear-gradient(rgba(0,0,0,.2),rgba(0,0,0,.4)), url("https://images.pexels.com/photos/7374/startup-photos.jpg");
+    background-position: top;
+    background-repeat: no-repeat;
+    background-size: cover;
+    animation-delay: 6s;
+}
+
+.cb-slideshow li:nth-child(3) span {
+    background: linear-gradient(rgba(0,0,0,.2),rgba(0,0,0,.4)), url("https://images.pexels.com/photos/7375/startup-photos.jpg");
+    background-position: top;
+    background-repeat: no-repeat;
+    background-size: cover;
+    animation-delay: 12s;
+}
+
+.cb-slideshow li:nth-child(4) span {
+    background: linear-gradient(rgba(0,0,0,.2),rgba(0,0,0,.4)), url("https://images.pexels.com/photos/933964/pexels-photo-933964.jpeg");
+    background-position: top;
+    background-repeat: no-repeat;
+    background-size: cover;
+    animation-delay: 18s;
+}
+
+.cb-slideshow li:nth-child(5) span {
+    background: linear-gradient(rgba(0,0,0,.2),rgba(0,0,0,.4)), url("https://images.pexels.com/photos/630839/pexels-photo-630839.jpeg");
+    background-position: top;
+    background-repeat: no-repeat;
+    background-size: cover;
+    animation-delay: 24s;
+}
+
+.cb-slideshow li:nth-child(6) span {
+    background: linear-gradient(rgba(0,0,0,.2),rgba(0,0,0,.4)), url("https://www.gaolos.com/img/gaolos-login-bg-1.jpg");
+    background-position: top;
+    background-repeat: no-repeat;
+    background-size: cover;
+    animation-delay: 30s;
+}
+
+.cb-slideshow li:nth-child(2) div {
+    animation-delay: 6s;
+}
+
+.cb-slideshow li:nth-child(3) div {
+    animation-delay: 12s;
+}
+
+.cb-slideshow li:nth-child(4) div {
+    animation-delay: 18s;
+}
+
+.cb-slideshow li:nth-child(5) div {
+    animation-delay: 24s;
+}
+
+.cb-slideshow li:nth-child(6) div {
+    animation-delay: 30s;
+}
+
+@keyframes imageAnimation {
+    0% {
+        opacity: 0;
+        animation-timing-function: ease-in;
+    }
+
+    8% {
+        opacity: 1;
+        animation-timing-function: ease-out;
+    }
+
+    17% {
+        opacity: 1
+    }
+
+    25% {
+        opacity: 0
+    }
+
+    100% {
+        opacity: 0
+    }
+}
+
+@keyframes titleAnimation {
+    0% {
+        opacity: 0
+    }
+
+    8% {
+        opacity: 1
+    }
+
+    17% {
+        opacity: 1
+    }
+
+    19% {
+        opacity: 0
+    }
+
+    100% {
+        opacity: 0
+    }
+}

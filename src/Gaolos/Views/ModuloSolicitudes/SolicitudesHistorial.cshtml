@@ -1,0 +1,177 @@
+﻿@model ModuloSolicitudesLibrary.ModuloSolicitudesAbiertasListadoViewModel
+
+@{
+    Layout = "~/Views/Shared/Modulo-Solicitudes/_Solicitudes.cshtml";
+    ViewData["Title"] = "Historial de solicitudes";
+    ViewData["Title-Bloque-1"] = "Solicitudes";
+    ViewData["BuscarTags"] = "Buscar solicitudes";
+    ViewData["Message"] = "Solicitudes - Gaolos App v2017";
+}
+
+<div class="main-content m-0" id="widget-area">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+
+
+                @if (Model.Model.Err.eserror)
+                {
+                    ViewData["err"] = Model.Model.Err.mensaje;
+                    @Html.Partial("AccesoDenegado");
+                }
+                else
+                {
+
+                <div class="card mb-3">
+                    <div class="card-header card-header-options">
+                        <span>@ViewData["BuscarTags"]</span>
+                        @Html.Partial("PanelActions")
+                    </div>
+
+                    <div class="card-block p-0">
+                        <form action="@ViewData["Form"]" method="post">
+                            <div class="d-flex justify-content-center align-items-center">
+                                <div class="col-1 text-center py-2">
+                                    <img src="~/flaticons/computer-2.svg" style="width: 100%;">
+                                </div>
+                                <div class="col-11 box-border-left-light">
+
+                                    <div class="row p-0">
+                                        <div class="col-12 p-0">
+                                            <div class="p-3">
+
+                                                <input type="text" class="form-control form-control-sm col-12" placeholder="Buscar por nombre, teléfono, mail, provincia, exposición y nº solicitud" name="buscar" value="@ViewData["buscar"]">
+                                                <select class="form-control form-control-sm mt-1" id="ID_Us_Asi" name="ID_Us_Asi">
+                                                    @for (Int32 t = 0; t < Model.Model.Trabajadores.Length; t++)
+                                                    {
+                                                        if (ViewData["ID_Us_Asi"].ToString() == Model.Model.Trabajadores[t].id.ToString())
+                                                        {
+                                                            <option value="@Model.Model.Trabajadores[t].id" selected>@Model.Model.Trabajadores[t].det</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="@Model.Model.Trabajadores[t].id">@Model.Model.Trabajadores[t].det</option>
+                                                        }
+                                                    }
+                                                </select>
+                                                <button class="btn btn btn-primary btn-sm mt-3" type="submit">Buscar</button>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+
+                </div>
+
+                    @* Listado de solicitudes *@
+
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card card-table">
+                                <div class="card-header card-header-options">
+                                    <span>Listado de solicitudes</span>
+                                </div>
+                                <div class="card-block">
+
+                                    <table class="table table-striped table-select">
+                                        <thead>
+                                            <tr>
+                                                <th class="w-5 text-left">Nº</th>
+                                                <th class="w-10 text-center">Fechas</th>
+                                                <th class="">Contacto / Exposición</th>
+                                                <th class="w-15">Usuario</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (Model.Model.det != null)
+                                            {
+                                                for (Int32 t = 0; t < Model.Model.det.Length; t++)
+                                                {
+                                                    string clase = "tr-no-priority";
+                                                    string clase2 = "text-success";
+                                                    <tr class="@clase">
+                                                        <td>
+                                                            <p class="mt-0 mb-0 fw-5">@Model.Model.det[t].ID_Soli2</p>
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <p class="fw-5 mb-0" title="Fecha planificada"><span class="@clase2">@Model.Model.det[t].Fe_New @Model.Model.det[t].Ho_New</span></p>
+                                                            @if (Model.Model.det[t].Expo != "")
+                                                            {
+                                                                <p class="fw-5 mb-0" title="Fecha de la tarea"><small>@Model.Model.det[t].Fe_Ul @Model.Model.det[t].Ho_Ul</small></p>
+                                                                <p class="fw-5 mb-0" title="Fecha de la solicitud"><small>@Model.Model.det[t].Fe_Al @Model.Model.det[t].Ho_Al</small></p>
+                                                            }
+                                                        </td>
+                                                        <td>
+                                                            <div class="priority">
+                                                                <a href="/tareas-pendientes/tarea-pendiente?ID_Soli2=@Model.Model.det[t].ID_Soli2">
+                                                                    <p class="m-0 py-1 fs-0-9"><strong>@Model.Model.det[t].Emp</strong></p>
+                                                                    <p class="m-0"><small><strong>@Html.Raw(Model.Model.det[t].Expo_New)</strong></small></p>
+                                                                    @if (Model.Model.det[t].Expo != "")
+                                                                    {
+                                                                        <hr class="my-1" />
+                                                                            <p class="m-0 mb-1"><small class="fw-5">@Html.Raw(Model.Model.det[t].Expo)</small></p>
+                                                                    }
+                                                                    @if (Model.Model.det[t].Dom != "")
+                                                                    {
+                                                                        <hr class="my-1" />
+                                                                        string txt = Model.Model.det[t].Dom;
+                                                                        if (Model.Model.det[t].Referer != "")
+                                                                        {
+                                                                            txt += " - " + Model.Model.det[t].Referer;
+                                                                        }
+                                                                        <p class="m-0 mb-1"><small class="fw-5">@txt</small></p>
+                                                                    }
+                                                                </a>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <p class="m-0 fw-5">@Model.Model.det[t].Usu_Tarea</p>
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <tr><td colspan="4"><p class='fw-5 text-danger mb-0'><i class='fa fa-exclamation-circle mr-1'></i> No hay resultados</p></td></tr>
+                                            }
+
+                                        </tbody>
+                                    </table>
+
+
+                                </div>
+                            </div>
+
+                            @* Resultado Búsqueda Paginador *@
+
+                            @if (Model.Model.det != null)
+                            {
+                                <nav aria-label="Búsqueda Listado" class="mb-3">
+                                    @Html.Raw(Model.Model.Paginador)
+                                </nav>
+                            }
+
+                        </div>
+
+                    </div>
+
+                }
+
+            </div>
+        </div>
+    </div>
+</div>

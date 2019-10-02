@@ -1,0 +1,486 @@
+﻿@model CursosLibrary.ModuloCursosCursoDetallesEditar_ComunicacionViewModel
+@{
+    Layout = "~/Views/Shared/Modulo-Cursos/_Cursos-Curso-Comunicacion.cshtml";
+    ViewData["Title"] = "Curso";
+    ViewData["Message"] = "Modulo de cursos - Gaolos App v2017";
+}
+
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section mb-0">
+                <h2>@ViewData["Title"] <i class="fa fa-angle-right mr-1 ml-1"></i> Comunicación</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+                @if (Model.Model.Err.eserror)
+                {
+                    ViewData["err"] = Model.Model.Err.mensaje;
+                    @Html.Partial("AccesoDenegado");
+                }
+                else
+                {
+                    @* tabs *@
+
+                    @Html.Partial("Curso-Tabs")
+
+                    @* cabecera *@
+
+                    @Html.Partial("Curso-Cabecera")
+
+
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            @* INFORMACIÓN *@
+                            <div class="card">
+                                <div class="card-header card-header-options">
+                                    <span>Información</span>
+                                </div>
+
+                                @* Web *@
+
+                                <div class="d-flex box-border-bottom p-2 mdc-bg-blue-grey-50 box-border-left-10">
+                                    <h5 class="fs-1-2 p-2 mb-0">Web</h5>
+                                </div>
+
+                                <div class="card-block p-0">
+
+                                    <div class="row mb-1 mt-2 pt-0 px-3">
+                                        <div class="col-12">
+                                            <div class="form-group mb-2 mt-0">
+                                                <label>Breve descripción</label>
+                                                <textarea id="InfoBreve" class="form-control" rows="2" placeholder="Breve descripción del curso">@Model.Model.InfoBreve</textarea>
+                                            </div>
+                                            <div class="form-group text-center mt-3">
+                                                <button type="button" class="btn btn-sm btn-primary">Guardar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <hr class="mt-0 mb-0" />
+
+                                    <div class="row mb-1 pt-3 px-3 pb-0">
+                                        <div class="col-12">
+                                            <div class="form-group mb-2">
+                                                <label>Texto HTML</label>
+                                                <textarea name="informacion-web-editor" id="InfoTextoWeb" class="form-control" rows="8">@Model.Model.InfoTextoWeb</textarea>
+                                            </div>
+                                            <div class="form-group text-center mt-3">
+                                                <button type="button" class="btn btn-sm btn-primary">Guardar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                @* Mail *@
+
+                                <div class="d-flex box-border-bottom box-border-top p-2 mdc-bg-blue-grey-50 box-border-left-10">
+                                    <h5 class="fs-1-2 p-2 mb-0">Mail</h5>
+                                </div>
+
+                                <div class="card-block p-0">
+                                    <div class="row mb-1 pt-3 px-3 pb-0">
+                                        <div class="col-12">
+                                            <div class="form-group mb-2">
+                                                <label>Asunto</label>
+                                                <input type="text" class="form-control mb-2" value="@Model.Model.InfoAsunto" placeholder="Asunto" id="InfoAsunto" />
+                                            </div>
+                                            <div class="d-flex">
+                                                <div class="form-group mr-2 ml-0 col-5 p-0">
+                                                    <label>Enviar por</label>
+                                                    <select class="custom-select form-control-sm col-12" id="Info_ID_Mail">
+                                                        @if  (Model.Model.Mails!=null)
+                                                        {
+                                                            @for (Int32 t = 0; t < Model.Model.Mails.Length; t++)
+                                                            {
+                                                                if (Model.Model.Mails[t].id == Model.Model.Info_ID_Mail)
+                                                                {
+                                                                    <option value="@Model.Model.Mails[t].id" selected>@Model.Model.Mails[t].det</option>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <option value="@Model.Model.Mails[t].id">@Model.Model.Mails[t].det</option>
+                                                                }
+                                                            }
+
+                                                        }
+                                                    </select>
+                                                </div>
+                                                <div class="form-group mr-0 ml-0 col-7 p-0 pr-2">
+                                                    <label>CCO</label>
+                                                    <input type="text" class="form-control form-control-sm mb-2" value="@Model.Model.InfoCCO" placeholder="CCO" id="InfoCCO" />
+                                                </div>
+                                            </div>
+                                            <div class="form-group text-center mt-0">
+                                                <button type="button" class="btn btn-sm btn-primary mr-3">Guardar</button> <button type="button" class="btn btn-sm btn-primary">Enviar prueba a CCO</button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <hr class="mt-0 mb-0" />
+
+                                    <div class="row mb-0 pt-3 px-3 pb-0">
+                                        <div class="col-12">
+                                            <div class="form-group mb-2">
+                                                <label>Mensaje</label>
+                                                <textarea name="informacion-mail-editor" id="InfoTextoMail" class="form-control" rows="8">@Model.Model.InfoTextoMail</textarea>
+                                            </div>
+                                            <div class="form-group text-center mt-3">
+                                                <button type="button" class="btn btn-sm btn-primary">Guardar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                @* SMS *@
+
+                                <div class="card-block p-0">
+                                    <div class="d-flex box-border-bottom box-border-top p-2 mdc-bg-blue-grey-50 box-border-left-10">
+                                        <h5 class="fs-1-2 p-2 mb-0">Sms</h5>
+                                    </div>
+
+                                    <div class="row mb-1 mt-2 pt-0 px-3">
+                                        <div class="col-12">
+                                            <div class="form-group mb-2 mt-0">
+                                                <label>Mensaje SMS</label>
+                                                <input type="text" class="form-control" placeholder="Mensaje SMS" value="@Model.Model.InfoSMS" id="InfoSMS">
+                                            </div>
+                                            <div class="form-group text-center mt-3">
+                                                <button type="button" class="btn btn-sm btn-primary">Guardar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            @* INSCRIPCIÓN *@
+                            <div class="card">
+                                <div class="card-header card-header-options">
+                                    <span>Inscripción</span>
+                                </div>
+
+                                @* Web *@
+
+                                <div class="d-flex box-border-bottom p-2 mdc-bg-blue-grey-50 box-border-left-10">
+                                    <h5 class="fs-1-2 p-2 mb-0">Web</h5>
+                                </div>
+
+                                <div class="card-block p-0">
+
+                                    <div class="row mb-1 mt-2 pt-0 px-3">
+                                        <div class="col-12">
+                                            <div class="form-group mb-2 mt-0">
+                                                <label>Ticket</label>
+                                                <textarea id="InscInfoTicket" class="form-control" rows="2" placeholder="Texto ticket">@Model.Model.InscInfoTicket</textarea>
+                                            </div>
+                                            <div class="form-group text-center mt-3">
+                                                <button type="button" class="btn btn-sm btn-primary">Guardar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <hr class="mt-0 mb-0" />
+
+                                    <div class="row mb-1 pt-3 px-3 pb-0">
+                                        <div class="col-12">
+                                            <div class="form-group mb-2">
+                                                <label>Texto HTML</label>
+                                                <textarea name="inscripcion-web-editor" id="InscTextoWeb" class="form-control" rows="8">@Model.Model.InscTextoWeb</textarea>
+                                            </div>
+                                            <div class="form-group text-center mt-3">
+                                                <button type="button" class="btn btn-sm btn-primary">Guardar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                @* Mail *@
+
+                                <div class="d-flex justify-content-between align-items-center box-border-bottom box-border-top p-2 mdc-bg-blue-grey-50 box-border-left-10">
+                                    <h5 class="fs-1-2 p-2 mb-0">Mail</h5>
+                                    <label class="mb-2 mr-sm-2 mb-sm-0">
+                                        @if (Model.Model.InscMailActivado)
+                                        {
+                                            <input type="checkbox" class="" checked>
+                                        }
+                                        else
+                                        {
+                                            <input type="checkbox" class="">
+                                        }
+                                        
+                                        <span class="">Activado</span>
+                                    </label>
+                                </div>
+
+                                <div class="card-block p-0">
+                                    <div class="row mb-1 pt-3 px-3 pb-0">
+                                        <div class="col-12">
+                                            <div class="form-group mb-2">
+                                                <label>Asunto</label>
+                                                <input type="text" class="form-control mb-2" value="@Model.Model.InscInfoAsunto" placeholder="Asunto" id="InscInfoAsunto" />
+                                            </div>
+                                            <div class="d-flex">
+                                                <div class="form-group mr-2 ml-0 col-5 p-0">
+                                                    <label>Enviar por</label>
+                                                    <select class="custom-select form-control-sm col-12" id="InscInfo_ID_Mail">
+                                                        @if (Model.Model.Mails != null)
+                                                        {
+                                                            @for (Int32 t = 0; t < Model.Model.Mails.Length; t++)
+                                                            {
+                                                                if (Model.Model.Mails[t].id == Model.Model.InscInfo_ID_Mail)
+                                                                {
+                                                                    <option value="@Model.Model.Mails[t].id" selected>@Model.Model.Mails[t].det</option>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <option value="@Model.Model.Mails[t].id">@Model.Model.Mails[t].det</option>
+                                                                }
+                                                            }
+
+                                                        }
+                                                    </select>
+                                                </div>
+                                                <div class="form-group mr-0 ml-0 col-7 p-0 pr-2">
+                                                    <label>CCO</label>
+                                                    <input type="text" class="form-control form-control-sm mb-2" value="@Model.Model.InscInfoCCO" placeholder="CCO" id="InscInfoCCO" />
+                                                </div>
+                                            </div>
+                                            <div class="form-group text-center mt-0">
+                                                <button type="button" class="btn btn-sm btn-primary mr-3">Guardar</button> <button type="button" class="btn btn-sm btn-primary">Enviar prueba a CCO</button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <hr class="mt-0 mb-0" />
+
+                                    <div class="row mb-1 pt-3 pb-0 px-3">
+                                        <div class="col-12">
+                                            <div class="form-group mb-2">
+                                                <label>Mensaje</label>
+                                                <textarea name="inscripcion-mail-editor" id="InscInfoTextoMail" class="form-control" rows="8">@Model.Model.InscInfoTextoMail</textarea>
+                                            </div>
+                                            <div class="form-group text-center mt-3">
+                                                <button type="button" class="btn btn-sm btn-primary">Guardar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr class="mt-2 mb-3" />
+
+                    <div class="row mb-3">
+
+                        <div class="col-6">
+                            @* PAGO COMPLETADO *@
+                            <div class="card">
+                                <div class="card-header card-header-options">
+                                    <span>Pago completado</span>
+                                </div>
+
+                                @* Web *@
+
+                                <div class="d-flex box-border-bottom p-2 mdc-bg-blue-grey-50 box-border-left-10">
+                                    <h5 class="fs-1-2 p-2 mb-0">Web</h5>
+                                </div>
+
+                                <div class="card-block p-0">
+
+                                    <div class="row mb-1 pt-3 px-3 pb-0">
+                                        <div class="col-12">
+                                            <div class="form-group mb-2">
+                                                <label>Texto HTML</label>
+                                                <textarea name="pago-completado-web-editor" id="PCTextoWeb" class="form-control" rows="8">@Model.Model.PCTextoWeb</textarea>
+                                            </div>
+                                            <div class="form-group text-center mt-3">
+                                                <button type="button" class="btn btn-sm btn-primary">Guardar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                @* Mail *@
+
+                                <div class="d-flex justify-content-between align-items-center box-border-bottom box-border-top p-2 mdc-bg-blue-grey-50 box-border-left-10">
+                                    <h5 class="fs-1-2 p-2 mb-0">Mail</h5>
+                                    <label class="mb-2 mr-sm-2 mb-sm-0">
+                                        @if (Model.Model.PCMailActivado)
+                                        {
+                                            <input type="checkbox" class="" checked id="PCMailActivado">
+                                        }
+                                        else
+                                        {
+                                            <input type="checkbox" class="" id="PCMailActivado">
+                                        }
+                                        
+                                        <span class="">Activado</span>
+                                    </label>
+                                </div>
+
+                                <div class="card-block p-0">
+                                    <div class="row mb-1 pt-3 px-3 pb-0">
+                                        <div class="col-12">
+                                            <div class="form-group mb-2">
+                                                <label>Asunto</label>
+                                                <input type="text" class="form-control mb-2" value="@Model.Model.PCInfoAsunto" placeholder="Asunto" id="PCInfoAsunto" />
+                                            </div>
+                                            <div class="d-flex">
+                                                <div class="form-group mr-2 ml-0 col-5 p-0">
+                                                    <label>Enviar por</label>
+                                                    <select class="custom-select form-control-sm col-12" id="PCInfo_ID_Mail">
+                                                        @if (Model.Model.Mails != null)
+                                                        {
+                                                            @for (Int32 t = 0; t < Model.Model.Mails.Length; t++)
+                                                            {
+                                                                if (Model.Model.Mails[t].id == Model.Model.PCInfo_ID_Mail)
+                                                                {
+                                                                    <option value="@Model.Model.Mails[t].id" selected>@Model.Model.Mails[t].det</option>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <option value="@Model.Model.Mails[t].id">@Model.Model.Mails[t].det</option>
+                                                                }
+                                                            }
+
+                                                        }
+                                                    </select>
+                                                </div>
+                                                <div class="form-group mr-0 ml-0 col-7 p-0 pr-2">
+                                                    <label>CCO</label>
+                                                    <input type="text" class="form-control form-control-sm mb-2" value="@Model.Model.PCInfoCCO" placeholder="CCO" id="PCInfoCCO" />
+                                                </div>
+                                            </div>
+                                            <div class="form-group text-center mt-0">
+                                                <button type="button" class="btn btn-sm btn-primary mr-3">Guardar</button> <button type="button" class="btn btn-sm btn-primary">Enviar prueba a CCO</button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <hr class="mt-0 mb-0" />
+
+                                    <div class="row mb-0 pt-3 px-3 pb-0">
+                                        <div class="col-12">
+                                            <div class="form-group mb-2">
+                                                <label>Mensaje</label>
+                                                <textarea name="pago-completado-mail-editor" id="PCInfoTextoMail" class="form-control" rows="8">@Model.Model.PCInfoTextoMail</textarea>
+                                            </div>
+                                            <div class="form-group text-center mt-3">
+                                                <button type="button" class="btn btn-sm btn-primary">Guardar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                @* SMS *@
+
+                                <div class="card-block p-0">
+                                    <div class="d-flex box-border-bottom box-border-top p-2 mdc-bg-blue-grey-50 box-border-left-10">
+                                        <h5 class="fs-1-2 p-2 mb-0">Sms</h5>
+                                    </div>
+
+                                    <div class="row mb-1 mt-2 pt-0 px-3">
+                                        <div class="col-12">
+                                            <div class="form-group mb-2 mt-0">
+                                                <label>Mensaje SMS</label>
+                                                <input type="text" class="form-control" placeholder="Mensaje SMS" id="PCInfoSMS" value="@Model.Model.PCInfoSMS">
+                                            </div>
+                                            <div class="form-group text-center mt-3">
+                                                <button type="button" class="btn btn-sm btn-primary">Guardar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="col-6">
+                            @* DIPLOMA *@
+                            <div class="card mb-3">
+                                <div class="card-header card-header-options">
+                                    <span>Diploma</span>
+                                    <div class="card-actions">
+                                        <ul>
+                                            <li><a href="#" class="handle"><i class="fa fa-bars"></i></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="card-block p-0">
+                                    <div class="row p-3">
+                                        <div class="col-12">
+                                            <div class="form-group mb-2">
+                                                <label>Diploma</label>
+                                                <input type="text" class="form-control form-control-sm ui-autocomplete-input" id="findcarac2" name="findcarac2" placeholder="Buscar documento" autocomplete="off" value="@Model.Model.Diploma">
+                                                <input id="vfindcarac2" name="vfindcarac2" type="hidden" value="@Model.Model.ID_DipDoc"><input id="tfindcarac2" name="tfindcarac2" type="hidden" value="@Model.Model.Diploma">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-center box-border-top p-2 mdc-bg-blue-grey-50">
+                                        <button type="submit" class="btn btn-sm btn-primary comu-diploma-doc">Guardar</button>
+                                    </div>
+                                </div>
+                            </div>
+                            @* LISTA DE DOCUMENTOS VINCULADOS *@
+                            <div class="card card-table">
+                                <div class="card-header card-header-options">
+                                    <span>Lista de documentos vinculados</span>
+                                    <div class="input-group input-group-sm col-4 mr-0 pr-0">
+                                        <input type="text" class="form-control form-control-sm ui-autocomplete-input" id="findcarac1" name="findcarac1" placeholder="Buscar documento" autocomplete="off">
+                                        <input id="vfindcarac1" name="vfindcarac1" type="hidden" value=""><input id="tfindcarac1" name="tfindcarac1" type="hidden" value="">
+                                        <div class="input-group-append">
+                                            <button type="button" class="btn btn-primary btn-sm comu-add-doc">Vincular</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-block p-0">
+                                    <table class="table table-striped table-select">
+                                        <thead>
+                                            <tr>
+                                                <th>Documento</th>
+                                                <th class="text-center w-10">Desvincular</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (Model.Model.DocsCurso != null)
+                                            {
+                                                for (Int32 t = 0; t < Model.Model.DocsCurso.Length; t++)
+                                                {
+                                                    <tr>
+                                                        <td><p class="mb-0 fw-5">@Model.Model.DocsCurso[t].det</p></td>
+                                                        <td class="text-center"><a href="#" class="text-danger comu-del-doc" id="docreleli_@Model.Model.DocsCurso[t].id"><i class="fa fa-times"></i></a></td>
+                                                    </tr>
+                                                }
+
+                                            }
+                                            else
+                                            {
+                                                <tr><td colspan="2"><p class='fw-5 text-danger mb-0'><i class='fa fa-exclamation-circle mr-1'></i> No hay resultados</p></td></tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+
+                }
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,271 @@
+﻿@model ModuloClientesLibrary.ModuloClientesClienteClientesRelacionadosCobrosPendientesViewModel
+@{
+    Layout = "~/Views/Shared/Modulo-Clientes/_Modulo-Clientes-Cliente.cshtml";
+    ViewData["Title"] = "Cobros pendientes";
+}
+
+<div class="main-content m-0">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 header-section mb-0">
+                <h2>@ViewData["Title"]</h2>
+                @Html.Raw(ViewData["Migas"])
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 mt-3">
+
+                @if (Model.Model.Err.eserror)
+                {
+                    ViewData["err"] = Model.Model.Err.mensaje;
+                    @Html.Partial("AccesoDenegado");
+                }
+                else
+                {
+
+                    @* cabecera cliente *@
+
+                    @Html.Partial("Cliente-Cabecera")
+
+                    @* tabs *@
+
+                    @Html.Partial("Cliente-Tabs")
+
+                    <div class="card">
+                        <div class="card-block">
+
+                            @* tabs *@
+
+                            @Html.Partial("Cliente-ClientesRelacionados-Tabs")
+
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="card card-table mb-0">
+                                        <div class="card-header card-header-options">
+                                            <span>Cobros pendientes</span>
+                                            @*<a href="#" class="fw-5 btn btn-primary btn-sm">Ir a la solicitud</a>*@
+                                        </div>
+                                        <div class="card-block">
+
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="text-center w-7">Vencimiento</th>
+                                                        <th class="text-center w-7">Factura</th>
+                                                        <th>Cliente</th>
+                                                        <th class="w-2 text-center"><i class="fa fa-file-text" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="Indica que hay una solicitud vinculada a la factura"></i></th>
+                                                        <th class="text-right w-7">Importe</th>
+                                                        <th class="w-30">Nuevo comentario</th>
+                                                        <th class="w-10 text-center">Posponer</th>
+                                                        <th class="w-10 text-center">Cambiar estado</th>
+                                                        <th class="w-2 text-center"><i class="fa fa-paper-plane" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="Enviar factura"></i></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @if (Model.Model.det != null)
+                                                    {
+                                                        for (Int32 t = 0; t < Model.Model.det.Length; t++)
+                                                        {
+                                                            string classtr = "";
+                                                            if (Model.Model.det[t].SoliTwitHoy)
+                                                            {
+                                                                classtr = "tr-success";
+                                                            }
+
+                                                    <tr class="@Html.Raw(classtr)">
+                                                        <td class="text-center align-top pt-2">
+                                                            <p class="fw-5 mb-0">@Model.Model.det[t].Fe_Ve</p>
+                                                            <p class="fw-5 mb-0">@Model.Model.det[t].Forma</p>
+                                                            @if (Model.Model.det[t].EnEspera)
+                                                            {
+                                                                <p class="fw-5 mb-0 text-danger">En espera</p>
+                                                            }
+                                                            @if (Model.Model.det[t].Fe_Dev != "" && Model.Model.det[t].Fe_Cob == "")
+                                                            {
+                                                                <p class="fw-5 mb-0 text-danger"><i class="fa fa-exclamation-triangle mr-1 text-danger" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="Recibo devuelto"></i> <small>@Model.Model.det[t].Fe_Dev</small></p>
+                                                            }
+                                                        </td>
+                                                        <td class="text-center align-top pt-2">
+                                                            <p class="fw-5 mb-0"><a href="/modulo-facturacion/informacion-factura/descargar?ID_Fac=@Model.Model.det[t].ID_Fac&Tipo=html" class="fw-5" target="_blank" data-toggle="tooltip" data-placement="top" title="" data-original-title="Ver factura en HTML">@Model.Model.det[t].Fac</a></p>
+                                                            <p class="fw-5 mb-0"><small>@Model.Model.det[t].Fe_Fa</small></p>
+                                                            <p class="fw-5 mb-0"><i class="fa fa-paper-plane" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="Factura enviada por mail"></i> <small>@Model.Model.det[t].EnvFacOK</small> - <i class="fa fa-envelope" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="Factura enviada por correo"></i> <small>@Model.Model.det[t].NumCorr</small></p>
+                                                        </td>
+                                                        <td class="align-top mt-2">
+                                                            <p class="fw-5 mb-0">
+                                                                @Model.Model.det[t].Emp
+                                                                @if (Model.Model.det[t].NIF != "")
+                                                                {
+                                                                    <small>NIF: @Model.Model.det[t].NIF</small>
+                                                                }
+                                                                <a href="/modulo-clientes/clientes/cliente/situacion/facturas?ID_Cli2=@Model.Model.det[t].ID_Cli2" target="_blank" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="Ir a la ficha del cliente">(@Model.Model.det[t].ID_Cli2)</a>
+                                                            </p>
+                                                            <p class="fw-5 mb-0">@Model.Model.det[t].Pob <small>@Model.Model.det[t].Dir</small></p>
+                                                            @if (@Model.Model.det[t].ObsFac != "")
+                                                            {
+                                                                <p class="fw-5 mb-0"><small><b>Observaciones: @Model.Model.det[t].ObsFac</b></small></p>
+                                                            }
+                                                            @if (Model.Model.det[t].ID_For == 3)
+                                                            {
+                                                                if (Model.Model.det[t].Cue != "")
+                                                                {
+                                                                    <p class="fw-5 mb-0">
+                                                                        @if (Model.Model.det[t].WarCue != "")
+                                                                        {
+                                                                            <i class='fa fa-exclamation-circle mr-1 text-danger' data-toggle="tooltip" data-placement="top" title="" data-original-title="@Model.Model.det[t].WarCue"></i>
+
+                                                                        }
+                                                                        <small>@Html.Raw(Model.Model.det[t].Cue)</small>
+                                                                    </p>
+                                                                }
+                                                                if (Model.Model.det[t].Banco != "")
+                                                                {
+                                                                    <p class="fw-5 mb-0"><small>@Html.Raw(Model.Model.det[t].Banco)</small></p>
+                                                                }
+                                                            }
+                                                            else
+                                                            {
+                                                                if (Model.Model.det[t].CueNeg != "")
+                                                                {
+                                                                    <p class="fw-5 mb-0"><small>@Html.Raw(Model.Model.det[t].CueNeg)</small></p>
+                                                                }
+                                                            }
+
+                                                        </td>
+                                                        <td class="align-top text-center pt-2">
+                                                            @if (Model.Model.det[t].ID_Soli2 > 0)
+                                                            {
+                                                                if (Model.Model.det[t].SoliCerr)
+                                                                {
+                                                                    <a href="/tareas-pendientes/tarea-pendiente?ID_Soli2=@Model.Model.det[t].ID_Soli2" target="_blank" class="text-muted"><i class="fa fa-file-text" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="Solicitud cerrada. Ir a la solicitud nº @Model.Model.det[t].ID_Soli2 "></i></a>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <a href="/tareas-pendientes/tarea-pendiente?ID_Soli2=@Model.Model.det[t].ID_Soli2" target="_blank" class="text-danger"><i class="fa fa-file-text" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="Solicitud abierta. Ir a la solicitud nº @Model.Model.det[t].ID_Soli2 "></i></a>
+                                                                }
+                                                            }
+                                                        </td>
+                                                        <td class="align-top text-right pt-2"><p class="mb-0 fw-5" id="val_@Model.Model.det[t].ID_Fra">@Model.Model.det[t].Imp</p></td>
+                                                        <td class="align-top">
+                                                            <input type="text" id="come_@Model.Model.det[t].ID_Fra" value="" class="form-control form-control-sm mt-2 cob-fra-soli" placeholder="Comentario a guardar" />
+                                                            @if (Model.Model.det[t].Sol != null)
+                                                            {
+                                                                <div class="d-flex flex-column my-2">
+                                                                    <div class="box-white-bg mb-1">
+                                                                        <p class="fs-0-7 mb-0">
+                                                                            @if (Model.Model.det[t].Soli_Atraso)
+                                                                            {
+                                                                                <span class="fw-5 text-danger">Planificado @Model.Model.det[t].Soli_Fe_Prev - @Model.Model.det[t].Soli_Usu_Prev - Atraso</span>
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                <span class="fw-5">Planificado @Model.Model.det[t].Soli_Fe_Prev - @Model.Model.det[t].Soli_Usu_Prev</span>
+                                                                            }
+                                                                        </p>
+                                                                    </div>
+
+                                                                    @for (Int32 i = 0; i < Model.Model.det[t].Sol.Length; i++)
+                                                                    {
+                                                                        <div class="box-white-bg mb-1">
+                                                                            <p class="fs-0-7 mb-0"><span class="fw-5">@Model.Model.det[t].Sol[i].Fe_Al - @Model.Model.det[t].Sol[i].Usu</span> - @Model.Model.det[t].Sol[i].Expo</p>
+                                                                        </div>
+                                                                    }
+                                                                </div>
+                                                            }
+
+                                                        </td>
+                                                        <td class="align-top text-center pt-2">
+                                                            <input type="text" id="posp_@Model.Model.det[t].ID_Fra" value="" class="form-control form-control-sm mt-2" placeholder="Fecha" />
+                                                        </td>
+                                                        <td class="align-top text-center pt-2">
+                                                            @if (Model.Model.det[t].EnEspera)
+                                                            {
+                                                                <p><label class="mr-2">Negociado </label><input type="checkbox" id="cobneg_@Model.Model.det[t].ID_Fra" value="" /></p>
+                                                            }
+                                                            else
+                                                            {
+                                                                <p><label class="mr-2">En espera </label><input type="checkbox" id="cobesp_@Model.Model.det[t].ID_Fra" value="" /></p>
+                                                            }
+                                                        </td>
+                                                        <td class="align-top text-center pt-2">
+                                                            <input type="checkbox" id="env_@Model.Model.det[t].ID_Fra" value="" />
+                                                        </td>
+                                                    </tr>
+                                                        }
+
+                                                        @*<tr>
+                                                            <td colspan="7" class="box-border-top p-2">
+                                                                <div class="d-flex">
+                                                                    <div class="col-6">
+                                                                        <div class="form-group">
+                                                                            <div class="input-group input-group-sm mb-0 mr-2">
+                                                                                <div class="input-group-prepend">
+                                                                                    <span class="input-group-text">Fecha planificación</span>
+                                                                                </div>
+                                                                                <input type="text" class="form-control" id="" value="" placeholder="Fecha planificación" list="">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-6">
+                                                                        <textarea type="text" class="form-control form-control-sm" id="" value="" placeholder="Exposición" rows="3"></textarea>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>*@
+
+                                                        <tr>
+                                                            <td colspan="9" class="text-center box-border-top p-2 mdc-bg-blue-grey-50">
+                                                                <button type="button" class="btn btn-primary btn-sm guardar-cli-comen-cobros-pend">Guardar</button>
+                                                            </td>
+                                                        </tr>
+
+                                                    }
+                                                    else
+                                                    {
+                                                        <tr><td colspan="7"><p class='fw-5 text-danger mb-0'><i class='fa fa-exclamation-circle mr-1'></i> No hay resultados</p></td></tr>
+
+                                                    }
+
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        @Html.Raw(Model.Model.Paginador)
+                                    </div>
+
+                                </div>
+
+
+                                @*<div class="col-2" id="sindatos">
+                                    <div class="card-info-wrapper w-100" id="sindatos">
+                                        <div class="card-info">
+                                            <div class="d-flex justify-content-center align-items-center">
+                                                <img src="https://image.flaticon.com/icons/svg/609/609998.svg" style="width: 20%;">
+                                                <p class="mb-2 ml-3">Si clica encima del nº de factura, en este espacio le aparecerán los datos de la factura</p>
+                                            </div>
+                                        </div>
+                                        <svg class="card-info-triangle">
+                                            <polygon points="0,0 200,0 0,200" fill="currentColor"></polygon>
+                                        </svg>
+                                    </div>
+
+                                </div>*@
+
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
